@@ -6,14 +6,14 @@ const Card = ({ title, subTitle,iconClass}) => {
     <CardContainer className='card h-100'>
       <div className='card-body'>
         <CardHeader>{title}</CardHeader>
-        <div class='d-flex justify-content-center'>
-          <div class='progress-circle p50'>
+        <div className='d-flex justify-content-center'>
+          <div className='progress-circle p50'>
             <span>
-              <i class={iconClass}></i>
+              <i className={iconClass}></i>
             </span>
-            <div class='left-half-clipper'>
-              <div class='first50-bar'></div>
-              <div class='value-bar'></div>
+            <div className='left-half-clipper'>
+              <div className='first50-bar'></div>
+              <div className='value-bar'></div>
             </div>
           </div>
         </div>
