@@ -11,7 +11,7 @@ client/.pnp.js
 client/coverage
 
 # #build
-# client/build
+client/build
 
 # misc
 .DS_Store
