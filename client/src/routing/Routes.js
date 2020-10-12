@@ -8,7 +8,7 @@ import formpage from '../pages/formpage/formpage';
 const Routes = () => {
   return (
     <Switch>
-      <Route exact path='/home' component={homepage} />
+      <Route exact path='/' component={homepage} />
       <Route exact path='/login' component={loginpage} />
       <Route exact path='/personal' component={personalpage} />
       <Route exact path='/form' component={formpage} />
