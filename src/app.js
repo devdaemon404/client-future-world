@@ -44,7 +44,9 @@ app.use(cookieParser());
 app.use(express.urlencoded({ extended: true }));
 
 // Set security headers
-app.use(helmet());
+app.use(helmet({
+  contentSecurityPolicy: false
+}));
 
 // Sanitize data
 app.use(mongoSanitize());
