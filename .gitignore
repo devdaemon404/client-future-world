@@ -1,4 +1,6 @@
-# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
+node_modules/
+config/dev.env
+config/prod.env
 
 # dependencies
 /node_modules
@@ -6,11 +8,14 @@ client/node_modules
 /.pnp
 .pnp.js
 
-# testing
-/coverage
+client/.pnp
+client/.pnp.js
 
-# production
-/build
+# testing
+client/coverage
+
+# #build
+client/build
 
 # misc
 .DS_Store
@@ -22,3 +27,12 @@ client/node_modules
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+# google service account key
+key.json
+
+# postman collection
+onpar_api.postman_collection.json
+
+# backup data
+_data

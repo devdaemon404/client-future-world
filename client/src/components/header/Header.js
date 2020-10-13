@@ -6,35 +6,35 @@ function Header() {
   return (
     <HeaderContainer>
       <div>
-        <nav class='navbar navbar-expand-lg'>
-          <a class='navbar-brand ml-5' href='/home'>
+        <nav className='navbar navbar-expand-lg'>
+          <a className='navbar-brand ml-5' href='/'>
             <img src='../../assets/img/logo.png' alt='' className='img-fluid' />
             Future World.
           </a>
           <button
-            class='navbar-toggler'
+            className='navbar-toggler'
             type='button'
             data-toggle='collapse'
             data-target='#navbarNav'
             aria-controls='navbarNav'
             aria-expanded='false'
             aria-label='Toggle navigation'
-            
+
           >
-            <span class='navbar-toggler-icon'><i class="fas fa-bars"></i></span>
+            <span className='navbar-toggler-icon'><i className="fas fa-bars"></i></span>
           </button>
           <div
-            class='flex justify-content-xl-end justify-content-lg-end justify-content-md-center   mr-5 collapse navbar-collapse'
+            className='flex justify-content-xl-end justify-content-lg-end justify-content-md-center   mr-5 collapse navbar-collapse'
             id='navbarNav'
           >
-            <ul class='navbar-nav'>
-              <li class='nav-item active mr-3'>
-                <a class='nav-link' href='/home'>
-                  My Profile <span class='sr-only'>(current)</span>
+            <ul className='navbar-nav'>
+              <li className='nav-item active mr-3'>
+                <a className='nav-link' href='/'>
+                  My Profile <span className='sr-only'>(current)</span>
                 </a>
               </li>
-              <li class='nav-item mr-3'>
-                <a class='nav-link' href='/login'>
+              <li className='nav-item mr-3'>
+                <a className='nav-link' href='/login'>
                   Logout
                 </a>
               </li>
