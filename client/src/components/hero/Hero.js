@@ -1,5 +1,5 @@
 import React from 'react';
-import { HeroContainer, MainHeader, MainPara} from './hero.style';
+import { HeroContainer, MainHeader, MainPara} from './hero.styles';
 import Card from '../card/Card';
 import { Link } from 'react-router-dom';
 
@@ -22,19 +22,28 @@ function Hero() {
               <div class='m-2'>
                 <div class='d-flex flex-row justify-content-around mb-2'>
                   <div class='m-1'>
-                    <Link to='/personal' className='link'>
+                    <Link className='link' 
+                                      to={{
+                                        pathname: '/personal',
+                                        state: {
+                                        
+                                        },
+                                      }}
+>
                       <Card
                         title='Personal Information'
-                        subTitle='5/10 Sections Completed'
-                        iconClass='fas fa-address-card'
+                        subTitle='2/4 Sections Completed'
+                        iconClass='fas fa-address-card fa-2x'
+                        percentage='50'
                       ></Card>
                     </Link>
                   </div>
                   <div class='m-1'>
                     <Card
                       title='Academic Information'
-                      subTitle='5/10 Sections Completed'
-                      iconClass='fas fa-address-card'
+                      subTitle='3/4 Sections Completed'
+                      iconClass='fas fa-user-graduate fa-2x'
+                      percentage='75'
                     ></Card>
                   </div>
                 </div>
@@ -44,15 +53,17 @@ function Hero() {
                   <div class='m-1'>
                     <Card
                       title='Professional Experience'
-                      subTitle='5/10 Sections Completed'
-                      iconClass='fas fa-address-card'
+                      subTitle='1/4 Sections Completed'
+                      iconClass='fas fa-briefcase fa-2x'
+                      percentage='25'
                     ></Card>
                   </div>
                   <div class='m-1'>
                     <Card
                       title='Health Information'
-                      subTitle='5/10 Sections Completed'
-                      iconClass='fas fa-address-card'
+                      subTitle='4/4 Sections Completed'
+                      iconClass='fas fa-briefcase-medical fa-2x'
+                      percentage='100'
                     ></Card>
                   </div>
                 </div>
