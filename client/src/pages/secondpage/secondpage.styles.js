@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 export const Container = styled.div`
-background-color: #111;
+  background-color:#111;
 `;
 
 export const HeroContainer = styled.div`
@@ -53,11 +53,12 @@ export const HeroContainer = styled.div`
     transition: all 0.2s ease-in-out;
     color:#111;
     background-color:#255473;
-    border-bottom: 1px solid aquamarine;
+    border-bottom: 1px solid #5082A1;
   }
 
   .list-group-item:hover{
-    transform: scale(1.03);
+    transform: scale(1.02);
+    background-color:#5082A1;
     z-index: 1;
   }
 `;
@@ -112,6 +113,3 @@ export const MainPara2 = styled.p`
   text-align: center;
   padding: 20px;
 `;
-
-
-

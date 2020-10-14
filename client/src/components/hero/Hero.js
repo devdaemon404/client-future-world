@@ -1,9 +1,9 @@
 import React from 'react';
-import { HeroContainer, MainHeader, MainPara} from './hero.styles';
+import { HeroContainer, MainHeader, MainPara } from './hero.styles';
 import Card from '../card/Card';
 import { Link } from 'react-router-dom';
 
-function Hero() {
+function Hero(...props) {
   return (
     <HeroContainer className='box d-flex align-items-center'>
       <div className='container'>
@@ -17,19 +17,12 @@ function Hero() {
           </div>
           <hr></hr>
           <hr></hr>
-          <div class='col-lg-7 order-1 order-lg-2'>
-            <div class='d-flex flex-column p-2'>
-              <div class='m-2'>
-                <div class='d-flex flex-row justify-content-around mb-2'>
-                  <div class='m-1'>
-                    <Link className='link' 
-                                      to={{
-                                        pathname: '/personal',
-                                        state: {
-                                        
-                                        },
-                                      }}
->
+          <div className='col-lg-7 order-1 order-lg-2'>
+            <div className='d-flex flex-column p-2'>
+              <div className='m-2'>
+                <div className='d-flex flex-row justify-content-around mb-2'>
+                  <div className='m-1'>
+                    <Link className='link' to={{ pathname: '/personal', }}>
                       <Card
                         title='Personal Information'
                         subTitle='2/4 Sections Completed'
@@ -50,21 +43,25 @@ function Hero() {
               </div>
               <div className='m-2'>
                 <div className='d-flex flex-row justify-content-around'>
-                  <div className='m-1'>
-                    <Card
-                      title='Professional Experience'
-                      subTitle='1/4 Sections Completed'
-                      iconClass='fas fa-briefcase fa-2x'
-                      percentage='25'
-                    ></Card>
+                <div className='m-1'>
+                    <Link className='link' to={{ pathname: '/health', }}>
+                      <Card
+                        title='Health & Family Information'
+                        subTitle='4/4 Sections Completed'
+                        iconClass='fas fa-briefcase-medical fa-2x'
+                        percentage='10'
+                      ></Card>
+                    </Link>
                   </div>
                   <div className='m-1'>
-                    <Card
-                      title='Health Information'
-                      subTitle='4/4 Sections Completed'
-                      iconClass='fas fa-briefcase-medical fa-2x'
-                      percentage='100'
-                    ></Card>
+                    <Link className='link' to={{ pathname: '/other', }}>
+                      <Card
+                        title='Other Information'
+                        subTitle='4/4 Sections Completed'
+                        iconClass='fas fa-clipboard fa-2x'
+                        percentage='100'
+                      ></Card>
+                    </Link>
                   </div>
                 </div>
               </div>

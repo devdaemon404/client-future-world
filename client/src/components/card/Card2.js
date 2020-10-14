@@ -3,12 +3,17 @@ import { Card2Header, Card2Container } from './card.styles';
 import ProgressBar from '../progress-bar/Progress';
 import { Link } from 'react-router-dom';
 
-const Card = ({ title, subTitle, iconClass, percentage }) => {
+const Card = ({ title, subTitle, iconClass, percentage, list, pathname }) => {
+
+
   return (
     <Card2Container className='card h-100 w-100'>
-      <div class="row no-gutters">
-        <div class="col-md-4 col-lg-12">
+      <div className="row no-gutters">
+        <div className="col-md-12 col-lg-12">
           <div className='row'>
+            <div className='col-md-6 d-flex align-items-center justify-content-center mt-3'>
+              <Card2Header>{title}</Card2Header>
+            </div>
             <div className='col-md-6'>
               <ProgressBar iconClass={iconClass}
                 percentage={percentage}
@@ -17,19 +22,31 @@ const Card = ({ title, subTitle, iconClass, percentage }) => {
                 <p><em>{subTitle}</em></p>
               </div>
             </div>
-            <div className='col-md-6 d-flex align-items-center'>
-              <Card2Header>{title}</Card2Header>
-  
-            </div>
           </div>
         </div>
-        <div class="col-md-8 col-lg-12">
-          <div class="card-body">
-            <ul class="list-group list-group-flush text-center">
-              <Link to='/form' className='form-link'><li class="list-group-item">Contact Information <i class="fas fa-caret-right fa-md"></i></li></Link>
-              <Link to='/form' className='form-link'><li class="list-group-item">Address Information <i class="fas fa-caret-right fa-md"></i></li></Link>
-              <Link to='/form' className='form-link'><li class="list-group-item">Family Members Information <i class="fas fa-caret-right fa-md"></i></li></Link>
-              <Link to='/form' className='form-link'><li class="list-group-item">Language Information <i class="fas fa-caret-right fa-md"></i></li></Link>
+        <div className="col-md-12 col-lg-12">
+          <div className="card-body">
+            <ul className="list-group">
+              {/* <Link to='/form' className='form-link'><li className="list-group-item">Contact Information</li></Link>
+              <Link to='/form' className='form-link'><li className="list-group-item">Address Information</li></Link>
+              <Link to='/form' className='form-link'><li className="list-group-item">Family Members Information </li></Link>
+              <Link to='/form' className='form-link'><li className="list-group-item">Language Information </li></Link> */}
+
+              {
+                list.map((item, index) => (
+                  <Link
+                    key={index}
+                    // to={`personal/${pathname[index]}`} 
+                    to={{
+                      pathname: `information/${pathname[index]}`,
+                      
+                    }}
+                    className='form-link'
+                  // list={list} pathname={pathname} subTitle={subTitle} title={title} iconClass={iconClass} percentage={percentage}
+                  ><li className="list-group-item">{item}</li></Link>
+                ))
+              }
+
             </ul>
           </div>
         </div>

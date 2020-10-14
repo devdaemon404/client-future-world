@@ -14,7 +14,7 @@ export const CardHeader = styled.h1`
 `;
 
 export const CardContainer = styled.div`
-  // width: 100%;
+  width: 19rem;
   transition: all 0.4s ease-in-out;
 
   &:hover {
@@ -36,11 +36,11 @@ export const Card2Header = styled.h1`
   // background-image: linear-gradient(315deg, #2d3436 0%, #000000 74%);
   font-family: 'Helvetica Neue', sans-serif;
   // border-radius:5px;
-  font-size: 35px;
+  font-size: 29px;
   // padding:10px;
   font-weight: bold;
   letter-spacing: -1px;
   line-height: 1;
-  // text-align: center;
+  text-align: center;
 `;
 

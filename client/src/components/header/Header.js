@@ -1,15 +1,14 @@
 import React from 'react';
 import { HeaderContainer } from './header.styles';
 
-
-function Header() {
+function Header({pathname}) {
   return (
     <HeaderContainer>
       <div>
         <nav className='navbar navbar-expand-lg'>
           <a className='navbar-brand ml-5' href='/'>
-            <img src='../../assets/img/logo.png' alt='' className='img-fluid' />
-            Future World.
+            <img src='http://www.futureworldconsultancy.com/images/logo2.png' alt='' className='img-fluid' height='30px' width='80px' />
+     
           </a>
           <button
             className='navbar-toggler'
@@ -29,8 +28,8 @@ function Header() {
           >
             <ul className='navbar-nav'>
               <li className='nav-item active mr-3'>
-                <a className='nav-link' href='/'>
-                  My Profile <span className='sr-only'>(current)</span>
+                <a className='nav-link' href={pathname}>
+                  My Application <span className='sr-only'>(current)</span>
                 </a>
               </li>
               <li className='nav-item mr-3'>

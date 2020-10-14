@@ -3,15 +3,15 @@ import './progress.styles.scss';
 
 const Progress = ({iconClass, percentage}) => {
   return (
-    <div class="container p-5">
-      <div class="progress" data-percentage={percentage}>
-        <span class="progress-left">
-          <span class="progress-bar"></span>
+    <div className="container p-5">
+      <div className="progress" data-percentage={percentage}>
+        <span className="progress-left">
+          <span className="progress-bar"></span>
         </span>
-        <span class="progress-right">
-          <span class="progress-bar"></span>
+        <span className="progress-right">
+          <span className="progress-bar"></span>
         </span>
-        <div class="progress-value">
+        <div className="progress-value">
           <div>
             <span><i className={iconClass}></i></span>
           </div>
