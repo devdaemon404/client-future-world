@@ -8,10 +8,19 @@ export const HeroContainer = styled.div`
   background: url(https://images.unsplash.com/photo-1581091215367-9b6c00b3035a?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80)
     center center no-repeat;
   background-size: cover;
-  // height: 100%;
+  // height: 85.7vh;
   padding: 80px 0 60px 0;
   position: relative;
   clip-path: polygon(0 0, 100% 0, 100% 100%, 0 calc(100% - 5vw));
+
+  .link{
+    color:#111;
+  }
+
+  .link:hover{
+    color:#6598BB;
+    text-decoration:none;
+  }
 
   &::before {
     content: '';
@@ -27,17 +36,12 @@ export const HeroContainer = styled.div`
     -khtml-opacity: 0.6;
   }
 
-  .card-footer{
-    padding: 0px;
-    border: none;
-    z-index:1px;
-    background-color:#f8f8ff;
-  }
 
   .form-link{
     padding: 10px;
     color:#111;
-    font-size:18px;
+    background-color:#255473;
+    font-size:24px;
   }
 
   .form-link:hover{
@@ -46,11 +50,15 @@ export const HeroContainer = styled.div`
   }
   
   .list-group-item{
-    transition: all 0.4s ease-in-out;
+    transition: all 0.2s ease-in-out;
+    color:#111;
+    background-color:#255473;
+    border-bottom: 1px solid #5082A1;
   }
 
   .list-group-item:hover{
-    transform: scale(1.1);
+    transform: scale(1.02);
+    background-color:#5082A1;
     z-index: 1;
   }
 `;
@@ -74,47 +82,34 @@ export const MainPara = styled.p`
   color: #111;
   // background: #222;
   font-family: 'Helvetica Neue', sans-serif;
-  font-size: 25px;
-  letter-spacing: -1px;
+  font-size: 22px;
+  // letter-spacing: -1px;
   line-height: 1;
-  text-align: center;
+  // text-align: center;
   padding: 20px;
 `;
 
-
-export const CardHeader = styled.h1`
+export const MainHeader2 = styled.h1`
   color: #f8f8f8;
-  border:none;
   background-color: #2d3436;
   background-image: linear-gradient(315deg, #2d3436 0%, #000000 74%);
   font-family: 'Helvetica Neue', sans-serif;
   border-radius:5px;
-  font-size: 25px;
-  padding:10px;
+  font-size: 50px;
+  padding:5px;
   font-weight: bold;
   letter-spacing: -1px;
   line-height: 1;
   text-align: center;
 `;
 
-export const CardPara = styled.p`
+export const MainPara2 = styled.p`
   color: #111;
+  // background: #222;
   font-family: 'Helvetica Neue', sans-serif;
   font-size: 25px;
   letter-spacing: -1px;
   line-height: 1;
-  text-align: center;  
-`;
-
-
-export const CardContainer = styled.div`
-  // width: 19rem;
-  background: #ffffff;
-  border-radius:10px;
-  transition: all 0.4s ease-in-out;
-
-  &:hover {
-    transform: scale(1.1);
-    z-index: 1;
-  }
+  text-align: center;
+  padding: 20px;
 `;

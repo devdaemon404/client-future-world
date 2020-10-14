@@ -1,5 +1,9 @@
 import styled from 'styled-components';
 
+export const Container = styled.div`
+background-color: #111;
+`;
+
 export const HeroContainer = styled.div`
   background: url(https://images.unsplash.com/photo-1581091215367-9b6c00b3035a?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80)
     center center no-repeat;
@@ -10,9 +14,7 @@ export const HeroContainer = styled.div`
   clip-path: polygon(0 0, 100% 0, 100% 100%, 0 calc(100% - 5vw));
 
   .link{
-    // padding: 10px;
     color:#111;
-    // font-size:18px;
   }
 
   .link:hover{
@@ -32,6 +34,31 @@ export const HeroContainer = styled.div`
     opacity: 0.6;
     -moz-opacity: 0.6;
     -khtml-opacity: 0.6;
+  }
+
+
+  .form-link{
+    padding: 10px;
+    color:#111;
+    background-color:#255473;
+    font-size:24px;
+  }
+
+  .form-link:hover{
+    color:#6598BB;
+    text-decoration:none;
+  }
+  
+  .list-group-item{
+    transition: all 0.2s ease-in-out;
+    color:#111;
+    background-color:#255473;
+    border-bottom: 1px solid aquamarine;
+  }
+
+  .list-group-item:hover{
+    transform: scale(1.03);
+    z-index: 1;
   }
 `;
 
@@ -60,5 +87,31 @@ export const MainPara = styled.p`
   // text-align: center;
   padding: 20px;
 `;
+
+export const MainHeader2 = styled.h1`
+  color: #f8f8f8;
+  background-color: #2d3436;
+  background-image: linear-gradient(315deg, #2d3436 0%, #000000 74%);
+  font-family: 'Helvetica Neue', sans-serif;
+  border-radius:5px;
+  font-size: 50px;
+  padding:5px;
+  font-weight: bold;
+  letter-spacing: -1px;
+  line-height: 1;
+  text-align: center;
+`;
+
+export const MainPara2 = styled.p`
+  color: #111;
+  // background: #222;
+  font-family: 'Helvetica Neue', sans-serif;
+  font-size: 25px;
+  letter-spacing: -1px;
+  line-height: 1;
+  text-align: center;
+  padding: 20px;
+`;
+
 
 

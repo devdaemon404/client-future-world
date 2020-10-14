@@ -24,35 +24,32 @@ export const HeaderContainer = styled.div`
 
   // & .navbar-nav {
   //   margin:revert;
-   
   // }
 
   & .navbar-nav a {
     font-family: 'Helvetica Neue', sans-serif;
     color: #111;
     // background-color: #121416;
-    font-size: 18px;
+    font-size: 16px;
     font-weight: bold;
-    letter-spacing: 1px;
+    // letter-spacing: 1px;
     line-height: 1;
-    text-align: center;
+    text-align: right;
     transition: all 0.4s ease-in-out;
     text-transform: uppercase;
     margin-top:5px;
-    padding: 10px 0px;
+    padding: 5px 0px;
+    border-bottom: 1px solid black;
 
   }
 
   & .navbar-nav a:hover {
-    font-family: 'Helvetica Neue', sans-serif;
-    color: #111;
-    background-color: #f8f8ff;
+   
     border-bottom: 1px solid black;
-    font-size: 18px;
-    font-weight: bold;
-    letter-spacing: 1px;
-    line-height: 1;
-    text-align: center;
-    transform: scale(1.1);
+   
+    // letter-spacing: 1px;
+    // line-height: 1;
+    // text-align: center;
+    transform: scale(1.04);
   }
 `;
