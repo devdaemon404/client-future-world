@@ -16,13 +16,13 @@ exports.register = asyncHandler(async (req, res, next) => {
 
 
   const salt = await bcrypt.genSalt(10);
-  password = await bcrypt.hash(password, salt);
+  let hashedPassword = await bcrypt.hash(password, salt);
 
   // Create user
   const user = await User.create({
     name,
     email,
-    password,
+    password: hashedPassword,
     role,
   });
 
