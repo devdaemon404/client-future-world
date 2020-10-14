@@ -4,13 +4,15 @@ const router = express.Router();
 const {
   register,
   login,
-  logout
+  logout,
+  updatePassword
 } = require('../controllers/auth');
 
 const { protect, authorize } = require('../middleware/auth');
 
-router.post('/register',/* protect, authorize('admin'),*/ register);
+router.post('/register', protect, authorize('admin'), register);
 router.post('/login', login);
+router.post('/update-password', protect, updatePassword);
 router.get('/logout', logout);
 
 module.exports = router;

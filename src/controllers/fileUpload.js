@@ -20,8 +20,12 @@ const s3 = new AWS.S3({
 exports.uploadFile = asyncHandler(async (req, res, next) => {
   const { fileName, fileType, fileExtension } = req.body;
 
-
-  const fileKey = `${req.user.id}/${fileType}/${fileName}.${fileExtension}`;
+  let fileKey;
+  if (fileType === 'doc')
+    fileKey = `${req.user.id}/doc/${fileName}.${fileExtension}`;
+  else if (fileType === 'photo') {
+    fileKey = `photos/${req.user.id}.${fileExtension}`;
+  }
 
   const params = {
     Bucket: 'random-bucket-1234',

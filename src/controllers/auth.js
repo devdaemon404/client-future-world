@@ -1,4 +1,5 @@
 const crypto = require('crypto');
+const bcrypt = require('bcryptjs');
 
 const ErrorResponse = require('../utils/errorResponse');
 const asyncHandler = require('../middleware/async');
@@ -6,14 +7,16 @@ const sendEmail = require('../utils/sendMail');
 
 const User = require('../models/User');
 
-const { jwtCookieExpire } = require('../../config/keys');
-
 // @desc      Register user
 // @route     POST /api/v1/auth/register
 // @access    Public
 exports.register = asyncHandler(async (req, res, next) => {
   const { name, email, role } = req.body;
-  const password = crypto.randomBytes(8).toString('hex');
+  let password = crypto.randomBytes(8).toString('hex');
+
+
+  const salt = await bcrypt.genSalt(10);
+  password = await bcrypt.hash(password, salt);
 
   // Create user
   const user = await User.create({
@@ -35,7 +38,7 @@ exports.register = asyncHandler(async (req, res, next) => {
 });
 
 // @desc      Login user
-// @route     POST /api/v1/auth/login
+// @route     POST /api/auth/login
 // @access    Public
 exports.login = asyncHandler(async (req, res, next) => {
   const { email, password } = req.body;
@@ -67,7 +70,7 @@ exports.login = asyncHandler(async (req, res, next) => {
 });
 
 // @desc      Log user out / clear cookie
-// @route     GET /api/v1/auth/logout
+// @route     GET /api/auth/logout
 // @access    Public
 exports.logout = asyncHandler(async (req, res, next) => {
   res.cookie('token', 'none', {
@@ -82,19 +85,22 @@ exports.logout = asyncHandler(async (req, res, next) => {
 });
 
 // @desc      Update password
-// @route     PUT /api/v1/auth/updatepassword
+// @route     PUT /api/auth/update-password
 // @access    Private
 
 exports.updatePassword = asyncHandler(async (req, res, next) => {
-  const user = await User.findById(req.user.id).select('+password');
+  const { currentPassword, newPassword } = req.body;
+  let user = await User.findById(req.user.id).select('+password');
 
   // Check current password
-  if (!(await user.matchPassword(req.body.currentPassword))) {
+  if (!(await user.matchPassword(currentPassword))) {
     return next(new ErrorResponse('Password is incorrect', 401));
   }
 
-  user.password = req.body.newPassword;
-  await user.save();
+  const salt = await bcrypt.genSalt(10);
+  let password = await bcrypt.hash(newPassword, salt);
+
+  user = await User.findByIdAndUpdate(req.user.id, { password }, { new: true, runValidators: true })
 
   sendTokenResponse(user, 200, res);
 });
@@ -107,7 +113,7 @@ const sendTokenResponse = (user, statusCode, res) => {
 
   const options = {
     expires: new Date(
-      Date.now() + jwtCookieExpire * 24 * 60 * 60 * 1000,
+      Date.now() + process.env.JWT_COOKIE_EXPIRE * 24 * 60 * 60 * 1000,
     ),
     httpOnly: true,
   };
