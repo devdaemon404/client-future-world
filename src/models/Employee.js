@@ -5,10 +5,6 @@ const EmployeeSchema = new mongoose.Schema({
     type: mongoose.Schema.ObjectId,
     ref: 'users',
   },
-  name: {
-    type: String,
-    required: [true, 'Please add a name'],
-  },
   createdAt: {
     type: Date,
     default: Date.now,
@@ -17,6 +13,6 @@ const EmployeeSchema = new mongoose.Schema({
     type: Date,
     default: Date.now,
   },
-});
+}, { strict: false });
 
 module.exports = mongoose.model('employees', EmployeeSchema);

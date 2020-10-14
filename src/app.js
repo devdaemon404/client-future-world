@@ -11,6 +11,10 @@ const cors = require('cors');
 
 const errorHandler = require('./middleware/error');
 const dbConnect = require('./db/dbConnect');
+const { validateUserActivity } = require('./utils/cronjob')
+
+//Run cronjob to validate user activity;
+validateUserActivity();
 
 //coloring the log attached to String.prototype
 require('colors');
@@ -27,6 +31,8 @@ dbConnect();
 //Route files
 const auth = require('./routes/auth');
 const employee = require('./routes/employee');
+const fileUpload = require('./routes/fileUpload');
+const admin = require('./routes/admin');
 
 //Initializing express app object
 const app = express();
@@ -98,6 +104,8 @@ app.use(express.static(path.join(__dirname, '..', 'public')));
 
 app.use('/api/auth', auth);
 app.use('/api/employee', employee);
+app.use('/api/file', fileUpload);
+app.use('/api/admin', admin);
 
 //Serve react client app to production
 if (
