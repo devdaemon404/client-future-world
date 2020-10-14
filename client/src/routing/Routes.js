@@ -16,6 +16,7 @@ import HealthInformation from '../pages/formpages/healthformpages/HealthInformat
 import FamilyInformation from '../pages/formpages/healthformpages/FamilyInformation';
 import otherpage from '../pages/secondpage/otherpage';
 import OtherInformation from '../pages/formpages/otherformpages/OtherInformation';
+import Uploads from '../pages/formpages/otherformpages/Uploads';
 
 const Routes = () => {
   return (
@@ -37,7 +38,7 @@ const Routes = () => {
 
       <Route exact path='/other' component={otherpage} />
       <Route exact path='/information/otherInformation' component={OtherInformation} />
-      <Route exact path='/information/uploads' component={FamilyInformation} />
+      <Route exact path='/information/uploads' component={Uploads} />
     </Switch>
   );
 };

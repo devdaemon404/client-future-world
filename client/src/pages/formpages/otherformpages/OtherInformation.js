@@ -11,7 +11,7 @@ const OtherInformation = () => {
 
   return (
     <Container>
-      <Header pathname="/health" />
+      <Header pathname="/other" />
       <HeroContainer className='box d-flex align-items-center justify-content-center'>
         <MainHeader className='text-center'>Uploads and Other Information</MainHeader>
       </HeroContainer>
@@ -32,10 +32,10 @@ const OtherInformation = () => {
               {/* <h2>Current Address</h2> */}
               <ul className="nav nav-pills nav-fill">
                 <li className="nav-item">
-                  <a className="nav-link active" href="/information/healthInformation2">Ohter Information</a>
+                  <a className="nav-link active" href="/information/otherInformation">Other Information</a>
                 </li>
                 <li className="nav-item">
-                  <a className="nav-link" href="/information/familyInformation">Uploading Documents</a>
+                  <a className="nav-link" href="/information/uploads">Uploading Documents</a>
                 </li>
               </ul>
               <hr></hr>
