@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Rubik:wght@400;700&display=swap');
+
 /* body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
@@ -12,12 +14,11 @@ code {
     monospace;
 } */
 
-
 /* .progress-circle {
   font-size: 25px;
   margin: 30px auto; */
-  /* position: relative; so that children can be absolutely positioned */
-  /* padding: 0;
+/* position: relative; so that children can be absolutely positioned */
+/* padding: 0;
   width: 5em;
   height: 5em;
   background-color: #F2E9E1; 
@@ -49,43 +50,42 @@ code {
    z-index: 2;
 }
 .left-half-clipper {  */
-  /* a round circle
+/* a round circle
   border-radius: 50%;
   width: 5em;
   height: 5em;
   position: absolute; /* needed for clipping */
-  /* clip: rect(0, 5em, 5em, 2.5em); clips the whole left half  */
+/* clip: rect(0, 5em, 5em, 2.5em); clips the whole left half  */
 /* }  */
 /* when p>50, don't clip left half*/
 /* .progress-circle.over50 .left-half-clipper {
   clip: rect(auto,auto,auto,auto);
 }
 .value-bar { */
-  /*This is an overlayed square, that is made round with the border radius,
+/*This is an overlayed square, that is made round with the border radius,
   then it is cut to display only the left half, then rotated clockwise
-  to escape the outer clipping path.*/ 
-  /* position: absolute; needed for clipping */
-  /* clip: rect(0, 2.5em, 5em, 0);
+  to escape the outer clipping path.*/
+/* position: absolute; needed for clipping */
+/* clip: rect(0, 2.5em, 5em, 0);
   width: 5em;
   height: 5em;
   border-radius: 50%; */
-  /* border: 0.45em solid #6598BB; /*The border is 0.35 but making it larger removes visual artifacts */
-  /* background-color: #4D642D; for debug  */
-  /* box-sizing: border-box;
+/* border: 0.45em solid #6598BB; /*The border is 0.35 but making it larger removes visual artifacts */
+/* background-color: #4D642D; for debug  */
+/* box-sizing: border-box;
  
 } */
 /* Progress bar filling the whole right half for values above 50% */
 /* .progress-circle.over50 .first50-bar { */
-  /*Progress bar for the first 50%, filling the whole right half*/
-  /* position: absolute; needed for clipping */
-  /* clip: rect(0, 5em, 5em, 2.5em);
+/*Progress bar for the first 50%, filling the whole right half*/
+/* position: absolute; needed for clipping */
+/* clip: rect(0, 5em, 5em, 2.5em);
   background-color: #6598BB;
   border-radius: 50%;
   width: 5em;
   height: 5em;
 }
 .progress-circle:not(.over50) .first50-bar{ display: none; } */
-
 
 /* Progress bar rotation position */
 /* .progress-circle.p0 .value-bar { display: none; }
