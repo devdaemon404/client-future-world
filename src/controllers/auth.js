@@ -12,14 +12,14 @@ const User = require('../models/User');
 // @access    Public
 exports.register = asyncHandler(async (req, res, next) => {
   const { name, email, role } = req.body;
-  let password = crypto.randomBytes(8).toString('hex');
 
+  let password = crypto.randomBytes(8).toString('hex');
 
   const salt = await bcrypt.genSalt(10);
   let hashedPassword = await bcrypt.hash(password, salt);
 
   // Create user
-  const user = await User.create({
+  let user = await User.create({
     name,
     email,
     password: hashedPassword,
@@ -33,8 +33,13 @@ exports.register = asyncHandler(async (req, res, next) => {
     subject: 'Credentials',
     message,
   });
-
-  sendTokenResponse(user, 200, res);
+  user = user.toObject();
+  delete user.password;
+  res.status(201).json({
+    success: true,
+    message: 'User created and credentials sent via mail',
+    data: user,
+  });
 });
 
 // @desc      Login user
@@ -125,5 +130,6 @@ const sendTokenResponse = (user, statusCode, res) => {
   res.status(statusCode).cookie('token', token, options).json({
     success: true,
     token,
+    role: user.role
   });
 };
