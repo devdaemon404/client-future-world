@@ -17,6 +17,9 @@ import FamilyInformation from '../pages/formpages/healthformpages/FamilyInformat
 import otherpage from '../pages/secondpage/otherpage';
 import OtherInformation from '../pages/formpages/otherformpages/OtherInformation';
 import Uploads from '../pages/formpages/otherformpages/Uploads';
+import schoolandworkpage from '../pages/secondpage/schoolandworkpage';
+import AcademicInformation from '../pages/formpages/workformpages/AcademicInformation';
+import WorkInformation from '../pages/formpages/workformpages/WorkInformation';
 
 const Routes = () => {
   return (
@@ -31,6 +34,10 @@ const Routes = () => {
       <Route exact path='/information/designationInformation' component={DesignationInformation} />
       <Route exact path='/information/documentalInformation' component={DocumentalInformation} />
       <Route exact path='/information/languageInformation' component={LanguageInformation} />
+
+      <Route exact path='/work' component={schoolandworkpage} />
+      <Route exact path='/information/academicInformation' component={AcademicInformation} />
+      <Route exact path='/information/workInformation' component={WorkInformation} />
 
       <Route exact path='/health' component={healthpage} />
       <Route exact path='/information/healthInformation' component={HealthInformation} />
