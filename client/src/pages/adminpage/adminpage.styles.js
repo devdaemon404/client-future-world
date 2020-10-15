@@ -42,12 +42,19 @@ export const SideBar = styled.div`
     border-bottom: 2px solid white;
   }
   .SideBarCompItem {
-    padding: 30px;
+    padding:5px 30px;
+    margin:25px 0px;
     width: 320px;
-    height: 88px;
+    height: 40px;
     color: white;
     text-align: center;
+    cursor: pointer;
   }
+
+  .SideBarCompItem:hover{
+    color:yellow;
+  } 
+
   .Logout {
     position: absolute;
     width: 320px;
@@ -65,13 +72,14 @@ export const SideBar = styled.div`
 `;
 export const AdminMain = styled.div`
   height: 100%;
+
   margin-left: 320px;
 
   .Admin {
-    padding-top: 107px;
+    padding-top: 120px;
     padding-left: 125px;
-    width: 164px;
-    height: 58px;
+    width: 464px;
+    height: 49px;
     text-align: left;
     font: normal normal medium 48px/58px Montserrat;
     letter-spacing: 0px;
@@ -79,9 +87,9 @@ export const AdminMain = styled.div`
     font-size: 48px;
   }
   .EmpInfo {
-    padding-top: 107px;
+    padding-top: 90px;
     padding-left: 125px;
-    width: 864px;
+    width: 400px;
     height: 58px;
     text-align: left;
     font: normal normal medium 48px/58px Montserrat;
@@ -91,9 +99,23 @@ export const AdminMain = styled.div`
   }
 `;
 export const TableContainer = styled.div`
-  margin-top: 100px;
-  margin-left: 50px;
+  margin-top: 80px;
+  margin-left: 20px;
   text-align: center;
   width: inherit;
-  max-height: 400px;
+  max-height: 550px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow-y: hidden;
+
+  .addEmployeeForm {
+    width: 40%;
+  }
+  .addEmpHead {
+    color: #0d054b;
+    padding: 20px;
+  }
+  #confirm {
+  }
 `;

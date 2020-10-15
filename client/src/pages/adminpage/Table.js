@@ -75,7 +75,7 @@ function OPTable({ data, columns, getCellProps, onClickHandler }) {
           }
         }
       >
-        <thead>
+        <thead style={{ marginBottom: 60 }}>
           {headerGroups.map((headerGroup) => (
             <tr {...headerGroup.getHeaderGroupProps()}>
               {headerGroup.headers.map((column, i) => (

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { SideBar, AdminMain, TableContainer } from './adminpage.styles';
-
+import { Form, Button } from 'react-bootstrap';
 import LOGO from '../../assets/img/logo.png';
 import axios from 'axios';
 import { useHistory } from 'react-router-dom';
@@ -12,6 +12,9 @@ const AdminPage = () => {
   let formattedData = [];
   const [data, setData] = useState([]);
   const [selectedEmp, setselectedEmp] = useState(false);
+  const [formTable, setFormTable] = useState('Table');
+  const [newUserDetails, setNewUserDetails] = useState({ name: '', email: '' });
+
   const history = useHistory();
 
   const getUsers = async () => {
@@ -76,6 +79,27 @@ const AdminPage = () => {
     history.push('/login');
   };
 
+  const onFormSubmit = async (e) => {
+    e.preventDefault();
+    document.querySelector('#confirm').style.opacity = 0;
+    document.body.querySelector('.ButtonForm').textContent = 'Loading...';
+    try {
+      const { name, email } = newUserDetails;
+      var result = await axios.post('/api/auth/register', { name, email });
+
+      if (result) {
+        document.body.querySelector('.ButtonForm').textContent = 'Add Employee';
+        document.querySelector('#confirm').style.opacity = 1;
+        document.querySelector('#confirm').textContent =
+          'New User Added (Confirmation Mail has been sent)';
+      }
+    } catch (error) {
+      document.querySelector('#confirm').style.opacity = 1;
+      document.body.querySelector('#confirm').textContent = 'Not Authorized';
+      document.body.querySelector('.ButtonForm').textContent = 'Add Employee';
+    }
+  };
+
   const onClickHandler = async (e) => {
     retrievedId = e.target.children[4].outerText.toString();
 
@@ -107,7 +131,7 @@ const AdminPage = () => {
         boxSizing: 'border-box',
         padding: 0,
         backgroundColor: '#f4f4f4',
-        height: '120vh',
+        height: '100vh',
       }}
     >
       <selectUserContext.Provider value={retrievedEmployee} />
@@ -116,22 +140,98 @@ const AdminPage = () => {
           <img alt='logo' src={LOGO}></img>
         </div>
         <div className='SideBarCompMain'>Dashboard</div>
-        <div className='SideBarCompItem'>Employees</div>
+        <div
+          className='SideBarCompItem'
+          style={
+            formTable === 'Table' ? { color: 'yellow' } : { color: 'white' }
+          }
+          onClick={(e) => setFormTable('Table')}
+          id='Table'
+        >
+          Employees
+        </div>
+        <div
+          className='SideBarCompItem'
+          id='Form'
+          style={
+            formTable === 'Form' ? { color: 'yellow' } : { color: 'white' }
+          }
+          onClick={(e) => setFormTable('Form')}
+        >
+          Add an Employee
+        </div>
         <div className='Logout' onClick={logoutHandler}>
           <span>LOGOUT</span>
         </div>
       </SideBar>
       <AdminMain>
-        <div className='Admin'>Admin</div>
-        <div className='EmpInfo'>Employee Information</div>
+        <div className='Admin'>Admin Panel</div>
+        <div className='EmpInfo'>
+          {formTable === 'Table' ? 'Employee Information' : ''}
+        </div>
 
         <TableContainer>
-          <OPTable
-            data={data}
-            columns={columns}
-            onClickHandler={onClickHandler}
-            getCellProps={() => ({})}
-          />
+          {formTable === 'Table' ? (
+            <OPTable
+              data={data}
+              columns={columns}
+              onClickHandler={onClickHandler}
+              getCellProps={() => ({})}
+            />
+          ) : (
+            <>
+              <Form className='addEmployeeForm'>
+                <h4 className='addEmpHead'>Add a new Employee</h4>
+                <Form.Group>
+                  <Form.Control
+                    type='text'
+                    placeholder='Employee Name'
+                    required
+                    name='Name'
+                    onChange={(e) =>
+                      setNewUserDetails({
+                        ...newUserDetails,
+                        name: e.target.value,
+                      })
+                    }
+                  />
+                  <br />
+                  <Form.Control
+                    type='email'
+                    placeholder='Employee Email'
+                    name='Email'
+                    required
+                    onChange={(e) =>
+                      setNewUserDetails({
+                        ...newUserDetails,
+                        email: e.target.value,
+                      })
+                    }
+                  />
+                </Form.Group>
+                <p
+                  id='confirm'
+                  style={{
+                    color: 'red',
+                    width: '100%',
+                    textAlign: 'Center',
+                    fontWeight: 500,
+                    opacity: 0,
+                  }}
+                >
+                  New User Added (Confirmation Mail has been sent){' '}
+                </p>
+                <Button
+                  variant='secondary'
+                  type='submit'
+                  className='ButtonForm'
+                  onClick={onFormSubmit}
+                >
+                  Add Employee
+                </Button>
+              </Form>
+            </>
+          )}
         </TableContainer>
       </AdminMain>
     </div>
