@@ -28,7 +28,10 @@ const FamilyInformation = () => {
         '/api/employee?select=familyInformation,',
         config
       );
-      if (result.data.data !== null && result.data.data.familyInformation != undefined)
+      if (
+        result.data.data !== null &&
+        result.data.data.familyInformation != undefined
+      )
         setFormData([...result.data.data.familyInformation]);
       setIsLoading(false);
     };
@@ -81,22 +84,47 @@ const FamilyInformation = () => {
                 crumbs={[
                   {
                     link: '/information/familyInformation',
-                    label: 'Health Information'
+                    label: 'Health Information',
                   },
                   {
                     link: '/information/healthInformation',
-                    label: 'Family Member Information'
-                  }
-                ]} />
+                    label: 'Family Member Information',
+                  },
+                ]}
+              />
               <hr></hr>
-              <h3 className='mt-3 mb-4'>Add at max five members of your family<span style={{ color: 'red' }}>*</span></h3>
+              <h3 className='mt-3 mb-4'>
+                Add at max five members of your family
+                <span style={{ color: 'red' }}>*</span>
+              </h3>
               <ComplexComponent
                 buttonName='Add Family Member'
-                onSubmit={(data) => {
+                onSubmit={async (data) => {
                   /// Make your API call here
-                  console.log(data);
+                  setFormData([...data]);
+                  const config = {
+                    headers: {
+                      'Content-Type': 'application/json',
+                    },
+                    withCredentials: true,
+                  };
+                  await axios.post(
+                    '/api/employee',
+                    JSON.stringify({
+                      postParams: {
+                        familyInformation: data,
+                      },
+                    }),
+                    config
+                  );
                 }}
-                tableColumns={['Name', 'Relationship', 'DOB', 'Blood Group', 'Occupation',]}
+                tableColumns={[
+                  'Name',
+                  'Relationship',
+                  'DOB',
+                  'Blood Group',
+                  'Occupation',
+                ]}
                 essentialFieldKeys={[
                   'name',
                   'relationship',
@@ -120,7 +148,6 @@ const FamilyInformation = () => {
                     key: 'familyDob',
                     isRequired: true,
                     type: 'date',
-
                   },
                   {
                     label: 'Blood Group',
@@ -133,7 +160,7 @@ const FamilyInformation = () => {
                     isRequired: true,
                   },
                 ]}
-                defaultData={formData}
+                defaultData={[...formData]}
               />
             </div>
           </div>

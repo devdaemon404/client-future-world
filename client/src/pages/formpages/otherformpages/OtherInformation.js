@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import {
   Container,
   HeroContainer,
@@ -9,26 +9,31 @@ import {
 import Header from '../../../components/header/Header';
 import Progressbar from '../../../components/progress-bar/Progress';
 import OPBreadCrumb from '../../../components/form/OPBreadCrumb.js';
+import axios from 'axios';
 
 const OtherInformation = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [formData, setFormData] = useState({
-    presentAddress: '',
-    phoneNumber: '',
-    permanentAddress: '',
-    phoneNumberPermAdd: '',
-    contactPersonName: '',
-    contactPersonPhone: '',
-    contactPersonAddress: '',
+    relativeInfo: '',
+    ref1Name: '',
+    ref1Company: '',
+    ref1Designation: '',
+    ref1Contact: '',
+    ref2Name: '',
+    ref2Company: '',
+    ref2Designation: '',
+    ref2Contact: '',
   });
   const {
-    presentAddress,
-    phoneNumberPresAdd,
-    permanentAddress,
-    phoneNumberPermAdd,
-    contactPersonName,
-    contactPersonPhone,
-    contactPersonAddress,
+    relativeInfo,
+    ref1Name,
+    ref1Company,
+    ref1Designation,
+    ref1Contact,
+    ref2Name,
+    ref2Company,
+    ref2Designation,
+    ref2Contact,
   } = formData;
 
   useEffect(() => {
@@ -41,7 +46,7 @@ const OtherInformation = () => {
         withCredentials: true,
       };
       const result = await axios.get(
-        '/api/employee?select=presentAddress,phoneNumberPresAdd,permanentAddress,phoneNumberPermAdd,contactPersonName,contactPersonPhone,contactPersonAddress,',
+        '/api/employee?select=relativeInfo,ref1Name,ref1Company,ref1Designation,ref1Contact,ref2Name,ref2Company,ref2Designation,ref2Contact,',
         config
       );
 
@@ -65,13 +70,15 @@ const OtherInformation = () => {
   };
 
   const updateAddress = async ({
-    presentAddress,
-    phoneNumberPresAdd,
-    permanentAddress,
-    phoneNumberPermAdd,
-    contactPersonName,
-    contactPersonPhone,
-    contactPersonAddress,
+    relativeInfo,
+    ref1Name,
+    ref1Company,
+    ref1Designation,
+    ref1Contact,
+    ref2Name,
+    ref2Company,
+    ref2Designation,
+    ref2Contact,
   }) => {
     try {
       const config = {
@@ -82,13 +89,15 @@ const OtherInformation = () => {
       };
       const body = JSON.stringify({
         postParams: {
-          presentAddress,
-          phoneNumberPresAdd,
-          permanentAddress,
-          phoneNumberPermAdd,
-          contactPersonName,
-          contactPersonPhone,
-          contactPersonAddress,
+          relativeInfo,
+          ref1Name,
+          ref1Company,
+          ref1Designation,
+          ref1Contact,
+          ref2Name,
+          ref2Company,
+          ref2Designation,
+          ref2Contact,
         },
       });
 
@@ -158,7 +167,12 @@ const OtherInformation = () => {
                 activeIndex={0}
               />
               <hr></hr>
-              <form className='mt-2 text-left'>
+              {isLoading ? (
+                <div>
+                  <h1>Loading...</h1>
+                </div>
+              ) : (
+              <form onSubmit={handleSubmit} className='mt-2 text-left'>
                 <div className='form-group row p-2'>
                   <label className='col-sm-3 col-form-label'>
                     <span style={{ color: 'red' }}>*</span> Relatives in the
@@ -168,7 +182,11 @@ const OtherInformation = () => {
                     <input
                       type='text'
                       className='form-control'
-                      id=''
+                      id='relativeInfo'
+                      name='relativeInfo'
+                      value={relativeInfo || ''}
+                      onChange={(e) => handleChange(e)}
+                      required
                       placeholder='Name , Designation and Location'
                     />
                   </div>
@@ -184,21 +202,41 @@ const OtherInformation = () => {
                     <input
                       type='text'
                       className='form-control'
+                      id='ref1Name'
                       placeholder='Name'
+                      name='ref1Name'
+                      value={ref1Name || ''}
+                      onChange={(e) => handleChange(e)}
+                      required
                     />
                     <input
                       type='text'
                       className='form-control'
+                      id='ref1Company'
                       placeholder='Company'
+                      name='ref1Company'
+                      value={ref1Company || ''}
+                      onChange={(e) => handleChange(e)}
+                      required
                     />
                     <input
                       type='text'
                       className='form-control'
+                      id='ref1Designation'
                       placeholder='Designation'
+                      name='ref1Designation'
+                      value={ref1Designation || ''}
+                      onChange={(e) => handleChange(e)}
+                      required
                     />
                     <input
                       type='text'
                       className='form-control'
+                      id='ref1Contact'
+                      name='ref1Contact'
+                      value={ref1Contact || ''}
+                      onChange={(e) => handleChange(e)}
+                      required
                       placeholder='Contact No.'
                     />
                   </div>
@@ -206,43 +244,63 @@ const OtherInformation = () => {
                     <input
                       type='text'
                       className='form-control'
+                      id='ref2Name'
                       placeholder='Name'
+                      name='ref2Name'
+                      value={ref2Name || ''}
+                      onChange={(e) => handleChange(e)}
+                      required
                     />
                     <input
                       type='text'
                       className='form-control'
+                      id='ref2Company'
                       placeholder='Company'
+                      name='ref2Company'
+                      value={ref2Company || ''}
+                      onChange={(e) => handleChange(e)}
+                      required
                     />
                     <input
                       type='text'
                       className='form-control'
+                      id='ref2Designation'
                       placeholder='Designation'
+                      name='ref2Designation'
+                      value={ref2Designation || ''}
+                      onChange={(e) => handleChange(e)}
+                      required
                     />
                     <input
                       type='text'
                       className='form-control'
+                      id='ref2Contact'
+                      name='ref2Contact'
+                      value={ref2Contact || ''}
+                      onChange={(e) => handleChange(e)}
+                      required
                       placeholder='Contact No.'
                     />
                   </div>
                 </div>
 
-                <div className='form-group row p-2'>
+                {/* <div className='form-group row p-2'>
                   <label className='col-sm-12'>
                     <span style={{ color: 'red' }}>*</span> Are you having
                     membership with any professional body / organization? (if
                     yes, please specify)
                   </label>
-                  <div className='col-sm-12'>
+                  <div className='col-sm-12'> */}
                     {/* <input type="text" className="form-control" id="" placeholder="" /> */}
-                    <textarea
+                    {/* <textarea
                       className='form-control'
                       id='exampleFormControlTextarea1'
                       rows='3'
                     ></textarea>
                   </div>
-                </div>
+                </div> */}
 
-                <div className='form-group row p-2'>
+                {/* <div className='form-group row p-2'>
                   <label className='col-sm-12'>
                     <span style={{ color: 'red' }}>*</span> Company Assets
                     provided{' '}
@@ -347,7 +405,7 @@ const OtherInformation = () => {
                       </label>
                     </div>
                   </div>
-                </div>
+                </div> */}
 
                 <div className='form-group row p-2 d-flex justify-content-center mt-4 mb-5'>
                   <div className='col-sm-10'>
@@ -360,6 +418,7 @@ const OtherInformation = () => {
                   </div>
                 </div>
               </form>
+              )}
             </div>
           </div>
         </div>

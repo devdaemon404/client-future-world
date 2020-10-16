@@ -1,11 +1,11 @@
 import styled from 'styled-components';
 
-export const Container = styled.div`
+export const HeroContainer = styled.div`
   background-color: #111;
   background: url(https://images.unsplash.com/photo-1581091215367-9b6c00b3035a?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80)
     center center no-repeat;
   background-size: cover;
-  height: 100vh;
+  // height: 100vh;
   padding: 80px 0 60px 0;
   position: relative;
   clip-path: polygon(0 0, 100% 0, 100% 100%, 0 calc(100% - 5vw));
@@ -40,7 +40,6 @@ export const Container = styled.div`
   }
 
   .sub-card {
-
   }
 
   .form-link:hover {
@@ -49,7 +48,7 @@ export const Container = styled.div`
   }
 
   .list-item-style {
-    color: blue
+    color: blue;
   }
 
   .list-group-item {
@@ -65,7 +64,7 @@ export const Container = styled.div`
   }
 
   .hero-row {
-    margin-bottom: 10px
+    margin-bottom: 10px;
   }
 `;
 
