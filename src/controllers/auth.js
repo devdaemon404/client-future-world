@@ -110,6 +110,15 @@ exports.updatePassword = asyncHandler(async (req, res, next) => {
   sendTokenResponse(user, 200, res);
 });
 
+// @desc      Validate Token
+// @route     GET /api/auth/validate-token
+// @access    Private
+
+exports.validateToken = asyncHandler(async (req, res, next) => {
+  const user = await User.findById(req.user._id);
+  sendTokenResponse(user, 200, res);
+});
+
 
 // Get token from model, create cookie and send response
 const sendTokenResponse = (user, statusCode, res) => {
