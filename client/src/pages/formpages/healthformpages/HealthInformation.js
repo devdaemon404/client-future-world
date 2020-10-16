@@ -8,6 +8,7 @@ import {
 // import { Link } from 'react-router-dom';
 import Header from '../../../components/header/Header';
 import Progressbar from '../../../components/progress-bar/Progress';
+import OPBreadCrumb from '../../../components/form/OPBreadCrumb.js';
 import axios from 'axios';
 import { Link } from 'react-router-dom';
 
@@ -149,180 +150,177 @@ const HealthInformation = () => {
 
             <div className='container-fluid mt-5'>
               {/* <h2>Current Address</h2> */}
-              <ul className='nav nav-pills nav-fill'>
-                <li className='nav-item'>
-                  <a
-                    className='nav-link active'
-                    href='/information/healthInformation'
-                  >
-                    Health Information
-                  </a>
-                </li>
-                <li className='nav-item'>
-                  <a className='nav-link' href='/information/familyInformation'>
-                    Family Member Information
-                  </a>
-                </li>
-              </ul>
+              <OPBreadCrumb
+                activeIndex={1}
+                crumbs={[
+                  {
+                    link: '/information/familyInformation',
+                    label: 'Health Information'
+                  },
+                  {
+                    link: '/information/healthInformation',
+                    label: 'Family Member Information'
+                  }
+                ]} />
               <hr></hr>
               {isLoading ? (
                 <div>
                   <h1>Loading...</h1>
                 </div>
               ) : (
-                <form onSubmit={handleSubmit} className='mt-2 text-left'>
-                  <div className='form-group row p-2'>
-                    <label className='col-sm-3 col-form-label'>
-                      <span style={{ color: 'red' }}>*</span> Blood Group
+                  <form onSubmit={handleSubmit} className='mt-2 text-left'>
+                    <div className='form-group row p-2'>
+                      <label className='col-sm-3 col-form-label'>
+                        <span style={{ color: 'red' }}>*</span> Blood Group
                     </label>
-                    <div className='col-sm-9'>
-                      <input
-                        type='text'
-                        className='form-control'
-                        id='bloodGroup'
-                        placeholder=''
-                        name='bloodGroup'
-                        value={bloodGroup || ''}
-                        onChange={(e) => handleChange(e)}
-                        required
-                      />
+                      <div className='col-sm-9'>
+                        <input
+                          type='text'
+                          className='form-control'
+                          id='bloodGroup'
+                          placeholder=''
+                          name='bloodGroup'
+                          value={bloodGroup || ''}
+                          onChange={(e) => handleChange(e)}
+                          required
+                        />
+                      </div>
                     </div>
-                  </div>
 
-                  <div className='form-group row p-2'>
-                    <label className='col-sm-3 col-form-label'>
-                      <span style={{ color: 'red' }}>*</span> Height(in cms)
+                    <div className='form-group row p-2'>
+                      <label className='col-sm-3 col-form-label'>
+                        <span style={{ color: 'red' }}>*</span> Height(in cms)
                     </label>
-                    <div className='col-sm-9'>
-                      <input
-                        type='text'
-                        className='form-control'
-                        id='height'
-                        placeholder=''
-                        name='height'
-                        value={height || ''}
-                        onChange={(e) => handleChange(e)}
-                        required
-                      />
+                      <div className='col-sm-9'>
+                        <input
+                          type='text'
+                          className='form-control'
+                          id='height'
+                          placeholder=''
+                          name='height'
+                          value={height || ''}
+                          onChange={(e) => handleChange(e)}
+                          required
+                        />
+                      </div>
                     </div>
-                  </div>
 
-                  <div className='form-group row p-2'>
-                    <label className='col-sm-3 col-form-label'>
-                      <span style={{ color: 'red' }}>*</span> Weight
+                    <div className='form-group row p-2'>
+                      <label className='col-sm-3 col-form-label'>
+                        <span style={{ color: 'red' }}>*</span> Weight
                     </label>
-                    <div className='col-sm-9'>
-                      <input
-                        type='text'
-                        className='form-control'
-                        id='weight'
-                        placeholder=''
-                        name='weight'
-                        value={weight || ''}
-                        onChange={(e) => handleChange(e)}
-                        required
-                      />
+                      <div className='col-sm-9'>
+                        <input
+                          type='text'
+                          className='form-control'
+                          id='weight'
+                          placeholder=''
+                          name='weight'
+                          value={weight || ''}
+                          onChange={(e) => handleChange(e)}
+                          required
+                        />
+                      </div>
                     </div>
-                  </div>
 
-                  <div className='form-group row p-2'>
-                    <label className='col-sm-4 col-form-label'>
-                      <span style={{ color: 'red' }}>*</span> Power of Glass
+                    <div className='form-group row p-2'>
+                      <label className='col-sm-4 col-form-label'>
+                        <span style={{ color: 'red' }}>*</span> Power of Glass
                     </label>
-                    <div className='col-sm-4'>
-                      <input
-                        type='text'
-                        className='form-control'
-                        id='lEyePower'
-                        placeholder='L'
-                        name='lEyePower'
-                        value={lEyePower || ''}
-                        onChange={(e) => handleChange(e)}
-                        required
-                      />
+                      <div className='col-sm-4'>
+                        <input
+                          type='text'
+                          className='form-control'
+                          id='lEyePower'
+                          placeholder='L'
+                          name='lEyePower'
+                          value={lEyePower || ''}
+                          onChange={(e) => handleChange(e)}
+                          required
+                        />
+                      </div>
+                      <div className='col-sm-4'>
+                        <input
+                          type='text'
+                          className='form-control'
+                          id='rEyePower'
+                          placeholder='R'
+                          name='rEyePower'
+                          value={rEyePower || ''}
+                          onChange={(e) => handleChange(e)}
+                          required
+                        />
+                      </div>
                     </div>
-                    <div className='col-sm-4'>
-                      <input
-                        type='text'
-                        className='form-control'
-                        id='rEyePower'
-                        placeholder='R'
-                        name='rEyePower'
-                        value={rEyePower || ''}
-                        onChange={(e) => handleChange(e)}
-                        required
-                      />
-                    </div>
-                  </div>
 
-                  <div className='form-group row p-2'>
-                    <label className='col-sm-4 col-form-label'>
-                      <span style={{ color: 'red' }}>*</span> Identification
+                    <div className='form-group row p-2'>
+                      <label className='col-sm-4 col-form-label'>
+                        <span style={{ color: 'red' }}>*</span> Identification
                       marks
                     </label>
-                    <div className='col-sm-4'>
-                      <input
-                        type='text'
-                        className='form-control'
-                        id='indentification1'
-                        placeholder='1.'
-                        name='indentification1'
-                        value={indentification1 || ''}
-                        onChange={(e) => handleChange(e)}
-                        required
-                      />
+                      <div className='col-sm-4'>
+                        <input
+                          type='text'
+                          className='form-control'
+                          id='indentification1'
+                          placeholder='1.'
+                          name='indentification1'
+                          value={indentification1 || ''}
+                          onChange={(e) => handleChange(e)}
+                          required
+                        />
+                      </div>
+                      <div className='col-sm-4'>
+                        <input
+                          type='text'
+                          className='form-control'
+                          id='indentification2'
+                          placeholder='2.'
+                          name='indentification2'
+                          value={indentification2 || ''}
+                          onChange={(e) => handleChange(e)}
+                          required
+                        />
+                      </div>
                     </div>
-                    <div className='col-sm-4'>
-                      <input
-                        type='text'
-                        className='form-control'
-                        id='indentification2'
-                        placeholder='2.'
-                        name='indentification2'
-                        value={indentification2 || ''}
-                        onChange={(e) => handleChange(e)}
-                        required
-                      />
-                    </div>
-                  </div>
 
-                  <div className='form-group row p-2'>
-                    <label className='col-sm-3 col-form-label'>
-                      <span style={{ color: 'red' }}>*</span> Any major surgery
+                    <div className='form-group row p-2'>
+                      <label className='col-sm-3 col-form-label'>
+                        <span style={{ color: 'red' }}>*</span> Any major surgery
                       / illness in the past / Allergies
                     </label>
-                    <div className='col-sm-9'>
-                      <input
-                        type='text'
-                        className='form-control'
-                        id='illnesses'
-                        placeholder=''
-                        name='illnesses'
-                        value={illnesses || ''}
-                        onChange={(e) => handleChange(e)}
-                        required
-                      />
+                      <div className='col-sm-9'>
+                        <input
+                          type='text'
+                          className='form-control'
+                          id='illnesses'
+                          placeholder=''
+                          name='illnesses'
+                          value={illnesses || ''}
+                          onChange={(e) => handleChange(e)}
+                          required
+                        />
+                      </div>
                     </div>
-                  </div>
 
-                  <div className='form-group row p-2 d-flex justify-content-center mt-4 mb-5'>
-                    <div className='col-sm-10'>
-                      <Link to='/information/familyInformation'>
-                        <button
-                          type='submit'
-                          onClick={() => {
-                            updateHealthInformation(formData);
-                          }}
-                          className='btn btn-primary w-100 font-weight-bold'
-                        >
-                          <i className='far fa-check-circle'></i> Save and
+                    <div className='form-group row p-2 d-flex justify-content-center mt-4 mb-5'>
+                      <div className='col-sm-10'>
+                        <Link to='/information/familyInformation'>
+                          <button
+                            type='submit'
+                            onClick={() => {
+                              updateHealthInformation(formData);
+                            }}
+                            className='btn btn-primary w-100 font-weight-bold'
+                          >
+                            <i className='far fa-check-circle'></i> Save and
                           Continue
                         </button>
-                      </Link>
+                        </Link>
+                      </div>
                     </div>
-                  </div>
-                </form>
-              )}
+                  </form>
+                )}
             </div>
           </div>
         </div>

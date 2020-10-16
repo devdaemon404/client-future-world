@@ -10,7 +10,7 @@ const User = require('../models/User');
 exports.getAllUsers = asyncHandler(async (req, res, next) => {
   const users = await User.find({});
 
-  res.status(201).json({
+  res.status(200).json({
     success: true,
     message: 'All list of users',
     data: users,
@@ -23,7 +23,6 @@ exports.getAllUsers = asyncHandler(async (req, res, next) => {
  * @access  Private
  */
 exports.getEmployeeInfo = asyncHandler(async (req, res, next) => {
-
   res.status(200).json({
     success: true,
   });

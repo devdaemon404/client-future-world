@@ -8,6 +8,8 @@ import {
 import { Link } from 'react-router-dom';
 import Header from '../../../components/header/Header';
 import Progressbar from '../../../components/progress-bar/Progress';
+import OPBreadCrumb from '../../../components/form/OPBreadCrumb.js';
+
 import axios from 'axios';
 
 const DesignationInformation = () => {
@@ -147,53 +149,35 @@ const DesignationInformation = () => {
 
             <div className='container-fluid mt-5'>
               {/* <h2>Current Address</h2> */}
-              <ul className='nav nav-pills nav-fill'>
-                <li className='nav-item'>
-                  <a
-                    className='nav-link'
-                    href='/information/basicInformation-1'
-                  >
-                    Basic Information - 1
-                  </a>
-                </li>
-                <li className='nav-item'>
-                  <a
-                    className='nav-link'
-                    href='/information/basicInformation-2'
-                  >
-                    Basic Information - 2
-                  </a>
-                </li>
-                <li className='nav-item'>
-                  <a
-                    className='nav-link active'
-                    href='/information/designationInformation'
-                  >
-                    Designation Information
-                  </a>
-                </li>
-                <li className='nav-item'>
-                  <a
-                    className='nav-link'
-                    href='/information/documentalInformation'
-                  >
-                    Documental Information
-                  </a>
-                </li>
-                <li className='nav-item'>
-                  <a className='nav-link' href='/information/address'>
-                    Address
-                  </a>
-                </li>
-                <li className='nav-item'>
-                  <a
-                    className='nav-link'
-                    href='/information/languageInformation'
-                  >
-                    Language Information
-                  </a>
-                </li>
-              </ul>
+              <OPBreadCrumb
+                activeIndex={2}
+                crumbs={[
+                  {
+                    link: '/information/basicInformation-1',
+                    label: 'Basic Information - 1',
+                  },
+                  {
+                    link: '/information/basicInformation-2',
+                    label: 'Basic Information - 2',
+                  },
+                  {
+                    link: '/information/designationInformation',
+                    label: 'Designation Information',
+                  },
+                  {
+                    link: '/information/documentalInformation',
+                    label: 'Documental Information',
+                  },
+                  {
+                    link: '/information/address',
+                    label: 'Address',
+                  },
+                  {
+                    link: '/information/languageInformation',
+                    label: 'Language Information',
+                  },
+                ]}
+              />
               <hr></hr>
               {isLoading ? (
                 <div>

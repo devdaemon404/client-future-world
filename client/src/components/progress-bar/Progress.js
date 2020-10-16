@@ -1,22 +1,13 @@
 import React from 'react';
 import './progress.styles.scss';
+import { CircularProgressbar } from 'react-circular-progressbar';
+import 'react-circular-progressbar/dist/styles.css';
 
-const Progress = ({iconClass, percentage}) => {
+const Progress = ({ iconClass, percentage }) => {
   return (
     <div className="container p-5">
-      <div className="progress" data-percentage={percentage}>
-        <span className="progress-left">
-          <span className="progress-bar"></span>
-        </span>
-        <span className="progress-right">
-          <span className="progress-bar"></span>
-        </span>
-        <div className="progress-value">
-          <div>
-            <span><i className={iconClass}></i></span>
-          </div>
-        </div>
-      </div>
+      <CircularProgressbar value={percentage} strokeWidth={12}>
+      </CircularProgressbar>
     </div>
   )
 }

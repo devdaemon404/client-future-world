@@ -1,13 +1,16 @@
 import React, { useState, useEffect } from 'react';
-import { SideBar, AdminMain, TableContainer } from './Adminpage.styles';
+import moment from 'moment';
+import { SideBar, AdminMain, TableContainer } from './AdminPage.styles';
 import { Form, Button } from 'react-bootstrap';
 import LOGO from '../../assets/img/logo.png';
 import axios from 'axios';
 import { useHistory } from 'react-router-dom';
 import OPTable from './AdminTable';
+
 // const selectUserContext = React.createContext({});
 const AdminPage = () => {
   let retrievedId = '';
+  // eslint-disable-next-line
   let retrievedEmployee;
   let formattedData = [];
   const [data, setData] = useState([]);
@@ -30,10 +33,10 @@ const AdminPage = () => {
           employee.active === 0
             ? 'Relieved'
             : employee.active === 1
-            ? 'Active'
-            : 'Inactive',
+              ? 'Active'
+              : 'Inactive',
 
-        joinDate: employee.createdAt,
+        joinDate: moment(employee.createdAt).format('DD/MMM/YYYY'),
         id: employee._id,
       });
     });
@@ -59,7 +62,7 @@ const AdminPage = () => {
     },
     {
       Header: 'Phone Number',
-      accessor: 'phone',
+      accessor: 'phoneNumberPresAdd',
     },
     {
       Header: `Status`,
@@ -90,7 +93,7 @@ const AdminPage = () => {
 
       if (result) {
         setAuthorized(1);
-
+        await getUsers();
         setLoading(false);
       }
     } catch (error) {
@@ -179,86 +182,86 @@ const AdminPage = () => {
               getCellProps={() => ({})}
             />
           ) : (
-            <React.Fragment>
-              <Form className='addEmployeeForm'>
-                <h4 className='addEmpHead'>Add a new Employee</h4>
-                <Form.Group>
-                  <Form.Control
-                    type='text'
-                    placeholder='Employee Name'
-                    required
-                    name='Name'
-                    onChange={(e) =>
-                      setNewUserDetails({
-                        ...newUserDetails,
-                        name: e.target.value,
-                      })
-                    }
-                  />
-                  <br />
-                  <Form.Control
-                    type='email'
-                    placeholder='Employee Email'
-                    name='Email'
-                    required
-                    onChange={(e) =>
-                      setNewUserDetails({
-                        ...newUserDetails,
-                        email: e.target.value,
-                      })
-                    }
-                  />
-                </Form.Group>
+              <React.Fragment>
+                <Form className='addEmployeeForm'>
+                  <h4 className='addEmpHead'>Add a new Employee</h4>
+                  <Form.Group>
+                    <Form.Control
+                      type='text'
+                      placeholder='Employee Name'
+                      required
+                      name='Name'
+                      onChange={(e) =>
+                        setNewUserDetails({
+                          ...newUserDetails,
+                          name: e.target.value,
+                        })
+                      }
+                    />
+                    <br />
+                    <Form.Control
+                      type='email'
+                      placeholder='Employee Email'
+                      name='Email'
+                      required
+                      onChange={(e) =>
+                        setNewUserDetails({
+                          ...newUserDetails,
+                          email: e.target.value,
+                        })
+                      }
+                    />
+                  </Form.Group>
 
-                {authorized === 1 ? (
-                  <p
-                    id='confirm'
-                    style={{
-                      color: 'green',
-                      width: '100%',
-                      textAlign: 'Center',
-                      fontWeight: 500,
-                    }}
+                  {authorized === 1 ? (
+                    <p
+                      id='confirm'
+                      style={{
+                        color: 'green',
+                        width: '100%',
+                        textAlign: 'Center',
+                        fontWeight: 500,
+                      }}
+                    >
+                      New User Added (Confirmation Mail has been sent){' '}
+                    </p>
+                  ) : authorized === 2 ? (
+                    <p
+                      id='confirm'
+                      style={{
+                        color: 'red',
+                        width: '100%',
+                        textAlign: 'Center',
+                        fontWeight: 500,
+                      }}
+                    >
+                      Not Authorized
+                    </p>
+                  ) : (
+                        <p
+                          id='confirm'
+                          style={{
+                            color: 'red',
+                            width: '100%',
+                            height: '24px',
+                            textAlign: 'Center',
+                            fontWeight: 500,
+                          }}
+                        >
+                          {'    '}
+                        </p>
+                      )}
+                  <Button
+                    variant='secondary'
+                    type='submit'
+                    className='ButtonForm'
+                    onClick={onFormSubmit}
                   >
-                    New User Added (Confirmation Mail has been sent){' '}
-                  </p>
-                ) : authorized === 2 ? (
-                  <p
-                    id='confirm'
-                    style={{
-                      color: 'red',
-                      width: '100%',
-                      textAlign: 'Center',
-                      fontWeight: 500,
-                    }}
-                  >
-                    Not Authorized
-                  </p>
-                ) : (
-                  <p
-                    id='confirm'
-                    style={{
-                      color: 'red',
-                      width: '100%',
-                      height: '24px',
-                      textAlign: 'Center',
-                      fontWeight: 500,
-                    }}
-                  >
-                    {'    '}
-                  </p>
-                )}
-                <Button
-                  variant='secondary'
-                  type='submit'
-                  className='ButtonForm'
-                  onClick={onFormSubmit}
-                >
-                  {!loading ? 'Add Employee' : 'Loading'}
-                </Button>
-              </Form>
-            </React.Fragment>
-          )}
+                    {!loading ? 'Add Employee' : 'Loading'}
+                  </Button>
+                </Form>
+              </React.Fragment>
+            )}
         </TableContainer>
       </AdminMain>
     </div>

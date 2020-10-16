@@ -1,14 +1,26 @@
 import React from 'react';
 import { HeaderContainer } from './header.styles';
+import { Link } from 'react-router-dom';
+import axios from 'axios';
 import logo from '../../assets/img/logo.png';
+
 function Header({ pathname }) {
+  const logOut = async () => {
+    await axios.get('/api/auth/logout');
+  };
   return (
     <HeaderContainer>
       <div>
         <nav className='navbar navbar-expand-lg'>
-          <a className='navbar-brand ml-5' href='/'>
-            <img src={logo} alt='' className='img-fluid' height='40px' width='90px' />
-          </a>
+          <Link className='navbar-brand ml-5' to='/'>
+            <img
+              src={logo}
+              alt=''
+              className='img-fluid'
+              height='40px'
+              width='90px'
+            />
+          </Link>
           <button
             className='navbar-toggler'
             type='button'
@@ -18,7 +30,9 @@ function Header({ pathname }) {
             aria-expanded='false'
             aria-label='Toggle navigation'
           >
-            <span className='navbar-toggler-icon'><i className="fas fa-bars"></i></span>
+            <span className='navbar-toggler-icon'>
+              <i className='fas fa-bars'></i>
+            </span>
           </button>
           <div
             className='flex justify-content-xl-end justify-content-lg-end justify-content-md-center   mr-5 collapse navbar-collapse'
@@ -31,9 +45,9 @@ function Header({ pathname }) {
                 </a>
               </li>
               <li className='nav-item mr-3'>
-                <a className='nav-link' href='/login'>
+                <Link onClick={logOut} className='nav-link' to='/login'>
                   Logout
-                </a>
+                </Link>
               </li>
             </ul>
           </div>

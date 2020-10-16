@@ -18,7 +18,7 @@ function DefaultColumnFilter({
     <input
       style={{
         width: '90%',
-        fontSize: '18px',
+        fontSize: '15px',
         height: '20px',
       }}
       value={filterValue || ''}
@@ -62,7 +62,7 @@ function OPTable({ data, columns, getCellProps, onClickHandler }) {
         overflow: 'auto',
         maxHeight: '70vh',
       }}
-      className='container mx-auto mt-3 text-center'
+      className='mx-auto mt-3 text-center'
     >
       <Table
         {...getTableProps()}
@@ -75,18 +75,18 @@ function OPTable({ data, columns, getCellProps, onClickHandler }) {
           }
         }
       >
-        <thead style={{ marginBottom: 60 }}>
+        <thead style={{ height: 100 }}>
           {headerGroups.map((headerGroup) => (
             <tr {...headerGroup.getHeaderGroupProps()}>
               {headerGroup.headers.map((column, i) => (
                 <th key={i}>
                   <h5 {...column.getHeaderProps(column.getSortByToggleProps())}>
                     {column.render('Header')}
+                    {/* Add a sort direction indicator */}
+                    <span>
+                      {column.isSorted ? (column.isSortedDesc ? '↓' : '↑') : ''}
+                    </span>
                   </h5>
-                  {/* Add a sort direction indicator */}
-                  <span>
-                    {column.isSorted ? (column.isSortedDesc ? '↓' : '↑') : ''}
-                  </span>
                   <br />
                   <DefaultColumnFilter column={column} />
                 </th>
@@ -137,7 +137,7 @@ function OPTable({ data, columns, getCellProps, onClickHandler }) {
           })}
         </tbody>
       </Table>
-    </div>
+    </div >
   );
 }
 

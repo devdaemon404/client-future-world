@@ -36,7 +36,11 @@ const LoginPage = () => {
         console.log('done');
         setIsLoading(false);
         setError(false);
-        history.push('/admin');
+        if (loginResult.data.role === 'admin') {
+          history.push('/admin');
+        } else {
+          history.push('/');
+        }
       }
     } catch (err) {
       setIsLoading(false);

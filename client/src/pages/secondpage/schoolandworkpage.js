@@ -12,8 +12,6 @@ function schoolandworkpage() {
   
 
   return (
-  
-      
       <Container>
       <Header pathname="/" />
         <HeroContainer className='box d-flex align-items-center'>

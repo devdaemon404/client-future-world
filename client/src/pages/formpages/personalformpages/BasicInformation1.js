@@ -5,13 +5,12 @@ import {
   MainHeader,
   //  MainPara, CardHeader, CardPara
 } from '../formpage.styles.js';
-import { Link } from 'react-router-dom';
 import Header from '../../../components/header/Header';
 import Progressbar from '../../../components/progress-bar/Progress';
 import axios from 'axios';
-import Resizer from 'react-image-file-resizer';
+import OPBreadCrumb from '../../../components/form/OPBreadCrumb.js';
 
-const BasicInformation1 = () => {
+const BasicInformation1 = ({ history }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [formData, setFormData] = useState({
     companyName: '',
@@ -89,6 +88,7 @@ const BasicInformation1 = () => {
       });
 
       await axios.post('/api/employee', body, config);
+      history.push('/information/basicInformation-2');
     } catch (error) {
       console.log(error);
     }
@@ -137,54 +137,37 @@ const BasicInformation1 = () => {
             </div>
 
             <div className='container-fluid mt-5'>
+              <OPBreadCrumb
+                activeIndex={0}
+                crumbs={[
+                  {
+                    link: '/information/basicInformation-1',
+                    label: 'Basic Information - 1',
+                  },
+                  {
+                    link: '/information/basicInformation-2',
+                    label: 'Basic Information - 2',
+                  },
+                  {
+                    link: '/information/designationInformation',
+                    label: 'Designation Information',
+                  },
+                  {
+                    link: '/information/documentalInformation',
+                    label: 'Documental Information',
+                  },
+                  {
+                    link: '/information/address',
+                    label: 'Address',
+                  },
+                  {
+                    link: '/information/languageInformation',
+                    label: 'Language Information',
+                  },
+                ]}
+              />
               {/* <h2>Current Address</h2> */}
-              <ul className='nav nav-pills nav-fill'>
-                <li className='nav-item'>
-                  <a
-                    className='nav-link active'
-                    href='/information/basicInformation-1'
-                  >
-                    Basic Information - 1
-                  </a>
-                </li>
-                <li className='nav-item'>
-                  <a
-                    className='nav-link'
-                    href='/information/basicInformation-2'
-                  >
-                    Basic Information - 2
-                  </a>
-                </li>
-                <li className='nav-item'>
-                  <a
-                    className='nav-link'
-                    href='/information/designationInformation'
-                  >
-                    Designation Information
-                  </a>
-                </li>
-                <li className='nav-item'>
-                  <a
-                    className='nav-link'
-                    href='/information/documentalInformation'
-                  >
-                    Documental Information
-                  </a>
-                </li>
-                <li className='nav-item'>
-                  <a className='nav-link' href='/information/address'>
-                    Address
-                  </a>
-                </li>
-                <li className='nav-item'>
-                  <a
-                    className='nav-link'
-                    href='/information/languageInformation'
-                  >
-                    Language Information
-                  </a>
-                </li>
-              </ul>
+
               <hr></hr>
               {isLoading ? (
                 <div>
@@ -301,18 +284,16 @@ const BasicInformation1 = () => {
 
                   <div className='form-group row p-2 d-flex justify-content-center mt-4 mb-5'>
                     <div className='col-sm-10'>
-                      <Link to='/information/basicInformation-2'>
-                        <button
-                          type='submit'
-                          onClick={() => {
-                            updateBasicInformation(formData);
-                          }}
-                          className='btn btn-primary w-100 font-weight-bold'
-                        >
-                          <i className='far fa-check-circle'></i> Save and
-                          Continue
-                        </button>
-                      </Link>
+                      <button
+                        type='submit'
+                        onClick={() => {
+                          updateBasicInformation(formData);
+                        }}
+                        className='btn btn-primary w-100 font-weight-bold'
+                      >
+                        <i className='far fa-check-circle'></i> Save and
+                        Continue
+                      </button>
                     </div>
                   </div>
                 </form>

@@ -11,7 +11,7 @@ const User = require('../models/User');
 // @route     POST /api/v1/auth/register
 // @access    Public
 exports.register = asyncHandler(async (req, res, next) => {
-  const { name, email, role } = req.body;
+  const { name, email, role, phoneNumber } = req.body;
 
   let password = crypto.randomBytes(8).toString('hex');
 
@@ -22,6 +22,7 @@ exports.register = asyncHandler(async (req, res, next) => {
   let user = await User.create({
     name,
     email,
+    phoneNumber,
     password: hashedPassword,
     role,
   });
