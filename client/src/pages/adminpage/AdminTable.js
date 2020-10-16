@@ -119,10 +119,38 @@ function OPTable({ data, columns, getCellProps, onClickHandler }) {
                           <option value='0'>Download</option>
                           <option value='1'>Relieve</option>
                           <option value='2'>Active</option>
+                          <option value='3'>Inactive</option>
                           <option disabled style={{ color: 'rgba(0,0,0,0)' }}>
                             {cell.render('Cell').props.cell.value}
                           </option>
                         </select>
+                      </td>
+                    );
+                  } else if (cell.column.Header === 'Name') {
+                    return (
+                      <td
+                        {...cell.getCellProps([{ ...getCellProps(cell) }])}
+                        style={{ color: '#0D054B', fontWeight: 700 }}
+                      >
+                        {cell.render('Cell')}
+                      </td>
+                    );
+                  } else if (cell.column.Header === 'Status') {
+                    return (
+                      <td
+                        {...cell.getCellProps([{ ...getCellProps(cell) }])}
+                        style={
+                          cell.render('Cell').props.cell.value === 'Inactive'
+                            ? { color: 'red', fontWeight: 700 }
+                            : cell.render('Cell').props.cell.value === 'Active'
+                            ? { color: 'green', fontWeight: 700 }
+                            : cell.render('Cell').props.cell.value ===
+                              'Relieved'
+                            ? { fontWeight: 700 }
+                            : {}
+                        }
+                      >
+                        {cell.render('Cell')}
                       </td>
                     );
                   }
@@ -137,7 +165,7 @@ function OPTable({ data, columns, getCellProps, onClickHandler }) {
           })}
         </tbody>
       </Table>
-    </div >
+    </div>
   );
 }
 

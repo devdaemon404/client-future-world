@@ -13,6 +13,7 @@ import ComplexComponent from '../../../components/form/ComplexComponent';
 import OPBreadCrumb from '../../../components/form/OPBreadCrumb.js';
 
 const FamilyInformation = () => {
+  // eslint-disable-next-line
   const [isLoading, setIsLoading] = useState(false);
   const [formData, setFormData] = useState([]);
   useEffect(() => {
@@ -30,7 +31,7 @@ const FamilyInformation = () => {
       );
       if (
         result.data.data !== null &&
-        result.data.data.familyInformation != undefined
+        result.data.data.familyInformation !== undefined
       )
         setFormData([...result.data.data.familyInformation]);
       setIsLoading(false);

@@ -13,6 +13,7 @@ import OPBreadCrumb from '../../../components/form/OPBreadCrumb';
 import axios from 'axios';
 
 const WorkInformation = () => {
+  // eslint-disable-next-line
   const [isLoading, setIsLoading] = useState(false);
   const [formData, setFormData] = useState([]);
   useEffect(() => {
@@ -28,7 +29,10 @@ const WorkInformation = () => {
         '/api/employee?select=workInformation,',
         config
       );
-      if (result.data.data !== null && result.data.data.workInformation != undefined)
+      if (
+        result.data.data !== null &&
+        result.data.data.workInformation !== undefined
+      )
         setFormData([...result.data.data.workInformation]);
       setIsLoading(false);
     };
@@ -77,16 +81,19 @@ const WorkInformation = () => {
 
             <div className='container-fluid mt-5'>
               {/* <h2>Current Address</h2> */}
-              <OPBreadCrumb activeIndex={1} crumbs={[
-                {
-                  link: '/information/academicInformation',
-                  label: 'Academic Information'
-                },
-                {
-                  link: '/information/workInformation',
-                  label: 'Work Experience'
-                }
-              ]} />
+              <OPBreadCrumb
+                activeIndex={1}
+                crumbs={[
+                  {
+                    link: '/information/academicInformation',
+                    label: 'Academic Information',
+                  },
+                  {
+                    link: '/information/workInformation',
+                    label: 'Work Experience',
+                  },
+                ]}
+              />
               <hr></hr>
               <h3 className='mt-3 mb-4'>
                 Please specify all the previous companies you have worked at.
@@ -96,18 +103,22 @@ const WorkInformation = () => {
                 buttonName='Add Professional Experiences'
                 onSubmit={async (data) => {
                   /// Make your API call here
-                  setFormData([...data])
+                  setFormData([...data]);
                   const config = {
                     headers: {
                       'Content-Type': 'application/json',
                     },
                     withCredentials: true,
                   };
-                  await axios.post('/api/employee', JSON.stringify({
-                    postParams: {
-                      workInformation: data
-                    }
-                  }), config)
+                  await axios.post(
+                    '/api/employee',
+                    JSON.stringify({
+                      postParams: {
+                        workInformation: data,
+                      },
+                    }),
+                    config
+                  );
                 }}
                 tableColumns={[
                   'Company ',

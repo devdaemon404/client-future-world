@@ -1,16 +1,17 @@
 const express = require('express');
 const router = express.Router();
-const ErrorResponse = require('../utils/errorResponse')
-const Employee = require('../models/Employee')
+const ErrorResponse = require('../utils/errorResponse');
+const Employee = require('../models/Employee');
 
 const { protect, authorize } = require('../middleware/auth');
 
 router.get('/pdf-gen', protect, authorize('admin'), async (req, res, next) => {
-  let e = await Employee.findOne({ user: req.query.employeeId })
-  e = e.toObject();
+  let e = await Employee.findOne({ user: req.query.employeeId });
+
   if (!e) {
-    return next(new ErrorResponse('Employee not filled the form', 400))
+    return next(new ErrorResponse('Employee not filled the form', 400));
   }
+  e = e.toObject();
   res.render('index', {
     basicInformation: {
       'Company Name': e.companyName,
@@ -20,23 +21,23 @@ router.get('/pdf-gen', protect, authorize('admin'), async (req, res, next) => {
       'Father Name': e.fatherName || '',
       'Documented Date of Birth': e.dob || '',
       'Original Date of Birth': e.originalDob || '',
-      'Sex': e.sex || '',
+      Sex: e.sex || '',
       'Birth Place': e.birthPlace || '',
       'Marital Status': e.maritalStatus || '',
       'Marriage Date': e.marriageDate || '',
-      'Religion': e.religion || '',
-      'Designation': e.designation || '',
+      Religion: e.religion || '',
+      Designation: e.designation || '',
       'Joining Date': e.joiningDate || '',
-      'Department': e.department || '',
+      Department: e.department || '',
       'Reporting To': e.reporting || '',
       'Job Level': e.jobLevel || '',
-      'Location': e.officeLocation || '',
+      Location: e.officeLocation || '',
       'Manner of Entry': e.entryVia || '',
-      'Nomination': e.nomination || '',
+      Nomination: e.nomination || '',
       'PAN Number': e.panNo || '',
       'Passport Number': e.passportNo || '',
       'Issue Date & Place': e.issue || '',
-      'Validity': e.validity || '',
+      Validity: e.validity || '',
     },
     addressInformation: {
       'Present Address': e.presentAddress || '',
@@ -47,7 +48,7 @@ router.get('/pdf-gen', protect, authorize('admin'), async (req, res, next) => {
       'Contact Person \nPh No. / Mobile No.': e.contactPersonPhone || '',
       'Contact Person Address': e.contactPersonAddress || '',
     },
-    familyMembersInformation: (e.familyMembers || []).map(o => ({
+    familyMembersInformation: (e.familyMembers || []).map((o) => ({
       name: o.name || '',
       relationship: o.relationship || '',
       dob: o.familyDob || '',
@@ -61,7 +62,7 @@ router.get('/pdf-gen', protect, authorize('admin'), async (req, res, next) => {
       'Can Speak': e.canSpeak || '',
       'Mother Tongue': e.motherLang || '',
     },
-    academicInformation: (e.academicInformation || []).map(o => ({
+    academicInformation: (e.academicInformation || []).map((o) => ({
       qualification: o.qualiDesc || '',
       subject: o.sub || '',
       schoolName: o.schoolCollegeName || '',
@@ -72,7 +73,7 @@ router.get('/pdf-gen', protect, authorize('admin'), async (req, res, next) => {
       fullTime: o.fullPartTime || '',
       yearOfPassing: o.yOfPassing || '',
     })),
-    professionalExperience: (e.workInformation || []).map(o => ({
+    professionalExperience: (e.workInformation || []).map((o) => ({
       company: o.company || '',
       fromDate: o.fromDate || '',
       toDate: o.toDate || '',
@@ -84,17 +85,18 @@ router.get('/pdf-gen', protect, authorize('admin'), async (req, res, next) => {
     healthInformation: {
       'Blood Group': e.bloodGroup || '',
       'Height (in cms)': e.height || '',
-      'Weight': e.weight || '',
+      Weight: e.weight || '',
       'Glass Power (L)': e.lEyePower || '',
       'Glass Power (R)': e.rEyePower || '',
     },
     otherHealthInformation: {
       'Identification Marks 1': e.identification1 || '',
       'Identification Marks 2': e.identification2 || '',
-      'Any major surgery / illness in the past / Allergies': e.illnesses || ''
+      'Any major surgery / illness in the past / Allergies': e.illnesses || '',
     },
     otherInformation: {
-      'Relatives in the Company (Name, Designation & Location)': e.relativeInfo || '',
+      'Relatives in the Company (Name, Designation & Location)':
+        e.relativeInfo || '',
       'Reference 1 - Name': e.ref1Name || '',
       'Ref 1 Company': e.ref1Company || '',
       'Ref 1 Designation': e.ref1Designation || '',
@@ -103,7 +105,7 @@ router.get('/pdf-gen', protect, authorize('admin'), async (req, res, next) => {
       'Ref 2 Company': e.ref2Company || '',
       'Ref 2 Designation': e.ref2Designation || '',
       'Ref 2 Contact No': e.ref2Contact || '',
-    }
+    },
   });
 });
 

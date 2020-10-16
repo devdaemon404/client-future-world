@@ -13,6 +13,7 @@ import ComplexComponent from '../../../components/form/ComplexComponent';
 import OPBreadCrumb from '../../../components/form/OPBreadCrumb.js';
 
 const AcademicInformation = () => {
+  // eslint-disable-next-line
   const [isLoading, setIsLoading] = useState(false);
   const [formData, setFormData] = useState([]);
 
@@ -29,7 +30,10 @@ const AcademicInformation = () => {
         '/api/employee?select=academicInformation,',
         config
       );
-      if (result.data.data !== null && result.data.data.academicInformation != undefined)
+      if (
+        result.data.data !== null &&
+        result.data.data.academicInformation !== undefined
+      )
         setFormData([...result.data.data.academicInformation]);
       setIsLoading(false);
     };
@@ -78,16 +82,19 @@ const AcademicInformation = () => {
 
             <div className='container-fluid mt-5'>
               {/* <h2>Current Address</h2> */}
-              <OPBreadCrumb activeIndex={0} crumbs={[
-                {
-                  link: '/information/academicInformation',
-                  label: 'Academic Information'
-                },
-                {
-                  link: '/information/workInformation',
-                  label: 'Work Experience'
-                }
-              ]} />
+              <OPBreadCrumb
+                activeIndex={0}
+                crumbs={[
+                  {
+                    link: '/information/academicInformation',
+                    label: 'Academic Information',
+                  },
+                  {
+                    link: '/information/workInformation',
+                    label: 'Work Experience',
+                  },
+                ]}
+              />
 
               <hr></hr>
               <h3 className='mt-3 mb-4'>
@@ -98,18 +105,22 @@ const AcademicInformation = () => {
                 buttonName='Add School/College Information'
                 onSubmit={async (data) => {
                   /// Make your API call here
-                  setFormData([...data])
+                  setFormData([...data]);
                   const config = {
                     headers: {
                       'Content-Type': 'application/json',
                     },
                     withCredentials: true,
                   };
-                  await axios.post('/api/employee', JSON.stringify({
-                    postParams: {
-                      academicInformation: data
-                    }
-                  }), config)
+                  await axios.post(
+                    '/api/employee',
+                    JSON.stringify({
+                      postParams: {
+                        academicInformation: data,
+                      },
+                    }),
+                    config
+                  );
                 }}
                 tableColumns={[
                   'Qualification Description',
@@ -146,7 +157,6 @@ const AcademicInformation = () => {
                     label: 'Name of the School / College/ Institute',
                     key: 'schoolCollegeName',
                     isRequired: true,
-
                   },
                   {
                     label: 'Name of the Board/ University',

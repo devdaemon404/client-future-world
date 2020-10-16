@@ -9,7 +9,7 @@ import {
   LoginHead,
   Heading,
   SubHeading,
-  FormBottom,
+  // FormBottom,
   BottomLinks,
 } from './loginpage.styles';
 import LOGO from '../../assets/img/logo.png';
@@ -95,7 +95,7 @@ const LoginPage = () => {
             </p>
           </form>
 
-          <FormBottom>
+          {/* <FormBottom>
             <p>
               Click here for{' '}
               <strong>
@@ -108,7 +108,7 @@ const LoginPage = () => {
               {' '}
               Forgot Password?
             </Link>
-          </FormBottom>
+          </FormBottom> */}
         </Form.Group>
 
         <BottomLinks>
