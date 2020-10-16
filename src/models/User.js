@@ -21,6 +21,9 @@ const UserSchema = new mongoose.Schema({
     enum: ['employee'],
     default: 'employee',
   },
+  phoneNumber: {
+    type: String,
+  },
   password: {
     type: String,
     required: [true, 'Please add a password'],

@@ -2,13 +2,14 @@ import styled from 'styled-components';
 
 export const Container = styled.div`
   background-color: #111;
+  height: 100vh;
 `;
 
 export const HeroContainer = styled.div`
   background: url(https://images.unsplash.com/photo-1581091215367-9b6c00b3035a?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80)
     center center no-repeat;
   background-size: cover;
-  // height: 85.7vh;
+  height: 100vh;
   padding: 80px 0 60px 0;
   position: relative;
   clip-path: polygon(0 0, 100% 0, 100% 100%, 0 calc(100% - 5vw));
@@ -39,8 +40,11 @@ export const HeroContainer = styled.div`
   .form-link {
     padding: 10px;
     color: white;
-    background-color: #255473;
     font-size: 24px;
+  }
+
+  .sub-card {
+
   }
 
   .form-link:hover {
@@ -48,16 +52,24 @@ export const HeroContainer = styled.div`
     text-decoration: none;
   }
 
+  .list-item-style {
+    color: blue
+  }
+
   .list-group-item {
     transition: all 0.2s ease-in-out;
-    color: white;
-    background-color: #255473;
+    color: red;
+    background-color: red;
     border-bottom: 1px solid aquamarine;
   }
 
   .list-group-item:hover {
     transform: scale(1.03);
     z-index: 1;
+  }
+
+  .hero-row {
+    margin-bottom: 10px
   }
 `;
 
@@ -77,12 +89,8 @@ export const MainHeader = styled.h1`
 
 export const MainPara = styled.p`
   color: #111;
-  // background: #222;
   font-family: 'Helvetica Neue', sans-serif;
   font-size: 22px;
-  // letter-spacing: -1px;
-  line-height: 1;
-  // text-align: center;
   padding: 20px;
 `;
 

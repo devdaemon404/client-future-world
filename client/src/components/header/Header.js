@@ -12,7 +12,7 @@ function Header({ pathname }) {
     <HeaderContainer>
       <div>
         <nav className='navbar navbar-expand-lg'>
-          <a className='navbar-brand ml-5' href='/'>
+          <Link className='navbar-brand ml-5' to='/'>
             <img
               src={logo}
               alt=''
@@ -20,7 +20,7 @@ function Header({ pathname }) {
               height='40px'
               width='90px'
             />
-          </a>
+          </Link>
           <button
             className='navbar-toggler'
             type='button'

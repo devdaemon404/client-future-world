@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useMemo, useState } from 'react';
 
 /**
  *
@@ -12,10 +12,13 @@ function ComplexComponent({
   tableColumns,
   textFieldDetails,
   buttonName = 'Invalid Button Name',
-  onSubmit = (_) => {},
+  onSubmit = (_) => { },
 }) {
-  const [data, setData] = useState(defaultData);
+  const [data, setData] = useState([...defaultData]);
   const tempInfoArr = [];
+  useMemo(() => {
+    setData([...defaultData])
+  }, [defaultData]);
   data.forEach((d) => {
     const dataArray = essentialFieldKeys.map((k) => d[k]);
     tempInfoArr.push(dataArray);
@@ -111,7 +114,7 @@ function ComplexComponent({
   };
 
   return (
-    <div className='container'>
+    <div className=''>
       {/* 
         Main button on the top of the component 
         --------------------------BUTTON------------------------
@@ -185,14 +188,14 @@ function ComplexComponent({
           </form>
         </div>
       ) : (
-        <div>
-          {/* 
+            <div>
+              {/* 
           ---------------Information Table---------------------------
            */}
-          <div className='container-fluid p-2' />
-          <InfoTable />
-        </div>
-      )}
+              <div className='container-fluid p-2' />
+              <InfoTable />
+            </div>
+          )}
     </div>
   );
 
@@ -202,9 +205,9 @@ function ComplexComponent({
   function InfoTable() {
     return (
       <div className='container-fluid'>
-        
-          <h2 className='p-2 mt-1'>Your Information.</h2>
-          <p><span>(Add family member to show them below)</span>
+
+        <h2 className='p-2 mt-1'>Your Information.</h2>
+        <p><span>(Add family member to show them below)</span>
         </p>
         <table
           className='table table-striped table-primary table-borderless mt-4 mb-5'
@@ -230,7 +233,7 @@ function ComplexComponent({
                 ))}
                 <td>
                   <button
-                    class='btn btn-primary mx-1 my-1'
+                    className='btn btn-primary mx-1 my-1'
                     onClick={() => {
                       setEditingFieldIndex(key);
                       setIsEditing(true);

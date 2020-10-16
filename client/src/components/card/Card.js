@@ -7,7 +7,7 @@ import ProgressBar from '../progress-bar/Progress';
 const Card = ({ title, subTitle, iconClass, percentage }) => {
   return (
     <CardContainer className='card h-100'>
-      <div className='card-body'>
+      <div className=''>
         <CardHeader>{title}</CardHeader>
         <div className='d-flex justify-content-center'>
           <ProgressBar iconClass={iconClass} percentage={percentage} />

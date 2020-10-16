@@ -6,6 +6,7 @@ import {
 // import { Link } from 'react-router-dom';
 import Header from '../../../components/header/Header';
 import Progressbar from '../../../components/progress-bar/Progress';
+import OPBreadCrumb from '../../../components/form/OPBreadCrumb';
 
 const Uploads = () => {
 
@@ -30,14 +31,15 @@ const Uploads = () => {
 
             <div className='container-fluid mt-5'>
               {/* <h2>Current Address</h2> */}
-              <ul className="nav nav-pills nav-fill">
-                <li className="nav-item">
-                  <a className="nav-link" href="/information/otherInformation">Ohter Information</a>
-                </li>
-                <li className="nav-item">
-                  <a className="nav-link active" href="/uploads">Uploading Documents</a>
-                </li>
-              </ul>
+              <OPBreadCrumb crumbs={[{
+                link: '/information/otherInformation',
+                label: 'Other Information'
+              }, {
+                link: '/information/uploads',
+                label: 'Uploading Documents'
+              }]}
+                activeIndex={1}
+              />
               <hr></hr>
               <form className='mt-2 text-left'>
 

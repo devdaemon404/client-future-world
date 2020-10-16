@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 import {
   Container,
   HeroContainer,
@@ -9,8 +10,32 @@ import {
 import Header from '../../../components/header/Header';
 import Progressbar from '../../../components/progress-bar/Progress';
 import ComplexComponent from '../../../components/form/ComplexComponent';
+import OPBreadCrumb from '../../../components/form/OPBreadCrumb.js';
 
 const FamilyInformation = () => {
+  const [isLoading, setIsLoading] = useState(false);
+  const [formData, setFormData] = useState([]);
+  useEffect(() => {
+    const fetchData = async () => {
+      setIsLoading(true);
+      const config = {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        withCredentials: true,
+      };
+      const result = await axios.get(
+        '/api/employee?select=familyInformation,',
+        config
+      );
+      if (result.data.data !== null && result.data.data.familyInformation != undefined)
+        setFormData([...result.data.data.familyInformation]);
+      setIsLoading(false);
+    };
+
+    fetchData();
+  }, []);
+
   return (
     <Container>
       <Header pathname='/health' />
@@ -49,24 +74,20 @@ const FamilyInformation = () => {
                 <span style={{ color: 'red' }}>*</span> Indicates required field
               </p>
             </div>
-
             <div className='container-fluid mt-5'>
               {/* <h2>Current Address</h2> */}
-              <ul className='nav nav-pills nav-fill'>
-                <li className='nav-item'>
-                  <a className='nav-link' href='/information/healthInformation'>
-                    Health Information
-                  </a>
-                </li>
-                <li className='nav-item'>
-                  <a
-                    className='nav-link active'
-                    href='/information/familyInformation'
-                  >
-                    Family Member Information
-                  </a>
-                </li>
-              </ul>
+              <OPBreadCrumb
+                activeIndex={0}
+                crumbs={[
+                  {
+                    link: '/information/familyInformation',
+                    label: 'Health Information'
+                  },
+                  {
+                    link: '/information/healthInformation',
+                    label: 'Family Member Information'
+                  }
+                ]} />
               <hr></hr>
               <h3 className='mt-3 mb-4'>Add at max five members of your family<span style={{ color: 'red' }}>*</span></h3>
               <ComplexComponent
@@ -75,7 +96,7 @@ const FamilyInformation = () => {
                   /// Make your API call here
                   console.log(data);
                 }}
-                tableColumns={['Name', 'Relationship','DOB', 'Blood Group' ,'Occupation',]}
+                tableColumns={['Name', 'Relationship', 'DOB', 'Blood Group', 'Occupation',]}
                 essentialFieldKeys={[
                   'name',
                   'relationship',
@@ -112,9 +133,7 @@ const FamilyInformation = () => {
                     isRequired: true,
                   },
                 ]}
-                defaultData={[
-                
-                ]}
+                defaultData={formData}
               />
             </div>
           </div>

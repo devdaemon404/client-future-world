@@ -6,6 +6,7 @@ import {
 // import { Link } from 'react-router-dom';
 import Header from '../../../components/header/Header';
 import Progressbar from '../../../components/progress-bar/Progress';
+import OPBreadCrumb from '../../../components/form/OPBreadCrumb.js';
 
 const OtherInformation = () => {
 
@@ -30,14 +31,15 @@ const OtherInformation = () => {
 
             <div className='container-fluid mt-5'>
               {/* <h2>Current Address</h2> */}
-              <ul className="nav nav-pills nav-fill">
-                <li className="nav-item">
-                  <a className="nav-link active" href="/information/otherInformation">Other Information</a>
-                </li>
-                <li className="nav-item">
-                  <a className="nav-link" href="/information/uploads">Uploading Documents</a>
-                </li>
-              </ul>
+              <OPBreadCrumb crumbs={[{
+                link: '/information/otherInformation',
+                label: 'Other Information'
+              }, {
+                link: '/information/uploads',
+                label: 'Uploading Documents'
+              }]}
+                activeIndex={0}
+              />
               <hr></hr>
               <form className='mt-2 text-left'>
 
@@ -87,7 +89,7 @@ const OtherInformation = () => {
                       </div>
                       <div className="form-check form-check-inline">
                         <input className="form-check-input" type="checkbox" id="inlineCheckbox2" value="Vehile" />
-                        <label className="form-check-label" >Vehile</label>
+                        <label className="form-check-label" >Vehicle</label>
                       </div>
                       <div className="form-check form-check-inline">
                         <input className="form-check-input" type="checkbox" id="inlineCheckbox3" value="Laptop" />

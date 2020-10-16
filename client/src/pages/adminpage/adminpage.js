@@ -1,10 +1,12 @@
 import React, { useState, useEffect } from 'react';
+import moment from 'moment';
 import { SideBar, AdminMain, TableContainer } from './AdminPage.styles';
 import { Form, Button } from 'react-bootstrap';
 import LOGO from '../../assets/img/logo.png';
 import axios from 'axios';
 import { useHistory } from 'react-router-dom';
 import OPTable from './AdminTable';
+
 // const selectUserContext = React.createContext({});
 const AdminPage = () => {
   let retrievedId = '';
@@ -38,7 +40,7 @@ const AdminPage = () => {
             ? 'Active'
             : 'Inactive',
 
-        joinDate: employee.createdAt,
+        joinDate: moment(employee.createdAt).format('DD/MMM/YYYY'),
         id: employee._id,
       });
     });
@@ -234,7 +236,6 @@ const AdminPage = () => {
                     }
                   />
                 </Form.Group>
-
                 {authorized === 1 ? (
                   <p
                     id='confirm'
@@ -273,6 +274,7 @@ const AdminPage = () => {
                     {'    '}
                   </p>
                 )}
+
                 <Button
                   variant='secondary'
                   type='submit'
