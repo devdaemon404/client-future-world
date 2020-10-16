@@ -30,7 +30,7 @@ const AdminPage = () => {
 
     users.data.data.forEach((employee, i) => {
       formattedData.push({
-        name: employee.name,
+        name: employee.name.capitalize(),
         email: employee.email,
         phoneNumber: !employee.phoneNumber ? '--' : employee.phoneNumber,
         status:
@@ -116,7 +116,7 @@ const AdminPage = () => {
 
     retrievedEmployee = data.find((o) => o.id === retrievedId);
     if (e.target.value === '0') {
-      await axios.get(`/api/ejs/pdf-gen?employeeId=${retrievedId}`);
+      window.open(`/api/ejs/pdf-gen?employeeId=${retrievedId}`);
     }
 
     if (e.target.value === '1') {
