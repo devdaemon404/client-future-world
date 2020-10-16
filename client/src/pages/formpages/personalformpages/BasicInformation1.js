@@ -27,7 +27,6 @@ const BasicInformation1 = () => {
     fullName,
     nameHRIS,
     fatherName,
-    upload,
   } = formData;
 
   useEffect(() => {
@@ -53,27 +52,6 @@ const BasicInformation1 = () => {
   }, []);
 
   const handleChange = (e) => {
-    var fileInput = false;
-    if (e.target.files[0]) {
-      fileInput = true;
-    }
-    if (fileInput) {
-      Resizer.imageFileResizer(
-        e.target.files[0],
-        600,
-        600,
-        'JPEG',
-        100,
-        0,
-        (uri) => {
-          console.log(uri);
-        },
-        'blob',
-        200,
-        200
-      );
-    }
-
     const target = e.target;
     const value = target.type === 'checkbox' ? target.checked : target.value;
     const name = target.name;
@@ -110,7 +88,7 @@ const BasicInformation1 = () => {
         },
       });
 
-      await axios.post('/api/employee', body, config).then();
+      await axios.post('/api/employee', body, config);
     } catch (error) {
       console.log(error);
     }

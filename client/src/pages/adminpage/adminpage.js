@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { SideBar, AdminMain, TableContainer } from './AdminPage.styles';
+import { SideBar, AdminMain, TableContainer } from './Adminpage.styles';
 import { Form, Button } from 'react-bootstrap';
 import LOGO from '../../assets/img/logo.png';
 import axios from 'axios';
