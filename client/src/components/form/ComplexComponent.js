@@ -123,7 +123,7 @@ function ComplexComponent({
         <div style={{ display: 'flex', flexDirection: 'column' }}>
           <div className='btn btn-primary' onClick={toggleFields}>
             <span style={{ fontSize: 20 }}>
-              {isEditing || isInserting ? '<- Go Back' : buttonName}
+             {isEditing || isInserting ? <div><i class="fas fa-chevron-circle-left"></i> Go Back</div> : buttonName}
             </span>
           </div>
         </div>
