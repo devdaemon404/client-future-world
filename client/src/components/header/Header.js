@@ -1,13 +1,13 @@
 import React from 'react';
 import { HeaderContainer } from './header.styles';
-import logo from '../../assets/img/logo2.png';
+import logo from '../../assets/img/logo.png';
 function Header({ pathname }) {
   return (
     <HeaderContainer>
       <div>
         <nav className='navbar navbar-expand-lg'>
           <a className='navbar-brand ml-5' href='/'>
-            <img src={logo} alt='' className='img-fluid' height='30px' width='80px' />
+            <img src={logo} alt='' className='img-fluid' height='40px' width='90px' />
           </a>
           <button
             className='navbar-toggler'

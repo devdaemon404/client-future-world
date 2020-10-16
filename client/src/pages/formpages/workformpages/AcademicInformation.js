@@ -10,13 +10,13 @@ import Header from '../../../components/header/Header';
 import Progressbar from '../../../components/progress-bar/Progress';
 import ComplexComponent from '../../../components/form/ComplexComponent';
 
-const FamilyInformation = () => {
+const AcademicInformation = () => {
   return (
     <Container>
-      <Header pathname='/health' />
+      <Header pathname='/work' />
       <HeroContainer className='box d-flex align-items-center justify-content-center'>
         <MainHeader className='text-center'>
-          Health and Family Information
+          Academic Infromation and Work Experience
         </MainHeader>
       </HeroContainer>
       <div className='container'>
@@ -54,67 +54,97 @@ const FamilyInformation = () => {
               {/* <h2>Current Address</h2> */}
               <ul className='nav nav-pills nav-fill'>
                 <li className='nav-item'>
-                  <a className='nav-link' href='/information/healthInformation'>
-                    Health Information
+                  <a
+                    className='nav-link active'
+                    href='/information/academicInformation'
+                  >
+                    Academic Information
                   </a>
                 </li>
                 <li className='nav-item'>
                   <a
-                    className='nav-link active'
-                    href='/information/familyInformation'
+                    className='nav-link'
+                    href='/information/workInformation'
                   >
-                    Family Member Information
+                    Work Experience
                   </a>
                 </li>
               </ul>
               <hr></hr>
-              <h3 className='mt-3 mb-4'>Add at max five members of your family<span style={{ color: 'red' }}>*</span></h3>
+              <h3 className='mt-3 mb-4'>
+                Please specify from Secondary Education onwards.
+                <span style={{ color: 'red' }}>*</span>
+              </h3>
               <ComplexComponent
-                buttonName='Add Family Member'
+                buttonName='Add School/College Information'
                 onSubmit={(data) => {
                   /// Make your API call here
                   console.log(data);
                 }}
-                tableColumns={['Name', 'Relationship','DOB', 'Blood Group' ,'Occupation',]}
+                tableColumns={[
+                  'Qualification Description',
+                  'Subject/Specialisation',
+                  'Name of the School /College/ Institute',
+                  'Name of the Board/ University',
+                  'Location of the Board / University',
+                  'Marks%',
+                  'Full time/ Part time',
+                  'Year of Passing',
+                ]}
                 essentialFieldKeys={[
-                  'name',
-                  'relationship',
-                  'familyDob',
-                  'bloodGroup',
-                  'occupation',
+                  'qualiDesc',
+                  'sub',
+                  'schoolCollegeName',
+                  'boardUniversityName',
+                  'location',
+                  'marks',
+                  'fullPartTime',
+                  'yOfPassing',
                 ]}
                 textFieldDetails={[
                   {
-                    label: 'Family Member Name',
-                    key: 'name',
+                    label:'Qualification Description',
+                    key: 'qualiDesc',
                     isRequired: true,
                   },
                   {
-                    label: 'Relationship',
-                    key: 'relationship',
+                    label: 'Subject/Specialisation',
+                    key: 'sub',
                     isRequired: true,
                   },
                   {
-                    label: 'DOB',
-                    key: 'familyDob',
+                    label: 'Name of the School /College/ Institute',
+                    key:  'schoolCollegeName',
                     isRequired: true,
-                    type: 'date',
-
+                  
                   },
                   {
-                    label: 'Blood Group',
-                    key: 'bloodGroup',
+                    label:  'Name of the Board/ University',
+                    key: 'boardUniversityName',
                     isRequired: true,
                   },
                   {
-                    label: 'Occupation',
-                    key: 'occupation',
+                    label: 'Location of the Board / University',
+                    key:   'location',
+                    isRequired: true,
+                  },
+                  {
+                    label: 'Marks%',
+                    key:   'marks',
+                    isRequired: true,
+                  },
+                  {
+                    label: 'Full time/ Part time',
+                    key:   'fullPartTime',
+                    isRequired: true,
+                  },
+                  {
+                    label: 'Year of Passing',
+                    key:   'yOfPassing',
                     isRequired: true,
                   },
                 ]}
-                defaultData={[
-                
-                ]}
+                defaultData={[]}
               />
             </div>
           </div>
@@ -124,4 +154,4 @@ const FamilyInformation = () => {
   );
 };
 
-export default FamilyInformation;
+export default AcademicInformation;

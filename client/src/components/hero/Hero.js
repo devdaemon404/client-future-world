@@ -22,7 +22,7 @@ function Hero(...props) {
               <div className='m-2'>
                 <div className='d-flex flex-row justify-content-around mb-2'>
                   <div className='m-1'>
-                    <Link className='link' to={{ pathname: '/personal', }}>
+                    <Link className='link' to={{ pathname: '/personal' }}>
                       <Card
                         title='Personal Information'
                         subTitle='2/4 Sections Completed'
@@ -32,19 +32,21 @@ function Hero(...props) {
                     </Link>
                   </div>
                   <div className='m-1'>
-                    <Card
-                      title='Academic Information'
-                      subTitle='3/4 Sections Completed'
-                      iconClass='fas fa-user-graduate fa-2x'
-                      percentage='75'
-                    ></Card>
+                    <Link className='link' to={{ pathname: '/work' }}>
+                      <Card
+                        title='Academic Information'
+                        subTitle='3/4 Sections Completed'
+                        iconClass='fas fa-user-graduate fa-2x'
+                        percentage='75'
+                      ></Card>
+                    </Link>
                   </div>
                 </div>
               </div>
               <div className='m-2'>
                 <div className='d-flex flex-row justify-content-around'>
-                <div className='m-1'>
-                    <Link className='link' to={{ pathname: '/health', }}>
+                  <div className='m-1'>
+                    <Link className='link' to={{ pathname: '/health' }}>
                       <Card
                         title='Health & Family Information'
                         subTitle='4/4 Sections Completed'
@@ -54,7 +56,7 @@ function Hero(...props) {
                     </Link>
                   </div>
                   <div className='m-1'>
-                    <Link className='link' to={{ pathname: '/other', }}>
+                    <Link className='link' to={{ pathname: '/other' }}>
                       <Card
                         title='Other Information'
                         subTitle='4/4 Sections Completed'
