@@ -112,11 +112,11 @@ const AdminPage = () => {
   };
 
   const onClickHandler = async (e) => {
-    retrievedId = e.target.children[4].outerText.toString();
+    retrievedId = e.target.children[5].outerText.toString();
 
     retrievedEmployee = data.find((o) => o.id === retrievedId);
     if (e.target.value === '0') {
-      history.push('/profile');
+      await axios.get(`/api/ejs/pdf-gen?employeeId=${retrievedId}`);
     }
 
     if (e.target.value === '1') {
@@ -130,6 +130,11 @@ const AdminPage = () => {
       await axios.post('/api/admin/change-activity', {
         employeeId: retrievedId,
         active: 1,
+      });
+    } else if (e.target.value === '3') {
+      await axios.post('/api/admin/change-activity', {
+        employeeId: retrievedId,
+        active: 2,
       });
     }
     setselectedEmp(!selectedEmp);

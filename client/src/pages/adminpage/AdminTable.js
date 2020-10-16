@@ -18,7 +18,7 @@ function DefaultColumnFilter({
     <input
       style={{
         width: '90%',
-        fontSize: '18px',
+        fontSize: '15px',
         height: '20px',
       }}
       value={filterValue || ''}
@@ -62,7 +62,7 @@ function OPTable({ data, columns, getCellProps, onClickHandler }) {
         overflow: 'auto',
         maxHeight: '70vh',
       }}
-      className='container mx-auto mt-3 text-center'
+      className='mx-auto mt-3 text-center'
     >
       <Table
         {...getTableProps()}
@@ -75,18 +75,18 @@ function OPTable({ data, columns, getCellProps, onClickHandler }) {
           }
         }
       >
-        <thead style={{ marginBottom: 60 }}>
+        <thead style={{ height: 100 }}>
           {headerGroups.map((headerGroup) => (
             <tr {...headerGroup.getHeaderGroupProps()}>
               {headerGroup.headers.map((column, i) => (
                 <th key={i}>
                   <h5 {...column.getHeaderProps(column.getSortByToggleProps())}>
                     {column.render('Header')}
+                    {/* Add a sort direction indicator */}
+                    <span>
+                      {column.isSorted ? (column.isSortedDesc ? '↓' : '↑') : ''}
+                    </span>
                   </h5>
-                  {/* Add a sort direction indicator */}
-                  <span>
-                    {column.isSorted ? (column.isSortedDesc ? '↓' : '↑') : ''}
-                  </span>
                   <br />
                   <DefaultColumnFilter column={column} />
                 </th>
@@ -119,10 +119,38 @@ function OPTable({ data, columns, getCellProps, onClickHandler }) {
                           <option value='0'>Download</option>
                           <option value='1'>Relieve</option>
                           <option value='2'>Active</option>
+                          <option value='3'>Inactive</option>
                           <option disabled style={{ color: 'rgba(0,0,0,0)' }}>
                             {cell.render('Cell').props.cell.value}
                           </option>
                         </select>
+                      </td>
+                    );
+                  } else if (cell.column.Header === 'Name') {
+                    return (
+                      <td
+                        {...cell.getCellProps([{ ...getCellProps(cell) }])}
+                        style={{ color: '#0D054B', fontWeight: 700 }}
+                      >
+                        {cell.render('Cell')}
+                      </td>
+                    );
+                  } else if (cell.column.Header === 'Status') {
+                    return (
+                      <td
+                        {...cell.getCellProps([{ ...getCellProps(cell) }])}
+                        style={
+                          cell.render('Cell').props.cell.value === 'Inactive'
+                            ? { color: 'red', fontWeight: 700 }
+                            : cell.render('Cell').props.cell.value === 'Active'
+                            ? { color: 'green', fontWeight: 700 }
+                            : cell.render('Cell').props.cell.value ===
+                              'Relieved'
+                            ? { fontWeight: 700 }
+                            : {}
+                        }
+                      >
+                        {cell.render('Cell')}
                       </td>
                     );
                   }

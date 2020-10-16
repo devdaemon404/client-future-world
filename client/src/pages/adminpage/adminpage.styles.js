@@ -99,11 +99,10 @@ export const AdminMain = styled.div`
   }
 `;
 export const TableContainer = styled.div`
-  margin-top: 80px;
+  margin-top: 100px;
   margin-left: 20px;
   text-align: center;
   width: inherit;
-  max-height: 550px;
   display: flex;
   justify-content: center;
   align-items: center;
