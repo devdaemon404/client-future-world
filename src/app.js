@@ -33,9 +33,14 @@ const auth = require('./routes/auth');
 const employee = require('./routes/employee');
 const fileUpload = require('./routes/fileUpload');
 const admin = require('./routes/admin');
+const ejs = require('./routes/ejs');
 
 //Initializing express app object
 const app = express();
+
+//view engine setup
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'ejs');
 
 //Logging middleware
 app.use(require('morgan')('dev'));
@@ -106,6 +111,7 @@ app.use('/api/auth', auth);
 app.use('/api/employee', employee);
 app.use('/api/file', fileUpload);
 app.use('/api/admin', admin);
+app.use('/api/ejs', ejs);
 
 //Serve react client app to production
 if (
