@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import { SideBar, AdminMain, TableContainer } from './adminpage.styles';
+import { SideBar, AdminMain, TableContainer } from './AdminPage.styles';
 import { Form, Button } from 'react-bootstrap';
 import LOGO from '../../assets/img/logo.png';
 import axios from 'axios';
 import { useHistory } from 'react-router-dom';
-import OPTable from './Table';
-const selectUserContext = React.createContext({});
+import OPTable from './AdminTable';
+// const selectUserContext = React.createContext({});
 const AdminPage = () => {
   let retrievedId = '';
   let retrievedEmployee;
@@ -14,7 +14,8 @@ const AdminPage = () => {
   const [selectedEmp, setselectedEmp] = useState(false);
   const [formTable, setFormTable] = useState('Table');
   const [newUserDetails, setNewUserDetails] = useState({ name: '', email: '' });
-
+  const [authorized, setAuthorized] = useState(0);
+  const [loading, setLoading] = useState(false);
   const history = useHistory();
 
   const getUsers = async () => {
@@ -81,22 +82,21 @@ const AdminPage = () => {
 
   const onFormSubmit = async (e) => {
     e.preventDefault();
-    document.querySelector('#confirm').style.opacity = 0;
-    document.body.querySelector('.ButtonForm').textContent = 'Loading...';
+    setAuthorized(0);
+    setLoading(true);
     try {
       const { name, email } = newUserDetails;
       var result = await axios.post('/api/auth/register', { name, email });
 
       if (result) {
-        document.body.querySelector('.ButtonForm').textContent = 'Add Employee';
-        document.querySelector('#confirm').style.opacity = 1;
-        document.querySelector('#confirm').textContent =
-          'New User Added (Confirmation Mail has been sent)';
+        setAuthorized(1);
+
+        setLoading(false);
       }
     } catch (error) {
-      document.querySelector('#confirm').style.opacity = 1;
-      document.body.querySelector('#confirm').textContent = 'Not Authorized';
-      document.body.querySelector('.ButtonForm').textContent = 'Add Employee';
+      setAuthorized(2);
+
+      setLoading(false);
     }
   };
 
@@ -134,7 +134,7 @@ const AdminPage = () => {
         height: '100vh',
       }}
     >
-      <selectUserContext.Provider value={retrievedEmployee} />
+      {/* <selectUserContext.Provider value={retrievedEmployee} /> */}
       <SideBar>
         <div className='logoContainer'>
           <img alt='logo' src={LOGO}></img>
@@ -179,7 +179,7 @@ const AdminPage = () => {
               getCellProps={() => ({})}
             />
           ) : (
-            <>
+            <React.Fragment>
               <Form className='addEmployeeForm'>
                 <h4 className='addEmpHead'>Add a new Employee</h4>
                 <Form.Group>
@@ -209,28 +209,55 @@ const AdminPage = () => {
                     }
                   />
                 </Form.Group>
-                <p
-                  id='confirm'
-                  style={{
-                    color: 'red',
-                    width: '100%',
-                    textAlign: 'Center',
-                    fontWeight: 500,
-                    opacity: 0,
-                  }}
-                >
-                  New User Added (Confirmation Mail has been sent){' '}
-                </p>
+
+                {authorized === 1 ? (
+                  <p
+                    id='confirm'
+                    style={{
+                      color: 'green',
+                      width: '100%',
+                      textAlign: 'Center',
+                      fontWeight: 500,
+                    }}
+                  >
+                    New User Added (Confirmation Mail has been sent){' '}
+                  </p>
+                ) : authorized === 2 ? (
+                  <p
+                    id='confirm'
+                    style={{
+                      color: 'red',
+                      width: '100%',
+                      textAlign: 'Center',
+                      fontWeight: 500,
+                    }}
+                  >
+                    Not Authorized
+                  </p>
+                ) : (
+                  <p
+                    id='confirm'
+                    style={{
+                      color: 'red',
+                      width: '100%',
+                      height: '24px',
+                      textAlign: 'Center',
+                      fontWeight: 500,
+                    }}
+                  >
+                    {'    '}
+                  </p>
+                )}
                 <Button
                   variant='secondary'
                   type='submit'
                   className='ButtonForm'
                   onClick={onFormSubmit}
                 >
-                  Add Employee
+                  {!loading ? 'Add Employee' : 'Loading'}
                 </Button>
               </Form>
-            </>
+            </React.Fragment>
           )}
         </TableContainer>
       </AdminMain>

@@ -1,4 +1,9 @@
 import React, { Fragment, useState } from 'react';
+
+import axios from 'axios';
+import { Form } from 'react-bootstrap';
+import { Link, useHistory } from 'react-router-dom';
+
 import {
   Center,
   LoginHead,
@@ -8,22 +13,19 @@ import {
   BottomLinks,
 } from './loginpage.styles';
 import LOGO from '../../assets/img/logo.png';
-import { useHistory } from 'react-router-dom';
-import axios from 'axios';
-import { Form } from 'react-bootstrap';
-import { Link } from 'react-router-dom';
 
 const LoginPage = () => {
   const history = useHistory();
   const [email, setemail] = useState('');
   const [password, setpassword] = useState('');
   // const [success, setSuccess] = useState(true);
-  const [isLoading, setisLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(false);
 
   const onFormSubmit = async (e) => {
-    setisLoading(true);
+    setIsLoading(true);
     e.preventDefault();
-    document.querySelector('#inv').style.display = 'none';
+    setError(false);
     try {
       var loginResult = await axios.post('/api/auth/login', {
         password,
@@ -32,12 +34,13 @@ const LoginPage = () => {
 
       if (loginResult.data.success) {
         console.log('done');
+        setIsLoading(false);
+        setError(false);
         history.push('/admin');
-        setisLoading(false);
       }
     } catch (err) {
-      setisLoading(false);
-      document.querySelector('#inv').style.display = 'block';
+      setIsLoading(false);
+      setError(true);
     }
   };
   return (
@@ -82,10 +85,9 @@ const LoginPage = () => {
                 width: 400,
                 textAlign: 'Center',
                 fontWeight: 500,
-                display: 'none',
               }}
             >
-              Invalid Credentials
+              {error ? 'Invalid Credentials' : ''}
             </p>
           </form>
 

@@ -18,7 +18,7 @@ import otherpage from '../pages/secondpage/otherpage';
 import OtherInformation from '../pages/formpages/otherformpages/OtherInformation';
 import Uploads from '../pages/formpages/otherformpages/Uploads';
 import Profilepage from '../pages/profilepage/Profilepage';
-import AdminPage from '../pages/adminpage/adminpage';
+import AdminPage from '../pages/adminpage/AdminPage';
 const Routes = () => {
   return (
     <Switch>
