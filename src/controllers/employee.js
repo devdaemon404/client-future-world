@@ -14,24 +14,24 @@ exports.postEmployeeInfo = asyncHandler(async (req, res, next) => {
   if (!employee) {
     employee = new Employee({
       user: req.user.id,
-      name
     });
     await employee.save();
   } else {
     let update = {
       ...postParams,
-      updatedAt: Date.now()
-    }
-    employee = await Employee.findByIdAndUpdate({ _id: employee._id }, update, { new: true });
+      updatedAt: Date.now(),
+    };
+    employee = await Employee.findByIdAndUpdate({ _id: employee._id }, update, {
+      new: true,
+    });
   }
 
   res.status(201).json({
     success: true,
     message: 'Dumped Employee info',
-    data: employee
+    data: employee,
   });
 });
-
 
 /**
  * @desc    Get employee info according to querystring select
@@ -41,7 +41,9 @@ exports.postEmployeeInfo = asyncHandler(async (req, res, next) => {
 
 exports.getEmployeeInfo = asyncHandler(async (req, res, next) => {
   if (!req.query.select) {
-    return next(new ErrorResponse('Please provide required query string "select"', 400))
+    return next(
+      new ErrorResponse('Please provide required query string "select"', 400)
+    );
   }
 
   const fields = req.query.select.split(',').join(' ');
@@ -50,6 +52,6 @@ exports.getEmployeeInfo = asyncHandler(async (req, res, next) => {
   res.status(201).json({
     success: true,
     message: 'Employee info',
-    data: results
+    data: results,
   });
 });

@@ -8,6 +8,7 @@ import OPTable from './AdminTable';
 // const selectUserContext = React.createContext({});
 const AdminPage = () => {
   let retrievedId = '';
+  // eslint-disable-next-line
   let retrievedEmployee;
   let formattedData = [];
   const [data, setData] = useState([]);
@@ -90,7 +91,7 @@ const AdminPage = () => {
 
       if (result) {
         setAuthorized(1);
-
+        await getUsers();
         setLoading(false);
       }
     } catch (error) {

@@ -1,5 +1,5 @@
-import React from 'react';
-import { Route, Switch } from 'react-router-dom';
+import React, { useEffect } from 'react';
+import { Route, Switch, useHistory } from 'react-router-dom';
 import homepage from '../pages/homepage/homepage';
 import LoginPage from '../pages/loginpage/loginpage';
 import personalpage from '../pages/secondpage/personalpage';
@@ -22,7 +22,28 @@ import AdminPage from '../pages/adminpage/AdminPage';
 import schoolandworkpage from '../pages/secondpage/schoolandworkpage';
 import AcademicInformation from '../pages/formpages/workformpages/AcademicInformation';
 import WorkInformation from '../pages/formpages/workformpages/WorkInformation';
+import axios from 'axios';
+
 const Routes = () => {
+  let history = useHistory();
+  useEffect(() => {
+    const checkLogin = async () => {
+      try {
+        const res = await axios.get('/api/auth/validate-token').then();
+        console.log(res.data.role);
+        if (res.data.role === 'admin') {
+          history.push('/admin');
+        } else {
+          history.push('/');
+        }
+      } catch (error) {
+        history.push('/login');
+      }
+    };
+
+    checkLogin();
+    // eslint-disable-next-line
+  }, []);
   return (
     <Switch>
       <Route exact path='/' component={homepage} />
@@ -57,8 +78,16 @@ const Routes = () => {
       />
 
       <Route exact path='/work' component={schoolandworkpage} />
-      <Route exact path='/information/academicInformation' component={AcademicInformation} />
-      <Route exact path='/information/workInformation' component={WorkInformation} />
+      <Route
+        exact
+        path='/information/academicInformation'
+        component={AcademicInformation}
+      />
+      <Route
+        exact
+        path='/information/workInformation'
+        component={WorkInformation}
+      />
 
       <Route exact path='/health' component={healthpage} />
       <Route
