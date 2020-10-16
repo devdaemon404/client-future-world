@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Container,
   HeroContainer,
@@ -9,8 +9,33 @@ import {
 import Header from '../../../components/header/Header';
 import Progressbar from '../../../components/progress-bar/Progress';
 import ComplexComponent from '../../../components/form/ComplexComponent';
+import OPBreadCrumb from '../../../components/form/OPBreadCrumb';
+import axios from 'axios';
 
 const WorkInformation = () => {
+  const [isLoading, setIsLoading] = useState(false);
+  const [formData, setFormData] = useState([]);
+  useEffect(() => {
+    const fetchData = async () => {
+      setIsLoading(true);
+      const config = {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        withCredentials: true,
+      };
+      const result = await axios.get(
+        '/api/employee?select=workInformation,',
+        config
+      );
+      if (result.data.data !== null && result.data.data.workInformation != undefined)
+        setFormData([...result.data.data.workInformation]);
+      setIsLoading(false);
+    };
+
+    fetchData();
+  }, []);
+
   return (
     <Container>
       <Header pathname='/work' />
@@ -52,24 +77,16 @@ const WorkInformation = () => {
 
             <div className='container-fluid mt-5'>
               {/* <h2>Current Address</h2> */}
-              <ul className='nav nav-pills nav-fill'>
-                <li className='nav-item'>
-                  <a
-                    className='nav-link'
-                    href='/information/academicInformation'
-                  >
-                    Academic Information
-                  </a>
-                </li>
-                <li className='nav-item'>
-                  <a
-                    className='nav-link active'
-                    href='/information/workInformation'
-                  >
-                    Work Experience
-                  </a>
-                </li>
-              </ul>
+              <OPBreadCrumb activeIndex={1} crumbs={[
+                {
+                  link: '/information/academicInformation',
+                  label: 'Academic Information'
+                },
+                {
+                  link: '/information/workInformation',
+                  label: 'Work Experience'
+                }
+              ]} />
               <hr></hr>
               <h3 className='mt-3 mb-4'>
                 Please specify all the previous companies you have worked at.
@@ -77,9 +94,20 @@ const WorkInformation = () => {
               </h3>
               <ComplexComponent
                 buttonName='Add Professional Experiences'
-                onSubmit={(data) => {
+                onSubmit={async (data) => {
                   /// Make your API call here
-                  console.log(data);
+                  setFormData([...data])
+                  const config = {
+                    headers: {
+                      'Content-Type': 'application/json',
+                    },
+                    withCredentials: true,
+                  };
+                  await axios.post('/api/employee', JSON.stringify({
+                    postParams: {
+                      workInformation: data
+                    }
+                  }), config)
                 }}
                 tableColumns={[
                   'Company ',
@@ -90,7 +118,7 @@ const WorkInformation = () => {
                   'Type of Industry',
                   'Reason for leaving',
                   'Funtional/Technical Skills',
-                  'Professional Achievents',
+                  'Professional Achievments',
                 ]}
                 essentialFieldKeys={[
                   'company ',
@@ -101,7 +129,7 @@ const WorkInformation = () => {
                   'typeOfIndustry',
                   'reasonForLeaving',
                   'skills',
-                  'achievents',
+                  'achievments',
                 ]}
                 textFieldDetails={[
                   {
@@ -148,11 +176,14 @@ const WorkInformation = () => {
                   },
                   {
                     label: 'Professional Achievents',
-                    key: 'achievents',
+                    key: 'achievments',
                     isRequired: true,
                   },
                 ]}
-                defaultData={[]}
+                // defaultData={[
+                //   { "company ": "asdsad", "fromDate ": "2020-10-27", "toDate ": "2020-11-07", "designation": "asd", "salary": "asd", "typeOfIndustry": "asd", "reasonForLeaving": "asd", "skills": "asd", "achievments": "asd" }
+                // ]}
+                defaultData={[...formData]}
               />
             </div>
           </div>
