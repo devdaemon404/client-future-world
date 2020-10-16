@@ -1,6 +1,6 @@
 import React from 'react';
 import {
-  Container, HeroContainer, MainHeader, MainPara,
+  Container, Hero2Container, MainHeader, MainPara,
   // CardHeader, CardPara
 } from './hero.styles';
 import Card2 from '../card/Card2';

@@ -12,12 +12,12 @@ function ComplexComponent({
   tableColumns,
   textFieldDetails,
   buttonName = 'Invalid Button Name',
-  onSubmit = (_) => { },
+  onSubmit = (_) => {},
 }) {
   const [data, setData] = useState([...defaultData]);
   const tempInfoArr = [];
   useMemo(() => {
-    setData([...defaultData])
+    setData([...defaultData]);
   }, [defaultData]);
   data.forEach((d) => {
     const dataArray = essentialFieldKeys.map((k) => d[k]);
@@ -123,7 +123,7 @@ function ComplexComponent({
         <div style={{ display: 'flex', flexDirection: 'column' }}>
           <div className='btn btn-primary' onClick={toggleFields}>
             <span style={{ fontSize: 20 }}>
-              {isEditing || isInserting ? '<- Go Back' : buttonName}
+             {isEditing || isInserting ? <div><i class="fas fa-chevron-circle-left"></i> Go Back</div> : buttonName}
             </span>
           </div>
         </div>
@@ -188,14 +188,14 @@ function ComplexComponent({
           </form>
         </div>
       ) : (
-            <div>
-              {/* 
+        <div>
+          {/* 
           ---------------Information Table---------------------------
            */}
-              <div className='container-fluid p-2' />
-              <InfoTable />
-            </div>
-          )}
+          <div className='container-fluid p-2' />
+          <InfoTable />
+        </div>
+      )}
     </div>
   );
 
@@ -205,9 +205,9 @@ function ComplexComponent({
   function InfoTable() {
     return (
       <div className='container-fluid'>
-
         <h2 className='p-2 mt-1'>Your Information.</h2>
-        <p><span>(Add family member to show them below)</span>
+        <p>
+          <span>(Add family member to show them below)</span>
         </p>
         <table
           className='table table-striped table-primary table-borderless mt-4 mb-5'

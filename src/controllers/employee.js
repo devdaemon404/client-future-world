@@ -49,7 +49,7 @@ exports.getEmployeeInfo = asyncHandler(async (req, res, next) => {
   const fields = req.query.select.split(',').join(' ');
   const results = await Employee.findOne({ user: req.user.id }).select(fields);
 
-  res.status(201).json({
+  res.status(200).json({
     success: true,
     message: 'Employee info',
     data: results,

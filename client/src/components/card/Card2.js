@@ -4,8 +4,6 @@ import ProgressBar from '../progress-bar/Progress';
 import { Link } from 'react-router-dom';
 
 const Card = ({ title, subTitle, iconClass, percentage, list, pathname }) => {
-
-
   return (
     <Card2Container className='sub-card h-100 w-100'>
       <div className="row">

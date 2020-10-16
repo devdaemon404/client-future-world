@@ -68,6 +68,10 @@ exports.login = asyncHandler(async (req, res, next) => {
     return next(new ErrorResponse('Invalid credentials', 401));
   }
 
+  if (user.active !== 1) {
+    return next(new ErrorResponse('User\'s account is active or relieved', 401));
+  }
+
   await User.findByIdAndUpdate(user._id, {
     lastLogin: Date.now()
   })

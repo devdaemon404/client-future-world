@@ -12,7 +12,7 @@ import OPBreadCrumb from '../../../components/form/OPBreadCrumb.js';
 
 import axios from 'axios';
 
-const LanguageInformation = () => {
+const LanguageInformation = ({history}) => {
   const [isLoading, setIsLoading] = useState(false);
   const [formData, setFormData] = useState({
     canRead: '',
@@ -77,7 +77,8 @@ const LanguageInformation = () => {
         },
       });
 
-      await axios.post('/api/employee', body, config).then();
+      await axios.post('/api/employee', body, config);
+      history.push('/work');
     } catch (error) {
       console.log(error);
     }
@@ -233,15 +234,18 @@ const LanguageInformation = () => {
                   </div>
                   <div className='form-group row p-2 d-flex justify-content-center mt-4 mb-5'>
                     <div className='col-sm-10'>
-                      <Link to='/work'>
+                      
                         <button
                           type='submit'
+                          onClick={() => {
+                            updateLanguageInformation(formData);
+                          }}
                           className='btn btn-primary w-100 font-weight-bold'
                         >
                           <i className='far fa-check-circle'></i> Save and
                           Continue
                         </button>
-                      </Link>
+                      
                     </div>
                   </div>
                 </form>

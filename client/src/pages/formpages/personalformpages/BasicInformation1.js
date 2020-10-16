@@ -18,8 +18,15 @@ const BasicInformation1 = ({ history }) => {
     fullName: '',
     nameHRIS: '',
     fatherName: '',
+    upload: '',
   });
-  const { companyName, empNo, fullName, nameHRIS, fatherName } = formData;
+  const {
+    companyName,
+    empNo,
+    fullName,
+    nameHRIS,
+    fatherName,
+  } = formData;
 
   useEffect(() => {
     const fetchData = async () => {
@@ -31,7 +38,7 @@ const BasicInformation1 = ({ history }) => {
         withCredentials: true,
       };
       const result = await axios.get(
-        '/api/employee?select=companyName,empNo,fullName,nameHRIS,fatherName,',
+        '/api/employee?select=companyName,empNo,fullName,nameHRIS,fatherName,upload',
         config
       );
 
@@ -60,6 +67,7 @@ const BasicInformation1 = ({ history }) => {
     fullName,
     nameHRIS,
     fatherName,
+    upload,
   }) => {
     try {
       const config = {
@@ -75,6 +83,7 @@ const BasicInformation1 = ({ history }) => {
           fullName,
           nameHRIS,
           fatherName,
+          upload,
         },
       });
 
@@ -251,23 +260,27 @@ const BasicInformation1 = ({ history }) => {
                   </div>
 
                   {/* <div class='input-group mb-3'>
-                  <div class='input-group-prepend'>
-                    <span class='input-group-text' id='inputGroupFileAddon01'>
-                      Upload
-                    </span>
-                  </div>
-                  <div class='custom-file'>
-                    <input
-                      type='file'
-                      class='custom-file-input'
-                      id='inputGroupFile01'
-                      aria-describedby='inputGroupFileAddon01'
-                    />
-                    <label class='custom-file-label' for='inputGroupFile01'>
-                      Passport Size Photo
-                    </label>
-                  </div>
-                </div> */}
+                    <div class='input-group-prepend'>
+                      <span class='input-group-text' id='inputGroupFileAddon01'>
+                        Upload Passport Size Photo
+                      </span>
+                    </div>
+                    <div class='custom-file'>
+                      <input
+                        type='file'
+                        class='custom-file-input'
+                        id='upload'
+                        aria-describedby='inputGroupFileAddon01'
+                        name='upload'
+                        // value={upload || ''}
+                        onChange={(e) => handleChange(e)}
+                      />
+                      <label
+                        class='custom-file-label'
+                        for='inputGroupFile01'
+                      ></label>
+                    </div>
+                  </div> */}
 
                   <div className='form-group row p-2 d-flex justify-content-center mt-4 mb-5'>
                     <div className='col-sm-10'>

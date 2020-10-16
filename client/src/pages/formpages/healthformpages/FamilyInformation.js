@@ -100,9 +100,24 @@ const FamilyInformation = () => {
               </h3>
               <ComplexComponent
                 buttonName='Add Family Member'
-                onSubmit={(data) => {
+                onSubmit={async (data) => {
                   /// Make your API call here
-                  console.log(data);
+                  setFormData([...data]);
+                  const config = {
+                    headers: {
+                      'Content-Type': 'application/json',
+                    },
+                    withCredentials: true,
+                  };
+                  await axios.post(
+                    '/api/employee',
+                    JSON.stringify({
+                      postParams: {
+                        familyInformation: data,
+                      },
+                    }),
+                    config
+                  );
                 }}
                 tableColumns={[
                   'Name',
@@ -146,7 +161,7 @@ const FamilyInformation = () => {
                     isRequired: true,
                   },
                 ]}
-                defaultData={formData}
+                defaultData={[...formData]}
               />
             </div>
           </div>

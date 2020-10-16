@@ -21,6 +21,7 @@ const DesignationInformation = () => {
     reporting: '',
     jobLevel: '',
     officeLocation: '',
+    entryVia: '',
     nomination: '',
   });
   const {
@@ -30,7 +31,9 @@ const DesignationInformation = () => {
     reporting,
     jobLevel,
     officeLocation,
+    entryVia,
     nomination,
+    
   } = formData;
 
   useEffect(() => {
@@ -43,7 +46,7 @@ const DesignationInformation = () => {
         withCredentials: true,
       };
       const result = await axios.get(
-        '/api/employee?select=joiningDate,designation,department,reporting,jobLevel,officeLocation,nomination,',
+        '/api/employee?select=joiningDate,designation,department,reporting,jobLevel,officeLocation,entryVia,,nomination,',
         config
       );
 
@@ -73,6 +76,7 @@ const DesignationInformation = () => {
     reporting,
     jobLevel,
     officeLocation,
+    entryVia,
     nomination,
   }) => {
     try {
@@ -90,6 +94,7 @@ const DesignationInformation = () => {
           reporting,
           jobLevel,
           officeLocation,
+          entryVia,
           nomination,
         },
       });
@@ -297,10 +302,12 @@ const DesignationInformation = () => {
                           <input
                             className='form-check-input'
                             type='radio'
-                            name='gridRadios'
-                            id='gridRadios1'
-                            value='option1'
-                            defaultChecked
+                            name='entryVia'
+                            id='Placement'
+                            value='Placement'
+                            onClick={(e) => handleChange(e)}
+                            checked={entryVia === 'Placement'}
+                            
                           />
                           <label className='form-check-label'>Placement</label>
                         </div>
@@ -308,9 +315,11 @@ const DesignationInformation = () => {
                           <input
                             className='form-check-input'
                             type='radio'
-                            name='gridRadios'
-                            id='gridRadios2'
-                            value='option2'
+                            name='entryVia'
+                            id='Direct'
+                            value='Direct'
+                            onClick={(e) => handleChange(e)}
+                            checked={entryVia === 'Direct'}
                           />
                           <label className='form-check-label'>Direct</label>
                         </div>
@@ -318,9 +327,11 @@ const DesignationInformation = () => {
                           <input
                             className='form-check-input'
                             type='radio'
-                            name='gridRadios'
-                            id='gridRadios2'
-                            value='option2'
+                            name='entryVia'
+                            id='Campus'
+                            value='Campus'
+                            onClick={(e) => handleChange(e)}
+                            checked={entryVia === 'Campus'}
                           />
                           <label className='form-check-label'>Campus</label>
                         </div>
@@ -328,9 +339,11 @@ const DesignationInformation = () => {
                           <input
                             className='form-check-input'
                             type='radio'
-                            name='gridRadios'
-                            id='gridRadios2'
-                            value='option2'
+                            name='entryVia'
+                            id='Referal'
+                            value='Referal'
+                            onClick={(e) => handleChange(e)}
+                            checked={entryVia === 'Referal'}
                           />
                           <label className='form-check-label'>Referal</label>
                         </div>
@@ -338,9 +351,11 @@ const DesignationInformation = () => {
                           <input
                             className='form-check-input'
                             type='radio'
-                            name='gridRadios'
-                            id='gridRadios2'
-                            value='option2'
+                            name='entryVia'
+                            id='ADVT'
+                            value='ADVT'
+                            onClick={(e) => handleChange(e)}
+                            checked={entryVia === 'ADVT'}
                           />
                           <label className='form-check-label'>ADVT</label>
                         </div>
@@ -348,9 +363,11 @@ const DesignationInformation = () => {
                           <input
                             className='form-check-input'
                             type='radio'
-                            name='gridRadios'
-                            id='gridRadios2'
-                            value='option2'
+                            name='entryVia'
+                            id='Consultant'
+                            value='Consultant'
+                            onClick={(e) => handleChange(e)}
+                            checked={entryVia === 'Consultant'}
                           />
                           <label className='form-check-label'>Consultant</label>
                         </div>

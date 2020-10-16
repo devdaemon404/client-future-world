@@ -40,9 +40,9 @@ function Header({ pathname }) {
           >
             <ul className='navbar-nav'>
               <li className='nav-item active mr-3'>
-                <a className='nav-link' href={pathname}>
+                <Link className='nav-link' to={pathname}>
                   My Application <span className='sr-only'>(current)</span>
-                </a>
+                </Link>
               </li>
               <li className='nav-item mr-3'>
                 <Link onClick={logOut} className='nav-link' to='/login'>
