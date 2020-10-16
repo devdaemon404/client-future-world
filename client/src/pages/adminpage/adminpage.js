@@ -14,7 +14,11 @@ const AdminPage = () => {
   const [data, setData] = useState([]);
   const [selectedEmp, setselectedEmp] = useState(false);
   const [formTable, setFormTable] = useState('Table');
-  const [newUserDetails, setNewUserDetails] = useState({ name: '', email: '' });
+  const [newUserDetails, setNewUserDetails] = useState({
+    name: '',
+    email: '',
+    phoneNumber: '',
+  });
   const [authorized, setAuthorized] = useState(0);
   const [loading, setLoading] = useState(false);
   const history = useHistory();
@@ -26,7 +30,7 @@ const AdminPage = () => {
       formattedData.push({
         name: employee.name,
         email: employee.email,
-        phone: !employee.phone ? '--' : employee.phone,
+        phoneNumber: !employee.phoneNumber ? '--' : employee.phoneNumber,
         status:
           employee.active === 0
             ? 'Relieved'
@@ -60,7 +64,7 @@ const AdminPage = () => {
     },
     {
       Header: 'Phone Number',
-      accessor: 'phone',
+      accessor: 'phoneNumber',
     },
     {
       Header: `Status`,
@@ -86,8 +90,12 @@ const AdminPage = () => {
     setAuthorized(0);
     setLoading(true);
     try {
-      const { name, email } = newUserDetails;
-      var result = await axios.post('/api/auth/register', { name, email });
+      const { name, email, phoneNumber } = newUserDetails;
+      var result = await axios.post('/api/auth/register', {
+        name,
+        email,
+        phoneNumber,
+      });
 
       if (result) {
         setAuthorized(1);
@@ -181,7 +189,7 @@ const AdminPage = () => {
             />
           ) : (
             <React.Fragment>
-              <Form className='addEmployeeForm'>
+              <Form className='addEmployeeForm' onSubmit={onFormSubmit}>
                 <h4 className='addEmpHead'>Add a new Employee</h4>
                 <Form.Group>
                   <Form.Control
@@ -206,6 +214,22 @@ const AdminPage = () => {
                       setNewUserDetails({
                         ...newUserDetails,
                         email: e.target.value,
+                      })
+                    }
+                  />
+
+                  <br />
+                  <Form.Control
+                    type='number'
+                    placeholder='Employe PhoneNo. (without country code)'
+                    min={1000000000}
+                    max={9999999999}
+                    name='phoneNumber'
+                    required
+                    onChange={(e) =>
+                      setNewUserDetails({
+                        ...newUserDetails,
+                        phoneNumber: e.target.value,
                       })
                     }
                   />
@@ -253,7 +277,6 @@ const AdminPage = () => {
                   variant='secondary'
                   type='submit'
                   className='ButtonForm'
-                  onClick={onFormSubmit}
                 >
                   {!loading ? 'Add Employee' : 'Loading'}
                 </Button>
