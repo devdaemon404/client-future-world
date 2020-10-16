@@ -17,6 +17,7 @@ const BasicInformation2 = () => {
     originalDob: '',
     // male: 'option1',
     // female: 'option2',
+    sex:'',
     birthPlace: '',
     maritalStatus: '',
     marriageDate: '',
@@ -25,8 +26,7 @@ const BasicInformation2 = () => {
   const {
     dob,
     originalDob,
-    // male,
-    // female,
+    sex,
     birthPlace,
     maritalStatus,
     marriageDate,
@@ -43,7 +43,7 @@ const BasicInformation2 = () => {
         withCredentials: true,
       };
       const result = await axios.get(
-        '/api/employee?select=dob,originalDob,male,female,birthPlace,maritalStatus,marriageDate,religion,',
+        '/api/employee?select=dob,originalDob,sex,birthPlace,maritalStatus,marriageDate,religion,',
         config
       );
 
@@ -70,8 +70,7 @@ const BasicInformation2 = () => {
   const updateBasicInformation = async ({
     dob,
     originalDob,
-    male,
-    female,
+    sex,
     birthPlace,
     maritalStatus,
     marriageDate,
@@ -88,8 +87,7 @@ const BasicInformation2 = () => {
         postParams: {
           dob,
           originalDob,
-          male,
-          female,
+          sex,
           birthPlace,
           maritalStatus,
           marriageDate,
@@ -246,9 +244,13 @@ const BasicInformation2 = () => {
                           <input
                             className='form-check-input'
                             type='radio'
-                            name='male'
+                            name='sex'
                             id='male'
-                            value='option1'
+                            value='male'
+                            onClick={(e) => handleChange(e)}
+                            checked={sex === 'male'}
+                            
+
                           />
                           <label className='form-check-label'>Male</label>
                         </div>
@@ -256,9 +258,11 @@ const BasicInformation2 = () => {
                           <input
                             className='form-check-input'
                             type='radio'
-                            name='female'
+                            name='sex'
                             id='female'
-                            value='option2'
+                            value='female'
+                            onClick={(e) => handleChange(e)}
+                            checked={sex === 'female'}
                           />
                           <label className='form-check-label'>Female</label>
                         </div>

@@ -9,6 +9,7 @@ import { Link } from 'react-router-dom';
 import Header from '../../../components/header/Header';
 import Progressbar from '../../../components/progress-bar/Progress';
 import axios from 'axios';
+import Resizer from 'react-image-file-resizer';
 
 const BasicInformation1 = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -18,8 +19,16 @@ const BasicInformation1 = () => {
     fullName: '',
     nameHRIS: '',
     fatherName: '',
+    upload: '',
   });
-  const { companyName, empNo, fullName, nameHRIS, fatherName } = formData;
+  const {
+    companyName,
+    empNo,
+    fullName,
+    nameHRIS,
+    fatherName,
+    upload,
+  } = formData;
 
   useEffect(() => {
     const fetchData = async () => {
@@ -31,7 +40,7 @@ const BasicInformation1 = () => {
         withCredentials: true,
       };
       const result = await axios.get(
-        '/api/employee?select=companyName,empNo,fullName,nameHRIS,fatherName,',
+        '/api/employee?select=companyName,empNo,fullName,nameHRIS,fatherName,upload',
         config
       );
 
@@ -44,6 +53,27 @@ const BasicInformation1 = () => {
   }, []);
 
   const handleChange = (e) => {
+    var fileInput = false;
+    if (e.target.files[0]) {
+      fileInput = true;
+    }
+    if (fileInput) {
+      Resizer.imageFileResizer(
+        e.target.files[0],
+        600,
+        600,
+        'JPEG',
+        100,
+        0,
+        (uri) => {
+          console.log(uri);
+        },
+        'blob',
+        200,
+        200
+      );
+    }
+
     const target = e.target;
     const value = target.type === 'checkbox' ? target.checked : target.value;
     const name = target.name;
@@ -60,6 +90,7 @@ const BasicInformation1 = () => {
     fullName,
     nameHRIS,
     fatherName,
+    upload,
   }) => {
     try {
       const config = {
@@ -75,6 +106,7 @@ const BasicInformation1 = () => {
           fullName,
           nameHRIS,
           fatherName,
+          upload,
         },
       });
 
@@ -267,23 +299,27 @@ const BasicInformation1 = () => {
                   </div>
 
                   {/* <div class='input-group mb-3'>
-                  <div class='input-group-prepend'>
-                    <span class='input-group-text' id='inputGroupFileAddon01'>
-                      Upload
-                    </span>
-                  </div>
-                  <div class='custom-file'>
-                    <input
-                      type='file'
-                      class='custom-file-input'
-                      id='inputGroupFile01'
-                      aria-describedby='inputGroupFileAddon01'
-                    />
-                    <label class='custom-file-label' for='inputGroupFile01'>
-                      Passport Size Photo
-                    </label>
-                  </div>
-                </div> */}
+                    <div class='input-group-prepend'>
+                      <span class='input-group-text' id='inputGroupFileAddon01'>
+                        Upload Passport Size Photo
+                      </span>
+                    </div>
+                    <div class='custom-file'>
+                      <input
+                        type='file'
+                        class='custom-file-input'
+                        id='upload'
+                        aria-describedby='inputGroupFileAddon01'
+                        name='upload'
+                        // value={upload || ''}
+                        onChange={(e) => handleChange(e)}
+                      />
+                      <label
+                        class='custom-file-label'
+                        for='inputGroupFile01'
+                      ></label>
+                    </div>
+                  </div> */}
 
                   <div className='form-group row p-2 d-flex justify-content-center mt-4 mb-5'>
                     <div className='col-sm-10'>
