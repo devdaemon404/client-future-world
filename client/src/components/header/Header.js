@@ -1,14 +1,13 @@
 import React from 'react';
 import { HeaderContainer } from './header.styles';
-
-function Header({pathname}) {
+import logo from '../../assets/img/logo.png';
+function Header({ pathname }) {
   return (
     <HeaderContainer>
       <div>
         <nav className='navbar navbar-expand-lg'>
           <a className='navbar-brand ml-5' href='/'>
-            <img src='http://www.futureworldconsultancy.com/images/logo2.png' alt='' className='img-fluid' height='30px' width='80px' />
-     
+            <img src={logo} alt='' className='img-fluid' height='40px' width='90px' />
           </a>
           <button
             className='navbar-toggler'
@@ -18,7 +17,6 @@ function Header({pathname}) {
             aria-controls='navbarNav'
             aria-expanded='false'
             aria-label='Toggle navigation'
-
           >
             <span className='navbar-toggler-icon'><i className="fas fa-bars"></i></span>
           </button>

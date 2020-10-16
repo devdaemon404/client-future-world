@@ -19,6 +19,9 @@ import OtherInformation from '../pages/formpages/otherformpages/OtherInformation
 import Uploads from '../pages/formpages/otherformpages/Uploads';
 import Profilepage from '../pages/profilepage/Profilepage';
 import AdminPage from '../pages/adminpage/AdminPage';
+import schoolandworkpage from '../pages/secondpage/schoolandworkpage';
+import AcademicInformation from '../pages/formpages/workformpages/AcademicInformation';
+import WorkInformation from '../pages/formpages/workformpages/WorkInformation';
 const Routes = () => {
   return (
     <Switch>
@@ -52,6 +55,10 @@ const Routes = () => {
         path='/information/languageInformation'
         component={LanguageInformation}
       />
+
+      <Route exact path='/work' component={schoolandworkpage} />
+      <Route exact path='/information/academicInformation' component={AcademicInformation} />
+      <Route exact path='/information/workInformation' component={WorkInformation} />
 
       <Route exact path='/health' component={healthpage} />
       <Route

@@ -10,13 +10,13 @@ import Header from '../../../components/header/Header';
 import Progressbar from '../../../components/progress-bar/Progress';
 import ComplexComponent from '../../../components/form/ComplexComponent';
 
-const FamilyInformation = () => {
+const WorkInformation = () => {
   return (
     <Container>
-      <Header pathname='/health' />
+      <Header pathname='/work' />
       <HeroContainer className='box d-flex align-items-center justify-content-center'>
         <MainHeader className='text-center'>
-          Health and Family Information
+          Academic Infromation and Work Experience
         </MainHeader>
       </HeroContainer>
       <div className='container'>
@@ -54,67 +54,105 @@ const FamilyInformation = () => {
               {/* <h2>Current Address</h2> */}
               <ul className='nav nav-pills nav-fill'>
                 <li className='nav-item'>
-                  <a className='nav-link' href='/information/healthInformation'>
-                    Health Information
+                  <a
+                    className='nav-link'
+                    href='/information/academicInformation'
+                  >
+                    Academic Information
                   </a>
                 </li>
                 <li className='nav-item'>
                   <a
                     className='nav-link active'
-                    href='/information/familyInformation'
+                    href='/information/workInformation'
                   >
-                    Family Member Information
+                    Work Experience
                   </a>
                 </li>
               </ul>
               <hr></hr>
-              <h3 className='mt-3 mb-4'>Add at max five members of your family<span style={{ color: 'red' }}>*</span></h3>
+              <h3 className='mt-3 mb-4'>
+                Please specify all the previous companies you have worked at.
+                <span style={{ color: 'red' }}>*</span>
+              </h3>
               <ComplexComponent
-                buttonName='Add Family Member'
+                buttonName='Add Professional Experiences'
                 onSubmit={(data) => {
                   /// Make your API call here
                   console.log(data);
                 }}
-                tableColumns={['Name', 'Relationship','DOB', 'Blood Group' ,'Occupation',]}
+                tableColumns={[
+                  'Company ',
+                  'From date ',
+                  'To date',
+                  'Designation',
+                  'Salary p.a.',
+                  'Type of Industry',
+                  'Reason for leaving',
+                  'Funtional/Technical Skills',
+                  'Professional Achievents',
+                ]}
                 essentialFieldKeys={[
-                  'name',
-                  'relationship',
-                  'familyDob',
-                  'bloodGroup',
-                  'occupation',
+                  'company ',
+                  'fromDate ',
+                  'toDate ',
+                  'designation',
+                  'salary',
+                  'typeOfIndustry',
+                  'reasonForLeaving',
+                  'skills',
+                  'achievents',
                 ]}
                 textFieldDetails={[
                   {
-                    label: 'Family Member Name',
-                    key: 'name',
+                    label: 'Company ',
+                    key: 'company ',
                     isRequired: true,
                   },
                   {
-                    label: 'Relationship',
-                    key: 'relationship',
-                    isRequired: true,
-                  },
-                  {
-                    label: 'DOB',
-                    key: 'familyDob',
+                    label: 'From date ',
+                    key: 'fromDate ',
                     isRequired: true,
                     type: 'date',
-
                   },
                   {
-                    label: 'Blood Group',
-                    key: 'bloodGroup',
+                    label: 'To date',
+                    key: 'toDate ',
+                    isRequired: true,
+                    type: 'date',
+                  },
+                  {
+                    label: 'Designation',
+                    key: 'designation',
                     isRequired: true,
                   },
                   {
-                    label: 'Occupation',
-                    key: 'occupation',
+                    label: 'Salary p.a.',
+                    key: 'salary',
+                    isRequired: true,
+                  },
+                  {
+                    label: 'Type of Industry',
+                    key: 'typeOfIndustry',
+                    isRequired: true,
+                  },
+                  {
+                    label: 'Reason for leaving',
+                    key: 'reasonForLeaving',
+                    isRequired: true,
+                  },
+                  {
+                    label: 'Funtional/Technical Skills',
+                    key: 'skills',
+                    isRequired: true,
+                  },
+                  {
+                    label: 'Professional Achievents',
+                    key: 'achievents',
                     isRequired: true,
                   },
                 ]}
-                defaultData={[
-                
-                ]}
+                defaultData={[]}
               />
             </div>
           </div>
@@ -124,4 +162,4 @@ const FamilyInformation = () => {
   );
 };
 
-export default FamilyInformation;
+export default WorkInformation;
