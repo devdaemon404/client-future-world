@@ -1,7 +1,7 @@
 import React from 'react';
 import Progressbar from '../progress-bar/Progress';
 
-export const FormPageComponent = ({ children }) => {
+const FormPageComponent = ({ children }) => {
   return (
     <>
       <div className='row'>
@@ -37,8 +37,12 @@ export const FormPageComponent = ({ children }) => {
             </div>
           </div>
         </div>
-        {children}
+        <div className='col-lg-7 order-1 order-lg-2 d-flex flex-column right justify-content-start mt-5'>
+          {children}
+        </div>
       </div>
     </>
   );
 };
+
+export default FormPageComponent;

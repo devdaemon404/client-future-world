@@ -121,9 +121,18 @@ function ComplexComponent({
       */}
       <div style={{ display: 'flex', flexDirection: 'row' }}>
         <div style={{ display: 'flex', flexDirection: 'column' }}>
-          <div className='btn btn-primary' onClick={toggleFields}>
+          <div
+            className='btn active crumb-item selected-crumb'
+            onClick={toggleFields}
+          >
             <span style={{ fontSize: 20 }}>
-             {isEditing || isInserting ? <div><i class="fas fa-chevron-circle-left"></i> Go Back</div> : buttonName}
+              {isEditing || isInserting ? (
+                <div>
+                  <i class='fas fa-chevron-circle-left'></i> &nbsp; Go Back
+                </div>
+              ) : (
+                buttonName
+              )}
             </span>
           </div>
         </div>
@@ -181,7 +190,7 @@ function ComplexComponent({
             ))}
             <button
               type='submit'
-              className='btn btn-primary w-100 font-weight-bold mb-5 mt-4'
+              className='btn selected-crumb submit-button crumb-item w-100 font-weight-bold'
             >
               <i className='far fa-check-circle'></i> Save and Continue
             </button>
@@ -207,10 +216,10 @@ function ComplexComponent({
       <div className='container-fluid'>
         <h2 className='p-2 mt-1'>Your Information.</h2>
         <p>
-          <span>(Add family member to show them below)</span>
+          <span>({buttonName}&nbsp; to show them below)</span>
         </p>
         <table
-          className='table table-striped table-primary table-borderless mt-4 mb-5'
+          className='table table-striped  table-borderless mt-4 mb-5'
           style={{
             display: 'block',
             overflowX: 'auto',
@@ -233,7 +242,7 @@ function ComplexComponent({
                 ))}
                 <td>
                   <button
-                    className='btn btn-primary mx-1 my-1'
+                    className='btn selected-crumb crumb-item mx-1 my-1'
                     onClick={() => {
                       setEditingFieldIndex(key);
                       setIsEditing(true);
@@ -242,7 +251,7 @@ function ComplexComponent({
                     Edit
                   </button>
                   <button
-                    class='btn btn-primary mx-1 my-1'
+                    className='btn crumb-item mx-1 my-1'
                     onClick={() => onDelete(key)}
                   >
                     Delete

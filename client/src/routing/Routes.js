@@ -1,5 +1,6 @@
 import React, { useEffect } from 'react';
-import { Route, Switch, useHistory } from 'react-router-dom';
+import { Route, useHistory } from 'react-router-dom';
+import { AnimatedSwitch } from 'react-router-transition';
 import homepage from '../pages/homepage/homepage';
 import LoginPage from '../pages/loginpage/loginpage';
 import personalpage from '../pages/secondpage/personalpage';
@@ -45,7 +46,12 @@ const Routes = () => {
     // eslint-disable-next-line
   }, []);
   return (
-    <Switch>
+    <AnimatedSwitch
+      atEnter={{ opacity: 0 }}
+      atLeave={{ opacity: 0 }}
+      atActive={{ opacity: 1 }}
+      className='switch-wrapper'
+    >
       <Route exact path='/' component={homepage} />
       <Route exact path='/login' component={LoginPage} />
 
@@ -112,7 +118,7 @@ const Routes = () => {
       <Route exact path='/admin' component={AdminPage} />
 
       <Route exact path='/profile' component={Profilepage} />
-    </Switch>
+    </AnimatedSwitch>
   );
 };
 

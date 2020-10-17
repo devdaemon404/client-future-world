@@ -9,7 +9,7 @@ import { Link } from 'react-router-dom';
 import Header from '../../../components/header/Header';
 import OPBreadCrumb from '../../../components/form/OPBreadCrumb';
 import axios from 'axios';
-import { FormPageComponent } from '../../../components/form/FormPageComponent.js';
+import FormPageComponent from '../../../components/form/FormPageComponent.js';
 
 const BasicInformation2 = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -115,7 +115,6 @@ const BasicInformation2 = () => {
       </HeroContainer>
       <div className=''>
         <FormPageComponent>
-          <div className='col-lg-6 order-1 order-lg-2 d-flex flex-column right justify-content-start mt-5'>
             <div className='container-fluid mt-5'>
               {/* <h2>Current Address</h2> */}
               <OPBreadCrumb
@@ -123,19 +122,19 @@ const BasicInformation2 = () => {
                 crumbs={[
                   {
                     link: '/information/basicInformation-1',
-                    label: 'Basic Information - 1',
+                    label: 'Basic Info - 1',
                   },
                   {
                     link: '/information/basicInformation-2',
-                    label: 'Basic Information - 2',
+                    label: 'Basic Info - 2',
                   },
                   {
                     link: '/information/designationInformation',
-                    label: 'Designation Information',
+                    label: 'Designation',
                   },
                   {
                     link: '/information/documentalInformation',
-                    label: 'Documental Information',
+                    label: 'Documental',
                   },
                   {
                     link: '/information/address',
@@ -143,7 +142,7 @@ const BasicInformation2 = () => {
                   },
                   {
                     link: '/information/languageInformation',
-                    label: 'Language Information',
+                    label: 'Language',
                   },
                 ]}
               />
@@ -303,10 +302,10 @@ const BasicInformation2 = () => {
                       <Link to='/information/designationInformation'>
                         <button
                           type='submit'
+                          className='btn selected-crumb submit-button crumb-item w-100 font-weight-bold'
                           onClick={() => {
                             updateBasicInformation(formData);
                           }}
-                          className='btn btn-primary w-100 font-weight-bold'
                         >
                           <i className='far fa-check-circle'></i> Save and
                           Continue
@@ -317,7 +316,6 @@ const BasicInformation2 = () => {
                 </form>
               )}
             </div>
-          </div>
         </FormPageComponent>
       </div>
     </Container>
