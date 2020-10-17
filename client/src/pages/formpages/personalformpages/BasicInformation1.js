@@ -6,7 +6,7 @@ import {
   //  MainPara, CardHeader, CardPara
 } from '../formpage.styles.js';
 import Header from '../../../components/header/Header';
-import Progressbar from '../../../components/progress-bar/Progress';
+import FormPageComponent from '../../../components/form/FormPageComponent';
 import axios from 'axios';
 import OPBreadCrumb from '../../../components/form/OPBreadCrumb.js';
 
@@ -20,13 +20,7 @@ const BasicInformation1 = ({ history }) => {
     fatherName: '',
     upload: '',
   });
-  const {
-    companyName,
-    empNo,
-    fullName,
-    nameHRIS,
-    fatherName,
-  } = formData;
+  const { companyName, empNo, fullName, nameHRIS, fatherName } = formData;
 
   useEffect(() => {
     const fetchData = async () => {
@@ -105,161 +99,133 @@ const BasicInformation1 = ({ history }) => {
       <HeroContainer className='box d-flex align-items-center justify-content-center'>
         <MainHeader className='text-center'>Personal Information</MainHeader>
       </HeroContainer>
-      <div className='container'>
-        <div className='row'>
-          <div className='col-lg-4 order-1 order-lg-1 d-flex flex-column justify-content-start mt-5'>
-            <div className='d-flex justify-content-center'>
-              <Progressbar
-                iconClass='fas fa-address-card fa-2x'
-                percentage='50'
-              />
-            </div>
-            <p className='text-muted text-center'>
-              <em>5/10 sections completed</em>
-            </p>
-          </div>
-          <div className='col-lg-8 order-1 order-lg-2 d-flex flex-column justify-content-start mt-5'>
-            <div>
-              <p>
-                Enter your contact information in this section. Keep this
-                information up-to-date throughout the application process.
-              </p>
-            </div>
-            <div>
-              <p>
-                You can edit this section after you submit your application.
-              </p>
-            </div>
-            <div>
-              <p>
-                <span style={{ color: 'red' }}>*</span> Indicates required field
-              </p>
-            </div>
+      <div className=''>
+        <FormPageComponent>
+          <div className='container-fluid mt-5'>
+            {/* <h2>Current Address</h2> */}
+            <OPBreadCrumb
+              activeIndex={0}
+              crumbs={[
+                {
+                  link: '/information/basicInformation-1',
+                  label: 'Basic Info - 1',
+                },
+                {
+                  link: '/information/basicInformation-2',
+                  label: 'Basic Info - 2',
+                },
+                {
+                  link: '/information/designationInformation',
+                  label: 'Designation',
+                },
+                {
+                  link: '/information/documentalInformation',
+                  label: 'Documental',
+                },
+                {
+                  link: '/information/address',
+                  label: 'Address',
+                },
+                {
+                  link: '/information/languageInformation',
+                  label: 'Language',
+                },
+              ]}
+            />
+            {/* <h2>Current Address</h2> */}
 
-            <div className='container-fluid mt-5'>
-              <OPBreadCrumb
-                activeIndex={0}
-                crumbs={[
-                  {
-                    link: '/information/basicInformation-1',
-                    label: 'Basic Information - 1',
-                  },
-                  {
-                    link: '/information/basicInformation-2',
-                    label: 'Basic Information - 2',
-                  },
-                  {
-                    link: '/information/designationInformation',
-                    label: 'Designation Information',
-                  },
-                  {
-                    link: '/information/documentalInformation',
-                    label: 'Documental Information',
-                  },
-                  {
-                    link: '/information/address',
-                    label: 'Address',
-                  },
-                  {
-                    link: '/information/languageInformation',
-                    label: 'Language Information',
-                  },
-                ]}
-              />
-              {/* <h2>Current Address</h2> */}
-
-              <hr></hr>
-              {isLoading ? (
-                <div>
-                  <h1>Loading...</h1>
+            <hr></hr>
+            {isLoading ? (
+              <div>
+                <h1>Loading...</h1>
+              </div>
+            ) : (
+              <form onSubmit={handleSubmit} className='mt-2 text-left'>
+                <div className='form-group row p-2'>
+                  <label className='col-sm-3 col-form-label'>
+                    <span style={{ color: 'red' }}>*</span> Company Name
+                  </label>
+                  <div className='col-sm-9'>
+                    <input
+                      type='text'
+                      className='form-control'
+                      id='companyName'
+                      placeholder=''
+                      name='companyName'
+                      value={companyName || ''}
+                      onChange={(e) => handleChange(e)}
+                      required
+                    />
+                  </div>
                 </div>
-              ) : (
-                <form onSubmit={handleSubmit} className='mt-2 text-left'>
-                  <div className='form-group row p-2'>
-                    <label className='col-sm-3 col-form-label'>
-                      <span style={{ color: 'red' }}>*</span> Company Name
-                    </label>
-                    <div className='col-sm-9'>
-                      <input
-                        type='text'
-                        className='form-control'
-                        id='companyName'
-                        placeholder=''
-                        name='companyName'
-                        value={companyName || ''}
-                        onChange={(e) => handleChange(e)}
-                        required
-                      />
-                    </div>
+                <div className='form-group row p-2'>
+                  <label className='col-sm-3 col-form-label'>
+                    <span style={{ color: 'red' }}>*</span> Emp no.
+                  </label>
+                  <div className='col-sm-9'>
+                    <input
+                      type='text'
+                      className='form-control'
+                      id='empNo'
+                      placeholder=''
+                      name='empNo'
+                      value={empNo || ''}
+                      onChange={(e) => handleChange(e)}
+                      required
+                    />
                   </div>
-                  <div className='form-group row p-2'>
-                    <label className='col-sm-3 col-form-label'>
-                      <span style={{ color: 'red' }}>*</span> Emp no.
-                    </label>
-                    <div className='col-sm-9'>
-                      <input
-                        type='text'
-                        className='form-control'
-                        id='empNo'
-                        placeholder=''
-                        name='empNo'
-                        value={empNo || ''}
-                        onChange={(e) => handleChange(e)}
-                        required
-                      />
-                    </div>
+                </div>
+                <div className='form-group row p-2'>
+                  <label className='col-sm-3 col-form-label'>
+                    <span style={{ color: 'red' }}>*</span> Name in full
+                  </label>
+                  <div className='col-sm-9'>
+                    <input
+                      placeholder='initial|First Name|Middle Name|Last Name'
+                      type='text'
+                      className='form-control'
+                      id='fullName'
+                      name='fullName'
+                      value={fullName || ''}
+                      onChange={(e) => handleChange(e)}
+                      required
+                    />
                   </div>
-                  <div className='form-group row p-2'>
-                    <label className='col-sm-3 col-form-label'>
-                      <span style={{ color: 'red' }}>*</span> Name in full
-                    </label>
-                    <div className='col-sm-9'>
-                      <input
-                        placeholder='initial|First Name|Middle Name|Last Name'
-                        type='text'
-                        className='form-control'
-                        id='fullName'
-                        name='fullName'
-                        value={fullName || ''}
-                        onChange={(e) => handleChange(e)}
-                        required
-                      />
-                    </div>
+                </div>
+                <div className='form-group row p-2'>
+                  <label className='col-sm-3 col-form-label'>
+                    <span style={{ color: 'red' }}>*</span> Name on HRIS
+                  </label>
+                  <div className='col-sm-9'>
+                    <input
+                      type='text'
+                      className='form-control'
+                      id='nameHRIS'
+                      name='nameHRIS'
+                      value={nameHRIS || ''}
+                      onChange={(e) => handleChange(e)}
+                      required
+                    />
                   </div>
-                  <div className='form-group row p-2'>
-                    <label className='col-sm-3 col-form-label'>
-                      <span style={{ color: 'red' }}>*</span> Name on HRIS
-                    </label>
-                    <div className='col-sm-9'>
-                      <input
-                        type='text'
-                        className='form-control'
-                        id='nameHRIS'
-                        name='nameHRIS'
-                        value={nameHRIS || ''}
-                        onChange={(e) => handleChange(e)}
-                        required
-                      />
-                    </div>
+                </div>
+                <div className='form-group row p-2'>
+                  <label className='col-sm-3 col-form-label'>
+                    <span style={{ color: 'red' }}>*</span> Father's Name
+                  </label>
+                  <div className='col-sm-9'>
+                    <input
+                      type='text'
+                      className='form-control'
+                      id='fatherName'
+                      name='fatherName'
+                      value={fatherName || ''}
+                      onChange={(e) => handleChange(e)}
+                      required
+                    />
                   </div>
-                  <div className='form-group row p-2'>
-                    <label className='col-sm-3 col-form-label'>
-                      <span style={{ color: 'red' }}>*</span> Father's Name
-                    </label>
-                    <div className='col-sm-9'>
-                      <input
-                        type='text'
-                        className='form-control'
-                        id='fatherName'
-                        name='fatherName'
-                        value={fatherName || ''}
-                        onChange={(e) => handleChange(e)}
-                        required
-                      />
-                    </div>
-                  </div>
+                </div>
 
-                  {/* <div class='input-group mb-3'>
+                {/* <div class='input-group mb-3'>
                     <div class='input-group-prepend'>
                       <span class='input-group-text' id='inputGroupFileAddon01'>
                         Upload Passport Size Photo
@@ -282,25 +248,23 @@ const BasicInformation1 = ({ history }) => {
                     </div>
                   </div> */}
 
-                  <div className='form-group row p-2 d-flex justify-content-center mt-4 mb-5'>
-                    <div className='col-sm-10'>
-                      <button
-                        type='submit'
-                        onClick={() => {
-                          updateBasicInformation(formData);
-                        }}
-                        className='btn btn-primary w-100 font-weight-bold'
-                      >
-                        <i className='far fa-check-circle'></i> Save and
-                        Continue
-                      </button>
-                    </div>
+                <div className='form-group row p-2 d-flex justify-content-center mt-4 mb-5'>
+                  <div className='col-sm-10'>
+                    <button
+                      type='submit'
+                      onClick={() => {
+                        updateBasicInformation(formData);
+                      }}
+                      className='btn selected-crumb submit-button crumb-item w-100 font-weight-bold'
+                    >
+                      <i className='far fa-check-circle'></i> Save and Continue
+                    </button>
                   </div>
-                </form>
-              )}
-            </div>
+                </div>
+              </form>
+            )}
           </div>
-        </div>
+        </FormPageComponent>
       </div>
     </Container>
   );

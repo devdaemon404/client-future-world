@@ -15,9 +15,19 @@ input::-webkit-inner-spin-button {
 .crumb-item {
   color: black;
 }
+.crumb-item:hover {
+  background-color: #265b7eca;
+  transition: 0.1s;
+  color: white;
+  transform: scale(0.95);
+}
 
 .selected-crumb {
   background-color: #265b7e;
+  color: white;
+}
+
+.selected-crumb:hover {
   color: white;
 }
 
@@ -38,6 +48,10 @@ input[type='number'] {
 .switch-wrapper > div {
   width: 100%;
   position: absolute;
+}
+
+.submit-button {
+  height: 50px;
 }
 
 /* body {

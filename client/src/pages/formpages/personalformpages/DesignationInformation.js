@@ -7,7 +7,7 @@ import {
 } from '../formpage.styles.js';
 import { Link } from 'react-router-dom';
 import Header from '../../../components/header/Header';
-import Progressbar from '../../../components/progress-bar/Progress';
+import FormPageComponent from '../../../components/form/FormPageComponent';
 import OPBreadCrumb from '../../../components/form/OPBreadCrumb.js';
 
 import axios from 'axios';
@@ -33,7 +33,6 @@ const DesignationInformation = () => {
     officeLocation,
     entryVia,
     nomination,
-    
   } = formData;
 
   useEffect(() => {
@@ -116,57 +115,29 @@ const DesignationInformation = () => {
       <HeroContainer className='box d-flex align-items-center justify-content-center'>
         <MainHeader className='text-center'>Personal Information</MainHeader>
       </HeroContainer>
-      <div className='container'>
-        <div className='row'>
-          <div className='col-lg-4 order-1 order-lg-1 d-flex flex-column justify-content-start mt-5'>
-            <div className='d-flex justify-content-center'>
-              <Progressbar
-                iconClass='fas fa-address-card fa-2x'
-                percentage='50'
-              />
-            </div>
-            <p className='text-muted text-center'>
-              <em>5/10 sections completed</em>
-            </p>
-          </div>
-          <div className='col-lg-8 order-1 order-lg-2 d-flex flex-column justify-content-start mt-5'>
-            <div>
-              <p>
-                Enter your contact information in this section. Keep this
-                information up-to-date throughout the application process.
-              </p>
-            </div>
-            <div>
-              <p>
-                You can edit this section after you submit your application.
-              </p>
-            </div>
-            <div>
-              <p>
-                <span style={{ color: 'red' }}>*</span> Indicates required field
-              </p>
-            </div>
-
+      <div className=''>
+        <FormPageComponent>
             <div className='container-fluid mt-5'>
+              {/* <h2>Current Address</h2> */}
               {/* <h2>Current Address</h2> */}
               <OPBreadCrumb
                 activeIndex={2}
                 crumbs={[
                   {
                     link: '/information/basicInformation-1',
-                    label: 'Basic Information - 1',
+                    label: 'Basic Info - 1',
                   },
                   {
                     link: '/information/basicInformation-2',
-                    label: 'Basic Information - 2',
+                    label: 'Basic Info - 2',
                   },
                   {
                     link: '/information/designationInformation',
-                    label: 'Designation Information',
+                    label: 'Designation',
                   },
                   {
                     link: '/information/documentalInformation',
-                    label: 'Documental Information',
+                    label: 'Documental',
                   },
                   {
                     link: '/information/address',
@@ -174,7 +145,7 @@ const DesignationInformation = () => {
                   },
                   {
                     link: '/information/languageInformation',
-                    label: 'Language Information',
+                    label: 'Language',
                   },
                 ]}
               />
@@ -307,7 +278,6 @@ const DesignationInformation = () => {
                             value='Placement'
                             onClick={(e) => handleChange(e)}
                             checked={entryVia === 'Placement'}
-                            
                           />
                           <label className='form-check-label'>Placement</label>
                         </div>
@@ -398,10 +368,10 @@ const DesignationInformation = () => {
                       <Link to='/information/documentalInformation'>
                         <button
                           type='submit'
+                          className='btn selected-crumb submit-button crumb-item w-100 font-weight-bold'
                           onClick={() => {
                             updateDesignationInformation(formData);
                           }}
-                          className='btn btn-primary w-100 font-weight-bold'
                         >
                           <i className='far fa-check-circle'></i> Save and
                           Continue
@@ -412,8 +382,7 @@ const DesignationInformation = () => {
                 </form>
               )}
             </div>
-          </div>
-        </div>
+        </FormPageComponent>
       </div>
     </Container>
   );
