@@ -48,7 +48,7 @@ const LoginPage = () => {
     }
   };
   return (
-    <Fragment>
+    <div style={{ position: 'absolute', width: '100%', height: '100%' }}>
       <LoginHead>
         <img alt='logo' src={LOGO} />
       </LoginHead>
@@ -123,7 +123,7 @@ const LoginPage = () => {
           </Link>
         </BottomLinks>
       </Center>
-    </Fragment>
+    </div>
   );
 };
 

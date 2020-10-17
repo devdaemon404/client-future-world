@@ -47,7 +47,7 @@ export const SideBar = styled.div`
     width: 200px;
     border-radius:8px;
     height: 40px;
-    font-size:17px;
+    font-size:15px;
     font-weight:700;
     color: white;
     text-align: center;

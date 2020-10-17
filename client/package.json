@@ -16,6 +16,7 @@
     "react-dom": "^16.13.1",
     "react-image-file-resizer": "^0.3.8",
     "react-router-dom": "^5.2.0",
+    "react-router-transition": "^2.0.0",
     "react-scripts": "3.4.3",
     "react-table": "^7.6.0",
     "styled-components": "^5.2.0"

@@ -41,7 +41,7 @@ const AdminPage = () => {
             ? 'Active'
             : 'Inactive',
 
-        joinDate: moment(employee.createdAt).format('DD/MMM/YYYY'),
+        joinDate: moment(employee.createdAt).format('DD/MMM/YYYY hh:mm:ss'),
         id: employee._id,
       });
     });
@@ -116,7 +116,7 @@ const AdminPage = () => {
   };
 
   const onClickHandler = async (e) => {
-    retrievedId = e.target.children[5].outerText.toString();
+    retrievedId = e.target.children[5].innerHTML.toString().trim();
 
     retrievedEmployee = data.find((o) => o.id === retrievedId);
     if (e.target.value === '0') {
