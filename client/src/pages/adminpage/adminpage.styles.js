@@ -42,12 +42,12 @@ export const SideBar = styled.div`
     border-bottom: 2px solid white;
   }
   .SideBarCompItem {
-    padding:8px 30px;
-    margin:15px auto;
+    padding:9px 30px;
+    margin:17px auto;
     width: 200px;
     border-radius:8px;
     height: 40px;
-    font-size:17px;
+    font-size:15px;
     font-weight:700;
     color: white;
     text-align: center;
