@@ -7,9 +7,9 @@ import {
 } from '../formpage.styles.js';
 import { Link } from 'react-router-dom';
 import Header from '../../../components/header/Header';
-import Progressbar from '../../../components/progress-bar/Progress';
 import OPBreadCrumb from '../../../components/form/OPBreadCrumb';
 import axios from 'axios';
+import { FormPageComponent } from '../../../components/form/FormPageComponent.js';
 
 const BasicInformation2 = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -18,7 +18,7 @@ const BasicInformation2 = () => {
     originalDob: '',
     // male: 'option1',
     // female: 'option2',
-    sex:'',
+    sex: '',
     birthPlace: '',
     maritalStatus: '',
     marriageDate: '',
@@ -113,37 +113,9 @@ const BasicInformation2 = () => {
       <HeroContainer className='box d-flex align-items-center justify-content-center'>
         <MainHeader className='text-center'>Personal Information</MainHeader>
       </HeroContainer>
-      <div className='container'>
-        <div className='row'>
-          <div className='col-lg-4 order-1 order-lg-1 d-flex flex-column justify-content-start mt-5'>
-            <div className='d-flex justify-content-center'>
-              <Progressbar
-                iconClass='fas fa-address-card fa-2x'
-                percentage='50'
-              />
-            </div>
-            <p className='text-muted text-center'>
-              <em>5/10 sections completed</em>
-            </p>
-          </div>
-          <div className='col-lg-8 order-1 order-lg-2 d-flex flex-column justify-content-start mt-5'>
-            <div>
-              <p>
-                Enter your contact information in this section. Keep this
-                information up-to-date throughout the application process.
-              </p>
-            </div>
-            <div>
-              <p>
-                You can edit this section after you submit your application.
-              </p>
-            </div>
-            <div>
-              <p>
-                <span style={{ color: 'red' }}>*</span> Indicates required field
-              </p>
-            </div>
-
+      <div className=''>
+        <FormPageComponent>
+          <div className='col-lg-6 order-1 order-lg-2 d-flex flex-column right justify-content-start mt-5'>
             <div className='container-fluid mt-5'>
               {/* <h2>Current Address</h2> */}
               <OPBreadCrumb
@@ -181,7 +153,11 @@ const BasicInformation2 = () => {
                   <h1>Loading...</h1>
                 </div>
               ) : (
-                <form onSubmit={handleSubmit} className='mt-2 text-left'>
+                <form
+                  onSubmit={handleSubmit}
+                  className='mt-2 text-left'
+                  style={{ textAlign: 'center' }}
+                >
                   <div className='form-group row p-2'>
                     <label className='col-sm-3 col-form-label'>
                       <span style={{ color: 'red' }}>*</span> DOB
@@ -232,8 +208,6 @@ const BasicInformation2 = () => {
                             value='male'
                             onClick={(e) => handleChange(e)}
                             checked={sex === 'male'}
-                            
-
                           />
                           <label className='form-check-label'>Male</label>
                         </div>
@@ -344,7 +318,7 @@ const BasicInformation2 = () => {
               )}
             </div>
           </div>
-        </div>
+        </FormPageComponent>
       </div>
     </Container>
   );

@@ -3,7 +3,7 @@ import styled from 'styled-components';
 export const CardHeader = styled.h1`
   color: #111;
   border-radius: 2px;
-  font-size: 30px;
+  font-size: 28px;
   text-align: center;
   font-weight: 600;
 `;
@@ -18,7 +18,7 @@ export const CardContainer = styled.div`
   padding-right: 40px;
   margin-left: 10px;
   &:hover {
-    opacity: 1.0
+    opacity: 1;
   }
 `;
 
@@ -26,7 +26,7 @@ export const Card2Container = styled.div`
   background-color: white;
   .sub-card-container {
     height: 85px;
-    background-color: #265B7E;
+    background-color: #265b7e;
     border-bottom: 1px solid white;
     display: flex;
     flex-direction: column;
@@ -36,7 +36,7 @@ export const Card2Container = styled.div`
   }
 
   .sub-card-container:hover {
-    background-color: #6FA7CD;
+    background-color: #6fa7cd;
   }
 
   .sub-card-content {

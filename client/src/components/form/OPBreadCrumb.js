@@ -8,7 +8,11 @@ const OPBreadCrumb = ({ crumbs, activeIndex = 0 }) => {
         {crumbs.map((crumb, index) => (
           <li className='nav-item' key={index}>
             <Link
-              className={index === activeIndex ? 'nav-link active' : 'nav-link'}
+              className={
+                index === activeIndex
+                  ? 'nav-link  selected-crumb'
+                  : 'nav-link crumb-item'
+              }
               to={crumb.link}
             >
               {crumb.label}

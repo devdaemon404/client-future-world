@@ -37,22 +37,25 @@ export const SideBar = styled.div`
     height: 88px;
     color: white;
     text-align: center;
-    font-size: 22px;
+    font-size: 26px;
     font-weight: Bold;
     border-bottom: 2px solid white;
   }
   .SideBarCompItem {
-    padding:5px 30px;
-    margin:25px 0px;
-    width: 320px;
+    padding:8px 30px;
+    margin:15px auto;
+    width: 200px;
+    border-radius:8px;
     height: 40px;
+    font-size:17px;
+    font-weight:700;
     color: white;
     text-align: center;
     cursor: pointer;
   }
 
-  .SideBarCompItem:hover{
-    color:yellow;
+  .SideBarCompItem: hover{
+   background:#3F46CC
   } 
 
   .Logout {
@@ -116,5 +119,8 @@ export const TableContainer = styled.div`
     padding: 20px;
   }
   #confirm {
+  }
+  .FormInputs {
+    margin: 10px 0;
   }
 `;
