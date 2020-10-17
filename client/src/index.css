@@ -1,9 +1,28 @@
 @import url('https://fonts.googleapis.com/css2?family=Rubik:wght@400;700&display=swap');
-
+body {
+  font-family: Rubik;
+}
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
   -webkit-appearance: none;
   margin: 0;
+}
+
+.progBar {
+  max-width: 350px;
+}
+
+.crumb-item {
+  color: black;
+}
+
+.selected-crumb {
+  background-color: #265b7e;
+  color: white;
+}
+
+.CircularProgressbar-trail {
+  stroke: gray;
 }
 
 /* Firefox */

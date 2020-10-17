@@ -21,6 +21,7 @@ const AdminPage = () => {
     email: '',
     phoneNumber: '',
   });
+  const [authMessage, setauthMessage] = useState('');
   const [authorized, setAuthorized] = useState(0);
   const [loading, setLoading] = useState(false);
   const history = useHistory();
@@ -30,7 +31,7 @@ const AdminPage = () => {
 
     users.data.data.forEach((employee, i) => {
       formattedData.push({
-        name: employee.name.capitalize(),
+        name: employee.name,
         email: employee.email,
         phoneNumber: !employee.phoneNumber ? '--' : employee.phoneNumber,
         status:
@@ -98,7 +99,6 @@ const AdminPage = () => {
         email,
         phoneNumber,
       });
-
       if (result) {
         setAuthorized(1);
         await getUsers();
@@ -106,8 +106,12 @@ const AdminPage = () => {
       }
     } catch (error) {
       setAuthorized(2);
-
-      setLoading(false);
+      if (error.response.status === 400) {
+        setLoading(false);
+        setauthMessage('User Already registered');
+      } else if (error.response.status === 401) {
+        setauthMessage('Try Login again, Not Authorized');
+      }
     }
   };
 
@@ -158,9 +162,7 @@ const AdminPage = () => {
         <div className='SideBarCompMain'>Dashboard</div>
         <div
           className='SideBarCompItem'
-          style={
-            formTable === 'Table' ? { color: 'yellow' } : { color: 'white' }
-          }
+          style={formTable === 'Table' ? { color: 'yellow' } : {}}
           onClick={(e) => setFormTable('Table')}
           id='Table'
         >
@@ -169,9 +171,7 @@ const AdminPage = () => {
         <div
           className='SideBarCompItem'
           id='Form'
-          style={
-            formTable === 'Form' ? { color: 'yellow' } : { color: 'white' }
-          }
+          style={formTable === 'Form' ? { color: 'yellow' } : {}}
           onClick={(e) => setFormTable('Form')}
         >
           Add an Employee
@@ -201,6 +201,7 @@ const AdminPage = () => {
                 <Form.Group>
                   <Form.Control
                     type='text'
+                    className='FormInputs'
                     placeholder='Employee Name'
                     required
                     name='Name'
@@ -211,9 +212,10 @@ const AdminPage = () => {
                       })
                     }
                   />
-                  <br />
+
                   <Form.Control
                     type='email'
+                    className='FormInputs'
                     placeholder='Employee Email'
                     name='Email'
                     required
@@ -225,9 +227,9 @@ const AdminPage = () => {
                     }
                   />
 
-                  <br />
                   <Form.Control
                     type='number'
+                    className='FormInputs'
                     placeholder='Employe PhoneNo. (without country code)'
                     min={1000000000}
                     max={9999999999}
@@ -241,6 +243,13 @@ const AdminPage = () => {
                     }
                   />
                 </Form.Group>
+                <Button
+                  variant='secondary'
+                  type='submit'
+                  className='ButtonForm'
+                >
+                  {!loading ? 'Add Employee' : 'Loading'}
+                </Button>
                 {authorized === 1 ? (
                   <p
                     id='confirm'
@@ -263,7 +272,7 @@ const AdminPage = () => {
                       fontWeight: 500,
                     }}
                   >
-                    Not Authorized
+                    {authMessage}
                   </p>
                 ) : (
                   <p
@@ -279,14 +288,6 @@ const AdminPage = () => {
                     {'    '}
                   </p>
                 )}
-
-                <Button
-                  variant='secondary'
-                  type='submit'
-                  className='ButtonForm'
-                >
-                  {!loading ? 'Add Employee' : 'Loading'}
-                </Button>
               </Form>
             </React.Fragment>
           )}
