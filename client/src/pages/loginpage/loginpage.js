@@ -63,14 +63,12 @@ const LoginPage = () => {
                 setemail(e.target.value);
               }}
               name='User'
-              size='lg'
               type='email'
               required
               placeholder='Email Id'
             />
             <br />
             <Form.Control
-              size='lg'
               type='password'
               placeholder='Password'
               required
@@ -79,9 +77,15 @@ const LoginPage = () => {
               }}
             />
             <br />
-            <button type='submit' onClick={onFormSubmit}>
-              {isLoading ? 'Logging you in ... ' : 'sign in'}
-            </button>
+            <div className='button-wrapper'>
+              <button
+                type='submit'
+                className='submit-button'
+                onClick={onFormSubmit}
+              >
+                {isLoading ? 'Logging you in ... ' : 'sign in'}
+              </button>
+            </div>
             <p
               id='inv'
               style={{

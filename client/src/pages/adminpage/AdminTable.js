@@ -60,7 +60,7 @@ function OPTable({ data, columns, getCellProps, onClickHandler }) {
     <div
       style={{
         overflow: 'auto',
-        maxHeight: '70vh',
+        // maxHeight: '70vh',
       }}
       className='mx-auto mt-3 text-center'
     >

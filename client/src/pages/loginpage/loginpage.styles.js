@@ -27,7 +27,7 @@ export const LoginHeader = styled.h1`
 export const Center = styled.div`
   margin: 0;
   position: absolute;
-  top: 60%;
+  margin-top: 500px;
   left: 50%;
   -ms-transform: translate(-50%, -50%);
   transform: translate(-50%, -50%);
@@ -67,6 +67,35 @@ export const Center = styled.div`
 
   #inv {
   }
+
+  @media only screen and (max-width: 480px) {
+    padding: 0px;
+
+    .form-control,
+    .submit-button {
+      padding-right: 0px;
+      width: 300px;
+      margin: 0 auto;
+    }
+    .button-wrapper {
+      margin: 0 auto;
+      width: 300px;
+    }
+  }
+  @media only screen and (max-width: 300px) {
+    padding: 0px;
+
+    .form-control,
+    .submit-button {
+      padding-right: 0px;
+      width: 240px;
+      margin: 0 auto;
+    }
+    .button-wrapper {
+      margin: 0 auto;
+      width: 240px;
+    }
+  }
 `;
 export const FormBottom = styled.div`
   margin-top: 12px;
@@ -85,10 +114,10 @@ export const FormBottom = styled.div`
 export const LoginHead = styled.div`
   position: absolute;
 
-  left: 48%;
+  left: 50%;
   -ms-transform: translate(-50%, -50%);
   transform: translate(-50%, -50%);
-  top: 120px;
+  margin-top: 120px;
   width: 237px;
   height: 107px;
 
@@ -96,10 +125,14 @@ export const LoginHead = styled.div`
     height: inherit;
     width: inherit;
   }
+
+  @media only screen and (max-width: 1300px) {
+    font-size: 28px;
+  }
 `;
 export const Heading = styled.div`
 position:absolute; 
-top: 25%;
+margin-top: 220px;
 left:50%;
 -ms-transform: translate(-50%, -50%);
   transform: translate(-50%, -50%);
@@ -117,7 +150,9 @@ opacity: 0.87;
   font-size:32px ;
 }
 
-
+@media only screen and (max-width: 480px) {
+  font-size: 24px;
+}
 
 
 
@@ -125,7 +160,7 @@ opacity: 0.87;
 
 export const SubHeading = styled.p`
   position: absolute;
-  top: 30%;
+  margin-top: 270px;
   left: 50%;
   -ms-transform: translate(-50%, -50%);
   transform: translate(-50%, -50%);
@@ -136,11 +171,11 @@ export const SubHeading = styled.p`
   font-weight: 400;
   @media only screen and (max-width: 780px) {
     font-size: 14px;
-    top: 34%;
+    margin-top: 300px;
   }
 `;
 export const BottomLinks = styled.div`
-  margin-top: 83px;
+  margin-top: 80px;
   display: flex;
   justify-content: space-around;
 

@@ -1,12 +1,18 @@
 import React, { useState, useEffect } from 'react';
 import moment from 'moment';
-import { SideBar, AdminMain, TableContainer } from './AdminPage.styles';
+import {
+  SideBar,
+  AdminMain,
+  TableContainer,
+  MainWrapper,
+  NotPhone,
+} from './AdminPage.styles';
 import { Form, Button } from 'react-bootstrap';
 import LOGO from '../../assets/img/logo.png';
 import axios from 'axios';
 import { useHistory } from 'react-router-dom';
 import OPTable from './AdminTable';
-
+import Gears from './../../assets/img/gears.gif';
 // const selectUserContext = React.createContext({});
 const AdminPage = () => {
   let retrievedId = '';
@@ -145,155 +151,161 @@ const AdminPage = () => {
   };
 
   return (
-    <div
-      style={{
-        margin: 0,
-        boxSizing: 'border-box',
-        padding: 0,
-        backgroundColor: '#f4f4f4',
-        height: '100vh',
-      }}
-    >
-      {/* <selectUserContext.Provider value={retrievedEmployee} /> */}
-      <SideBar>
-        <div className='logoContainer'>
-          <img alt='logo' src={LOGO}></img>
-        </div>
-        <div className='SideBarCompMain'>Dashboard</div>
-        <div
-          className='SideBarCompItem'
-          style={formTable === 'Table' ? { color: 'yellow' } : {}}
-          onClick={(e) => setFormTable('Table')}
-          id='Table'
-        >
-          Employees
-        </div>
-        <div
-          className='SideBarCompItem'
-          id='Form'
-          style={formTable === 'Form' ? { color: 'yellow' } : {}}
-          onClick={(e) => setFormTable('Form')}
-        >
-          Add an Employee
-        </div>
-        <div className='Logout' onClick={logoutHandler}>
-          <span>LOGOUT</span>
-        </div>
-      </SideBar>
-      <AdminMain>
-        <div className='Admin'>Admin Panel</div>
-        <div className='EmpInfo'>
-          {formTable === 'Table' ? 'Employee Information' : ''}
-        </div>
+    <React.Fragment>
+      <MainWrapper>
+        {/* <selectUserContext.Provider value={retrievedEmployee} /> */}
+        <SideBar>
+          <div className='logoContainer'>
+            <img alt='logo' src={LOGO}></img>
+          </div>
+          <div className='SideBarCompMain'>Dashboard</div>
+          <div
+            className='SideBarCompItem'
+            style={formTable === 'Table' ? { color: 'yellow' } : {}}
+            onClick={(e) => setFormTable('Table')}
+            id='Table'
+          >
+            Employees
+          </div>
+          <div
+            className='SideBarCompItem'
+            id='Form'
+            style={formTable === 'Form' ? { color: 'yellow' } : {}}
+            onClick={(e) => setFormTable('Form')}
+          >
+            Add an Employee
+          </div>
+          <div className='Logout' onClick={logoutHandler}>
+            <span>LOGOUT</span>
+          </div>
+        </SideBar>
+        <AdminMain>
+          <div className='Admin'>Admin Panel</div>
+          <div className='EmpInfo'>
+            {formTable === 'Table' ? 'Employee Information' : ''}
+          </div>
 
-        <TableContainer>
-          {formTable === 'Table' ? (
-            <OPTable
-              data={data}
-              columns={columns}
-              onClickHandler={onClickHandler}
-              getCellProps={() => ({})}
-            />
-          ) : (
-            <React.Fragment>
-              <Form className='addEmployeeForm' onSubmit={onFormSubmit}>
-                <h4 className='addEmpHead'>Add a new Employee</h4>
-                <Form.Group>
-                  <Form.Control
-                    type='text'
-                    className='FormInputs'
-                    placeholder='Employee Name'
-                    required
-                    name='Name'
-                    onChange={(e) =>
-                      setNewUserDetails({
-                        ...newUserDetails,
-                        name: e.target.value,
-                      })
-                    }
-                  />
+          <TableContainer>
+            {formTable === 'Table' ? (
+              <OPTable
+                data={data}
+                columns={columns}
+                onClickHandler={onClickHandler}
+                getCellProps={() => ({})}
+              />
+            ) : (
+              <React.Fragment>
+                <Form className='addEmployeeForm' onSubmit={onFormSubmit}>
+                  <h4 className='addEmpHead'>Add a new Employee</h4>
+                  <Form.Group>
+                    <Form.Control
+                      type='text'
+                      className='FormInputs'
+                      placeholder='Employee Name'
+                      required
+                      name='Name'
+                      onChange={(e) =>
+                        setNewUserDetails({
+                          ...newUserDetails,
+                          name: e.target.value,
+                        })
+                      }
+                    />
 
-                  <Form.Control
-                    type='email'
-                    className='FormInputs'
-                    placeholder='Employee Email'
-                    name='Email'
-                    required
-                    onChange={(e) =>
-                      setNewUserDetails({
-                        ...newUserDetails,
-                        email: e.target.value,
-                      })
-                    }
-                  />
+                    <Form.Control
+                      type='email'
+                      className='FormInputs'
+                      placeholder='Employee Email'
+                      name='Email'
+                      required
+                      onChange={(e) =>
+                        setNewUserDetails({
+                          ...newUserDetails,
+                          email: e.target.value,
+                        })
+                      }
+                    />
 
-                  <Form.Control
-                    type='number'
-                    className='FormInputs'
-                    placeholder='Employe PhoneNo. (without country code)'
-                    min={1000000000}
-                    max={9999999999}
-                    name='phoneNumber'
-                    required
-                    onChange={(e) =>
-                      setNewUserDetails({
-                        ...newUserDetails,
-                        phoneNumber: e.target.value,
-                      })
-                    }
-                  />
-                </Form.Group>
-                <Button
-                  variant='secondary'
-                  type='submit'
-                  className='ButtonForm'
-                >
-                  {!loading ? 'Add Employee' : 'Loading'}
-                </Button>
-                {authorized === 1 ? (
-                  <p
-                    id='confirm'
-                    style={{
-                      color: 'green',
-                      width: '100%',
-                      textAlign: 'Center',
-                      fontWeight: 500,
-                    }}
+                    <Form.Control
+                      type='number'
+                      className='FormInputs'
+                      placeholder='Employe PhoneNo. (without country code)'
+                      min={1000000000}
+                      max={9999999999}
+                      name='phoneNumber'
+                      required
+                      onChange={(e) =>
+                        setNewUserDetails({
+                          ...newUserDetails,
+                          phoneNumber: e.target.value,
+                        })
+                      }
+                    />
+                  </Form.Group>
+                  <Button
+                    variant='secondary'
+                    type='submit'
+                    className='ButtonForm'
                   >
-                    New User Added (Confirmation Mail has been sent){' '}
-                  </p>
-                ) : authorized === 2 ? (
-                  <p
-                    id='confirm'
-                    style={{
-                      color: 'red',
-                      width: '100%',
-                      textAlign: 'Center',
-                      fontWeight: 500,
-                    }}
-                  >
-                    {authMessage}
-                  </p>
-                ) : (
-                  <p
-                    id='confirm'
-                    style={{
-                      color: 'red',
-                      width: '100%',
-                      height: '24px',
-                      textAlign: 'Center',
-                      fontWeight: 500,
-                    }}
-                  >
-                    {'    '}
-                  </p>
-                )}
-              </Form>
-            </React.Fragment>
-          )}
-        </TableContainer>
-      </AdminMain>
-    </div>
+                    {!loading ? 'Add Employee' : 'Loading'}
+                  </Button>
+                  {authorized === 1 ? (
+                    <p
+                      id='confirm'
+                      style={{
+                        color: 'green',
+                        width: '100%',
+                        textAlign: 'Center',
+                        fontWeight: 500,
+                      }}
+                    >
+                      New User Added (Confirmation Mail has been sent){' '}
+                    </p>
+                  ) : authorized === 2 ? (
+                    <p
+                      id='confirm'
+                      style={{
+                        color: 'red',
+                        width: '100%',
+                        textAlign: 'Center',
+                        fontWeight: 500,
+                      }}
+                    >
+                      {authMessage}
+                    </p>
+                  ) : (
+                    <p
+                      id='confirm'
+                      style={{
+                        color: 'red',
+                        width: '100%',
+                        height: '24px',
+                        textAlign: 'Center',
+                        fontWeight: 500,
+                      }}
+                    >
+                      {'    '}
+                    </p>
+                  )}
+                </Form>
+              </React.Fragment>
+            )}
+          </TableContainer>
+        </AdminMain>
+      </MainWrapper>
+      <NotPhone>
+        <div className='NotPhone-Main'>
+          <div className='ErrorContainer'>
+            <div style={{ display: 'flex', justifyContent: 'center' }}>
+              <img src={Gears} className='gears' />
+            </div>
+            <br />
+            <p className='PhoneError'>Sorry, We Don't Support Mobile View</p>
+            <p className='PhoneError'> Please Switch to Landscape </p>
+          </div>
+        </div>
+      </NotPhone>
+    </React.Fragment>
   );
 };
 

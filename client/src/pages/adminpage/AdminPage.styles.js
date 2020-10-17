@@ -1,5 +1,51 @@
 import styled from 'styled-components';
 
+export const MainWrapper = styled.div`
+  margin: 0px;
+  boxsizing: 'border-box';
+  padding: 0px;
+  backgroundcolor: '#f4f4f4';
+  height: '100vh';
+  display: block;
+  @media only screen and (max-width: 720px) {
+    display: none;
+  }
+`;
+
+export const NotPhone = styled.div`
+  margin: 0px;
+  boxsizing: 'border-box';
+  padding: 0px;
+  backgroundcolor: '#f4f4f4';
+  height: 100vh;
+  display: none;
+  .NotPhone-Main {
+    display: flex;
+    flex-wrap: wrap;
+    height: 100vh;
+    justify-content: center;
+    align-items: center;
+  }
+  .gears {
+    max-width: 100px;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+  }
+  .PhoneError {
+    text-align: center;
+    color: red;
+    font-size: 18px;
+  }
+  .ErrorContainer {
+    width: 80%;
+  }
+
+  @media only screen and (max-width: 720px) {
+    display: block;
+  }
+`;
+
 export const LoginContainer = styled.div`
   display: flex;
   justify-content: center;
@@ -63,7 +109,7 @@ export const SideBar = styled.div`
     width: 320px;
     text-align: center;
     color: white;
-    bottom: 80px;
+    bottom: 0%;
     padding: 20px;
     cursor: pointer;
   }
@@ -75,7 +121,7 @@ export const SideBar = styled.div`
 `;
 export const AdminMain = styled.div`
   height: 100%;
-
+  width: inherit;
   margin-left: 320px;
 
   .Admin {
