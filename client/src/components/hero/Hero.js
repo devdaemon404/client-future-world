@@ -20,7 +20,7 @@ function Hero(...props) {
           <div className='col-lg-5 order-1 order-lg-1 d-flex flex-column justify-content-start'>
             <div className='row'>
               <div className='col-3'>
-                <img className='img-fluid' src={userData.photo} />
+                <img className='img-fluid' src={userData.photo} alt="user" />
               </div>
               <MainHeader className='col'>
                 <span>
