@@ -297,11 +297,11 @@ const AdminPage = () => {
         <div className='NotPhone-Main'>
           <div className='ErrorContainer'>
             <div style={{ display: 'flex', justifyContent: 'center' }}>
-              <img src={Gears} className='gears' alt="Loading..." />
+              <img src={Gears} className='gears' alt='Loading...' />
             </div>
             <br />
             <p className='PhoneError'>Sorry, We Don't Support Mobile View</p>
-            <p className='PhoneError'> Please Switch to Landscape </p>
+            <p className='PhoneError'> Please Switch to a Desktop</p>
           </div>
         </div>
       </NotPhone>
