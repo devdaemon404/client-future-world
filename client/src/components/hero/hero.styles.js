@@ -74,8 +74,6 @@ export const MainHeader = styled.h1`
   font-family: Montserrat;
   font-size: 35;
   font-weight: 400;
-  letter-spacing: -1ps;
-  line-height: 1;
   span {
     font-size: 35px;
     font-weight: 700;
@@ -90,8 +88,6 @@ export const MainPara = styled.p`
 
 export const MainHeader2 = styled.h1`
   color: #f8f8f8;
-  background-color: #2d3436;
-  background-image: linear-gradient(315deg, #2d3436 0%, #000000 74%);
   font-family: 'Helvetica Neue', sans-serif;
   border-radius: 5px;
   font-size: 50px;

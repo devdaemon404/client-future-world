@@ -7,7 +7,7 @@ import {
 } from '../formpage.styles.js';
 // import { Link } from 'react-router-dom';
 import Header from '../../../components/header/Header';
-import Progressbar from '../../../components/progress-bar/Progress';
+import FormPageComponent from '../../../components/form/FormPageComponent';
 import OPBreadCrumb from '../../../components/form/OPBreadCrumb';
 import axios from 'axios';
 import { toast } from '../../../util/ToastUtil.js';
@@ -43,167 +43,138 @@ const Uploads = () => {
           Uploads and Other Information
         </MainHeader>
       </HeroContainer>
-      <div className='container'>
-        <div className='row'>
-          <div className='col-lg-4 order-1 order-lg-1 d-flex flex-column justify-content-start mt-3'>
-            <div className='d-flex justify-content-center'>
-              <Progressbar
-                iconClass='fas fa-address-card fa-2x'
-                percentage='50'
-              />
-            </div>
-            <p className='text-muted text-center'>
-              <em>5/10 sections completed</em>
-            </p>
-          </div>
-          <div className='col-lg-8 order-1 order-lg-2 d-flex flex-column justify-content-start mt-5'>
-            <div>
-              <p>
-                Enter your contact information in this section. Keep this
-                information up-to-date throughout the application process.
-              </p>
-            </div>
-            <div>
-              <p>
-                You can edit this section after you submit your application.
-              </p>
-            </div>
-            <div>
-              <p>
-                <span style={{ color: 'red' }}>*</span> Indicates required field
-              </p>
-            </div>
-
-            <div className='container-fluid mt-5'>
-              {/* <h2>Current Address</h2> */}
-              <OPBreadCrumb
-                crumbs={[
-                  {
-                    link: '/information/otherInformation',
-                    label: 'Other Information',
-                  },
-                  {
-                    link: '/information/uploads',
-                    label: 'Uploading Documents',
-                  },
-                ]}
-                activeIndex={1}
-              />
-              <hr></hr>
-              <form className='mt-2 text-left'>
-                <div className='form-row p-2'>
-                  <div className='col-sm-12 col-lg-6 col-md-6 p-2'>
-                    <label>
-                      <h3>Upload (required)*</h3>
-                    </label>
-                    {[
-                      {
-                        label: '10th Class / SSC / SSLC',
-                        name: 'tenthGradeCertificateU',
-                      },
-                      {
-                        label: 'Intermediate / PUC / 10 + 2',
-                        name: 'twelvethGradeCertificateU',
-                      },
-                      {
-                        label: 'Degree Certificate',
-                        name: 'degreeCertificateU',
-                      },
-                      {
-                        label: 'PG Degree Certificate',
-                        name: 'pgDegreeCertificate',
-                      },
-                      {
-                        label: 'Diploma / PG Diploma',
-                        name: 'diplomaCertificateU',
-                      },
-                      {
-                        label: 'Previous Expereince(s) & Relieving Letter (s)',
-                        name: 'previousExperienceCertificateU',
-                      },
-                    ].map((form, i) => (
-                      <div key={i} className='form-group p-3'>
-                        <label>
-                          <h5>{form.label}</h5>
-                        </label>
-                        <input
-                          type='file'
-                          name={form.name}
-                          onChange={onFileChange}
-                          className='form-control-file'
-                          id='exampleFormControlFile1'
-                          accept='application/pdf'
-                        />
-                      </div>
-                    ))}
-                  </div>
-
-                  <div className='col-sm-12 col-lg-6 col-md-6 p-2'>
-                    <label>
-                      {' '}
-                      <h3>Upload (optional)</h3>
-                    </label>
-                    {[
-                      {
-                        label: 'Bio Data',
-                        name: 'bioDataForm',
-                      },
-                      {
-                        label: 'Joining Report / Company Application Form',
-                        name: 'joiningReportU',
-                      },
-                      {
-                        label: 'Mediclaim Declaration',
-                        name: 'mediclaimDeclarationU',
-                      },
-                      {
-                        label: 'PF Nomination Form',
-                        name: 'pfNominationU',
-                      },
-                      {
-                        label: 'ESI Nomination Form',
-                        name: 'esiNominationU',
-                      },
-                      {
-                        label: 'Gratuity Nomination Form',
-                        name: 'gratuityNominationU',
-                      },
-                      {
-                        label: 'Other Document',
-                        name: 'otherDocsU',
-                      },
-                    ].map((form, i) => (
-                      <div key={i} className='form-group p-3'>
-                        <label>
-                          <h5>{form.label}</h5>
-                        </label>
-                        <input
-                          type='file'
-                          name={form.name}
-                          onChange={onFileChange}
-                          className='form-control-file'
-                          id='exampleFormControlFile1'
-                          accept='application/pdf'
-                        />
-                      </div>
-                    ))}
-                  </div>
+      <div className=''>
+        <FormPageComponent>
+          <div className='container-fluid mt-5'>
+            {/* <h2>Current Address</h2> */}
+            <OPBreadCrumb
+              crumbs={[
+                {
+                  link: '/information/otherInformation',
+                  label: 'Other Information',
+                },
+                {
+                  link: '/information/uploads',
+                  label: 'Uploading Documents',
+                },
+              ]}
+              activeIndex={1}
+            />
+            <hr></hr>
+            <form className='mt-2 text-left'>
+              <p>Files once uploaded, need not be uploaded again</p>
+              <div className='form-row p-2'>
+                <div className='col-sm-12 col-lg-6 col-md-6 p-2'>
+                  <label>
+                    <h3>Upload (required)*</h3>
+                  </label>
+                  {[
+                    {
+                      label: '10th Class / SSC / SSLC',
+                      name: 'tenthGradeCertificateU',
+                    },
+                    {
+                      label: 'Intermediate / PUC / 10 + 2',
+                      name: 'twelvethGradeCertificateU',
+                    },
+                    {
+                      label: 'Degree Certificate',
+                      name: 'degreeCertificateU',
+                    },
+                    {
+                      label: 'PG Degree Certificate',
+                      name: 'pgDegreeCertificate',
+                    },
+                    {
+                      label: 'Diploma / PG Diploma',
+                      name: 'diplomaCertificateU',
+                    },
+                    {
+                      label: 'Previous Expereince(s) & Relieving Letter (s)',
+                      name: 'previousExperienceCertificateU',
+                    },
+                  ].map((form, i) => (
+                    <div key={i} className='form-group p-3'>
+                      <label>
+                        <h5>{form.label}</h5>
+                      </label>
+                      <input
+                        type='file'
+                        name={form.name}
+                        onChange={onFileChange}
+                        className='form-control-file'
+                        id='exampleFormControlFile1'
+                        accept='application/pdf'
+                      />
+                    </div>
+                  ))}
                 </div>
 
-                <div className='form-group row p-2 d-flex justify-content-center mt-4 mb-5'>
-                  <div className='col-sm-10'>
-                    <button
-                      type='submit'
-                      className='btn btn-primary w-100 font-weight-bold'
-                    >
-                      <i className='far fa-check-circle'></i> Save and Continue
-                    </button>
-                  </div>
+                <div className='col-sm-12 col-lg-6 col-md-6 p-2'>
+                  <label>
+                    {' '}
+                    <h3>Upload (optional)</h3>
+                  </label>
+                  {[
+                    {
+                      label: 'Bio Data',
+                      name: 'bioDataForm',
+                    },
+                    {
+                      label: 'Joining Report / Company Application Form',
+                      name: 'joiningReportU',
+                    },
+                    {
+                      label: 'Mediclaim Declaration',
+                      name: 'mediclaimDeclarationU',
+                    },
+                    {
+                      label: 'PF Nomination Form',
+                      name: 'pfNominationU',
+                    },
+                    {
+                      label: 'ESI Nomination Form',
+                      name: 'esiNominationU',
+                    },
+                    {
+                      label: 'Gratuity Nomination Form',
+                      name: 'gratuityNominationU',
+                    },
+                    {
+                      label: 'Other Document',
+                      name: 'otherDocsU',
+                    },
+                  ].map((form, i) => (
+                    <div key={i} className='form-group p-3'>
+                      <label>
+                        <h5>{form.label}</h5>
+                      </label>
+                      <input
+                        type='file'
+                        name={form.name}
+                        onChange={onFileChange}
+                        className='form-control-file'
+                        id='exampleFormControlFile1'
+                        accept='application/pdf'
+                      />
+                    </div>
+                  ))}
                 </div>
-              </form>
-            </div>
+              </div>
+
+              <div className='form-group row p-2 d-flex justify-content-center mt-4 mb-5'>
+                <div className='col-sm-10'>
+                  <button
+                    type='submit'
+                    className='btn btn-primary w-100 font-weight-bold'
+                  >
+                    <i className='far fa-check-circle'></i> Save and Continue
+                  </button>
+                </div>
+              </div>
+            </form>
           </div>
-        </div>
+        </FormPageComponent>
       </div>
     </Container>
   );
