@@ -5,6 +5,7 @@ import {
   MainHeader,
   //  MainPara, CardHeader, CardPara
 } from '../formpage.styles.js';
+import ImageUploading from 'react-images-uploading';
 import Header from '../../../components/header/Header';
 import FormPageComponent from '../../../components/form/FormPageComponent';
 import axios from 'axios';
@@ -21,6 +22,14 @@ const BasicInformation1 = ({ history }) => {
     upload: '',
   });
   const { companyName, empNo, fullName, nameHRIS, fatherName } = formData;
+  const [images, setImages] = React.useState([]);
+  const maxNumber = 1;
+
+  const onImageAdd = (imageList, addUpdateIndex) => {
+    // data for submit
+    console.log(imageList, addUpdateIndex);
+    setImages(imageList);
+  };
 
   useEffect(() => {
     const fetchData = async () => {
@@ -32,12 +41,20 @@ const BasicInformation1 = ({ history }) => {
         withCredentials: true,
       };
       const result = await axios.get(
-        '/api/employee?select=companyName,empNo,fullName,nameHRIS,fatherName,upload',
+        '/api/employee?select=companyName,empNo,fullName,nameHRIS,fatherName,upload, photo',
         config
       );
 
-      console.log(result.data.data);
-      setFormData({ ...result.data.data });
+      const { data } = result.data;
+      console.log(data);
+      setFormData({ ...data });
+      if (data.photo && data.photo !== '')
+        setImages([
+          {
+            data_url: result.data.data.photo,
+            file: { name: 'photo.jpg' },
+          },
+        ]);
       setIsLoading(false);
     };
 
@@ -63,22 +80,27 @@ const BasicInformation1 = ({ history }) => {
     fatherName,
     upload,
   }) => {
+    const config = {
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      withCredentials: true,
+    };
+    let postParams = {};
+    const formFieldData = {
+      companyName,
+      empNo,
+      fullName,
+      nameHRIS,
+      fatherName,
+      upload,
+    };
+    if (images.length !== 0)
+      postParams = { ...formFieldData, photo: images[0]['data_url'] };
+    else postParams = { ...formFieldData, photo: '' };
     try {
-      const config = {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        withCredentials: true,
-      };
       const body = JSON.stringify({
-        postParams: {
-          companyName,
-          empNo,
-          fullName,
-          nameHRIS,
-          fatherName,
-          upload,
-        },
+        postParams,
       });
 
       await axios.post('/api/employee', body, config);
@@ -248,13 +270,73 @@ const BasicInformation1 = ({ history }) => {
                     </div>
                   </div> */}
 
+                <label className='col-sm-3 col-form-label'>
+                  <span style={{ color: 'red' }}>*</span> Passport Sized Photo
+                </label>
+
+                <ImageUploading
+                  multiple
+                  value={images}
+                  onChange={onImageAdd}
+                  maxNumber={maxNumber}
+                  dataURLKey='data_url'
+                >
+                  {({
+                    imageList,
+                    onImageUpload,
+                    onImageRemoveAll,
+                    onImageUpdate,
+                    onImageRemove,
+                    isDragging,
+                    dragProps,
+                  }) => (
+                    <div className='upload__image-wrapper'>
+                      {images.length === 0 ? (
+                        <div
+                          className='btn selected-crumb'
+                          style={isDragging ? { color: 'red' } : undefined}
+                          onClick={async () => {
+                            onImageUpload();
+                          }}
+                          {...dragProps}
+                        >
+                          Click or Drop here
+                        </div>
+                      ) : (
+                        <div />
+                      )}
+                      &nbsp;
+                      {imageList.map((image, index) => (
+                        <div key={index} className='row ml-5'>
+                          <img src={image['data_url']} alt='' width='100' />
+                          <div className='ml-5 col'>
+                            <div className='row mb-5'>
+                              <div
+                                className='btn selected-crumb'
+                                onClick={() => onImageUpdate(index)}
+                              >
+                                Update
+                              </div>
+                            </div>
+                            <div className='row'>
+                              <div
+                                className='btn selected-crumb'
+                                onClick={() => onImageRemove(index)}
+                              >
+                                Remove
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </ImageUploading>
+
                 <div className='form-group row p-2 d-flex justify-content-center mt-4 mb-5'>
                   <div className='col-sm-10'>
                     <button
                       type='submit'
-                      onClick={() => {
-                        updateBasicInformation(formData);
-                      }}
                       className='btn selected-crumb submit-button crumb-item w-100 font-weight-bold'
                     >
                       <i className='far fa-check-circle'></i> Save and Continue

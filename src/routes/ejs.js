@@ -13,8 +13,9 @@ router.get('/pdf-gen', protect, authorize('admin'), async (req, res, next) => {
   }
   e = e.toObject();
   res.render('index', {
+    photo: e.photo || '',
     basicInformation: {
-      'Company Name': e.companyName,
+      'Company Name': e.companyName || '',
       'Emp No.': e.empNo || '',
       'Name in Full': e.fullName || '',
       'Name in HRIS': e.nameHRIS || '',
@@ -48,7 +49,7 @@ router.get('/pdf-gen', protect, authorize('admin'), async (req, res, next) => {
       'Contact Person \nPh No. / Mobile No.': e.contactPersonPhone || '',
       'Contact Person Address': e.contactPersonAddress || '',
     },
-    familyMembersInformation: (e.familyMembers || []).map((o) => ({
+    familyMembersInformation: (e.familyInformation || []).map((o) => ({
       name: o.name || '',
       relationship: o.relationship || '',
       dob: o.familyDob || '',

@@ -9,7 +9,7 @@ export const HeroContainer = styled.div`
   padding: 80px 0 60px 0;
   position: relative;
   clip-path: polygon(0 0, 100% 0, 100% 100%, 0 calc(100% - 5vw));
-
+  padding: 100px 300px;
   .link {
     color: #111;
   }
@@ -70,23 +70,22 @@ export const HeroContainer = styled.div`
 
 export const MainHeader = styled.h1`
   color: #f8f8f8;
-  background-color: #2d3436;
-  background-image: linear-gradient(315deg, #2d3436 0%, #000000 74%);
-  font-family: 'Helvetica Neue', sans-serif;
   border-radius: 5px;
-  font-size: 50px;
-  padding: 5px;
-  font-weight: bold;
-  letter-spacing: -1px;
+  font-family: Montserrat;
+  font-size: 35;
+  font-weight: 400;
+  letter-spacing: -1ps;
   line-height: 1;
-  text-align: center;
+  span {
+    font-size: 35px;
+    font-weight: 700;
+  }
 `;
 
 export const MainPara = styled.p`
-  color: #111;
-  font-family: 'Helvetica Neue', sans-serif;
+  margin-top: 25px;
+  color: #eee;
   font-size: 22px;
-  padding: 20px;
 `;
 
 export const MainHeader2 = styled.h1`

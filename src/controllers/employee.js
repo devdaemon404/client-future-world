@@ -2,6 +2,7 @@ const ErrorResponse = require('../utils/errorResponse');
 const asyncHandler = require('../middleware/async');
 
 const Employee = require('../models/Employee');
+const User = require('../models/User');
 
 /**
  * @desc    Create employee info
@@ -41,9 +42,19 @@ exports.postEmployeeInfo = asyncHandler(async (req, res, next) => {
 
 exports.getEmployeeInfo = asyncHandler(async (req, res, next) => {
   if (!req.query.select) {
-    return next(
-      new ErrorResponse('Please provide required query string "select"', 400)
+    const userData = await User.findById(req.user.id).select('name');
+    let userPhoto = await Employee.findOne({ user: req.user.id }).select(
+      'photo'
     );
+    userPhoto = userPhoto.toObject();
+    res.status(200).json({
+      success: true,
+      message: 'User info',
+      data: {
+        name: userData.name,
+        photo: userPhoto.photo,
+      },
+    });
   }
 
   const fields = req.query.select.split(',').join(' ');

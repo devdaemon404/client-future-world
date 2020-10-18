@@ -6,9 +6,10 @@ export const CardHeader = styled.h1`
   font-size: 28px;
   text-align: center;
   font-weight: 600;
+  font-family: 'Montserrat';
 `;
 
-export const CardContainer = styled.div`
+export const CardContainer = styled.div`a
   transition: all 0.4s ease-in-out;
   border-radius: 0px;
   opacity: 0.9;
@@ -50,7 +51,7 @@ export const Card2Container = styled.div`
 export const Card2Header = styled.h1`
   color: black;
   border: none;
-  font-family: 'Helvetica Neue', sans-serif;
+  font-family: 'Montserrat', sans-serif;
   font-size: 29px;
   font-weight: light;
   letter-spacing: -1px;

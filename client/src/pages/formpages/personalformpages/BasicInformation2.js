@@ -11,14 +11,14 @@ import OPBreadCrumb from '../../../components/form/OPBreadCrumb';
 import axios from 'axios';
 import FormPageComponent from '../../../components/form/FormPageComponent.js';
 
-const BasicInformation2 = () => {
+const BasicInformation2 = ({ history }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [formData, setFormData] = useState({
     dob: '',
     originalDob: '',
     // male: 'option1',
     // female: 'option2',
-    sex: '',
+    sex: 'male',
     birthPlace: '',
     maritalStatus: '',
     marriageDate: '',
@@ -97,6 +97,7 @@ const BasicInformation2 = () => {
       });
 
       await axios.post('/api/employee', body, config).then();
+      history.push('/information/designationInformation');
     } catch (error) {
       console.log(error);
     }
@@ -115,207 +116,201 @@ const BasicInformation2 = () => {
       </HeroContainer>
       <div className=''>
         <FormPageComponent>
-            <div className='container-fluid mt-5'>
-              {/* <h2>Current Address</h2> */}
-              <OPBreadCrumb
-                activeIndex={1}
-                crumbs={[
-                  {
-                    link: '/information/basicInformation-1',
-                    label: 'Basic Info - 1',
-                  },
-                  {
-                    link: '/information/basicInformation-2',
-                    label: 'Basic Info - 2',
-                  },
-                  {
-                    link: '/information/designationInformation',
-                    label: 'Designation',
-                  },
-                  {
-                    link: '/information/documentalInformation',
-                    label: 'Documental',
-                  },
-                  {
-                    link: '/information/address',
-                    label: 'Address',
-                  },
-                  {
-                    link: '/information/languageInformation',
-                    label: 'Language',
-                  },
-                ]}
-              />
-              <hr></hr>
-              {isLoading ? (
-                <div>
-                  <h1>Loading...</h1>
+          <div className='container-fluid mt-5'>
+            {/* <h2>Current Address</h2> */}
+            <OPBreadCrumb
+              activeIndex={1}
+              crumbs={[
+                {
+                  link: '/information/basicInformation-1',
+                  label: 'Basic Info - 1',
+                },
+                {
+                  link: '/information/basicInformation-2',
+                  label: 'Basic Info - 2',
+                },
+                {
+                  link: '/information/designationInformation',
+                  label: 'Designation',
+                },
+                {
+                  link: '/information/documentalInformation',
+                  label: 'Documental',
+                },
+                {
+                  link: '/information/address',
+                  label: 'Address',
+                },
+                {
+                  link: '/information/languageInformation',
+                  label: 'Language',
+                },
+              ]}
+            />
+            <hr></hr>
+            {isLoading ? (
+              <div>
+                <h1>Loading...</h1>
+              </div>
+            ) : (
+              <form
+                onSubmit={handleSubmit}
+                className='mt-2 text-left'
+                style={{ textAlign: 'center' }}
+              >
+                <div className='form-group row p-2'>
+                  <label className='col-sm-3 col-form-label'>
+                    <span style={{ color: 'red' }}>*</span> DOB
+                  </label>
+                  <div className='col-sm-9'>
+                    <input
+                      type='date'
+                      className='form-control'
+                      placeholder='as per records'
+                      id='dob'
+                      name='dob'
+                      value={dob || ''}
+                      onChange={(e) => handleChange(e)}
+                      required
+                    />
+                  </div>
                 </div>
-              ) : (
-                <form
-                  onSubmit={handleSubmit}
-                  className='mt-2 text-left'
-                  style={{ textAlign: 'center' }}
-                >
-                  <div className='form-group row p-2'>
-                    <label className='col-sm-3 col-form-label'>
-                      <span style={{ color: 'red' }}>*</span> DOB
-                    </label>
-                    <div className='col-sm-9'>
-                      <input
-                        type='date'
-                        className='form-control'
-                        placeholder='as per records'
-                        id='dob'
-                        name='dob'
-                        value={dob || ''}
-                        onChange={(e) => handleChange(e)}
-                        required
-                      />
-                    </div>
-                  </div>
 
-                  <div className='form-group row p-2'>
-                    <label className='col-sm-3 col-form-label'>
-                      <span style={{ color: 'red' }}>*</span> Original DOB
-                    </label>
-                    <div className='col-sm-9'>
-                      <input
-                        type='date'
-                        className='form-control'
-                        id='originalDob'
-                        name='originalDob'
-                        value={originalDob || ''}
-                        onChange={(e) => handleChange(e)}
-                        required
-                      />
-                    </div>
+                <div className='form-group row p-2'>
+                  <label className='col-sm-3 col-form-label'>
+                    <span style={{ color: 'red' }}>*</span> Original DOB
+                  </label>
+                  <div className='col-sm-9'>
+                    <input
+                      type='date'
+                      className='form-control'
+                      id='originalDob'
+                      name='originalDob'
+                      value={originalDob || ''}
+                      onChange={(e) => handleChange(e)}
+                      required
+                    />
                   </div>
+                </div>
 
-                  <fieldset className='form-group p-2'>
-                    <div className='row'>
-                      <legend className='col-form-label col-sm-3 pt-0'>
-                        <span style={{ color: 'red' }}>*</span> Sex
-                      </legend>
-                      <div className='col-sm-9'>
-                        <div className='form-check'>
-                          <input
-                            className='form-check-input'
-                            type='radio'
-                            name='sex'
-                            id='male'
-                            value='male'
-                            onClick={(e) => handleChange(e)}
-                            checked={sex === 'male'}
-                          />
-                          <label className='form-check-label'>Male</label>
-                        </div>
-                        <div className='form-check'>
-                          <input
-                            className='form-check-input'
-                            type='radio'
-                            name='sex'
-                            id='female'
-                            value='female'
-                            onClick={(e) => handleChange(e)}
-                            checked={sex === 'female'}
-                          />
-                          <label className='form-check-label'>Female</label>
-                        </div>
+                <fieldset className='form-group p-2'>
+                  <div className='row'>
+                    <legend className='col-form-label col-sm-3 pt-0'>
+                      <span style={{ color: 'red' }}>*</span> Sex
+                    </legend>
+                    <div className='col-sm-9'>
+                      <div className='form-check'>
+                        <input
+                          className='form-check-input'
+                          type='radio'
+                          name='sex'
+                          id='male'
+                          value='male'
+                          onClick={(e) => handleChange(e)}
+                          defaultChecked={sex === 'male'}
+                        />
+                        <label className='form-check-label'>Male</label>
+                      </div>
+                      <div className='form-check'>
+                        <input
+                          className='form-check-input'
+                          type='radio'
+                          name='sex'
+                          id='female'
+                          value='female'
+                          onClick={(e) => handleChange(e)}
+                          defaultChecked={sex === 'female'}
+                        />
+                        <label className='form-check-label'>Female</label>
                       </div>
                     </div>
-                  </fieldset>
-
-                  <div className='form-group row p-2'>
-                    <label className='col-sm-3 col-form-label'>
-                      <span style={{ color: 'red' }}>*</span> Birth Place
-                    </label>
-                    <div className='col-sm-9'>
-                      <input
-                        type='text'
-                        className='form-control'
-                        id='birthPlace'
-                        placeholder=''
-                        name='birthPlace'
-                        value={birthPlace || ''}
-                        onChange={(e) => handleChange(e)}
-                        required
-                      />
-                    </div>
                   </div>
+                </fieldset>
 
-                  <div className='form-group row p-2'>
-                    <label className='col-sm-3 col-form-label'>
-                      <span style={{ color: 'red' }}>*</span> Marital Status
-                    </label>
-                    <div className='col-sm-9'>
-                      <input
-                        type='text'
-                        className='form-control'
-                        id='maritalStatus'
-                        placeholder=''
-                        name='maritalStatus'
-                        value={maritalStatus || ''}
-                        onChange={(e) => handleChange(e)}
-                        required
-                      />
-                    </div>
+                <div className='form-group row p-2'>
+                  <label className='col-sm-3 col-form-label'>
+                    <span style={{ color: 'red' }}>*</span> Birth Place
+                  </label>
+                  <div className='col-sm-9'>
+                    <input
+                      type='text'
+                      className='form-control'
+                      id='birthPlace'
+                      placeholder=''
+                      name='birthPlace'
+                      value={birthPlace || ''}
+                      onChange={(e) => handleChange(e)}
+                      required
+                    />
                   </div>
+                </div>
 
-                  <div className='form-group row p-2'>
-                    <label className='col-sm-3 col-form-label'>
-                      <span style={{ color: 'red' }}></span> Marriage Date
-                    </label>
-                    <div className='col-sm-9'>
-                      <input
-                        type='date'
-                        className='form-control'
-                        id='marriageDate'
-                        name='marriageDate'
-                        value={marriageDate || ''}
-                        onChange={(e) => handleChange(e)}
-                        required
-                      />
-                    </div>
+                <div className='form-group row p-2'>
+                  <label className='col-sm-3 col-form-label'>
+                    <span style={{ color: 'red' }}>*</span> Marital Status
+                  </label>
+                  <div className='col-sm-9'>
+                    <input
+                      type='text'
+                      className='form-control'
+                      id='maritalStatus'
+                      placeholder=''
+                      name='maritalStatus'
+                      value={maritalStatus || ''}
+                      onChange={(e) => handleChange(e)}
+                      required
+                    />
                   </div>
+                </div>
 
-                  <div className='form-group row p-2'>
-                    <label className='col-sm-3 col-form-label'>
-                      <span style={{ color: 'red' }}>*</span> Religion
-                    </label>
-                    <div className='col-sm-9'>
-                      <input
-                        type='text'
-                        className='form-control'
-                        id='religion'
-                        placeholder=''
-                        name='religion'
-                        value={religion || ''}
-                        onChange={(e) => handleChange(e)}
-                        required
-                      />
-                    </div>
+                <div className='form-group row p-2'>
+                  <label className='col-sm-3 col-form-label'>
+                    <span style={{ color: 'red' }}></span> Marriage Date
+                  </label>
+                  <div className='col-sm-9'>
+                    <input
+                      type='date'
+                      className='form-control'
+                      id='marriageDate'
+                      name='marriageDate'
+                      value={marriageDate || ''}
+                      onChange={(e) => handleChange(e)}
+                      required
+                    />
                   </div>
+                </div>
 
-                  <div className='form-group row p-2 d-flex justify-content-center mt-4 mb-5'>
-                    <div className='col-sm-10'>
-                      <Link to='/information/designationInformation'>
-                        <button
-                          type='submit'
-                          className='btn selected-crumb submit-button crumb-item w-100 font-weight-bold'
-                          onClick={() => {
-                            updateBasicInformation(formData);
-                          }}
-                        >
-                          <i className='far fa-check-circle'></i> Save and
-                          Continue
-                        </button>
-                      </Link>
-                    </div>
+                <div className='form-group row p-2'>
+                  <label className='col-sm-3 col-form-label'>
+                    <span style={{ color: 'red' }}>*</span> Religion
+                  </label>
+                  <div className='col-sm-9'>
+                    <input
+                      type='text'
+                      className='form-control'
+                      id='religion'
+                      placeholder=''
+                      name='religion'
+                      value={religion || ''}
+                      onChange={(e) => handleChange(e)}
+                      required
+                    />
                   </div>
-                </form>
-              )}
-            </div>
+                </div>
+
+                <div className='form-group row p-2 d-flex justify-content-center mt-4 mb-5'>
+                  <div className='col-sm-10'>
+                    <button
+                      type='submit'
+                      className='btn selected-crumb submit-button crumb-item w-100 font-weight-bold'
+                    >
+                      <i className='far fa-check-circle'></i> Save and Continue
+                    </button>
+                  </div>
+                </div>
+              </form>
+            )}
+          </div>
         </FormPageComponent>
       </div>
     </Container>
