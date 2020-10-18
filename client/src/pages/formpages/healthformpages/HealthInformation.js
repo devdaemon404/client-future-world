@@ -10,9 +10,9 @@ import Header from '../../../components/header/Header';
 import FormPageComponent from '../../../components/form/FormPageComponent';
 import OPBreadCrumb from '../../../components/form/OPBreadCrumb.js';
 import axios from 'axios';
-import { Link } from 'react-router-dom';
+// import { Link } from 'react-router-dom';
 
-const HealthInformation = () => {
+const HealthInformation = ({history}) => {
   const [isLoading, setIsLoading] = useState(false);
   const [formData, setFormData] = useState({
     bloodGroup: '',
@@ -98,7 +98,8 @@ const HealthInformation = () => {
         },
       });
 
-      await axios.post('/api/employee', body, config).then();
+      await axios.post('/api/employee', body, config);
+      history.push('/other');
     } catch (error) {
       console.log(error);
     }
@@ -277,18 +278,12 @@ const HealthInformation = () => {
 
                 <div className='form-group row p-2 d-flex justify-content-center mt-4 mb-5'>
                   <div className='col-sm-10'>
-                    <Link to='/information/familyInformation'>
-                      <button
-                        type='submit'
-                        onClick={() => {
-                          updateHealthInformation(formData);
-                        }}
-                        className='btn selected-crumb submit-button crumb-item w-100 font-weight-bold'
-                      >
-                        <i className='far fa-check-circle'></i> Save and
-                        Continue
-                      </button>
-                    </Link>
+                    <button
+                      type='submit'
+                      className='btn selected-crumb submit-button crumb-item w-100 font-weight-bold'
+                    >
+                      <i className='far fa-check-circle'></i> Save and Continue
+                    </button>
                   </div>
                 </div>
               </form>

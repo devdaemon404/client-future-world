@@ -1,12 +1,14 @@
 import React from 'react';
 import {
-  Container, Hero2Container, MainHeader, MainPara,
+  Container,
+  Hero2Container,
+  MainHeader,
+  MainPara,
   // CardHeader, CardPara
 } from './hero.styles';
 import Card2 from '../card/Card2';
 
 function Hero2() {
-
   return (
     <Container>
       <HeroContainer className='box d-flex align-items-center'>
@@ -15,8 +17,8 @@ function Hero2() {
             <div className='col-lg-5 order-1 order-lg-1 d-flex flex-column justify-content-start mt-5 mb-5'>
               <MainHeader>My Application</MainHeader>
               <MainPara>
-                It is a long established fact that a reader will be distracted by
-                the readable content of a page when looking at its layout.
+                Please fill in your on-boarding application form. We are
+                delighted to have you here!
               </MainPara>
             </div>
             <div className='col-lg-7 order-1 order-lg-2'>
@@ -24,7 +26,8 @@ function Hero2() {
                 title='Personal Information'
                 subTitle='2/4 Sections Completed'
                 iconClass='fas fa-address-card fa-2x'
-                percentage='50' />
+                percentage='50'
+              />
             </div>
           </div>
         </div>

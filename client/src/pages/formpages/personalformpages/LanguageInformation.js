@@ -206,9 +206,6 @@ const LanguageInformation = ({ history }) => {
                   <div className='col-sm-10'>
                     <button
                       type='submit'
-                      onClick={() => {
-                        updateLanguageInformation(formData);
-                      }}
                       className='btn selected-crumb submit-button crumb-item w-100 font-weight-bold'
                     >
                       <i className='far fa-check-circle'></i> Save and Continue

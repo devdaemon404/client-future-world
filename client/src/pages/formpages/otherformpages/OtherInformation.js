@@ -11,7 +11,7 @@ import Progressbar from '../../../components/progress-bar/Progress';
 import OPBreadCrumb from '../../../components/form/OPBreadCrumb.js';
 import axios from 'axios';
 
-const OtherInformation = () => {
+const OtherInformation = ({history}) => {
   const [isLoading, setIsLoading] = useState(false);
   const [formData, setFormData] = useState({
     relativeInfo: '',
@@ -101,7 +101,8 @@ const OtherInformation = () => {
         },
       });
 
-      await axios.post('/api/employee', body, config).then();
+      await axios.post('/api/employee', body, config);
+      history.push('/information/uploads');
     } catch (error) {
       console.log(error);
     }

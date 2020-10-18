@@ -16,8 +16,6 @@ const BasicInformation2 = ({ history }) => {
   const [formData, setFormData] = useState({
     dob: '',
     originalDob: '',
-    // male: 'option1',
-    // female: 'option2',
     sex: 'male',
     birthPlace: '',
     maritalStatus: '',
@@ -96,7 +94,7 @@ const BasicInformation2 = ({ history }) => {
         },
       });
 
-      await axios.post('/api/employee', body, config).then();
+      await axios.post('/api/employee', body, config);
       history.push('/information/designationInformation');
     } catch (error) {
       console.log(error);
@@ -275,7 +273,7 @@ const BasicInformation2 = ({ history }) => {
                       name='marriageDate'
                       value={marriageDate || ''}
                       onChange={(e) => handleChange(e)}
-                      required
+                     
                     />
                   </div>
                 </div>

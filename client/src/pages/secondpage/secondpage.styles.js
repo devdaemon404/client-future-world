@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 
 export const Container = styled.div`
-  background-color:#111;
+  background-color: #111;
 `;
 
 export const HeroContainer = styled.div`
@@ -13,13 +13,13 @@ export const HeroContainer = styled.div`
   position: relative;
   clip-path: polygon(0 0, 100% 0, 100% 100%, 0 calc(100% - 5vw));
 
-  .link{
-    color:#111;
+  .link {
+    color: #111;
   }
 
-  .link:hover{
-    color:#6598BB;
-    text-decoration:none;
+  .link:hover {
+    color: #6598bb;
+    text-decoration: none;
   }
 
   &::before {
@@ -36,29 +36,28 @@ export const HeroContainer = styled.div`
     -khtml-opacity: 0.6;
   }
 
-
-  .form-link{
+  .form-link {
     padding: 10px;
-    color:#111;
-    background-color:#255473;
-    font-size:24px;
+    color: #111;
+    background-color: #255473;
+    font-size: 24px;
   }
 
-  .form-link:hover{
-    color:#6598BB;
-    text-decoration:none;
+  .form-link:hover {
+    color: #6598bb;
+    text-decoration: none;
   }
-  
-  .list-group-item{
+
+  .list-group-item {
     transition: all 0.2s ease-in-out;
-    color:#111;
-    background-color:#255473;
-    border-bottom: 1px solid #5082A1;
+    color: #111;
+    background-color: #255473;
+    border-bottom: 1px solid #5082a1;
   }
 
-  .list-group-item:hover{
+  .list-group-item:hover {
     transform: scale(1.02);
-    background-color:#5082A1;
+    background-color: #5082a1;
     z-index: 1;
   }
 `;
@@ -68,15 +67,14 @@ export const MainHeader = styled.h1`
   background-color: #2d3436;
   background-image: linear-gradient(315deg, #2d3436 0%, #000000 74%);
   font-family: 'Helvetica Neue', sans-serif;
-  border-radius:5px;
+  border-radius: 5px;
   font-size: 50px;
-  padding:5px;
+  padding: 5px;
   font-weight: bold;
   letter-spacing: -1px;
   line-height: 1;
   text-align: center;
 `;
-
 
 export const MainPara = styled.p`
   color: #111;
@@ -94,9 +92,9 @@ export const MainHeader2 = styled.h1`
   background-color: #2d3436;
   background-image: linear-gradient(315deg, #2d3436 0%, #000000 74%);
   font-family: 'Helvetica Neue', sans-serif;
-  border-radius:5px;
+  border-radius: 5px;
   font-size: 50px;
-  padding:5px;
+  padding: 5px;
   font-weight: bold;
   letter-spacing: -1px;
   line-height: 1;

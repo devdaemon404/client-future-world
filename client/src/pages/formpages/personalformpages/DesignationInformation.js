@@ -98,7 +98,7 @@ const DesignationInformation = ({ history }) => {
         },
       });
 
-      await axios.post('/api/employee', body, config).then();
+      await axios.post('/api/employee', body, config);
       history.push('/information/documentalInformation');
     } catch (error) {
       console.log(error);
@@ -369,9 +369,6 @@ const DesignationInformation = ({ history }) => {
                     <button
                       type='submit'
                       className='btn selected-crumb submit-button crumb-item w-100 font-weight-bold'
-                      onClick={() => {
-                        updateDesignationInformation(formData);
-                      }}
                     >
                       <i className='far fa-check-circle'></i> Save and Continue
                     </button>
