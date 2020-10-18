@@ -46,14 +46,23 @@ exports.getEmployeeInfo = asyncHandler(async (req, res, next) => {
     let userPhoto = await Employee.findOne({ user: req.user.id }).select(
       'photo'
     );
-    userPhoto = userPhoto.toObject();
-    res.status(200).json({
-      success: true,
-      message: 'User info',
-      data: {
+    let data;
+    if (userPhoto !== null) {
+      userPhoto = userPhoto.toObject();
+      data = {
         name: userData.name,
         photo: userPhoto.photo,
-      },
+      }
+    } else {
+      data = {
+        name: '',
+        photo: '',
+      }
+    }
+    return res.status(200).json({
+      success: true,
+      message: 'User info',
+      data
     });
   }
 

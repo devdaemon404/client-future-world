@@ -13,6 +13,10 @@ const EmployeeSchema = new mongoose.Schema({
     type: Date,
     default: Date.now,
   },
+  photo: {
+    type: String,
+    default: ''
+  }
 }, { strict: false });
 
 module.exports = mongoose.model('employees', EmployeeSchema);
