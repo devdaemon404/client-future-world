@@ -7,7 +7,7 @@ import {
 } from '../formpage.styles.js';
 // import { Link } from 'react-router-dom';
 import Header from '../../../components/header/Header';
-import Progressbar from '../../../components/progress-bar/Progress';
+// import Progressbar from '../../../components/progress-bar/Progress';
 import ComplexComponent from '../../../components/form/ComplexComponent';
 import OPBreadCrumb from '../../../components/form/OPBreadCrumb';
 import axios from 'axios';
@@ -46,7 +46,7 @@ const WorkInformation = () => {
       <Header pathname='/work' />
       <HeroContainer className='box d-flex align-items-center justify-content-center'>
         <MainHeader className='text-center'>
-          Academic Infromation and Work Experience
+          Academic Information and Work Experience
         </MainHeader>
       </HeroContainer>
 

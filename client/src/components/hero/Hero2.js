@@ -14,10 +14,10 @@ function Hero2() {
       <div className='container'>
         <div className='row'>
           <div className='col-lg-5 order-1 order-lg-1 d-flex flex-column justify-content-start mt-5 mb-5'>
-            <MainHeader>My FUCK Application</MainHeader>
+            <MainHeader>My Application</MainHeader>
             <MainPara>
-              It is a long established fact that a reader will be distracted by
-              the readable content of a page when looking at its layout.
+              Please fill in your on-boarding application form. We are delighted
+              to have you here!
             </MainPara>
           </div>
           <div className='col-lg-7 order-1 order-lg-2'>
