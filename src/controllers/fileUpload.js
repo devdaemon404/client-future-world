@@ -40,10 +40,9 @@ exports.uploadFile = asyncHandler(async (req, res, next) => {
     success: true,
     message: 'Created PUT url for file upload',
     fileKey,
-    url
+    url,
   });
 });
-
 
 /**
  * @desc    Get a file from aws s3

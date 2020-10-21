@@ -52,17 +52,17 @@ exports.getEmployeeInfo = asyncHandler(async (req, res, next) => {
       data = {
         name: userData.name,
         photo: userPhoto.photo,
-      }
+      };
     } else {
       data = {
         name: '',
         photo: '',
-      }
+      };
     }
     return res.status(200).json({
       success: true,
       message: 'User info',
-      data
+      data,
     });
   }
 

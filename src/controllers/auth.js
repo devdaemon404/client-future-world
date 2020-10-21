@@ -69,12 +69,14 @@ exports.login = asyncHandler(async (req, res, next) => {
   }
 
   if (user.active !== 1) {
-    return next(new ErrorResponse('User\'s account is active or relieved', 401));
+    return next(
+      new ErrorResponse("User's account is inactive or relieved", 401)
+    );
   }
 
   await User.findByIdAndUpdate(user._id, {
-    lastLogin: Date.now()
-  })
+    lastLogin: Date.now(),
+  });
 
   sendTokenResponse(user, 200, res);
 });
@@ -110,7 +112,11 @@ exports.updatePassword = asyncHandler(async (req, res, next) => {
   const salt = await bcrypt.genSalt(10);
   let password = await bcrypt.hash(newPassword, salt);
 
-  user = await User.findByIdAndUpdate(req.user.id, { password }, { new: true, runValidators: true })
+  user = await User.findByIdAndUpdate(
+    req.user.id,
+    { password },
+    { new: true, runValidators: true }
+  );
 
   sendTokenResponse(user, 200, res);
 });
@@ -124,7 +130,6 @@ exports.validateToken = asyncHandler(async (req, res, next) => {
   sendTokenResponse(user, 200, res);
 });
 
-
 // Get token from model, create cookie and send response
 const sendTokenResponse = (user, statusCode, res) => {
   // Create token
@@ -132,7 +137,7 @@ const sendTokenResponse = (user, statusCode, res) => {
 
   const options = {
     expires: new Date(
-      Date.now() + process.env.JWT_COOKIE_EXPIRE * 24 * 60 * 60 * 1000,
+      Date.now() + process.env.JWT_COOKIE_EXPIRE * 24 * 60 * 60 * 1000
     ),
     httpOnly: true,
   };
@@ -144,6 +149,6 @@ const sendTokenResponse = (user, statusCode, res) => {
   res.status(statusCode).cookie('token', token, options).json({
     success: true,
     token,
-    role: user.role
+    role: user.role,
   });
 };

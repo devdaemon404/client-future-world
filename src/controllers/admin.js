@@ -18,13 +18,15 @@ exports.getAllUsers = asyncHandler(async (req, res, next) => {
 });
 
 /**
- * @desc    Get all users
- * @route   GET /api/admin/employee-info
+ * @desc    Get employee info
+ * @route   GET /api/admin/employee-info/:employeeId
  * @access  Private
  */
 exports.getEmployeeInfo = asyncHandler(async (req, res, next) => {
+  const employee = await Employee.findById(req.params.employeeId);
   res.status(200).json({
     success: true,
+    data: employee,
   });
 });
 
@@ -36,13 +38,17 @@ exports.getEmployeeInfo = asyncHandler(async (req, res, next) => {
 exports.changeUserActiveStatus = asyncHandler(async (req, res, next) => {
   const { employeeId, active } = req.body;
 
-  await User.findByIdAndUpdate(employeeId, { active }, {
-    new: true,
-    runValidators: true
-  });
+  await User.findByIdAndUpdate(
+    employeeId,
+    { active },
+    {
+      new: true,
+      runValidators: true,
+    }
+  );
 
   res.status(201).json({
     success: true,
-    message: 'Changed user\'s active status'
+    message: "Changed user's active status",
   });
 });

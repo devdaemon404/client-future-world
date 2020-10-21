@@ -6,7 +6,7 @@ const {
   login,
   logout,
   updatePassword,
-  validateToken
+  validateToken,
 } = require('../controllers/auth');
 
 const { protect, authorize } = require('../middleware/auth');
