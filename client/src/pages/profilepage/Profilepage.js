@@ -1,13 +1,18 @@
 import React from 'react';
-import { Header, Sidebar, SidebarItem } from './ProfilePage.styles';
+import {
+  LeftCol,
+  RightCol,
+  ProfContainer,
+  DisplayPic,
+} from './ProfilePage.styles';
 const Profilepage = () => {
   return (
-    <>
-      <Header>hi</Header>
-      <Sidebar>
-        <SidebarItem></SidebarItem>
-      </Sidebar>
-    </>
+    <ProfContainer>
+      <LeftCol>
+        <DisplayPic></DisplayPic>
+      </LeftCol>
+      <RightCol></RightCol>
+    </ProfContainer>
   );
 };
 export default Profilepage;

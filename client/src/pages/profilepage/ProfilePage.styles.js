@@ -1,25 +1,19 @@
 import styled from 'styled-components';
-export const TableContainer = styled.div`
-  margin-top: 100px;
-  margin-left: 50px;
-  text-align: center;
-  width: inherit;
-  max-height: 400px;
-`;
-export const Header = styled.div`
-  width: 100vw;
-  height: 240px;
-  background-color: #11154c;
-`;
-export const Sidebar = styled.div`
-  width: 346px;
-  margin-left: 12%;
-  height: calc(100vh - 240px);
-  background-color: #f4f4f4;
+export const ProfContainer = styled.div`
   display: flex;
+  width: 100vw;
 `;
-export const SidebarItem = styled.div`
+export const LeftCol = styled.div`
+  width: 25%;
+  height: 100vh;
+  background: gray;
+`;
+export const RightCol = styled.div`
+  width: 75%;
+  height: 100vh;
+  background: pink;
+`;
+export const DisplayPic = styled.div`
   width: 100%;
-  height: 24px;
-  background-color: white;
+  height: 300px;
 `;

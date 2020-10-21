@@ -1,0 +1,150 @@
+import React, { useCallback, useState } from 'react';
+import BG from '../../assets/img/smart.png';
+
+import axios from 'axios';
+import { Form } from 'react-bootstrap';
+import { Link, useHistory } from 'react-router-dom';
+import {
+  MainLogin,
+  MainSlide,
+  MainContainer,
+  Footer,
+} from './LoginPage2.styles';
+import LOGO from '../../assets/img/logo.png';
+import Circle from '../../assets/img/circles.png';
+export const LoginPage2 = () => {
+  const history = useHistory();
+  const [email, setemail] = useState('');
+  const [password, setpassword] = useState('');
+  // const [success, setSuccess] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(false);
+
+  const onFormSubmit = async (e) => {
+    setIsLoading(true);
+    e.preventDefault();
+    setError(false);
+    try {
+      var loginResult = await axios.post('/api/auth/login', {
+        password,
+        email,
+      });
+
+      if (loginResult.data.success) {
+        console.log('done');
+        setIsLoading(false);
+        setError(false);
+        if (loginResult.data.role === 'admin') {
+          history.push('/admin');
+        } else {
+          history.push('/');
+        }
+      }
+    } catch (err) {
+      setIsLoading(false);
+      setError(true);
+    }
+  };
+
+  return (
+    <React.Fragment>
+      <MainContainer>
+        <div>
+          <MainLogin>
+            <div className='Logo'>
+              <img src={LOGO} style={{ margin: '20px 40px' }} />
+            </div>
+            <div className='loginForm'>
+              <div style={{ height: 150 }}></div>
+              <form onSubmit={onFormSubmit}>
+                <h6>Login ID</h6>
+
+                <div className='form-group'>
+                  <input
+                    type='email'
+                    className='form-control lg'
+                    id='exampleInputEmail1'
+                    aria-describedby='emailHelp'
+                    placeholder='Enter Here'
+                    onChange={(e) => {
+                      setemail(e.target.value);
+                    }}
+                    style={{
+                      background: 'none',
+                      borderRadius: 0,
+                      borderBottom: '1px solid rgba(0,0,0,.3)',
+                      width: '350px',
+                    }}
+                  />
+                </div>
+                <h6>Password</h6>
+
+                <div className='form-group'>
+                  <input
+                    type='password'
+                    onChange={(e) => {
+                      setpassword(e.target.value);
+                    }}
+                    className='form-control lg'
+                    id='exampleInputPassword1'
+                    placeholder='Enter Here'
+                    style={{
+                      background: 'none',
+
+                      borderRadius: 0,
+                      borderBottom: '1px solid rgba(0,0,0,.3)',
+                      width: '350px',
+                    }}
+                  />
+                </div>
+                <div className='form-grou'>
+                  <button
+                    type='submit'
+                    className='btn btn-primary'
+                    style={{ width: '190px', margin: '10px 13% ' }}
+                  >
+                    {isLoading ? 'Logging you in ... ' : 'sign in'}
+                  </button>
+                  <br />
+                </div>
+                <div className='form-group'>
+                  <p style={{ color: 'red', fontWeight: 700 }}>
+                    {error ? 'Invalid Credentials' : ''}
+                  </p>
+                </div>
+              </form>
+            </div>
+          </MainLogin>
+        </div>
+        <MainSlide>
+          <div className='image'>
+            {' '}
+            <img src={BG} style={{ maxWidth: '70%', minWidth: '300px' }} />
+          </div>
+          <h2 className='Head'> Helping businesses around the world succeed</h2>
+        </MainSlide>
+        <Footer>
+          <div className='footer-up'></div>
+          <div className='footer-down'>
+            <Link className='Link' to='#!'>
+              Contact Us
+            </Link>
+            {'   '}|
+            <Link className='Link' to='#!'>
+              Locate Us
+            </Link>
+            {'   '}|
+            <Link className='Link' to='#!'>
+              Terms of service
+            </Link>
+            {'   '}|
+            <Link className='Link' to='/profile'>
+              Privacy policy
+            </Link>
+          </div>
+        </Footer>
+      </MainContainer>
+    </React.Fragment>
+  );
+};
+export default LoginPage2;
