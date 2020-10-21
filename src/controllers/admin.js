@@ -1,6 +1,7 @@
 const asyncHandler = require('../middleware/async');
 
 const User = require('../models/User');
+const Employee = require('../models/Employee');
 
 /**
  * @desc    Get all users
@@ -23,7 +24,7 @@ exports.getAllUsers = asyncHandler(async (req, res, next) => {
  * @access  Private
  */
 exports.getEmployeeInfo = asyncHandler(async (req, res, next) => {
-  const employee = await Employee.findById(req.params.employeeId);
+  const employee = await Employee.findOne({ user: req.params.employeeId });
   res.status(200).json({
     success: true,
     data: employee,

@@ -14,7 +14,7 @@ router
   .route('/change-activity')
   .post(protect, authorize('admin'), changeUserActiveStatus);
 router
-  .route('/employee-info')
+  .route('/employee-info/:employeeId')
   .get(protect, authorize('admin'), getEmployeeInfo);
 
 module.exports = router;
