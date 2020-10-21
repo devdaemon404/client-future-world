@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Container,
   HeroContainer,
@@ -7,11 +7,11 @@ import {
 } from '../formpage.styles.js';
 // import { Link } from 'react-router-dom';
 import Header from '../../../components/header/Header';
-import Progressbar from '../../../components/progress-bar/Progress';
+import FormPageComponent from '../../../components/form/FormPageComponent';
 import OPBreadCrumb from '../../../components/form/OPBreadCrumb.js';
 import axios from 'axios';
 
-const OtherInformation = () => {
+const OtherInformation = ({history}) => {
   const [isLoading, setIsLoading] = useState(false);
   const [formData, setFormData] = useState({
     relativeInfo: '',
@@ -101,7 +101,8 @@ const OtherInformation = () => {
         },
       });
 
-      await axios.post('/api/employee', body, config).then();
+      await axios.post('/api/employee', body, config);
+      history.push('/information/uploads');
     } catch (error) {
       console.log(error);
     }
@@ -120,58 +121,29 @@ const OtherInformation = () => {
           Uploads and Other Information
         </MainHeader>
       </HeroContainer>
-      <div className='container'>
-        <div className='row'>
-          <div className='col-lg-4 order-1 order-lg-1 d-flex flex-column justify-content-start mt-5'>
-            <div className='d-flex justify-content-center'>
-              <Progressbar
-                iconClass='fas fa-address-card fa-2x'
-                percentage='50'
-              />
-            </div>
-            <p className='text-muted text-center'>
-              <em>5/10 sections completed</em>
-            </p>
-          </div>
-          <div className='col-lg-8 order-1 order-lg-2 d-flex flex-column justify-content-start mt-5'>
-            <div>
-              <p>
-                Enter your contact information in this section. Keep this
-                information up-to-date throughout the application process.
-              </p>
-            </div>
-            <div>
-              <p>
-                You can edit this section after you submit your application.
-              </p>
-            </div>
-            <div>
-              <p>
-                <span style={{ color: 'red' }}>*</span> Indicates required field
-              </p>
-            </div>
-
-            <div className='container-fluid mt-5'>
-              {/* <h2>Current Address</h2> */}
-              <OPBreadCrumb
-                crumbs={[
-                  {
-                    link: '/information/otherInformation',
-                    label: 'Other Information',
-                  },
-                  {
-                    link: '/information/uploads',
-                    label: 'Uploading Documents',
-                  },
-                ]}
-                activeIndex={0}
-              />
-              <hr></hr>
-              {isLoading ? (
-                <div>
-                  <h1>Loading...</h1>
-                </div>
-              ) : (
+      <div className=''>
+        <FormPageComponent>
+          <div className='container-fluid mt-5'>
+            {/* <h2>Current Address</h2> */}
+            <OPBreadCrumb
+              crumbs={[
+                {
+                  link: '/information/otherInformation',
+                  label: 'Other Information',
+                },
+                {
+                  link: '/information/uploads',
+                  label: 'Uploading Documents',
+                },
+              ]}
+              activeIndex={0}
+            />
+            <hr></hr>
+            {isLoading ? (
+              <div>
+                <h1>Loading...</h1>
+              </div>
+            ) : (
               <form onSubmit={handleSubmit} className='mt-2 text-left'>
                 <div className='form-group row p-2'>
                   <label className='col-sm-3 col-form-label'>
@@ -291,8 +263,8 @@ const OtherInformation = () => {
                     yes, please specify)
                   </label>
                   <div className='col-sm-12'> */}
-                    {/* <input type="text" className="form-control" id="" placeholder="" /> */}
-                    {/* <textarea
+                {/* <input type="text" className="form-control" id="" placeholder="" /> */}
+                {/* <textarea
                       className='form-control'
                       id='exampleFormControlTextarea1'
                       rows='3'
@@ -418,10 +390,9 @@ const OtherInformation = () => {
                   </div>
                 </div>
               </form>
-              )}
-            </div>
+            )}
           </div>
-        </div>
+        </FormPageComponent>
       </div>
     </Container>
   );

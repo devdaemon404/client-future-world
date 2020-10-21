@@ -213,10 +213,9 @@ function ComplexComponent({
    */
   function InfoTable() {
     return (
-      <div className='container-fluid'>
-        <h2 className='p-2 mt-1'>Your Information.</h2>
+      <div className=''>
         <p>
-          <span>({buttonName}&nbsp; to show them below)</span>
+          <span>({buttonName}&nbsp; to show below)</span>
         </p>
         <table
           className='table table-striped  table-borderless mt-4 mb-5'

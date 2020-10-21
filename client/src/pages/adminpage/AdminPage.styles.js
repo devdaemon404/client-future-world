@@ -34,7 +34,7 @@ export const NotPhone = styled.div`
   }
   .PhoneError {
     text-align: center;
-    color: red;
+    color: purple;
     font-size: 18px;
   }
   .ErrorContainer {
