@@ -29,17 +29,17 @@ const Routes = () => {
   let history = useHistory();
   useEffect(() => {
     const checkLogin = async () => {
-      try {
-        const res = await axios.get('/api/auth/validate-token').then();
-        console.log(res.data.role);
-        if (res.data.role === 'admin') {
-          history.push('/admin');
-        } else {
-          history.push('/');
-        }
-      } catch (error) {
-        history.push('/login');
-      }
+      // try {
+      //   const res = await axios.get('/api/auth/validate-token').then();
+      //   console.log(res.data.role);
+      //   if (res.data.role === 'admin') {
+      //     history.push('/admin');
+      //   } else {
+      //     history.push('/');
+      //   }
+      // } catch (error) {
+      //   history.push('/login');
+      // }
     };
 
     checkLogin();
@@ -50,7 +50,8 @@ const Routes = () => {
       atEnter={{ opacity: 0 }}
       atLeave={{ opacity: 0 }}
       atActive={{ opacity: 1 }}
-      className='switch-wrapper'>
+      className='switch-wrapper'
+    >
       <Route exact path='/' component={homepage} />
       <Route exact path='/login' component={LoginPage} />
 

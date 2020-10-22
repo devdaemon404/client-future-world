@@ -92,36 +92,14 @@ const WorkInformation = () => {
                 config
               );
             }}
-            tableColumns={[
-              'Company ',
-              'From date ',
-              'To date',
-              'Designation',
-              'Salary p.a.',
-              'Type of Industry',
-              'Reason for leaving',
-              'Funtional/Technical Skills',
-              'Professional Achievments',
-            ]}
-            essentialFieldKeys={[
-              'company ',
-              'fromDate ',
-              'toDate ',
-              'designation',
-              'salary',
-              'typeOfIndustry',
-              'reasonForLeaving',
-              'skills',
-              'achievments',
-            ]}
-            textFieldDetails={[
+            columnNames={[
               {
                 label: 'Company ',
                 key: 'company ',
                 isRequired: true,
               },
               {
-                label: 'From date ',
+                label: 'DOJ',
                 key: 'fromDate ',
                 isRequired: true,
                 type: 'date',

@@ -381,64 +381,65 @@ const BasicInformation1 = ({ history }) => {
                     <span style={{ color: 'red' }}>*</span> Passport Sized Photo
                   </label>
                   <div className='col-sm-9'>
-                  <ImageUploading
-                    multiple
-                    value={images}
-                    onChange={onImageAdd}
-                    maxNumber={maxNumber}
-                    dataURLKey='data_url'
-                  >
-                    {({
-                      imageList,
-                      onImageUpload,
-                      onImageRemoveAll,
-                      onImageUpdate,
-                      onImageRemove,
-                      isDragging,
-                      dragProps,
-                    }) => (
-                      <div className='upload__image-wrapper'>
-                        {images.length === 0 ? (
-                          <div
-                            className='btn selected-crumb'
-                            style={isDragging ? { color: 'red' } : undefined}
-                            onClick={async () => {
-                              onImageUpload();
-                            }}
-                            {...dragProps}
-                          >
-                            Click or Drop here
-                          </div>
-                        ) : (
-                          <div />
-                        )}
-                        &nbsp;
-                        {imageList.map((image, index) => (
-                          <div key={index} className='row ml-5'>
-                            <img src={image['data_url']} alt='' width='100' />
-                            <div className='ml-5 col'>
-                              <div className='row mb-5'>
-                                <div
-                                  className='btn selected-crumb'
-                                  onClick={() => onImageUpdate(index)}
-                                >
-                                  Update
+                    <ImageUploading
+                      multiple
+                      value={images}
+                      onChange={onImageAdd}
+                      maxNumber={maxNumber}
+                      dataURLKey='data_url'
+                    >
+                      {({
+                        imageList,
+                        onImageUpload,
+                        onImageRemoveAll,
+                        onImageUpdate,
+                        onImageRemove,
+                        isDragging,
+                        dragProps,
+                      }) => (
+                        <div className='upload__image-wrapper'>
+                          {images.length === 0 ? (
+                            <div
+                              className='btn selected-crumb'
+                              style={isDragging ? { color: 'red' } : undefined}
+                              onClick={async () => {
+                                onImageUpload();
+                              }}
+                              {...dragProps}
+                            >
+                              Click or Drop here
+                            </div>
+                          ) : (
+                            <div />
+                          )}
+                          &nbsp;
+                          {imageList.map((image, index) => (
+                            <div key={index} className='row ml-5'>
+                              <img src={image['data_url']} alt='' width='100' />
+                              <div className='ml-5 col'>
+                                <div className='row mb-5'>
+                                  <div
+                                    className='btn selected-crumb'
+                                    onClick={() => onImageUpdate(index)}
+                                  >
+                                    Update
+                                  </div>
                                 </div>
-                              </div>
-                              <div className='row'>
-                                <div
-                                  className='btn selected-crumb'
-                                  onClick={() => onImageRemove(index)}
-                                >
-                                  Remove
+                                <div className='row'>
+                                  <div
+                                    className='btn selected-crumb'
+                                    onClick={() => onImageRemove(index)}
+                                  >
+                                    Remove
+                                  </div>
                                 </div>
                               </div>
                             </div>
-                          </div>
-                        ))}
-                      </div>
-                    )}
-                  </ImageUploading></div>
+                          ))}
+                        </div>
+                      )}
+                    </ImageUploading>
+                  </div>
                 </div>
 
                 <div className='form-group row p-2 d-flex justify-content-center mt-4 mb-5'>

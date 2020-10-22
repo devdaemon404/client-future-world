@@ -324,7 +324,7 @@ const DesignationInformation = ({ history }) => {
                           name='entryVia'
                           id='Placement'
                           value='Placement'
-                          onClick={(e) => handleChange(e)}
+                          onChange={(e) => handleChange(e)}
                           checked={entryVia === 'Placement'}
                         />
                         <label className='form-check-label'>
@@ -338,7 +338,7 @@ const DesignationInformation = ({ history }) => {
                           name='entryVia'
                           id='Direct'
                           value='Direct'
-                          onClick={(e) => handleChange(e)}
+                          onChange={(e) => handleChange(e)}
                           checked={entryVia === 'Direct'}
                         />
                         <label className='form-check-label'>Direct</label>
@@ -362,7 +362,7 @@ const DesignationInformation = ({ history }) => {
                           name='entryVia'
                           id='Referal'
                           value='Referal'
-                          onClick={(e) => handleChange(e)}
+                          onChange={(e) => handleChange(e)}
                           checked={entryVia === 'Referal'}
                         />
                         <label className='form-check-label'>Referal</label>
@@ -374,7 +374,7 @@ const DesignationInformation = ({ history }) => {
                           name='entryVia'
                           id='ADVT'
                           value='ADVT'
-                          onClick={(e) => handleChange(e)}
+                          onChange={(e) => handleChange(e)}
                           checked={entryVia === 'ADVT'}
                         />
                         <label className='form-check-label'>ADVT</label>
@@ -386,7 +386,7 @@ const DesignationInformation = ({ history }) => {
                           name='entryVia'
                           id='Consultant'
                           value='Consultant'
-                          onClick={(e) => handleChange(e)}
+                          onChange={(e) => handleChange(e)}
                           checked={entryVia === 'Consultant'}
                         />
                         <label className='form-check-label'>Consultant</label>
@@ -394,80 +394,87 @@ const DesignationInformation = ({ history }) => {
                     </div>
                   </div>
 
-                  {(() => {
-                    switch (entryVia) {
-                      case 'Placement':
-                        return (
-                          <input
-                            type='text'
-                            className='form-control'
-                            id='collegeName'
-                            placeholder='College Name'
-                            name='collegeName'
-                            value={collegeName || ''}
-                            onChange={(e) => handleChange(e)}
-                            required
-                          />
-                        );
-                      case 'Direct':
-                        return (
-                          <input
-                            type='text'
-                            className='form-control'
-                            id='hrName'
-                            placeholder='FutureWorld HR name'
-                            name='hrName'
-                            value={hrName || ''}
-                            onChange={(e) => handleChange(e)}
-                            required
-                          />
-                        );
+                  <div className='form-group row p-2'>
+                    <label className='col-sm-3 col-form-label'>
+                      <div />
+                    </label>
+                    <div className='col-sm-9'>
+                      {(() => {
+                        switch (entryVia) {
+                          case 'Placement':
+                            return (
+                              <input
+                                type='text'
+                                className='form-control'
+                                id='collegeName'
+                                placeholder='College Name'
+                                name='collegeName'
+                                value={collegeName || ''}
+                                onChange={(e) => handleChange(e)}
+                                required
+                              />
+                            );
+                          case 'Direct':
+                            return (
+                              <input
+                                type='text'
+                                className='form-control'
+                                id='hrName'
+                                placeholder='FutureWorld HR name'
+                                name='hrName'
+                                value={hrName || ''}
+                                onChange={(e) => handleChange(e)}
+                                required
+                              />
+                            );
 
-                      case 'Referal':
-                        return (
-                          <input
-                            type='text'
-                            className='form-control'
-                            id='empNameId'
-                            placeholder='empNameId'
-                            name='empNameId'
-                            value={empNameId || ''}
-                            onChange={(e) => handleChange(e)}
-                            required
-                          />
-                        );
+                          case 'Referal':
+                            return (
+                              <input
+                                type='text'
+                                className='form-control'
+                                id='empNameId'
+                                placeholder='empNameId'
+                                name='empNameId'
+                                value={empNameId || ''}
+                                onChange={(e) => handleChange(e)}
+                                required
+                              />
+                            );
 
-                      case 'ADVT':
-                        return (
-                          <input
-                            type='text'
-                            className='form-control'
-                            id='agencyName'
-                            placeholder='Agency Name'
-                            name='agencyName'
-                            value={agencyName || ''}
-                            onChange={(e) => handleChange(e)}
-                            required
-                          />
-                        );
-                      case 'Consultant':
-                        return (
-                          <input
-                            type='text'
-                            className='form-control'
-                            id='consultancyName'
-                            placeholder='Company Name'
-                            name='consultancyName'
-                            value={consultancyName || ''}
-                            onChange={(e) => handleChange(e)}
-                            required
-                          />
-                        );
+                          case 'ADVT':
+                            return (
+                              <input
+                                type='text'
+                                className='form-control'
+                                id='agencyName'
+                                placeholder='Agency Name'
+                                name='agencyName'
+                                value={agencyName || ''}
+                                onChange={(e) => handleChange(e)}
+                                required
+                              />
+                            );
+                          case 'Consultant':
+                            return (
+                              <input
+                                type='text'
+                                className='form-control'
+                                id='consultancyName'
+                                placeholder='Company Name'
+                                name='consultancyName'
+                                value={consultancyName || ''}
+                                onChange={(e) => handleChange(e)}
+                                required
+                              />
+                            );
 
-                      default:
-                        return '';
-                    }
-                  })()}
+                          default:
+                            return '';
+                        }
+                      })()}
+                    </div>
+                  </div>
                 </fieldset>
 
                 <div className='form-group row p-2'>
