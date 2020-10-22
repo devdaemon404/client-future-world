@@ -33,7 +33,7 @@ const UserSchema = new mongoose.Schema({
   active: {
     type: Number,
     enum: [0, 1, 2],
-    default: 1
+    default: 1,
   },
   lastLogin: {
     type: Number,
