@@ -11,15 +11,16 @@ import OPBreadCrumb from '../../../components/form/OPBreadCrumb.js';
 
 import axios from 'axios';
 
-const DocumentalInformation = ({history}) => {
+const DocumentalInformation = ({ history }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [formData, setFormData] = useState({
     panNo: '',
     passportNo: '',
     issue: '',
+    place: '',
     validity: '',
   });
-  const { panNo, passportNo, issue, validity } = formData;
+  const { panNo, passportNo, issue, place, validity } = formData;
 
   useEffect(() => {
     const fetchData = async () => {
@@ -31,7 +32,7 @@ const DocumentalInformation = ({history}) => {
         withCredentials: true,
       };
       const result = await axios.get(
-        '/api/employee?select=panNo,passportNo,issue,validity',
+        '/api/employee?select=panNo,passportNo,issue,place,validity',
         config
       );
 
@@ -58,6 +59,7 @@ const DocumentalInformation = ({history}) => {
     panNo,
     passportNo,
     issue,
+    place,
     validity,
   }) => {
     try {
@@ -72,6 +74,7 @@ const DocumentalInformation = ({history}) => {
           panNo,
           passportNo,
           issue,
+          place,
           validity,
         },
       });
@@ -172,17 +175,29 @@ const DocumentalInformation = ({history}) => {
                 </div>
 
                 <div className='form-group row p-2'>
-                  <label className='col-sm-3 col-form-label'>
+                  <label className='col-sm-12 col-form-label'>
                     <span style={{ color: 'red' }}>*</span> Issue date and place
                   </label>
-                  <div className='col-sm-9'>
+                  <div className='col-sm-6'>
+                    <input
+                      type='date'
+                      className='form-control'
+                      id='issue'
+                      placeholder=''
+                      name='issue'
+                      value={issue || ''}
+                      onChange={(e) => handleChange(e)}
+                      required
+                    />
+                  </div>
+                  <div className='col-sm-6'>
                     <input
                       type='text'
                       className='form-control'
-                      id='issue'
-                      placeholder='location of issue dd/mm/yyyy'
-                      name='issue'
-                      value={issue || ''}
+                      id='place'
+                      placeholder='location'
+                      name='place'
+                      value={place || ''}
                       onChange={(e) => handleChange(e)}
                       required
                     />
@@ -195,7 +210,7 @@ const DocumentalInformation = ({history}) => {
                   </label>
                   <div className='col-sm-9'>
                     <input
-                      type='text'
+                      type='date'
                       className='form-control'
                       id='validity'
                       placeholder=''

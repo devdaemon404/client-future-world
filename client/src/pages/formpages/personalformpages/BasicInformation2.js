@@ -15,8 +15,10 @@ const BasicInformation2 = ({ history }) => {
   const [formData, setFormData] = useState({
     dob: '',
     originalDob: '',
-    sex: 'male',
-    birthPlace: '',
+    sex: '',
+    district: '',
+    state: '',
+    country: '',
     maritalStatus: '',
     marriageDate: '',
     religion: '',
@@ -25,7 +27,9 @@ const BasicInformation2 = ({ history }) => {
     dob,
     originalDob,
     sex,
-    birthPlace,
+    district,
+    state,
+    country,
     maritalStatus,
     marriageDate,
     religion,
@@ -41,7 +45,7 @@ const BasicInformation2 = ({ history }) => {
         withCredentials: true,
       };
       const result = await axios.get(
-        '/api/employee?select=dob,originalDob,sex,birthPlace,maritalStatus,marriageDate,religion,',
+        '/api/employee?select=dob,originalDob,sex,district,state,country,maritalStatus,marriageDate,religion,',
         config
       );
 
@@ -69,7 +73,9 @@ const BasicInformation2 = ({ history }) => {
     dob,
     originalDob,
     sex,
-    birthPlace,
+    district,
+    state,
+    country,
     maritalStatus,
     marriageDate,
     religion,
@@ -86,7 +92,9 @@ const BasicInformation2 = ({ history }) => {
           dob,
           originalDob,
           sex,
-          birthPlace,
+          district,
+          state,
+          country,
           maritalStatus,
           marriageDate,
           religion,
@@ -169,13 +177,14 @@ const BasicInformation2 = ({ history }) => {
                       value={dob || ''}
                       onChange={(e) => handleChange(e)}
                       required
+                      // disabled
                     />
                   </div>
                 </div>
 
                 <div className='form-group row p-2'>
                   <label className='col-sm-3 col-form-label'>
-                    <span style={{ color: 'red' }}>*</span> Original DOB
+                    <span style={{ color: 'red' }}>*</span> DOB (as in pan)
                   </label>
                   <div className='col-sm-9'>
                     <input
@@ -186,6 +195,7 @@ const BasicInformation2 = ({ history }) => {
                       value={originalDob || ''}
                       onChange={(e) => handleChange(e)}
                       required
+                      // disabled
                     />
                   </div>
                 </div>
@@ -193,7 +203,7 @@ const BasicInformation2 = ({ history }) => {
                 <fieldset className='form-group p-2'>
                   <div className='row'>
                     <legend className='col-form-label col-sm-3 pt-0'>
-                      <span style={{ color: 'red' }}>*</span> Sex
+                      <span style={{ color: 'red' }}></span> Sex
                     </legend>
                     <div className='col-sm-9'>
                       <div className='form-check'>
@@ -224,7 +234,7 @@ const BasicInformation2 = ({ history }) => {
                   </div>
                 </fieldset>
 
-                <div className='form-group row p-2'>
+                {/* <div className='form-group row p-2'>
                   <label className='col-sm-3 col-form-label'>
                     <span style={{ color: 'red' }}>*</span> Birth Place
                   </label>
@@ -240,9 +250,51 @@ const BasicInformation2 = ({ history }) => {
                       required
                     />
                   </div>
-                </div>
+                </div> */}
 
                 <div className='form-group row p-2'>
+                  <label className='col-sm-12 form-label'>
+                    <span style={{ color: 'red' }}>*</span> Birth Place
+                  </label>
+                  <div className='col-sm-4'>
+                    <input
+                      placeholder='District'
+                      type='text'
+                      className='form-control'
+                      id='district'
+                      name='district'
+                      value={district || ''}
+                      onChange={(e) => handleChange(e)}
+                      required
+                    />
+                  </div>
+                  <div className='col-sm-4'>
+                    <input
+                      placeholder='State'
+                      type='text'
+                      className='form-control'
+                      id='state'
+                      name='state'
+                      value={state || ''}
+                      onChange={(e) => handleChange(e)}
+                      required
+                    />
+                  </div>
+                  <div className='col-sm-4'>
+                    <input
+                      placeholder='Country'
+                      type='text'
+                      className='form-control'
+                      id='country'
+                      name='country'
+                      value={country || ''}
+                      onChange={(e) => handleChange(e)}
+                      required
+                    />
+                  </div>
+                </div>
+
+                {/* <div className='form-group row p-2'>
                   <label className='col-sm-3 col-form-label'>
                     <span style={{ color: 'red' }}>*</span> Marital Status
                   </label>
@@ -258,24 +310,68 @@ const BasicInformation2 = ({ history }) => {
                       required
                     />
                   </div>
-                </div>
+                </div> */}
 
-                <div className='form-group row p-2'>
-                  <label className='col-sm-3 col-form-label'>
-                    <span style={{ color: 'red' }}></span> Marriage Date
-                  </label>
-                  <div className='col-sm-9'>
-                    <input
-                      type='date'
-                      className='form-control'
-                      id='marriageDate'
-                      name='marriageDate'
-                      value={marriageDate || ''}
-                      onChange={(e) => handleChange(e)}
-                     
-                    />
+                <fieldset className='form-group p-4'>
+                  <div className='row'>
+                    <legend className='col-form-label col-sm-3 pt-0'>
+                      <span style={{ color: 'red' }}></span> Marital status
+                    </legend>
+                    <div className='col-sm-9'>
+                      <div className='form-check'>
+                        <input
+                          className='form-check-input'
+                          type='radio'
+                          name='maritalStatus'
+                          id='single'
+                          value='single'
+                          onClick={(e) => handleChange(e)}
+                          defaultChecked={maritalStatus === 'single'}
+                        />
+                        <label className='form-check-label'>Single</label>
+                      </div>
+                      <div className='form-check'>
+                        <input
+                          className='form-check-input'
+                          type='radio'
+                          name='maritalStatus'
+                          id='married'
+                          value='married'
+                          onClick={(e) => handleChange(e)}
+                          defaultChecked={maritalStatus === 'married'}
+                        />
+                        <label className='form-check-label'>Married</label>
+                      </div>
+                    </div>
                   </div>
-                </div>
+                  {(() => {
+                    switch (maritalStatus) {
+                      case 'married':
+                        return (
+                          <>
+                            <label className='col-sm-3 col-lg-3 form-label mt-3'>
+                              <span style={{ color: 'red' }}></span> Marriage
+                              Date
+                            </label>
+                            <input
+                              type='date'
+                              className='form-control col-sm-9 col-lg-9'
+                              id='marriageDate'
+                              name='marriageDate'
+                              value={marriageDate || ''}
+                              onChange={(e) => handleChange(e)}
+                              required
+                            />
+                          </>
+                        );
+
+                      case 'single':
+                        return <div></div>;
+                      default:
+                        return '';
+                    }
+                  })()}
+                </fieldset>
 
                 <div className='form-group row p-2'>
                   <label className='col-sm-3 col-form-label'>
