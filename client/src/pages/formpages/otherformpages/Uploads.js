@@ -166,7 +166,7 @@ const Uploads = () => {
                 <div className='col-sm-10'>
                   <button
                     type='submit'
-                    className='btn btn-primary w-100 font-weight-bold'
+                    className='btn selected-crumb submit-button crumb-item w-100 font-weight-bold'
                   >
                     <i className='far fa-check-circle'></i> Save and Continue
                   </button>

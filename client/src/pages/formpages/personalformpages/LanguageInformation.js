@@ -133,7 +133,7 @@ const LanguageInformation = ({ history }) => {
                 <h1>Loading...</h1>
               </div>
             ) : (
-              <form onSubmit={handleSubmit} className='mt-2 text-left'>
+              <form onSubmit={handleSubmit} className='mt-2 text-right'>
                 <div className='form-group row p-2'>
                   <label className='col-sm-3 col-form-label'>
                     <span style={{ color: 'red' }}>*</span> Can Read

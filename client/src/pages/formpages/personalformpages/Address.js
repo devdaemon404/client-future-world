@@ -151,16 +151,13 @@ const Address = ({ history }) => {
                 <h1>Loading...</h1>
               </div>
             ) : (
-              <form onSubmit={handleSubmit} className='mt-2 text-left'>
+              <form onSubmit={handleSubmit} className='mt-2 text-right'>
                 <div className='form-group row p-2'>
-                  <label className='col-sm-8 form-label'>
-                    <span style={{ color: 'red' }}>*</span> Present Address
+                  <label className='col-sm-3 form-label'>
+                    <span style={{ color: 'red' }}>*</span> Present Address &
+                    Phone Number
                   </label>
-                  <label className='col-sm-4 form-label'>
-                    <span style={{ color: 'red' }}>*</span> Ph No./Mob No.
-                  </label>
-                  <div className='col-sm-8'>
-                    {/* <input type="text" className="form-control" id="" placeholder="" /> */}
+                  <div className='col-sm-5'>
                     <textarea
                       className='form-control'
                       rows='3'
@@ -172,6 +169,10 @@ const Address = ({ history }) => {
                       required
                     ></textarea>
                   </div>
+                  {/* <label className='col-sm-2 form-label'>
+                    <span style={{ color: 'red' }}>*</span> Ph No./Mob No.
+                  </label> */}
+
                   <div className='col-sm-4'>
                     <input
                       type='tel'
@@ -190,13 +191,10 @@ const Address = ({ history }) => {
                 </div>
 
                 <div className='form-group row p-2'>
-                  <label className='col-sm-8 col-form-label'>
-                    <span style={{ color: 'red' }}>*</span> Permanent Address
+                  <label className='col-sm-3 col-form-label'>
+                    <span style={{ color: 'red' }}>*</span> Permanent Address & Phone Number
                   </label>
-                  <label className='col-sm-4 col-form-label'>
-                    <span style={{ color: 'red' }}>*</span> Ph No./Mob No.
-                  </label>
-                  <div className='col-sm-8'>
+                  <div className='col-sm-5'>
                     <textarea
                       className='form-control'
                       rows='3'
@@ -208,6 +206,10 @@ const Address = ({ history }) => {
                       required
                     ></textarea>
                   </div>
+{/* 
+                  <label className='col-sm-2 col-form-label'>
+                    <span style={{ color: 'red' }}>*</span> Ph No./Mob No.
+                  </label> */}
                   <div className='col-sm-4'>
                     <input
                       type='tel'
@@ -226,11 +228,11 @@ const Address = ({ history }) => {
                 </div>
 
                 <div className='form-group row p-2'>
-                  <label className='col-sm-12 col-form-label'>
+                  <label className='col-sm-3 col-form-label'>
                     <span style={{ color: 'red' }}>*</span> Contact Person in
                     case of emergency
                   </label>
-                  <div className='col-sm-6'>
+                  <div className='col-sm-3'>
                     <textarea
                       className='form-control'
                       rows='3'

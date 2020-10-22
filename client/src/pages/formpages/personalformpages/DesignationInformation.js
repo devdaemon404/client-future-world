@@ -179,7 +179,7 @@ const DesignationInformation = ({ history }) => {
                 <h1>Loading...</h1>
               </div>
             ) : (
-              <form onSubmit={handleSubmit} className='mt-2 text-left'>
+              <form onSubmit={handleSubmit} className='mt-2 text-right'>
                 <div className='form-group row p-2'>
                   <label className='col-sm-3 col-form-label'>
                     <span style={{ color: 'red' }}></span> Date of Joining
@@ -316,8 +316,8 @@ const DesignationInformation = ({ history }) => {
                       <span style={{ color: 'red' }}>*</span> Mode of
                       Recruitment
                     </legend>
-                    <div className='col-sm-9'>
-                      <div className='form-check'>
+                    <div className='col-sm-9 text-left'>
+                      <div className='form-check form-check-inline'>
                         <input
                           className='form-check-input'
                           type='radio'
@@ -331,7 +331,7 @@ const DesignationInformation = ({ history }) => {
                           Campus Placement
                         </label>
                       </div>
-                      <div className='form-check'>
+                      <div className='form-check form-check-inline'>
                         <input
                           className='form-check-input'
                           type='radio'
@@ -355,7 +355,7 @@ const DesignationInformation = ({ history }) => {
                         />
                         <label className='form-check-label'>Campus</label>
                       </div> */}
-                      <div className='form-check'>
+                      <div className='form-check form-check-inline'>
                         <input
                           className='form-check-input'
                           type='radio'
@@ -367,7 +367,7 @@ const DesignationInformation = ({ history }) => {
                         />
                         <label className='form-check-label'>Referal</label>
                       </div>
-                      <div className='form-check'>
+                      <div className='form-check form-check-inline'>
                         <input
                           className='form-check-input'
                           type='radio'
@@ -379,7 +379,7 @@ const DesignationInformation = ({ history }) => {
                         />
                         <label className='form-check-label'>ADVT</label>
                       </div>
-                      <div className='form-check'>
+                      <div className='form-check form-check-inline'>
                         <input
                           className='form-check-input'
                           type='radio'

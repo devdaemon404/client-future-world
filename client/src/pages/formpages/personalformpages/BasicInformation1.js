@@ -197,7 +197,7 @@ const BasicInformation1 = ({ history }) => {
                 <h1>Loading...</h1>
               </div>
             ) : (
-              <form onSubmit={handleSubmit} className='mt-2 text-left'>
+              <form onSubmit={handleSubmit} className='mt-2 text-right'>
                 <div className='form-group row p-2'>
                   <label className='col-sm-3 col-form-label'>
                     <span style={{ color: 'red' }}></span> Company Name
@@ -252,10 +252,10 @@ const BasicInformation1 = ({ history }) => {
                 </div>
 
                 <div className='form-group row p-2'>
-                  <label className='col-sm-12 form-label'>
+                  <label className='col-sm-3 form-label'>
                     <span style={{ color: 'red' }}>*</span> Name in full
                   </label>
-                  <div className='col-sm-4'>
+                  <div className='col-sm-3'>
                     <input
                       placeholder='First Name'
                       type='text'
@@ -267,7 +267,7 @@ const BasicInformation1 = ({ history }) => {
                       required
                     />
                   </div>
-                  <div className='col-sm-4'>
+                  <div className='col-sm-3'>
                     <input
                       placeholder='Middle Name'
                       type='text'
@@ -279,7 +279,7 @@ const BasicInformation1 = ({ history }) => {
                       required
                     />
                   </div>
-                  <div className='col-sm-4'>
+                  <div className='col-sm-3'>
                     <input
                       placeholder='Last Name'
                       type='text'
@@ -293,12 +293,11 @@ const BasicInformation1 = ({ history }) => {
                   </div>
                 </div>
 
-
                 <div className='form-group row p-2'>
-                  <label className='col-sm-12 form-label'>
+                  <label className='col-sm-3 form-label'>
                     <span style={{ color: 'red' }}>*</span> Name (as in pan)
                   </label>
-                  <div className='col-sm-4'>
+                  <div className='col-sm-3'>
                     <input
                       placeholder='First Name'
                       type='text'
@@ -310,7 +309,7 @@ const BasicInformation1 = ({ history }) => {
                       required
                     />
                   </div>
-                  <div className='col-sm-4'>
+                  <div className='col-sm-3'>
                     <input
                       placeholder='Middle Name'
                       type='text'
@@ -322,7 +321,7 @@ const BasicInformation1 = ({ history }) => {
                       required
                     />
                   </div>
-                  <div className='col-sm-4'>
+                  <div className='col-sm-3'>
                     <input
                       placeholder='Last Name'
                       type='text'
@@ -337,10 +336,10 @@ const BasicInformation1 = ({ history }) => {
                 </div>
 
                 <div className='form-group row p-2'>
-                  <label className='col-sm-12 form-label'>
+                  <label className='col-sm-3 form-label'>
                     <span style={{ color: 'red' }}>*</span> Father Name
                   </label>
-                  <div className='col-sm-4'>
+                  <div className='col-sm-3'>
                     <input
                       placeholder='First Name'
                       type='text'
@@ -352,7 +351,7 @@ const BasicInformation1 = ({ history }) => {
                       required
                     />
                   </div>
-                  <div className='col-sm-4'>
+                  <div className='col-sm-3'>
                     <input
                       placeholder='Middle Name'
                       type='text'
@@ -364,7 +363,7 @@ const BasicInformation1 = ({ history }) => {
                       required
                     />
                   </div>
-                  <div className='col-sm-4'>
+                  <div className='col-sm-3'>
                     <input
                       placeholder='Last Name'
                       type='text'
@@ -377,69 +376,70 @@ const BasicInformation1 = ({ history }) => {
                     />
                   </div>
                 </div>
-
-                <label className='col-sm-3 col-form-label'>
-                  <span style={{ color: 'red' }}>*</span> Passport Sized Photo
-                </label>
-
-                <ImageUploading
-                  multiple
-                  value={images}
-                  onChange={onImageAdd}
-                  maxNumber={maxNumber}
-                  dataURLKey='data_url'
-                >
-                  {({
-                    imageList,
-                    onImageUpload,
-                    onImageRemoveAll,
-                    onImageUpdate,
-                    onImageRemove,
-                    isDragging,
-                    dragProps,
-                  }) => (
-                    <div className='upload__image-wrapper'>
-                      {images.length === 0 ? (
-                        <div
-                          className='btn selected-crumb'
-                          style={isDragging ? { color: 'red' } : undefined}
-                          onClick={async () => {
-                            onImageUpload();
-                          }}
-                          {...dragProps}
-                        >
-                          Click or Drop here
-                        </div>
-                      ) : (
-                        <div />
-                      )}
-                      &nbsp;
-                      {imageList.map((image, index) => (
-                        <div key={index} className='row ml-5'>
-                          <img src={image['data_url']} alt='' width='100' />
-                          <div className='ml-5 col'>
-                            <div className='row mb-5'>
-                              <div
-                                className='btn selected-crumb'
-                                onClick={() => onImageUpdate(index)}
-                              >
-                                Update
+                <div className='form-group row p-2'>
+                  <label className='col-sm-3 col-form-label'>
+                    <span style={{ color: 'red' }}>*</span> Passport Sized Photo
+                  </label>
+                  <div className='col-sm-9'>
+                  <ImageUploading
+                    multiple
+                    value={images}
+                    onChange={onImageAdd}
+                    maxNumber={maxNumber}
+                    dataURLKey='data_url'
+                  >
+                    {({
+                      imageList,
+                      onImageUpload,
+                      onImageRemoveAll,
+                      onImageUpdate,
+                      onImageRemove,
+                      isDragging,
+                      dragProps,
+                    }) => (
+                      <div className='upload__image-wrapper'>
+                        {images.length === 0 ? (
+                          <div
+                            className='btn selected-crumb'
+                            style={isDragging ? { color: 'red' } : undefined}
+                            onClick={async () => {
+                              onImageUpload();
+                            }}
+                            {...dragProps}
+                          >
+                            Click or Drop here
+                          </div>
+                        ) : (
+                          <div />
+                        )}
+                        &nbsp;
+                        {imageList.map((image, index) => (
+                          <div key={index} className='row ml-5'>
+                            <img src={image['data_url']} alt='' width='100' />
+                            <div className='ml-5 col'>
+                              <div className='row mb-5'>
+                                <div
+                                  className='btn selected-crumb'
+                                  onClick={() => onImageUpdate(index)}
+                                >
+                                  Update
+                                </div>
                               </div>
-                            </div>
-                            <div className='row'>
-                              <div
-                                className='btn selected-crumb'
-                                onClick={() => onImageRemove(index)}
-                              >
-                                Remove
+                              <div className='row'>
+                                <div
+                                  className='btn selected-crumb'
+                                  onClick={() => onImageRemove(index)}
+                                >
+                                  Remove
+                                </div>
                               </div>
                             </div>
                           </div>
-                        </div>
-                      ))}
-                    </div>
-                  )}
-                </ImageUploading>
+                        ))}
+                      </div>
+                    )}
+                  </ImageUploading></div>
+                </div>
 
                 <div className='form-group row p-2 d-flex justify-content-center mt-4 mb-5'>
                   <div className='col-sm-10'>

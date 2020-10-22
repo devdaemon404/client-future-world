@@ -137,7 +137,7 @@ const DocumentalInformation = ({ history }) => {
                 <h1>Loading...</h1>
               </div>
             ) : (
-              <form onSubmit={handleSubmit} className='mt-2 text-left'>
+              <form onSubmit={handleSubmit} className='mt-2 text-right'>
                 <div className='form-group row p-2'>
                   <label className='col-sm-3 col-form-label'>
                     <span style={{ color: 'red' }}>*</span> PAN number
@@ -175,10 +175,11 @@ const DocumentalInformation = ({ history }) => {
                 </div>
 
                 <div className='form-group row p-2'>
-                  <label className='col-sm-12 col-form-label'>
+                  <label className='col-sm-3 col-form-label'>
                     <span style={{ color: 'red' }}>*</span> Issue date and place
                   </label>
-                  <div className='col-sm-6'>
+                  
+                  <div className='col-sm-4'>
                     <input
                       type='date'
                       className='form-control'
@@ -190,7 +191,7 @@ const DocumentalInformation = ({ history }) => {
                       required
                     />
                   </div>
-                  <div className='col-sm-6'>
+                  <div className='col-sm-5'>
                     <input
                       type='text'
                       className='form-control'
@@ -202,6 +203,7 @@ const DocumentalInformation = ({ history }) => {
                       required
                     />
                   </div>
+                 
                 </div>
 
                 <div className='form-group row p-2'>

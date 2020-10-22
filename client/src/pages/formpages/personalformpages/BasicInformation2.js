@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, Fragment } from 'react';
 import {
   Container,
   HeroContainer,
@@ -160,7 +160,7 @@ const BasicInformation2 = ({ history }) => {
             ) : (
               <form
                 onSubmit={handleSubmit}
-                className='mt-2 text-left'
+                className='mt-2 text-right'
                 style={{ textAlign: 'center' }}
               >
                 <div className='form-group row p-2'>
@@ -200,13 +200,13 @@ const BasicInformation2 = ({ history }) => {
                   </div>
                 </div>
 
-                <fieldset className='form-group p-2'>
+                <fieldset className='p-2'>
                   <div className='row'>
                     <legend className='col-form-label col-sm-3 pt-0'>
-                      <span style={{ color: 'red' }}></span> Sex
+                      <span style={{ color: 'red' }}>*</span> Sex
                     </legend>
-                    <div className='col-sm-9'>
-                      <div className='form-check'>
+                    <div className='col-sm-9 text-left'>
+                      <div className='form-check form-check-inline'>
                         <input
                           className='form-check-input'
                           type='radio'
@@ -218,7 +218,7 @@ const BasicInformation2 = ({ history }) => {
                         />
                         <label className='form-check-label'>Male</label>
                       </div>
-                      <div className='form-check'>
+                      <div className='form-check form-check-inline'>
                         <input
                           className='form-check-input'
                           type='radio'
@@ -253,10 +253,10 @@ const BasicInformation2 = ({ history }) => {
                 </div> */}
 
                 <div className='form-group row p-2'>
-                  <label className='col-sm-12 form-label'>
+                  <label className='col-sm-3 form-label'>
                     <span style={{ color: 'red' }}>*</span> Birth Place
                   </label>
-                  <div className='col-sm-4'>
+                  <div className='col-sm-3'>
                     <input
                       placeholder='District'
                       type='text'
@@ -268,7 +268,7 @@ const BasicInformation2 = ({ history }) => {
                       required
                     />
                   </div>
-                  <div className='col-sm-4'>
+                  <div className='col-sm-3'>
                     <input
                       placeholder='State'
                       type='text'
@@ -280,7 +280,7 @@ const BasicInformation2 = ({ history }) => {
                       required
                     />
                   </div>
-                  <div className='col-sm-4'>
+                  <div className='col-sm-3'>
                     <input
                       placeholder='Country'
                       type='text'
@@ -312,13 +312,13 @@ const BasicInformation2 = ({ history }) => {
                   </div>
                 </div> */}
 
-                <fieldset className='form-group p-4'>
+                <fieldset className='form-group p-2'>
                   <div className='row'>
                     <legend className='col-form-label col-sm-3 pt-0'>
-                      <span style={{ color: 'red' }}></span> Marital status
+                      <span style={{ color: 'red' }}>*</span> Marital status
                     </legend>
-                    <div className='col-sm-9'>
-                      <div className='form-check'>
+                    <div className='col-sm-9 text-left'>
+                      <div className='form-check form-check-inline'>
                         <input
                           className='form-check-input'
                           type='radio'
@@ -330,7 +330,7 @@ const BasicInformation2 = ({ history }) => {
                         />
                         <label className='form-check-label'>Single</label>
                       </div>
-                      <div className='form-check'>
+                      <div className='form-check form-check-inline'>
                         <input
                           className='form-check-input'
                           type='radio'
@@ -348,21 +348,26 @@ const BasicInformation2 = ({ history }) => {
                     switch (maritalStatus) {
                       case 'married':
                         return (
-                          <>
-                            <label className='col-sm-3 col-lg-3 form-label mt-3'>
-                              <span style={{ color: 'red' }}></span> Marriage
-                              Date
-                            </label>
-                            <input
-                              type='date'
-                              className='form-control col-sm-9 col-lg-9'
-                              id='marriageDate'
-                              name='marriageDate'
-                              value={marriageDate || ''}
-                              onChange={(e) => handleChange(e)}
-                              required
-                            />
-                          </>
+                          <Fragment>
+                            <div className='row mt-2 pt-2'>
+                              <label className='col-sm-3 form-label'>
+                                <span style={{ color: 'red' }}>*</span> Marriage
+                                Date
+                              </label>
+
+                              <div className='col-sm-9'>
+                                <input
+                                  type='date'
+                                  className='form-control'
+                                  id='marriageDate'
+                                  name='marriageDate'
+                                  value={marriageDate || ''}
+                                  onChange={(e) => handleChange(e)}
+                                  required
+                                />
+                              </div>
+                            </div>
+                          </Fragment>
                         );
 
                       case 'single':
@@ -373,7 +378,7 @@ const BasicInformation2 = ({ history }) => {
                   })()}
                 </fieldset>
 
-                <div className='form-group row p-2'>
+                <div className='form-group row'>
                   <label className='col-sm-3 col-form-label'>
                     <span style={{ color: 'red' }}>*</span> Religion
                   </label>
