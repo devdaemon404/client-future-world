@@ -12,7 +12,7 @@ import FormPageComponent from '../../../components/form/FormPageComponent';
 import ComplexComponent from '../../../components/form/ComplexComponent';
 import OPBreadCrumb from '../../../components/form/OPBreadCrumb.js';
 
-const AcademicInformation = () => {
+const AcademicInformation = ({ history }) => {
   // eslint-disable-next-line
   const [isLoading, setIsLoading] = useState(false);
   const [formData, setFormData] = useState([]);
@@ -172,6 +172,19 @@ const AcademicInformation = () => {
             ]}
             defaultData={[...formData]}
           />
+          <div className='form-group row p-2 d-flex justify-content-center mt-4 mb-5'>
+            <div className='col-sm-10'>
+              <button
+                type='submit'
+                onClick={() => {
+                  history.push('/information/workInformation');
+                }}
+                className='btn selected-crumb submit-button crumb-item w-100 font-weight-bold'
+              >
+                <i className='far fa-check-circle'></i> Save and Continue
+              </button>
+            </div>
+          </div>
         </div>
       </FormPageComponent>
     </Container>

@@ -14,7 +14,7 @@ import axios from 'axios';
 import FormPageComponent from '../../../components/form/FormPageComponent.js';
 import { OPLoader } from '../../../util/LoaderUtil.js';
 
-const WorkInformation = () => {
+const WorkInformation = ({ history }) => {
   // eslint-disable-next-line
   const [isLoading, setIsLoading] = useState(false);
   const [formData, setFormData] = useState([]);
@@ -135,6 +135,19 @@ const WorkInformation = () => {
             ]}
             defaultData={[...formData]}
           />
+          <div className='form-group row p-2 d-flex justify-content-center mt-4 mb-5'>
+            <div className='col-sm-10'>
+              <button
+                type='submit'
+                onClick={() => {
+                  history.push('/health');
+                }}
+                className='btn selected-crumb submit-button crumb-item w-100 font-weight-bold'
+              >
+                <i className='far fa-check-circle'></i> Save and Continue
+              </button>
+            </div>
+          </div>
         </div>
       </FormPageComponent>
     </Container>
