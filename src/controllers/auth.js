@@ -6,12 +6,13 @@ const asyncHandler = require('../middleware/async');
 const sendEmail = require('../utils/sendMail');
 
 const User = require('../models/User');
+const Employee = require('../models/Employee');
 
 // @desc      Register user
-// @route     POST /api/v1/auth/register
+// @route     POST /api/auth/register
 // @access    Public
 exports.register = asyncHandler(async (req, res, next) => {
-  const { name, email, role, phoneNumber } = req.body;
+  const { name, email, role, phoneNumber, extraFields } = req.body;
 
   let password = crypto.randomBytes(8).toString('hex');
 
@@ -35,11 +36,20 @@ exports.register = asyncHandler(async (req, res, next) => {
     message,
   });
   user = user.toObject();
+
+  let employee = await Employee.create({
+    user: user._id,
+    ...extraFields,
+  });
+
   delete user.password;
   res.status(201).json({
     success: true,
     message: 'User created and credentials sent via mail',
-    data: user,
+    data: {
+      user,
+      employee,
+    },
   });
 });
 

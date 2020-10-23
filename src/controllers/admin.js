@@ -20,14 +20,17 @@ exports.getAllUsers = asyncHandler(async (req, res, next) => {
 
 /**
  * @desc    Get employee info
- * @route   GET /api/admin/employee-info/:employeeId
+ * @route   GET /api/admin/employee-info/:employeeId?select
  * @access  Private
  */
 exports.getEmployeeInfo = asyncHandler(async (req, res, next) => {
-  const employee = await Employee.findOne({ user: req.params.employeeId });
+  const fields = req.query.select.split(',').join(' ');
+  const results = await Employee.findOne({
+    user: req.params.employeeId,
+  }).select(fields);
   res.status(200).json({
     success: true,
-    data: employee,
+    data: results,
   });
 });
 
@@ -51,5 +54,31 @@ exports.changeUserActiveStatus = asyncHandler(async (req, res, next) => {
   res.status(201).json({
     success: true,
     message: "Changed user's active status",
+  });
+});
+
+/**
+ * @desc    Update User details
+ * @route   PUT /api/admin/register
+ * @access  Private
+ */
+exports.updateRegisteredUser = asyncHandler(async (req, res, next) => {
+  const { employeeId, updateParams } = req.body;
+
+  updateParams.password && delete updateParams.password;
+
+  let employee = await Employee.findOneAndUpdate(
+    { user: employeeId },
+    { ...updateParams, updatedAt: Date.now() },
+    {
+      new: true,
+      runValidators: true,
+    }
+  );
+
+  res.status(201).json({
+    success: true,
+    message: 'Updated user employee',
+    data: employee,
   });
 });
