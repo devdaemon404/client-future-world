@@ -1,8 +1,8 @@
-import React, { useCallback, useState } from 'react';
+import React, { useState } from 'react';
 import BG from '../../assets/img/smart.png';
 
 import axios from 'axios';
-import { Form } from 'react-bootstrap';
+
 import { Link, useHistory } from 'react-router-dom';
 import {
   MainLogin,
@@ -11,7 +11,7 @@ import {
   Footer,
 } from './LoginPage2.styles';
 import LOGO from '../../assets/img/logo.png';
-import Circle from '../../assets/img/circles.png';
+
 export const LoginPage2 = () => {
   const history = useHistory();
   const [email, setemail] = useState('');
@@ -52,7 +52,7 @@ export const LoginPage2 = () => {
         <div>
           <MainLogin>
             <div className='Logo'>
-              <img src={LOGO} style={{ margin: '20px 40px' }} />
+              <img src={LOGO} alt='iem2' style={{ margin: '20px 40px' }} />
             </div>
             <div className='loginForm'>
               <div style={{ height: 150 }}></div>
@@ -119,7 +119,15 @@ export const LoginPage2 = () => {
         <MainSlide>
           <div className='image'>
             {' '}
-            <img src={BG} style={{ maxWidth: '70%', minWidth: '300px' }} />
+            <img
+              src={BG}
+              alt={'bgsy'}
+              style={{
+                width: 800,
+
+                objectFit: 'fill',
+              }}
+            />
           </div>
           <h2 className='Head'> Helping businesses around the world succeed</h2>
         </MainSlide>
