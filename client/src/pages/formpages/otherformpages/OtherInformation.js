@@ -10,8 +10,9 @@ import Header from '../../../components/header/Header';
 import FormPageComponent from '../../../components/form/FormPageComponent';
 import OPBreadCrumb from '../../../components/form/OPBreadCrumb.js';
 import axios from 'axios';
+import { OPLoader } from '../../../util/LoaderUtil.js';
 
-const OtherInformation = ({history}) => {
+const OtherInformation = ({ history }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [formData, setFormData] = useState({
     relativeInfo: '',
@@ -39,15 +40,8 @@ const OtherInformation = ({history}) => {
   useEffect(() => {
     const fetchData = async () => {
       setIsLoading(true);
-      const config = {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        withCredentials: true,
-      };
       const result = await axios.get(
-        '/api/employee?select=relativeInfo,ref1Name,ref1Company,ref1Designation,ref1Contact,ref2Name,ref2Company,ref2Designation,ref2Contact,',
-        config
+        '/api/employee?select=relativeInfo,ref1Name,ref1Company,ref1Designation,ref1Contact,ref2Name,ref2Company,ref2Designation,ref2Contact,'
       );
 
       console.log(result.data.data);
@@ -81,12 +75,6 @@ const OtherInformation = ({history}) => {
     ref2Contact,
   }) => {
     try {
-      const config = {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        withCredentials: true,
-      };
       const body = JSON.stringify({
         postParams: {
           relativeInfo,
@@ -101,10 +89,13 @@ const OtherInformation = ({history}) => {
         },
       });
 
-      await axios.post('/api/employee', body, config);
+      setIsLoading(true);
+      await axios.post('/api/employee', body);
       history.push('/information/uploads');
     } catch (error) {
       console.log(error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -139,132 +130,128 @@ const OtherInformation = ({history}) => {
               activeIndex={0}
             />
             <hr></hr>
-            {isLoading ? (
-              <div>
-                <h1>Loading...</h1>
+            <OPLoader isLoading={isLoading} />
+            <form onSubmit={handleSubmit} className='mt-2 text-right'>
+              <div className='form-group row p-2'>
+                <label className='col-sm-3 col-form-label'>
+                  <span style={{ color: 'red' }}>*</span> Relatives in the
+                  company
+                </label>
+                <div className='col-sm-9'>
+                  <input
+                    type='text'
+                    className='form-control'
+                    id='relativeInfo'
+                    name='relativeInfo'
+                    value={relativeInfo || ''}
+                    onChange={(e) => handleChange(e)}
+                    required
+                    placeholder='Name , Designation and Location'
+                  />
+                </div>
               </div>
-            ) : (
-              <form onSubmit={handleSubmit} className='mt-2 text-right'>
-                <div className='form-group row p-2'>
-                  <label className='col-sm-3 col-form-label'>
-                    <span style={{ color: 'red' }}>*</span> Relatives in the
-                    company
-                  </label>
-                  <div className='col-sm-9'>
-                    <input
-                      type='text'
-                      className='form-control'
-                      id='relativeInfo'
-                      name='relativeInfo'
-                      value={relativeInfo || ''}
-                      onChange={(e) => handleChange(e)}
-                      required
-                      placeholder='Name , Designation and Location'
-                    />
-                  </div>
-                </div>
 
-                <div className='form-row p-2'>
-                  <label className='col-sm-3 col-form-label'>
-                    <span style={{ color: 'red' }}>*</span> References : (Please
-                    specify any two other than your relatives, one should be
-                    from your last Company)
-                  </label>
-                  <div className='col-sm-4 p-2'>
-                    <input
-                      type='text'
-                      className='form-control'
-                      id='ref1Name'
-                      placeholder='Name'
-                      name='ref1Name'
-                      value={ref1Name || ''}
-                      onChange={(e) => handleChange(e)}
-                      required
-                    />
-                    <input
-                      type='text'
-                      className='form-control'
-                      id='ref1Company'
-                      placeholder='Company'
-                      name='ref1Company'
-                      value={ref1Company || ''}
-                      onChange={(e) => handleChange(e)}
-                      required
-                    />
-                    <input
-                      type='text'
-                      className='form-control'
-                      id='ref1Designation'
-                      placeholder='Designation'
-                      name='ref1Designation'
-                      value={ref1Designation || ''}
-                      onChange={(e) => handleChange(e)}
-                      required
-                    />
-                    <input
-                      type='text'
-                      className='form-control'
-                      id='ref1Contact'
-                      name='ref1Contact'
-                      value={ref1Contact || ''}
-                      onChange={(e) => handleChange(e)}
-                      required
-                      placeholder='Contact No.'
-                    />
-                  </div>
-                  <div className='col-sm-5 p-2'>
-                    <input
-                      type='text'
-                      className='form-control'
-                      id='ref2Name'
-                      placeholder='Name'
-                      name='ref2Name'
-                      value={ref2Name || ''}
-                      onChange={(e) => handleChange(e)}
-                      required
-                    />
-                    <input
-                      type='text'
-                      className='form-control'
-                      id='ref2Company'
-                      placeholder='Company'
-                      name='ref2Company'
-                      value={ref2Company || ''}
-                      onChange={(e) => handleChange(e)}
-                      required
-                    />
-                    <input
-                      type='text'
-                      className='form-control'
-                      id='ref2Designation'
-                      placeholder='Designation'
-                      name='ref2Designation'
-                      value={ref2Designation || ''}
-                      onChange={(e) => handleChange(e)}
-                      required
-                    />
-                    <input
-                      type='text'
-                      className='form-control'
-                      id='ref2Contact'
-                      name='ref2Contact'
-                      value={ref2Contact || ''}
-                      onChange={(e) => handleChange(e)}
-                      required
-                      placeholder='Contact No.'
-                    />
-                  </div>
+              <div className='form-row p-2'>
+                <label className='col-sm-3 col-form-label'>
+                  <span style={{ color: 'red' }}>*</span> References : (Please
+                  specify any two other than your relatives, one should be from
+                  your last Company)
+                </label>
+                <div className='col-sm-4 p-2'>
+                  <input
+                    type='text'
+                    className='form-control'
+                    id='ref1Name'
+                    placeholder='Name'
+                    name='ref1Name'
+                    value={ref1Name || ''}
+                    onChange={(e) => handleChange(e)}
+                    required
+                  />
+                  <input
+                    type='text'
+                    className='form-control'
+                    id='ref1Company'
+                    placeholder='Company'
+                    name='ref1Company'
+                    value={ref1Company || ''}
+                    onChange={(e) => handleChange(e)}
+                    required
+                  />
+                  <input
+                    type='text'
+                    className='form-control'
+                    id='ref1Designation'
+                    placeholder='Designation'
+                    name='ref1Designation'
+                    value={ref1Designation || ''}
+                    onChange={(e) => handleChange(e)}
+                    required
+                  />
+                  <input
+                    type='text'
+                    className='form-control'
+                    id='ref1Contact'
+                    name='ref1Contact'
+                    value={ref1Contact || ''}
+                    onChange={(e) => handleChange(e)}
+                    required
+                    placeholder='Contact No.'
+                  />
                 </div>
+                <div className='col-sm-5 p-2'>
+                  <input
+                    type='text'
+                    className='form-control'
+                    id='ref2Name'
+                    placeholder='Name'
+                    name='ref2Name'
+                    value={ref2Name || ''}
+                    onChange={(e) => handleChange(e)}
+                    required
+                  />
+                  <input
+                    type='text'
+                    className='form-control'
+                    id='ref2Company'
+                    placeholder='Company'
+                    name='ref2Company'
+                    value={ref2Company || ''}
+                    onChange={(e) => handleChange(e)}
+                    required
+                  />
+                  <input
+                    type='text'
+                    className='form-control'
+                    id='ref2Designation'
+                    placeholder='Designation'
+                    name='ref2Designation'
+                    value={ref2Designation || ''}
+                    onChange={(e) => handleChange(e)}
+                    required
+                  />
+                  <input
+                    type='text'
+                    className='form-control'
+                    id='ref2Contact'
+                    name='ref2Contact'
+                    value={ref2Contact || ''}
+                    onChange={(e) => handleChange(e)}
+                    required
+                    placeholder='Contact No.'
+                  />
+                </div>
+              </div>
 
-                {/* <div className='form-group row p-2'>
+              {/* <div className='form-group row p-2'>
                   <label className='col-sm-12'>
                     <span style={{ color: 'red' }}>*</span> Are you having
                     membership with any professional body / organization? (if
                     yes, please specify)
                   </label>
                   <div className='col-sm-12'> */}
-                {/* <input type="text" className="form-control" id="" placeholder="" /> */}
-                {/* <textarea
+              {/* <input type="text" className="form-control" id="" placeholder="" /> */}
+              {/* <textarea
                       className='form-control'
                       id='exampleFormControlTextarea1'
                       rows='3'
@@ -272,7 +259,7 @@ const OtherInformation = ({history}) => {
                   </div>
                 </div> */}
 
-                {/* <div className='form-group row p-2'>
+              {/* <div className='form-group row p-2'>
                   <label className='col-sm-12'>
                     <span style={{ color: 'red' }}>*</span> Company Assets
                     provided{' '}
@@ -379,18 +366,17 @@ const OtherInformation = ({history}) => {
                   </div>
                 </div> */}
 
-                <div className='form-group row p-2 d-flex justify-content-center mt-4 mb-5'>
-                  <div className='col-sm-10'>
-                    <button
-                      type='submit'
-                      className='btn selected-crumb submit-button crumb-item w-100 font-weight-bold'
-                    >
-                      <i className='far fa-check-circle'></i> Save and Continue
-                    </button>
-                  </div>
+              <div className='form-group row p-2 d-flex justify-content-center mt-4 mb-5'>
+                <div className='col-sm-10'>
+                  <button
+                    type='submit'
+                    className='btn selected-crumb submit-button crumb-item w-100 font-weight-bold'
+                  >
+                    <i className='far fa-check-circle'></i> Save and Continue
+                  </button>
                 </div>
-              </form>
-            )}
+              </div>
+            </form>
           </div>
         </FormPageComponent>
       </div>

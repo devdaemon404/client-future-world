@@ -1,6 +1,7 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import DataGrid from 'react-data-grid';
 import 'react-data-grid/dist/react-data-grid.css';
+import { OPLoader } from '../../util/LoaderUtil';
 import { toast } from '../../util/ToastUtil';
 import { uploadDocument } from '../../util/UploadFile';
 
@@ -22,6 +23,7 @@ function ComplexComponent({
   const [columns, setColumns] = useState([]);
   // Show loading indicator
   const [isUploading, setIsUploading] = useState(false);
+  const [selectedRow, setSelectedRow] = useState(0);
   /**
    *
    * @param {Array<Object>} incomingData
@@ -44,7 +46,7 @@ function ComplexComponent({
    *
    */
   const onDelete = (index) => {
-    if (data[index].deletable) {
+    if (data[index].deletable === true || data[index].deletable === undefined) {
       const tempData = data.filter((d, i) => i !== index);
       saveData([...tempData]);
     } else {
@@ -84,6 +86,7 @@ function ComplexComponent({
           name: column.label,
           editable: true,
           width: column.width,
+          resizable: true,
         });
       });
     }
@@ -114,6 +117,7 @@ function ComplexComponent({
     columnNames.forEach((col) => {
       if (col.type === 'file') {
         tempCols.push({
+          resizable: true,
           name: col.label,
           key: col.key,
           formatter: (formatter) => (
@@ -143,6 +147,7 @@ function ComplexComponent({
     columnNames.forEach((col) => {
       if (col.type === 'date') {
         tempCols.push({
+          resizable: true,
           name: col.label,
           key: col.key,
           formatter: (formatter) => {
@@ -189,53 +194,17 @@ function ComplexComponent({
   return (
     <div className='col'>
       {/* Conditional Loading Indicator */}
-      {(() => {
-        if (isUploading)
-          return (
-            <div>
-              <div
-                style={{
-                  position: 'fixed',
-                  top: 0,
-                  left: 0,
-                  zIndex: 100,
-                  backgroundColor: 'rgba(0,0,0,0.6)',
-                  width: '100%',
-                  height: '100%',
-                }}
-              ></div>
-              <div
-                style={{
-                  display: 'block',
-                  position: 'absolute',
-                  zIndex: 1031,
-                  top: '50%',
-                  left: '50%',
-                }}
-              >
-                <div className='col'>
-                  <div className='spinner-grow row' role='status'>
-                    <span className='sr-only'>Loading...</span>
-                  </div>
-                  <span
-                    className='row'
-                    style={{
-                      marginLeft: -35,
-                    }}
-                  >
-                    Uploading...
-                  </span>
-                </div>
-              </div>
-            </div>
-          );
-      })()}
+      <OPLoader isLoading={isUploading} />
       {/* "Add New" button */}
       <div className='float-right'>
         <div
           className='btn btn-default'
           onClick={() => {
-            const tempData = [...data, { deletable: true }];
+            const placeholderData = {};
+            for (const obj of columnNames) {
+              placeholderData[obj.key] = `Enter ${obj.label}`;
+            }
+            const tempData = [...data, { ...placeholderData, deletable: true }];
             saveData(tempData);
           }}
         >
@@ -249,6 +218,7 @@ function ComplexComponent({
       {/* Data Grid  */}
       <DataGrid
         className='data-grid'
+        enableCellSelect={true}
         onRowsUpdate={({ fromRow, toRow, updated }) => {
           const tempRows = [...data];
           for (let i = fromRow; i <= toRow; i++) {
@@ -259,6 +229,14 @@ function ComplexComponent({
         columns={columns}
         rows={data}
         rowsCount={data.length}
+        enableRowSelect={true}
+        rowSelection={{
+          selectBy: {
+            showCheckbox: true,
+            enableShiftSelect: true,
+            indexes: [data.length - 1],
+          },
+        }}
       />
     </div>
   );

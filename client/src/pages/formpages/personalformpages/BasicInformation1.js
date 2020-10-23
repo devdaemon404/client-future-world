@@ -10,6 +10,7 @@ import Header from '../../../components/header/Header';
 import FormPageComponent from '../../../components/form/FormPageComponent';
 import axios from 'axios';
 import OPBreadCrumb from '../../../components/form/OPBreadCrumb.js';
+import { OPLoader } from '../../../util/LoaderUtil.js';
 
 const BasicInformation1 = ({ history }) => {
   const [isLoading, setIsLoading] = useState(false);
@@ -108,12 +109,6 @@ const BasicInformation1 = ({ history }) => {
     fLastName,
     upload,
   }) => {
-    const config = {
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      withCredentials: true,
-    };
     let postParams = {};
     const formFieldData = {
       companyName,
@@ -134,14 +129,17 @@ const BasicInformation1 = ({ history }) => {
       postParams = { ...formFieldData, photo: images[0]['data_url'] };
     else postParams = { ...formFieldData, photo: '' };
     try {
+      setIsLoading(true);
       const body = JSON.stringify({
         postParams,
       });
 
-      await axios.post('/api/employee', body, config);
+      await axios.post('/api/employee', body);
       history.push('/information/basicInformation-2');
     } catch (error) {
       console.log(error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -190,270 +188,264 @@ const BasicInformation1 = ({ history }) => {
               ]}
             />
             {/* <h2>Current Address</h2> */}
-
             <hr></hr>
-            {isLoading ? (
-              <div>
-                <h1>Loading...</h1>
+            <OPLoader isLoading={isLoading} />
+            <form onSubmit={handleSubmit} className='mt-2 text-right'>
+              <div className='form-group row p-2'>
+                <label className='col-sm-3 col-form-label'>
+                  <span style={{ color: 'red' }}></span> Company Name
+                </label>
+                <div className='col-sm-9'>
+                  <input
+                    type='text'
+                    className='form-control'
+                    id='companyName'
+                    placeholder='Future World'
+                    name='companyName'
+                    value={companyName || ''}
+                    // onChange={(e) => handleChange(e)}
+                    disabled
+                  />
+                </div>
               </div>
-            ) : (
-              <form onSubmit={handleSubmit} className='mt-2 text-right'>
-                <div className='form-group row p-2'>
-                  <label className='col-sm-3 col-form-label'>
-                    <span style={{ color: 'red' }}></span> Company Name
-                  </label>
-                  <div className='col-sm-9'>
-                    <input
-                      type='text'
-                      className='form-control'
-                      id='companyName'
-                      placeholder='Future World'
-                      name='companyName'
-                      value={companyName || ''}
-                      // onChange={(e) => handleChange(e)}
-                      disabled
-                    />
-                  </div>
+              <div className='form-group row p-2'>
+                <label className='col-sm-3 col-form-label'>
+                  <span style={{ color: 'red' }}></span> FWID
+                </label>
+                <div className='col-sm-9'>
+                  <input
+                    type='text'
+                    className='form-control'
+                    id='empNo'
+                    placeholder=''
+                    name='empNo'
+                    value={empNo || ''}
+                    // onChange={(e) => handleChange(e)}
+                    disabled
+                  />
                 </div>
-                <div className='form-group row p-2'>
-                  <label className='col-sm-3 col-form-label'>
-                    <span style={{ color: 'red' }}></span> FWID
-                  </label>
-                  <div className='col-sm-9'>
-                    <input
-                      type='text'
-                      className='form-control'
-                      id='empNo'
-                      placeholder=''
-                      name='empNo'
-                      value={empNo || ''}
-                      // onChange={(e) => handleChange(e)}
-                      disabled
-                    />
-                  </div>
-                </div>
+              </div>
 
-                <div className='form-group row p-2'>
-                  <label className='col-sm-3 col-form-label'>
-                    <span style={{ color: 'red' }}>*</span> Customer Name
-                  </label>
-                  <div className='col-sm-9'>
-                    <input
-                      type='text'
-                      className='form-control'
-                      id='custName'
-                      placeholder='Future World'
-                      name='custName'
-                      value={custName || ''}
-                      onChange={(e) => handleChange(e)}
-                      required
-                    />
-                  </div>
+              <div className='form-group row p-2'>
+                <label className='col-sm-3 col-form-label'>
+                  <span style={{ color: 'red' }}>*</span> Customer Name
+                </label>
+                <div className='col-sm-9'>
+                  <input
+                    type='text'
+                    className='form-control'
+                    id='custName'
+                    placeholder='Future World'
+                    name='custName'
+                    value={custName || ''}
+                    onChange={(e) => handleChange(e)}
+                    required
+                  />
                 </div>
+              </div>
 
-                <div className='form-group row p-2'>
-                  <label className='col-sm-3 form-label'>
-                    <span style={{ color: 'red' }}>*</span> Name in full
-                  </label>
-                  <div className='col-sm-3'>
-                    <input
-                      placeholder='First Name'
-                      type='text'
-                      className='form-control'
-                      id='firstName'
-                      name='firstName'
-                      value={firstName || ''}
-                      onChange={(e) => handleChange(e)}
-                      required
-                    />
-                  </div>
-                  <div className='col-sm-3'>
-                    <input
-                      placeholder='Middle Name'
-                      type='text'
-                      className='form-control'
-                      id='middleName'
-                      name='middleName'
-                      value={middleName || ''}
-                      onChange={(e) => handleChange(e)}
-                      required
-                    />
-                  </div>
-                  <div className='col-sm-3'>
-                    <input
-                      placeholder='Last Name'
-                      type='text'
-                      className='form-control'
-                      id='lastName'
-                      name='lastName'
-                      value={lastName || ''}
-                      onChange={(e) => handleChange(e)}
-                      required
-                    />
-                  </div>
+              <div className='form-group row p-2'>
+                <label className='col-sm-3 form-label'>
+                  <span style={{ color: 'red' }}>*</span> Name in full
+                </label>
+                <div className='col-sm-3'>
+                  <input
+                    placeholder='First Name'
+                    type='text'
+                    className='form-control'
+                    id='firstName'
+                    name='firstName'
+                    value={firstName || ''}
+                    onChange={(e) => handleChange(e)}
+                    required
+                  />
                 </div>
+                <div className='col-sm-3'>
+                  <input
+                    placeholder='Middle Name'
+                    type='text'
+                    className='form-control'
+                    id='middleName'
+                    name='middleName'
+                    value={middleName || ''}
+                    onChange={(e) => handleChange(e)}
+                    required
+                  />
+                </div>
+                <div className='col-sm-3'>
+                  <input
+                    placeholder='Last Name'
+                    type='text'
+                    className='form-control'
+                    id='lastName'
+                    name='lastName'
+                    value={lastName || ''}
+                    onChange={(e) => handleChange(e)}
+                    required
+                  />
+                </div>
+              </div>
 
-                <div className='form-group row p-2'>
-                  <label className='col-sm-3 form-label'>
-                    <span style={{ color: 'red' }}>*</span> Name (as in pan)
-                  </label>
-                  <div className='col-sm-3'>
-                    <input
-                      placeholder='First Name'
-                      type='text'
-                      className='form-control'
-                      id='panFirstName'
-                      name='panFirstName'
-                      value={panFirstName || ''}
-                      onChange={(e) => handleChange(e)}
-                      required
-                    />
-                  </div>
-                  <div className='col-sm-3'>
-                    <input
-                      placeholder='Middle Name'
-                      type='text'
-                      className='form-control'
-                      id='panMiddleName'
-                      name='panMiddleName'
-                      value={panMiddleName || ''}
-                      onChange={(e) => handleChange(e)}
-                      required
-                    />
-                  </div>
-                  <div className='col-sm-3'>
-                    <input
-                      placeholder='Last Name'
-                      type='text'
-                      className='form-control'
-                      id='panLastName'
-                      name='panLastName'
-                      value={panLastName || ''}
-                      onChange={(e) => handleChange(e)}
-                      required
-                    />
-                  </div>
+              <div className='form-group row p-2'>
+                <label className='col-sm-3 form-label'>
+                  <span style={{ color: 'red' }}>*</span> Name (as in pan)
+                </label>
+                <div className='col-sm-3'>
+                  <input
+                    placeholder='First Name'
+                    type='text'
+                    className='form-control'
+                    id='panFirstName'
+                    name='panFirstName'
+                    value={panFirstName || ''}
+                    onChange={(e) => handleChange(e)}
+                    required
+                  />
                 </div>
+                <div className='col-sm-3'>
+                  <input
+                    placeholder='Middle Name'
+                    type='text'
+                    className='form-control'
+                    id='panMiddleName'
+                    name='panMiddleName'
+                    value={panMiddleName || ''}
+                    onChange={(e) => handleChange(e)}
+                    required
+                  />
+                </div>
+                <div className='col-sm-3'>
+                  <input
+                    placeholder='Last Name'
+                    type='text'
+                    className='form-control'
+                    id='panLastName'
+                    name='panLastName'
+                    value={panLastName || ''}
+                    onChange={(e) => handleChange(e)}
+                    required
+                  />
+                </div>
+              </div>
 
-                <div className='form-group row p-2'>
-                  <label className='col-sm-3 form-label'>
-                    <span style={{ color: 'red' }}>*</span> Father Name
-                  </label>
-                  <div className='col-sm-3'>
-                    <input
-                      placeholder='First Name'
-                      type='text'
-                      className='form-control'
-                      id='fFirstName'
-                      name='fFirstName'
-                      value={fFirstName || ''}
-                      onChange={(e) => handleChange(e)}
-                      required
-                    />
-                  </div>
-                  <div className='col-sm-3'>
-                    <input
-                      placeholder='Middle Name'
-                      type='text'
-                      className='form-control'
-                      id='fMiddleName'
-                      name='fMiddleName'
-                      value={fMiddleName || ''}
-                      onChange={(e) => handleChange(e)}
-                      required
-                    />
-                  </div>
-                  <div className='col-sm-3'>
-                    <input
-                      placeholder='Last Name'
-                      type='text'
-                      className='form-control'
-                      id='fLastName'
-                      name='fLastName'
-                      value={fLastName || ''}
-                      onChange={(e) => handleChange(e)}
-                      required
-                    />
-                  </div>
+              <div className='form-group row p-2'>
+                <label className='col-sm-3 form-label'>
+                  <span style={{ color: 'red' }}>*</span> Father Name
+                </label>
+                <div className='col-sm-3'>
+                  <input
+                    placeholder='First Name'
+                    type='text'
+                    className='form-control'
+                    id='fFirstName'
+                    name='fFirstName'
+                    value={fFirstName || ''}
+                    onChange={(e) => handleChange(e)}
+                    required
+                  />
                 </div>
-                <div className='form-group row p-2'>
-                  <label className='col-sm-3 col-form-label'>
-                    <span style={{ color: 'red' }}>*</span> Passport Sized Photo
-                  </label>
-                  <div className='col-sm-9'>
-                    <ImageUploading
-                      multiple
-                      value={images}
-                      onChange={onImageAdd}
-                      maxNumber={maxNumber}
-                      dataURLKey='data_url'
-                    >
-                      {({
-                        imageList,
-                        onImageUpload,
-                        onImageRemoveAll,
-                        onImageUpdate,
-                        onImageRemove,
-                        isDragging,
-                        dragProps,
-                      }) => (
-                        <div className='upload__image-wrapper'>
-                          {images.length === 0 ? (
-                            <div
-                              className='btn selected-crumb'
-                              style={isDragging ? { color: 'red' } : undefined}
-                              onClick={async () => {
-                                onImageUpload();
-                              }}
-                              {...dragProps}
-                            >
-                              Click or Drop here
-                            </div>
-                          ) : (
-                            <div />
-                          )}
-                          &nbsp;
-                          {imageList.map((image, index) => (
-                            <div key={index} className='row ml-5'>
-                              <img src={image['data_url']} alt='' width='100' />
-                              <div className='ml-5 col'>
-                                <div className='row mb-5'>
-                                  <div
-                                    className='btn selected-crumb'
-                                    onClick={() => onImageUpdate(index)}
-                                  >
-                                    Update
-                                  </div>
+                <div className='col-sm-3'>
+                  <input
+                    placeholder='Middle Name'
+                    type='text'
+                    className='form-control'
+                    id='fMiddleName'
+                    name='fMiddleName'
+                    value={fMiddleName || ''}
+                    onChange={(e) => handleChange(e)}
+                    required
+                  />
+                </div>
+                <div className='col-sm-3'>
+                  <input
+                    placeholder='Last Name'
+                    type='text'
+                    className='form-control'
+                    id='fLastName'
+                    name='fLastName'
+                    value={fLastName || ''}
+                    onChange={(e) => handleChange(e)}
+                    required
+                  />
+                </div>
+              </div>
+              <div className='form-group row p-2'>
+                <label className='col-sm-3 col-form-label'>
+                  <span style={{ color: 'red' }}>*</span> Passport Sized Photo
+                </label>
+                <div className='col-sm-9'>
+                  <ImageUploading
+                    multiple
+                    value={images}
+                    onChange={onImageAdd}
+                    maxNumber={maxNumber}
+                    dataURLKey='data_url'
+                  >
+                    {({
+                      imageList,
+                      onImageUpload,
+                      onImageRemoveAll,
+                      onImageUpdate,
+                      onImageRemove,
+                      isDragging,
+                      dragProps,
+                    }) => (
+                      <div className='upload__image-wrapper'>
+                        {images.length === 0 ? (
+                          <div
+                            className='btn selected-crumb'
+                            style={isDragging ? { color: 'red' } : undefined}
+                            onClick={async () => {
+                              onImageUpload();
+                            }}
+                            {...dragProps}
+                          >
+                            Click or Drop here
+                          </div>
+                        ) : (
+                          <div />
+                        )}
+                        &nbsp;
+                        {imageList.map((image, index) => (
+                          <div key={index} className='row ml-5'>
+                            <img src={image['data_url']} alt='' width='100' />
+                            <div className='ml-5 col'>
+                              <div className='row mb-5'>
+                                <div
+                                  className='btn selected-crumb'
+                                  onClick={() => onImageUpdate(index)}
+                                >
+                                  Update
                                 </div>
-                                <div className='row'>
-                                  <div
-                                    className='btn selected-crumb'
-                                    onClick={() => onImageRemove(index)}
-                                  >
-                                    Remove
-                                  </div>
+                              </div>
+                              <div className='row'>
+                                <div
+                                  className='btn selected-crumb'
+                                  onClick={() => onImageRemove(index)}
+                                >
+                                  Remove
                                 </div>
                               </div>
                             </div>
-                          ))}
-                        </div>
-                      )}
-                    </ImageUploading>
-                  </div>
+                          </div>
+                        ))}
+                      </div>
+                    )}
+                  </ImageUploading>
                 </div>
+              </div>
 
-                <div className='form-group row p-2 d-flex justify-content-center mt-4 mb-5'>
-                  <div className='col-sm-10'>
-                    <button
-                      type='submit'
-                      className='btn selected-crumb submit-button crumb-item w-100 font-weight-bold'
-                    >
-                      <i className='far fa-check-circle'></i> Save and Continue
-                    </button>
-                  </div>
+              <div className='form-group row p-2 d-flex justify-content-center mt-4 mb-5'>
+                <div className='col-sm-10'>
+                  <button
+                    type='submit'
+                    className='btn selected-crumb submit-button crumb-item w-100 font-weight-bold'
+                  >
+                    <i className='far fa-check-circle'></i> Save and Continue
+                  </button>
                 </div>
-              </form>
-            )}
+              </div>
+            </form>
           </div>
         </FormPageComponent>
       </div>

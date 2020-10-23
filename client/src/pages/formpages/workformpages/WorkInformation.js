@@ -12,6 +12,7 @@ import ComplexComponent from '../../../components/form/ComplexComponent';
 import OPBreadCrumb from '../../../components/form/OPBreadCrumb';
 import axios from 'axios';
 import FormPageComponent from '../../../components/form/FormPageComponent.js';
+import { OPLoader } from '../../../util/LoaderUtil.js';
 
 const WorkInformation = () => {
   // eslint-disable-next-line
@@ -67,6 +68,7 @@ const WorkInformation = () => {
             ]}
           />
           <hr></hr>
+          <OPLoader isLoading={isLoading} />
           <h5 className='mt-3 mb-4'>
             Please specify all the previous companies you have worked at.
             <span style={{ color: 'red' }}>*</span>
@@ -130,20 +132,7 @@ const WorkInformation = () => {
                 key: 'reasonForLeaving',
                 isRequired: true,
               },
-              {
-                label: 'Funtional/Technical Skills',
-                key: 'skills',
-                isRequired: true,
-              },
-              {
-                label: 'Professional Achievents',
-                key: 'achievments',
-                isRequired: true,
-              },
             ]}
-            // defaultData={[
-            //   { "company ": "asdsad", "fromDate ": "2020-10-27", "toDate ": "2020-11-07", "designation": "asd", "salary": "asd", "typeOfIndustry": "asd", "reasonForLeaving": "asd", "skills": "asd", "achievments": "asd" }
-            // ]}
             defaultData={[...formData]}
           />
         </div>

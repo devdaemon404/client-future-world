@@ -45,7 +45,7 @@ const FamilyInformation = () => {
       <Header pathname='/health' />
       <HeroContainer className='box d-flex align-items-center justify-content-center'>
         <MainHeader className='text-center'>
-          Health and Family Information
+          Employee Health and Family Information
         </MainHeader>
       </HeroContainer>
       <div className=''>
@@ -62,7 +62,7 @@ const FamilyInformation = () => {
                 },
                 {
                   link: '/information/healthInformation',
-                  label: 'Health Information',
+                  label: 'Employee Health Information',
                 },
               ]}
             />
@@ -92,20 +92,6 @@ const FamilyInformation = () => {
                   config
                 );
               }}
-              tableColumns={[
-                'Name',
-                'Relationship',
-                'DOB',
-                'Blood Group',
-                'Occupation',
-              ]}
-              essentialFieldKeys={[
-                'name',
-                'relationship',
-                'familyDob',
-                'bloodGroup',
-                'occupation',
-              ]}
               columnNames={[
                 {
                   label: 'Family Member Name',
