@@ -12,7 +12,7 @@ const Card3 = ({ title, subTitle }) => {
         </div>
         <div className='col-md-12 col-lg-12'>
           <div>
-            <Link to='/' className='sub-card-container'>
+            <Link to='/payslip' className='sub-card-container'>
               {' '}
               <span className='sub-card-content text-center'>View</span>
             </Link>

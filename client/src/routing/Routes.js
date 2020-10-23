@@ -24,6 +24,7 @@ import schoolandworkpage from '../pages/secondpage/schoolandworkpage';
 import AcademicInformation from '../pages/formpages/workformpages/AcademicInformation';
 import WorkInformation from '../pages/formpages/workformpages/WorkInformation';
 import axios from 'axios';
+import Payslippage from '../pages/secondpage/Payslippage';
 
 const Routes = () => {
   let history = useHistory();
@@ -54,7 +55,7 @@ const Routes = () => {
     >
       <Route exact path='/' component={homepage} />
       <Route exact path='/login' component={LoginPage} />
-
+      <Route exact path='/payslip' component={Payslippage} />
       <Route exact path='/personal' component={personalpage} />
       <Route exact path='/information/address' component={Address} />
       <Route

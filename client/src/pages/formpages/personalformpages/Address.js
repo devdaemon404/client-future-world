@@ -103,7 +103,7 @@ const Address = ({ history }) => {
       <HeroContainer className='box d-flex align-items-center justify-content-center'>
         <MainHeader className='text-center'>Personal Information</MainHeader>
       </HeroContainer>
-      <div className=''>
+      <div>
         <FormPageComponent>
           <div className='container-fluid mt-5'>
             {/* <h2>Current Address</h2> */}
