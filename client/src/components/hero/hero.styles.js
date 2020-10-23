@@ -6,10 +6,10 @@ export const HeroContainer = styled.div`
     center center no-repeat;
   background-size: cover;
   // height: 100vh;
-  padding: 80px 0 60px 0;
+  // padding: 80px 0 60px 0;
   position: relative;
   clip-path: polygon(0 0, 100% 0, 100% 100%, 0 calc(100% - 5vw));
-  padding: 100px 300px;
+  padding: 80px 80px;
   .link {
     color: #111;
   }
