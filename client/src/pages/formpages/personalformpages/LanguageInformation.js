@@ -10,6 +10,7 @@ import FormPageComponent from '../../../components/form/FormPageComponent';
 import OPBreadCrumb from '../../../components/form/OPBreadCrumb.js';
 
 import axios from 'axios';
+import { OPLoader } from '../../../util/LoaderUtil.js';
 
 const LanguageInformation = ({ history }) => {
   const [isLoading, setIsLoading] = useState(false);
@@ -24,15 +25,8 @@ const LanguageInformation = ({ history }) => {
   useEffect(() => {
     const fetchData = async () => {
       setIsLoading(true);
-      const config = {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        withCredentials: true,
-      };
       const result = await axios.get(
-        '/api/employee?select=canRead, canWrite, canSpeak, motherLang',
-        config
+        '/api/employee?select=canRead, canWrite, canSpeak, motherLang'
       );
 
       console.log(result.data.data);
@@ -61,12 +55,6 @@ const LanguageInformation = ({ history }) => {
     motherLang,
   }) => {
     try {
-      const config = {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        withCredentials: true,
-      };
       const body = JSON.stringify({
         postParams: {
           canRead,
@@ -76,10 +64,13 @@ const LanguageInformation = ({ history }) => {
         },
       });
 
-      await axios.post('/api/employee', body, config);
+      setIsLoading(true);
+      await axios.post('/api/employee', body);
       history.push('/work');
     } catch (error) {
       console.log(error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -128,92 +119,87 @@ const LanguageInformation = ({ history }) => {
               ]}
             />
             <hr></hr>
-            {isLoading ? (
-              <div>
-                <h1>Loading...</h1>
+            <OPLoader isLoading={isLoading} />
+            <form onSubmit={handleSubmit} className='mt-2 text-right'>
+              <div className='form-group row p-2'>
+                <label className='col-sm-3 col-form-label'>
+                  <span style={{ color: 'red' }}>*</span> Can Read
+                </label>
+                <div className='col-sm-9'>
+                  <input
+                    type='text'
+                    className='form-control'
+                    id='canRead'
+                    placeholder=''
+                    name='canRead'
+                    value={canRead || ''}
+                    onChange={(e) => handleChange(e)}
+                    required
+                  />
+                </div>
               </div>
-            ) : (
-              <form onSubmit={handleSubmit} className='mt-2 text-left'>
-                <div className='form-group row p-2'>
-                  <label className='col-sm-3 col-form-label'>
-                    <span style={{ color: 'red' }}>*</span> Can Read
-                  </label>
-                  <div className='col-sm-9'>
-                    <input
-                      type='text'
-                      className='form-control'
-                      id='canRead'
-                      placeholder=''
-                      name='canRead'
-                      value={canRead || ''}
-                      onChange={(e) => handleChange(e)}
-                      required
-                    />
-                  </div>
+              <div className='form-group row p-2'>
+                <label className='col-sm-3 col-form-label'>
+                  <span style={{ color: 'red' }}>*</span> Can Write
+                </label>
+                <div className='col-sm-9'>
+                  <input
+                    type='text'
+                    className='form-control'
+                    id='canWrite'
+                    placeholder=''
+                    name='canWrite'
+                    value={canWrite || ''}
+                    onChange={(e) => handleChange(e)}
+                    required
+                  />
                 </div>
-                <div className='form-group row p-2'>
-                  <label className='col-sm-3 col-form-label'>
-                    <span style={{ color: 'red' }}>*</span> Can Write
-                  </label>
-                  <div className='col-sm-9'>
-                    <input
-                      type='text'
-                      className='form-control'
-                      id='canWrite'
-                      placeholder=''
-                      name='canWrite'
-                      value={canWrite || ''}
-                      onChange={(e) => handleChange(e)}
-                      required
-                    />
-                  </div>
+              </div>
+              <div className='form-group row p-2'>
+                <label className='col-sm-3 col-form-label'>
+                  <span style={{ color: 'red' }}>*</span> Can Speak
+                </label>
+                <div className='col-sm-9'>
+                  <input
+                    type='text'
+                    className='form-control'
+                    id='canSpeak'
+                    placeholder=''
+                    name='canSpeak'
+                    value={canSpeak || ''}
+                    onChange={(e) => handleChange(e)}
+                    required
+                  />
                 </div>
-                <div className='form-group row p-2'>
-                  <label className='col-sm-3 col-form-label'>
-                    <span style={{ color: 'red' }}>*</span> Can Speak
-                  </label>
-                  <div className='col-sm-9'>
-                    <input
-                      type='text'
-                      className='form-control'
-                      id='canSpeak'
-                      placeholder=''
-                      name='canSpeak'
-                      value={canSpeak || ''}
-                      onChange={(e) => handleChange(e)}
-                      required
-                    />
-                  </div>
+              </div>
+              <div className='form-group row p-2'>
+                <label className='col-sm-3 col-form-label'>
+                  <span style={{ color: 'red' }}>*</span> Mother Tongue
+                </label>
+                <div className='col-sm-9'>
+                  <input
+                    type='text'
+                    className='form-control'
+                    id='motherLang'
+                    placeholder=''
+                    name='motherLang'
+                    value={motherLang || ''}
+                    onChange={(e) => handleChange(e)}
+                    required
+                  />
                 </div>
-                <div className='form-group row p-2'>
-                  <label className='col-sm-3 col-form-label'>
-                    <span style={{ color: 'red' }}>*</span> Mother Tongue
-                  </label>
-                  <div className='col-sm-9'>
-                    <input
-                      type='text'
-                      className='form-control'
-                      id='motherLang'
-                      placeholder=''
-                      name='motherLang'
-                      value={motherLang || ''}
-                      onChange={(e) => handleChange(e)}
-                      required
-                    />
-                  </div>
+              </div>
+              <div className='form-group row p-2 d-flex justify-content-center mt-4 mb-5'>
+                <div className='col-sm-10'>
+                  <button
+                    type='submit'
+                    className='btn selected-crumb submit-button crumb-item w-100 font-weight-bold'
+                  >
+                    <i className='far fa-check-circle'></i> Save and Continue
+                  </button>
                 </div>
-                <div className='form-group row p-2 d-flex justify-content-center mt-4 mb-5'>
-                  <div className='col-sm-10'>
-                    <button
-                      type='submit'
-                      className='btn selected-crumb submit-button crumb-item w-100 font-weight-bold'
-                    >
-                      <i className='far fa-check-circle'></i> Save and Continue
-                    </button>
-                  </div>
-                </div>
-              </form>
-            )}
+              </div>
+            </form>
           </div>
         </FormPageComponent>
       </div>

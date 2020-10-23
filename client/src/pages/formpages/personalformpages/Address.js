@@ -11,8 +11,9 @@ import FormPageComponent from '../../../components/form/FormPageComponent';
 import OPBreadCrumb from '../../../components/form/OPBreadCrumb.js';
 
 import axios from 'axios';
+import { OPLoader } from '../../../util/LoaderUtil.js';
 
-const Address = ({history}) => {
+const Address = ({ history }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [formData, setFormData] = useState({
     presentAddress: '',
@@ -36,15 +37,8 @@ const Address = ({history}) => {
   useEffect(() => {
     const fetchData = async () => {
       setIsLoading(true);
-      const config = {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        withCredentials: true,
-      };
       const result = await axios.get(
-        '/api/employee?select=presentAddress,phoneNumberPresAdd,permanentAddress,phoneNumberPermAdd,contactPersonName,contactPersonPhone,contactPersonAddress,',
-        config
+        '/api/employee?select=presentAddress,phoneNumberPresAdd,permanentAddress,phoneNumberPermAdd,contactPersonName,contactPersonPhone,contactPersonAddress,'
       );
 
       console.log(result.data.data);
@@ -76,12 +70,6 @@ const Address = ({history}) => {
     contactPersonAddress,
   }) => {
     try {
-      const config = {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        withCredentials: true,
-      };
       const body = JSON.stringify({
         postParams: {
           presentAddress,
@@ -94,10 +82,13 @@ const Address = ({history}) => {
         },
       });
 
-      await axios.post('/api/employee', body, config);
+      setIsLoading(true);
+      await axios.post('/api/employee', body);
       history.push('/information/languageInformation');
     } catch (error) {
       console.log(error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -146,165 +137,141 @@ const Address = ({history}) => {
               ]}
             />
             <hr></hr>
-            {isLoading ? (
-              <div>
-                <h1>Loading...</h1>
+            <OPLoader isLoading={isLoading} />
+            <form onSubmit={handleSubmit} className='mt-2 text-right'>
+              <div className='form-group row p-2'>
+                <label className='col-sm-3 form-label'>
+                  <span style={{ color: 'red' }}>*</span> Present Address &
+                  Phone Number
+                </label>
+                <div className='col-sm-5'>
+                  <textarea
+                    className='form-control'
+                    rows='3'
+                    id='presentAddress'
+                    placeholder=''
+                    name='presentAddress'
+                    value={presentAddress || ''}
+                    onChange={(e) => handleChange(e)}
+                    required
+                  ></textarea>
+                </div>
+                {/* <label className='col-sm-2 form-label'>
+                    <span style={{ color: 'red' }}>*</span> Ph No./Mob No.
+                  </label> */}
+
+                <div className='col-sm-4'>
+                  <input
+                    type='tel'
+                    pattern='^[6-9]\d{9}$'
+                    placeholder='+91 Phone Number'
+                    maxLength='10'
+                    minLength='10'
+                    className='form-control'
+                    id='phoneNumberPresAdd'
+                    name='phoneNumberPresAdd'
+                    value={phoneNumberPresAdd || ''}
+                    onChange={(e) => handleChange(e)}
+                    required
+                  />
+                </div>
               </div>
-            ) : (
-              <form onSubmit={handleSubmit} className='mt-2 text-left'>
-                <div className='form-group row p-2'>
-                  <label className='col-sm-3 col-form-label'>
-                    <span style={{ color: 'red' }}>*</span> Present Address
-                  </label>
-                  <div className='col-sm-9'>
-                    {/* <input type="text" className="form-control" id="" placeholder="" /> */}
-                    <textarea
-                      className='form-control'
-                      rows='3'
-                      id='presentAddress'
-                      placeholder=''
-                      name='presentAddress'
-                      value={presentAddress || ''}
-                      onChange={(e) => handleChange(e)}
-                      required
-                    ></textarea>
-                  </div>
-                </div>
 
-                <div className='form-group row p-2'>
-                  <label className='col-sm-3 col-form-label'>
+              <div className='form-group row p-2'>
+                <label className='col-sm-3 col-form-label'>
+                  <span style={{ color: 'red' }}>*</span> Permanent Address &
+                  Phone Number
+                </label>
+                <div className='col-sm-5'>
+                  <textarea
+                    className='form-control'
+                    rows='3'
+                    id='permanentAddress'
+                    placeholder=''
+                    name='permanentAddress'
+                    value={permanentAddress || ''}
+                    onChange={(e) => handleChange(e)}
+                    required
+                  ></textarea>
+                </div>
+                {/* 
+                  <label className='col-sm-2 col-form-label'>
                     <span style={{ color: 'red' }}>*</span> Ph No./Mob No.
-                  </label>
-                  <div className='col-sm-9'>
-                    <input
-                      type='tel'
-                      pattern='^[6-9]\d{9}$'
-                      placeholder='+91 Phone Number'
-                      maxLength='10'
-                      minLength='10'
-                      className='form-control'
-                      id='phoneNumberPresAdd'
-                      name='phoneNumberPresAdd'
-                      value={phoneNumberPresAdd || ''}
-                      onChange={(e) => handleChange(e)}
-                      required
-                    />
-                  </div>
+                  </label> */}
+                <div className='col-sm-4'>
+                  <input
+                    type='tel'
+                    pattern='^[6-9]\d{9}$'
+                    placeholder='+91 Phone Number'
+                    maxLength='10'
+                    minLength='10'
+                    className='form-control'
+                    id='phoneNumberPermAdd'
+                    name='phoneNumberPermAdd'
+                    value={phoneNumberPermAdd || ''}
+                    onChange={(e) => handleChange(e)}
+                    required
+                  />
                 </div>
+              </div>
 
-                <div className='form-group row p-2'>
-                  <label className='col-sm-3 col-form-label'>
-                    <span style={{ color: 'red' }}>*</span> Permanent Address
-                  </label>
-                  <div className='col-sm-9'>
-                    {/* <input type="text" className="form-control" id="" placeholder="" /> */}
-                    <textarea
-                      className='form-control'
-                      rows='3'
-                      id='permanentAddress'
-                      placeholder=''
-                      name='permanentAddress'
-                      value={permanentAddress || ''}
-                      onChange={(e) => handleChange(e)}
-                      required
-                    ></textarea>
-                  </div>
+              <div className='form-group row p-2'>
+                <label className='col-sm-3 col-form-label'>
+                  <span style={{ color: 'red' }}>*</span> Contact Person in case
+                  of emergency
+                </label>
+                <div className='col-sm-3'>
+                  <textarea
+                    className='form-control'
+                    rows='3'
+                    id='contactPersonAddress'
+                    placeholder='Address'
+                    name='contactPersonAddress'
+                    value={contactPersonAddress || ''}
+                    onChange={(e) => handleChange(e)}
+                    required
+                  ></textarea>
                 </div>
+                <div className='col-sm-3'>
+                  <input
+                    type='text'
+                    className='form-control'
+                    id='contactPersonName'
+                    placeholder='Name'
+                    name='contactPersonName'
+                    value={contactPersonName || ''}
+                    onChange={(e) => handleChange(e)}
+                    required
+                  />
+                </div>
+                <div className='col-sm-3'>
+                  <input
+                    type='tel'
+                    pattern='^[6-9]\d{9}$'
+                    placeholder='+91 Phone Number'
+                    maxLength='10'
+                    minLength='10'
+                    className='form-control'
+                    id='contactPersonPhone'
+                    name='contactPersonPhone'
+                    value={contactPersonPhone || ''}
+                    onChange={(e) => handleChange(e)}
+                    required
+                  />
+                </div>
+              </div>
 
-                <div className='form-group row p-2'>
-                  <label className='col-sm-3 col-form-label'>
-                    <span style={{ color: 'red' }}>*</span> Ph No./Mob No.
-                  </label>
-                  <div className='col-sm-9'>
-                    <input
-                      type='tel'
-                      pattern='^[6-9]\d{9}$'
-                      placeholder='+91 Phone Number'
-                      maxLength='10'
-                      minLength='10'
-                      className='form-control'
-                      id='phoneNumberPermAdd'
-                      name='phoneNumberPermAdd'
-                      value={phoneNumberPermAdd || ''}
-                      onChange={(e) => handleChange(e)}
-                      required
-                    />
-                  </div>
+              <div className='form-group row p-2 d-flex justify-content-center mt-4 mb-5'>
+                <div className='col-sm-10'>
+                  <button
+                    type='submit'
+                    className='btn selected-crumb submit-button crumb-item w-100 font-weight-bold'
+                  >
+                    <i className='far fa-check-circle'></i> Save and Continue
+                  </button>
                 </div>
-
-                <div className='form-group row p-2'>
-                  <label className='col-sm-3 col-form-label'>
-                    <span style={{ color: 'red' }}>*</span> Contact Person in
-                    case of emergency
-                  </label>
-                  <div className='col-sm-9'>
-                    <input
-                      type='text'
-                      className='form-control'
-                      id='contactPersonName'
-                      placeholder=''
-                      name='contactPersonName'
-                      value={contactPersonName || ''}
-                      onChange={(e) => handleChange(e)}
-                      required
-                    />
-                  </div>
-                </div>
-
-                <div className='form-group row p-2'>
-                  <label className='col-sm-3 col-form-label'>
-                    <span style={{ color: 'red' }}>*</span> Contact Person Ph
-                    No./Mob No.
-                  </label>
-                  <div className='col-sm-9'>
-                    <input
-                      type='tel'
-                      pattern='^[6-9]\d{9}$'
-                      placeholder='+91 Phone Number'
-                      maxLength='10'
-                      minLength='10'
-                      className='form-control'
-                      id='contactPersonPhone'
-                      name='contactPersonPhone'
-                      value={contactPersonPhone || ''}
-                      onChange={(e) => handleChange(e)}
-                      required
-                    />
-                  </div>
-                </div>
-
-                <div className='form-group row p-2'>
-                  <label className='col-sm-3 col-form-label'>
-                    <span style={{ color: 'red' }}>*</span> Contact Person
-                    Address
-                  </label>
-                  <div className='col-sm-9'>
-                    {/* <input type="text" className="form-control" id="" placeholder="" /> */}
-                    <textarea
-                      className='form-control'
-                      rows='3'
-                      id='contactPersonAddress'
-                      placeholder=''
-                      name='contactPersonAddress'
-                      value={contactPersonAddress || ''}
-                      onChange={(e) => handleChange(e)}
-                      required
-                    ></textarea>
-                  </div>
-                </div>
-
-                <div className='form-group row p-2 d-flex justify-content-center mt-4 mb-5'>
-                  <div className='col-sm-10'>
-                    <button
-                      type='submit'
-                      className='btn selected-crumb submit-button crumb-item w-100 font-weight-bold'
-                    >
-                      <i className='far fa-check-circle'></i> Save and Continue
-                    </button>
-                  </div>
-                </div>
-              </form>
-            )}
+              </div>
+            </form>
           </div>
         </FormPageComponent>
       </div>

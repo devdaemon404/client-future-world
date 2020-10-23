@@ -9,8 +9,8 @@ import Header from '../../components/header/Header';
 import Card2 from '../../components/card/Card2';
 
 function healthpage() {
-  const list = ['Health Information', 'Family Members Information'];
-  const pathname = ['healthInformation', 'familyInformation'];
+  const list = ['Family Members Information', 'Employee Health Information'];
+  const pathname = ['familyInformation', 'healthInformation'];
 
   return (
     <Container>

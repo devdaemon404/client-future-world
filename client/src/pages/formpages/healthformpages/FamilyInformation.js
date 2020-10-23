@@ -12,7 +12,7 @@ import FormPageComponent from '../../../components/form/FormPageComponent';
 import ComplexComponent from '../../../components/form/ComplexComponent';
 import OPBreadCrumb from '../../../components/form/OPBreadCrumb.js';
 
-const FamilyInformation = () => {
+const FamilyInformation = ({ history }) => {
   // eslint-disable-next-line
   const [isLoading, setIsLoading] = useState(false);
   const [formData, setFormData] = useState([]);
@@ -45,7 +45,7 @@ const FamilyInformation = () => {
       <Header pathname='/health' />
       <HeroContainer className='box d-flex align-items-center justify-content-center'>
         <MainHeader className='text-center'>
-          Health and Family Information
+          Employee Health and Family Information
         </MainHeader>
       </HeroContainer>
       <div className=''>
@@ -62,7 +62,7 @@ const FamilyInformation = () => {
                 },
                 {
                   link: '/information/healthInformation',
-                  label: 'Health Information',
+                  label: 'Employee Health Information',
                 },
               ]}
             />
@@ -92,21 +92,7 @@ const FamilyInformation = () => {
                   config
                 );
               }}
-              tableColumns={[
-                'Name',
-                'Relationship',
-                'DOB',
-                'Blood Group',
-                'Occupation',
-              ]}
-              essentialFieldKeys={[
-                'name',
-                'relationship',
-                'familyDob',
-                'bloodGroup',
-                'occupation',
-              ]}
-              textFieldDetails={[
+              columnNames={[
                 {
                   label: 'Family Member Name',
                   key: 'name',
@@ -136,6 +122,19 @@ const FamilyInformation = () => {
               ]}
               defaultData={[...formData]}
             />
+            <div className='form-group row p-2 d-flex justify-content-center mt-4 mb-5'>
+              <div className='col-sm-10'>
+                <button
+                  type='submit'
+                  onClick={() => {
+                    history.push('/information/healthInformation');
+                  }}
+                  className='btn selected-crumb submit-button crumb-item w-100 font-weight-bold'
+                >
+                  <i className='far fa-check-circle'></i> Save and Continue
+                </button>
+              </div>
+            </div>
           </div>
         </FormPageComponent>
       </div>

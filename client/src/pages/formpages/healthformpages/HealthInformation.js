@@ -10,9 +10,10 @@ import Header from '../../../components/header/Header';
 import FormPageComponent from '../../../components/form/FormPageComponent';
 import OPBreadCrumb from '../../../components/form/OPBreadCrumb.js';
 import axios from 'axios';
+import { OPLoader } from '../../../util/LoaderUtil.js';
 // import { Link } from 'react-router-dom';
 
-const HealthInformation = ({history}) => {
+const HealthInformation = ({ history }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [formData, setFormData] = useState({
     bloodGroup: '',
@@ -38,15 +39,8 @@ const HealthInformation = ({history}) => {
   useEffect(() => {
     const fetchData = async () => {
       setIsLoading(true);
-      const config = {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        withCredentials: true,
-      };
       const result = await axios.get(
-        '/api/employee?select=bloodGroup,height,weight,lEyePower,rEyePower,indentification1,indentification2,illnesses,',
-        config
+        '/api/employee?select=bloodGroup,height,weight,lEyePower,rEyePower,indentification1,indentification2,illnesses,'
       );
 
       console.log(result.data.data);
@@ -79,12 +73,6 @@ const HealthInformation = ({history}) => {
     illnesses,
   }) => {
     try {
-      const config = {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        withCredentials: true,
-      };
       const body = JSON.stringify({
         postParams: {
           bloodGroup,
@@ -98,10 +86,13 @@ const HealthInformation = ({history}) => {
         },
       });
 
-      await axios.post('/api/employee', body, config);
+      setIsLoading(true);
+      await axios.post('/api/employee', body);
       history.push('/other');
     } catch (error) {
       console.log(error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -115,7 +106,7 @@ const HealthInformation = ({history}) => {
       <Header pathname='/health' />
       <HeroContainer className='box d-flex align-items-center justify-content-center'>
         <MainHeader className='text-center'>
-          Health and Family Information
+          Employee Health and Family Information
         </MainHeader>
       </HeroContainer>
       <div className=''>
@@ -132,162 +123,157 @@ const HealthInformation = ({history}) => {
                 },
                 {
                   link: '/information/healthInformation',
-                  label: 'Health Information',
+                  label: 'Employee Health Information',
                 },
               ]}
             />
             <hr></hr>
-            {isLoading ? (
-              <div>
-                <h1>Loading...</h1>
+            <OPLoader isLoading={isLoading} />
+            <form onSubmit={handleSubmit} className='mt-2 text-right'>
+              <div className='form-group row p-2'>
+                <label className='col-sm-3 col-form-label'>
+                  <span style={{ color: 'red' }}>*</span> Blood Group
+                </label>
+                <div className='col-sm-9'>
+                  <input
+                    type='text'
+                    className='form-control'
+                    id='bloodGroup'
+                    placeholder=''
+                    name='bloodGroup'
+                    value={bloodGroup || ''}
+                    onChange={(e) => handleChange(e)}
+                    required
+                  />
+                </div>
               </div>
-            ) : (
-              <form onSubmit={handleSubmit} className='mt-2 text-left'>
-                <div className='form-group row p-2'>
-                  <label className='col-sm-3 col-form-label'>
-                    <span style={{ color: 'red' }}>*</span> Blood Group
-                  </label>
-                  <div className='col-sm-9'>
-                    <input
-                      type='text'
-                      className='form-control'
-                      id='bloodGroup'
-                      placeholder=''
-                      name='bloodGroup'
-                      value={bloodGroup || ''}
-                      onChange={(e) => handleChange(e)}
-                      required
-                    />
-                  </div>
-                </div>
 
-                <div className='form-group row p-2'>
-                  <label className='col-sm-3 col-form-label'>
-                    <span style={{ color: 'red' }}>*</span> Height(in cms)
-                  </label>
-                  <div className='col-sm-9'>
-                    <input
-                      type='text'
-                      className='form-control'
-                      id='height'
-                      placeholder=''
-                      name='height'
-                      value={height || ''}
-                      onChange={(e) => handleChange(e)}
-                      required
-                    />
-                  </div>
+              <div className='form-group row p-2'>
+                <label className='col-sm-3 col-form-label'>
+                  <span style={{ color: 'red' }}>*</span> Height(in cms)
+                </label>
+                <div className='col-sm-9'>
+                  <input
+                    type='text'
+                    className='form-control'
+                    id='height'
+                    placeholder=''
+                    name='height'
+                    value={height || ''}
+                    onChange={(e) => handleChange(e)}
+                    required
+                  />
                 </div>
+              </div>
 
-                <div className='form-group row p-2'>
-                  <label className='col-sm-3 col-form-label'>
-                    <span style={{ color: 'red' }}>*</span> Weight
-                  </label>
-                  <div className='col-sm-9'>
-                    <input
-                      type='text'
-                      className='form-control'
-                      id='weight'
-                      placeholder=''
-                      name='weight'
-                      value={weight || ''}
-                      onChange={(e) => handleChange(e)}
-                      required
-                    />
-                  </div>
+              <div className='form-group row p-2'>
+                <label className='col-sm-3 col-form-label'>
+                  <span style={{ color: 'red' }}>*</span> Weight
+                </label>
+                <div className='col-sm-9'>
+                  <input
+                    type='text'
+                    className='form-control'
+                    id='weight'
+                    placeholder=''
+                    name='weight'
+                    value={weight || ''}
+                    onChange={(e) => handleChange(e)}
+                    required
+                  />
                 </div>
+              </div>
 
-                <div className='form-group row p-2'>
-                  <label className='col-sm-4 col-form-label'>
-                    <span style={{ color: 'red' }}>*</span> Power of Glass
-                  </label>
-                  <div className='col-sm-4'>
-                    <input
-                      type='text'
-                      className='form-control'
-                      id='lEyePower'
-                      placeholder='L'
-                      name='lEyePower'
-                      value={lEyePower || ''}
-                      onChange={(e) => handleChange(e)}
-                      required
-                    />
-                  </div>
-                  <div className='col-sm-4'>
-                    <input
-                      type='text'
-                      className='form-control'
-                      id='rEyePower'
-                      placeholder='R'
-                      name='rEyePower'
-                      value={rEyePower || ''}
-                      onChange={(e) => handleChange(e)}
-                      required
-                    />
-                  </div>
+              <div className='form-group row p-2'>
+                <label className='col-sm-3 col-form-label'>
+                  <span style={{ color: 'red' }}>*</span> Power of Glass
+                </label>
+                <div className='col-sm-4'>
+                  <input
+                    type='text'
+                    className='form-control'
+                    id='lEyePower'
+                    placeholder='L'
+                    name='lEyePower'
+                    value={lEyePower || ''}
+                    onChange={(e) => handleChange(e)}
+                    required
+                  />
                 </div>
+                <div className='col-sm-5'>
+                  <input
+                    type='text'
+                    className='form-control'
+                    id='rEyePower'
+                    placeholder='R'
+                    name='rEyePower'
+                    value={rEyePower || ''}
+                    onChange={(e) => handleChange(e)}
+                    required
+                  />
+                </div>
+              </div>
 
-                <div className='form-group row p-2'>
-                  <label className='col-sm-4 col-form-label'>
-                    <span style={{ color: 'red' }}>*</span> Identification marks
-                  </label>
-                  <div className='col-sm-4'>
-                    <input
-                      type='text'
-                      className='form-control'
-                      id='indentification1'
-                      placeholder='1.'
-                      name='indentification1'
-                      value={indentification1 || ''}
-                      onChange={(e) => handleChange(e)}
-                      required
-                    />
-                  </div>
-                  <div className='col-sm-4'>
-                    <input
-                      type='text'
-                      className='form-control'
-                      id='indentification2'
-                      placeholder='2.'
-                      name='indentification2'
-                      value={indentification2 || ''}
-                      onChange={(e) => handleChange(e)}
-                      required
-                    />
-                  </div>
+              <div className='form-group row p-2'>
+                <label className='col-sm-3 col-form-label'>
+                  <span style={{ color: 'red' }}>*</span> Identification marks
+                </label>
+                <div className='col-sm-4'>
+                  <input
+                    type='text'
+                    className='form-control'
+                    id='indentification1'
+                    placeholder='1.'
+                    name='indentification1'
+                    value={indentification1 || ''}
+                    onChange={(e) => handleChange(e)}
+                    required
+                  />
                 </div>
+                <div className='col-sm-5'>
+                  <input
+                    type='text'
+                    className='form-control'
+                    id='indentification2'
+                    placeholder='2.'
+                    name='indentification2'
+                    value={indentification2 || ''}
+                    onChange={(e) => handleChange(e)}
+                    required
+                  />
+                </div>
+              </div>
 
-                <div className='form-group row p-2'>
-                  <label className='col-sm-3 col-form-label'>
-                    <span style={{ color: 'red' }}>*</span> Any major surgery /
-                    illness in the past / Allergies
-                  </label>
-                  <div className='col-sm-9'>
-                    <input
-                      type='text'
-                      className='form-control'
-                      id='illnesses'
-                      placeholder=''
-                      name='illnesses'
-                      value={illnesses || ''}
-                      onChange={(e) => handleChange(e)}
-                      required
-                    />
-                  </div>
+              <div className='form-group row p-2'>
+                <label className='col-sm-3 col-form-label'>
+                  <span style={{ color: 'red' }}>*</span> Any major surgery /
+                  illness in the past / Allergies
+                </label>
+                <div className='col-sm-9'>
+                  <input
+                    type='text'
+                    className='form-control'
+                    id='illnesses'
+                    placeholder=''
+                    name='illnesses'
+                    value={illnesses || ''}
+                    onChange={(e) => handleChange(e)}
+                    required
+                  />
                 </div>
+              </div>
 
-                <div className='form-group row p-2 d-flex justify-content-center mt-4 mb-5'>
-                  <div className='col-sm-10'>
-                    <button
-                      type='submit'
-                      className='btn selected-crumb submit-button crumb-item w-100 font-weight-bold'
-                    >
-                      <i className='far fa-check-circle'></i> Save and Continue
-                    </button>
-                  </div>
+              <div className='form-group row p-2 d-flex justify-content-center mt-4 mb-5'>
+                <div className='col-sm-10'>
+                  <button
+                    type='submit'
+                    className='btn selected-crumb submit-button crumb-item w-100 font-weight-bold'
+                  >
+                    <i className='far fa-check-circle'></i> Save and Continue
+                  </button>
                 </div>
-              </form>
-            )}
+              </div>
+            </form>
           </div>
         </FormPageComponent>
       </div>

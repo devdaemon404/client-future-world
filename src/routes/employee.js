@@ -3,12 +3,12 @@ const router = express.Router();
 
 const {
   postEmployeeInfo,
-  getEmployeeInfo
+  getEmployeeInfo,
 } = require('../controllers/employee');
 
 const { protect } = require('../middleware/auth');
 
-router.route('/').post(protect, postEmployeeInfo)
-router.route('/').get(protect, getEmployeeInfo)
+router.route('/').post(protect, postEmployeeInfo);
+router.route('/').get(protect, getEmployeeInfo);
 
 module.exports = router;

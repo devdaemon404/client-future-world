@@ -10,29 +10,24 @@ import FormPageComponent from '../../../components/form/FormPageComponent';
 import OPBreadCrumb from '../../../components/form/OPBreadCrumb.js';
 
 import axios from 'axios';
+import { OPLoader } from '../../../util/LoaderUtil.js';
 
-const DocumentalInformation = ({history}) => {
+const DocumentalInformation = ({ history }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [formData, setFormData] = useState({
     panNo: '',
     passportNo: '',
     issue: '',
+    place: '',
     validity: '',
   });
-  const { panNo, passportNo, issue, validity } = formData;
+  const { panNo, passportNo, issue, place, validity } = formData;
 
   useEffect(() => {
     const fetchData = async () => {
       setIsLoading(true);
-      const config = {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        withCredentials: true,
-      };
       const result = await axios.get(
-        '/api/employee?select=panNo,passportNo,issue,validity',
-        config
+        '/api/employee?select=panNo,passportNo,issue,place,validity'
       );
 
       console.log(result.data.data);
@@ -58,28 +53,27 @@ const DocumentalInformation = ({history}) => {
     panNo,
     passportNo,
     issue,
+    place,
     validity,
   }) => {
     try {
-      const config = {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        withCredentials: true,
-      };
       const body = JSON.stringify({
         postParams: {
           panNo,
           passportNo,
           issue,
+          place,
           validity,
         },
       });
 
-      await axios.post('/api/employee', body, config);
+      setIsLoading(true);
+      await axios.post('/api/employee', body);
       history.push('/information/address');
     } catch (error) {
       console.log(error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -129,96 +123,104 @@ const DocumentalInformation = ({history}) => {
               ]}
             />
             <hr></hr>
-            {isLoading ? (
-              <div>
-                <h1>Loading...</h1>
+            <OPLoader isLoading={isLoading} />
+            <form onSubmit={handleSubmit} className='mt-2 text-right'>
+              <div className='form-group row p-2'>
+                <label className='col-sm-3 col-form-label'>
+                  <span style={{ color: 'red' }}>*</span> PAN number
+                </label>
+                <div className='col-sm-9'>
+                  <input
+                    type='text'
+                    className='form-control'
+                    id='panNo'
+                    placeholder=''
+                    name='panNo'
+                    value={panNo || ''}
+                    onChange={(e) => handleChange(e)}
+                    required
+                  />
+                </div>
               </div>
-            ) : (
-              <form onSubmit={handleSubmit} className='mt-2 text-left'>
-                <div className='form-group row p-2'>
-                  <label className='col-sm-3 col-form-label'>
-                    <span style={{ color: 'red' }}>*</span> PAN number
-                  </label>
-                  <div className='col-sm-9'>
-                    <input
-                      type='text'
-                      className='form-control'
-                      id='panNo'
-                      placeholder=''
-                      name='panNo'
-                      value={panNo || ''}
-                      onChange={(e) => handleChange(e)}
-                      required
-                    />
-                  </div>
-                </div>
 
-                <div className='form-group row p-2'>
-                  <label className='col-sm-3 col-form-label'>
-                    <span style={{ color: 'red' }}>*</span> Passport number
-                  </label>
-                  <div className='col-sm-9'>
-                    <input
-                      type='text'
-                      className='form-control'
-                      id='passportNo'
-                      placeholder=''
-                      name='passportNo'
-                      value={passportNo || ''}
-                      onChange={(e) => handleChange(e)}
-                      required
-                    />
-                  </div>
+              <div className='form-group row p-2'>
+                <label className='col-sm-3 col-form-label'>
+                  <span style={{ color: 'red' }}>*</span> Passport number
+                </label>
+                <div className='col-sm-9'>
+                  <input
+                    type='text'
+                    className='form-control'
+                    id='passportNo'
+                    placeholder=''
+                    name='passportNo'
+                    value={passportNo || ''}
+                    onChange={(e) => handleChange(e)}
+                    required
+                  />
                 </div>
+              </div>
 
-                <div className='form-group row p-2'>
-                  <label className='col-sm-3 col-form-label'>
-                    <span style={{ color: 'red' }}>*</span> Issue date and place
-                  </label>
-                  <div className='col-sm-9'>
-                    <input
-                      type='text'
-                      className='form-control'
-                      id='issue'
-                      placeholder='location of issue dd/mm/yyyy'
-                      name='issue'
-                      value={issue || ''}
-                      onChange={(e) => handleChange(e)}
-                      required
-                    />
-                  </div>
-                </div>
+              <div className='form-group row p-2'>
+                <label className='col-sm-3 col-form-label'>
+                  <span style={{ color: 'red' }}>*</span> Issue date and place
+                </label>
 
-                <div className='form-group row p-2'>
-                  <label className='col-sm-3 col-form-label'>
-                    <span style={{ color: 'red' }}>*</span> Validity
-                  </label>
-                  <div className='col-sm-9'>
-                    <input
-                      type='text'
-                      className='form-control'
-                      id='validity'
-                      placeholder=''
-                      name='validity'
-                      value={validity || ''}
-                      onChange={(e) => handleChange(e)}
-                      required
-                    />
-                  </div>
+                <div className='col-sm-4'>
+                  <input
+                    type='date'
+                    className='form-control'
+                    id='issue'
+                    placeholder=''
+                    name='issue'
+                    value={issue || ''}
+                    onChange={(e) => handleChange(e)}
+                    required
+                  />
                 </div>
+                <div className='col-sm-5'>
+                  <input
+                    type='text'
+                    className='form-control'
+                    id='place'
+                    placeholder='location'
+                    name='place'
+                    value={place || ''}
+                    onChange={(e) => handleChange(e)}
+                    required
+                  />
+                </div>
+              </div>
 
-                <div className='form-group row p-2 d-flex justify-content-center mt-4 mb-5'>
-                  <div className='col-sm-10'>
-                    <button
-                      type='submit'
-                      className='btn selected-crumb submit-button crumb-item w-100 font-weight-bold'
-                    >
-                      <i className='far fa-check-circle'></i> Save and Continue
-                    </button>
-                  </div>
+              <div className='form-group row p-2'>
+                <label className='col-sm-3 col-form-label'>
+                  <span style={{ color: 'red' }}>*</span> Validity
+                </label>
+                <div className='col-sm-9'>
+                  <input
+                    type='date'
+                    className='form-control'
+                    id='validity'
+                    placeholder=''
+                    name='validity'
+                    value={validity || ''}
+                    onChange={(e) => handleChange(e)}
+                    required
+                  />
                 </div>
-              </form>
-            )}
+              </div>
+
+              <div className='form-group row p-2 d-flex justify-content-center mt-4 mb-5'>
+                <div className='col-sm-10'>
+                  <button
+                    type='submit'
+                    className='btn selected-crumb submit-button crumb-item w-100 font-weight-bold'
+                  >
+                    <i className='far fa-check-circle'></i> Save and Continue
+                  </button>
+                </div>
+              </div>
+            </form>
           </div>
         </FormPageComponent>
       </div>

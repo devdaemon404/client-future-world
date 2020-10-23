@@ -12,8 +12,9 @@ import ComplexComponent from '../../../components/form/ComplexComponent';
 import OPBreadCrumb from '../../../components/form/OPBreadCrumb';
 import axios from 'axios';
 import FormPageComponent from '../../../components/form/FormPageComponent.js';
+import { OPLoader } from '../../../util/LoaderUtil.js';
 
-const WorkInformation = () => {
+const WorkInformation = ({ history }) => {
   // eslint-disable-next-line
   const [isLoading, setIsLoading] = useState(false);
   const [formData, setFormData] = useState([]);
@@ -67,6 +68,7 @@ const WorkInformation = () => {
             ]}
           />
           <hr></hr>
+          <OPLoader isLoading={isLoading} />
           <h5 className='mt-3 mb-4'>
             Please specify all the previous companies you have worked at.
             <span style={{ color: 'red' }}>*</span>
@@ -92,36 +94,14 @@ const WorkInformation = () => {
                 config
               );
             }}
-            tableColumns={[
-              'Company ',
-              'From date ',
-              'To date',
-              'Designation',
-              'Salary p.a.',
-              'Type of Industry',
-              'Reason for leaving',
-              'Funtional/Technical Skills',
-              'Professional Achievments',
-            ]}
-            essentialFieldKeys={[
-              'company ',
-              'fromDate ',
-              'toDate ',
-              'designation',
-              'salary',
-              'typeOfIndustry',
-              'reasonForLeaving',
-              'skills',
-              'achievments',
-            ]}
-            textFieldDetails={[
+            columnNames={[
               {
                 label: 'Company ',
                 key: 'company ',
                 isRequired: true,
               },
               {
-                label: 'From date ',
+                label: 'DOJ',
                 key: 'fromDate ',
                 isRequired: true,
                 type: 'date',
@@ -152,22 +132,22 @@ const WorkInformation = () => {
                 key: 'reasonForLeaving',
                 isRequired: true,
               },
-              {
-                label: 'Funtional/Technical Skills',
-                key: 'skills',
-                isRequired: true,
-              },
-              {
-                label: 'Professional Achievents',
-                key: 'achievments',
-                isRequired: true,
-              },
             ]}
-            // defaultData={[
-            //   { "company ": "asdsad", "fromDate ": "2020-10-27", "toDate ": "2020-11-07", "designation": "asd", "salary": "asd", "typeOfIndustry": "asd", "reasonForLeaving": "asd", "skills": "asd", "achievments": "asd" }
-            // ]}
             defaultData={[...formData]}
           />
+          <div className='form-group row p-2 d-flex justify-content-center mt-4 mb-5'>
+            <div className='col-sm-10'>
+              <button
+                type='submit'
+                onClick={() => {
+                  history.push('/health');
+                }}
+                className='btn selected-crumb submit-button crumb-item w-100 font-weight-bold'
+              >
+                <i className='far fa-check-circle'></i> Save and Continue
+              </button>
+            </div>
+          </div>
         </div>
       </FormPageComponent>
     </Container>

@@ -1,6 +1,13 @@
 const nodemailer = require('nodemailer');
 
-const { smtpHost, smtpPort, smtpEmail, smtpPassword, fromName, fromEmail } = require('../../config/keys')
+const {
+  smtpHost,
+  smtpPort,
+  smtpEmail,
+  smtpPassword,
+  fromName,
+  fromEmail,
+} = require('../../config/keys');
 
 const sendEmail = async (options) => {
   const transporter = nodemailer.createTransport({
