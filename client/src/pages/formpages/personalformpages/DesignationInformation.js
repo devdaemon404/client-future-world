@@ -327,18 +327,6 @@ const DesignationInformation = ({ history }) => {
                       />
                       <label className='form-check-label'>Direct</label>
                     </div>
-                    {/* <div className='form-check'>
-                        <input
-                          className='form-check-input'
-                          type='radio'
-                          name='entryVia'
-                          id='Campus'
-                          value='Campus'
-                          onClick={(e) => handleChange(e)}
-                          checked={entryVia === 'Campus'}
-                        />
-                        <label className='form-check-label'>Campus</label>
-                      </div> */}
                     <div className='form-check form-check-inline'>
                       <input
                         className='form-check-input'
