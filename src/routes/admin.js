@@ -5,6 +5,7 @@ const {
   getAllUsers,
   getEmployeeInfo,
   changeUserActiveStatus,
+  updateRegisteredUser,
 } = require('../controllers/admin');
 
 const { protect, authorize } = require('../middleware/auth');
@@ -16,5 +17,8 @@ router
 router
   .route('/employee-info/:employeeId')
   .get(protect, authorize('admin'), getEmployeeInfo);
+router
+  .route('/register')
+  .put(protect, authorize('admin'), updateRegisteredUser);
 
 module.exports = router;
