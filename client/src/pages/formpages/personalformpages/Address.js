@@ -12,7 +12,7 @@ import OPBreadCrumb from '../../../components/form/OPBreadCrumb.js';
 
 import axios from 'axios';
 
-const Address = ({history}) => {
+const Address = ({ history }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [formData, setFormData] = useState({
     presentAddress: '',
@@ -151,13 +151,13 @@ const Address = ({history}) => {
                 <h1>Loading...</h1>
               </div>
             ) : (
-              <form onSubmit={handleSubmit} className='mt-2 text-left'>
+              <form onSubmit={handleSubmit} className='mt-2 text-right'>
                 <div className='form-group row p-2'>
-                  <label className='col-sm-3 col-form-label'>
-                    <span style={{ color: 'red' }}>*</span> Present Address
+                  <label className='col-sm-3 form-label'>
+                    <span style={{ color: 'red' }}>*</span> Present Address &
+                    Phone Number
                   </label>
-                  <div className='col-sm-9'>
-                    {/* <input type="text" className="form-control" id="" placeholder="" /> */}
+                  <div className='col-sm-5'>
                     <textarea
                       className='form-control'
                       rows='3'
@@ -169,13 +169,11 @@ const Address = ({history}) => {
                       required
                     ></textarea>
                   </div>
-                </div>
-
-                <div className='form-group row p-2'>
-                  <label className='col-sm-3 col-form-label'>
+                  {/* <label className='col-sm-2 form-label'>
                     <span style={{ color: 'red' }}>*</span> Ph No./Mob No.
-                  </label>
-                  <div className='col-sm-9'>
+                  </label> */}
+
+                  <div className='col-sm-4'>
                     <input
                       type='tel'
                       pattern='^[6-9]\d{9}$'
@@ -194,10 +192,9 @@ const Address = ({history}) => {
 
                 <div className='form-group row p-2'>
                   <label className='col-sm-3 col-form-label'>
-                    <span style={{ color: 'red' }}>*</span> Permanent Address
+                    <span style={{ color: 'red' }}>*</span> Permanent Address & Phone Number
                   </label>
-                  <div className='col-sm-9'>
-                    {/* <input type="text" className="form-control" id="" placeholder="" /> */}
+                  <div className='col-sm-5'>
                     <textarea
                       className='form-control'
                       rows='3'
@@ -209,13 +206,11 @@ const Address = ({history}) => {
                       required
                     ></textarea>
                   </div>
-                </div>
-
-                <div className='form-group row p-2'>
-                  <label className='col-sm-3 col-form-label'>
+{/* 
+                  <label className='col-sm-2 col-form-label'>
                     <span style={{ color: 'red' }}>*</span> Ph No./Mob No.
-                  </label>
-                  <div className='col-sm-9'>
+                  </label> */}
+                  <div className='col-sm-4'>
                     <input
                       type='tel'
                       pattern='^[6-9]\d{9}$'
@@ -237,26 +232,31 @@ const Address = ({history}) => {
                     <span style={{ color: 'red' }}>*</span> Contact Person in
                     case of emergency
                   </label>
-                  <div className='col-sm-9'>
+                  <div className='col-sm-3'>
+                    <textarea
+                      className='form-control'
+                      rows='3'
+                      id='contactPersonAddress'
+                      placeholder='Address'
+                      name='contactPersonAddress'
+                      value={contactPersonAddress || ''}
+                      onChange={(e) => handleChange(e)}
+                      required
+                    ></textarea>
+                  </div>
+                  <div className='col-sm-3'>
                     <input
                       type='text'
                       className='form-control'
                       id='contactPersonName'
-                      placeholder=''
+                      placeholder='Name'
                       name='contactPersonName'
                       value={contactPersonName || ''}
                       onChange={(e) => handleChange(e)}
                       required
                     />
                   </div>
-                </div>
-
-                <div className='form-group row p-2'>
-                  <label className='col-sm-3 col-form-label'>
-                    <span style={{ color: 'red' }}>*</span> Contact Person Ph
-                    No./Mob No.
-                  </label>
-                  <div className='col-sm-9'>
+                  <div className='col-sm-3'>
                     <input
                       type='tel'
                       pattern='^[6-9]\d{9}$'
@@ -270,26 +270,6 @@ const Address = ({history}) => {
                       onChange={(e) => handleChange(e)}
                       required
                     />
-                  </div>
-                </div>
-
-                <div className='form-group row p-2'>
-                  <label className='col-sm-3 col-form-label'>
-                    <span style={{ color: 'red' }}>*</span> Contact Person
-                    Address
-                  </label>
-                  <div className='col-sm-9'>
-                    {/* <input type="text" className="form-control" id="" placeholder="" /> */}
-                    <textarea
-                      className='form-control'
-                      rows='3'
-                      id='contactPersonAddress'
-                      placeholder=''
-                      name='contactPersonAddress'
-                      value={contactPersonAddress || ''}
-                      onChange={(e) => handleChange(e)}
-                      required
-                    ></textarea>
                   </div>
                 </div>
 

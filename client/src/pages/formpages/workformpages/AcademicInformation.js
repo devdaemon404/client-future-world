@@ -20,6 +20,44 @@ const AcademicInformation = () => {
   useEffect(() => {
     const fetchData = async () => {
       setIsLoading(true);
+      const defaultData = [
+        {
+          qualiDesc: '10th',
+          schoolCollegeName: '',
+          marks: '',
+          yOfPassingg: '',
+          sub: '',
+          certificate: '',
+          deletable: false,
+        },
+        {
+          qualiDesc: '12th/Diploma',
+          schoolCollegeName: '',
+          marks: '',
+          yOfPassingg: '',
+          sub: '',
+          certificate: '',
+          deletable: false,
+        },
+        {
+          qualiDesc: 'Undergraduate',
+          schoolCollegeName: '',
+          marks: '',
+          yOfPassingg: '',
+          sub: '',
+          certificate: '',
+          deletable: false,
+        },
+        {
+          qualiDesc: 'Postgraduate',
+          schoolCollegeName: '',
+          marks: '',
+          yOfPassingg: '',
+          sub: '',
+          certificate: '',
+          deletable: false,
+        },
+      ];
       const config = {
         headers: {
           'Content-Type': 'application/json',
@@ -30,11 +68,19 @@ const AcademicInformation = () => {
         '/api/employee?select=academicInformation,',
         config
       );
-      if (
-        result.data.data !== null &&
-        result.data.data.academicInformation !== undefined
-      )
-        setFormData([...result.data.data.academicInformation]);
+      const resData = result.data.data;
+      let tempData = [];
+      if (resData !== null && resData.academicInformation !== undefined) {
+        if (resData.academicInformation.length === 0) {
+          tempData = defaultData;
+        } else {
+          tempData = [...resData.academicInformation];
+        }
+      }
+      if (tempData.length === 0) {
+        tempData = defaultData;
+      }
+      setFormData([...tempData]);
       setIsLoading(false);
     };
 
@@ -92,31 +138,25 @@ const AcademicInformation = () => {
                 config
               );
             }}
-            tableColumns={[
-              'Qualification Description',
-              'Subject / Specialisation',
-              'Name of the School / College / Institute',
-              'Name of the Board / University',
-              'Location of the Board / University',
-              'Marks %',
-              'Full time/ Part time',
-              'Year of Passing',
-            ]}
-            essentialFieldKeys={[
-              'qualiDesc',
-              'sub',
-              'schoolCollegeName',
-              'boardUniversityName',
-              'location',
-              'marks',
-              'fullPartTime',
-              'yOfPassing',
-            ]}
-            textFieldDetails={[
+            columnNames={[
               {
-                label: 'Qualification Description',
+                label: 'Grade',
                 key: 'qualiDesc',
+              },
+              {
+                label: 'School Name',
+                key: 'schoolCollegeName',
                 isRequired: true,
+              },
+              {
+                label: 'Marks (%)',
+                key: 'marks',
+                width: 100,
+              },
+              {
+                label: 'Pass Year',
+                key: 'yOfPassing',
+                width: 100,
               },
               {
                 label: 'Subject / Specialisation',
@@ -124,34 +164,10 @@ const AcademicInformation = () => {
                 isRequired: true,
               },
               {
-                label: 'Name of the School / College/ Institute',
-                key: 'schoolCollegeName',
-                isRequired: true,
-              },
-              {
-                label: 'Name of the Board/ University',
-                key: 'boardUniversityName',
-                isRequired: true,
-              },
-              {
-                label: 'Location of the Board / University',
-                key: 'location',
-                isRequired: true,
-              },
-              {
-                label: 'Marks%',
-                key: 'marks',
-                isRequired: true,
-              },
-              {
-                label: 'Full time/ Part time',
-                key: 'fullPartTime',
-                isRequired: true,
-              },
-              {
-                label: 'Year of Passing',
-                key: 'yOfPassing',
-                isRequired: true,
+                label: 'Certificate',
+                key: 'certificate',
+                type: 'file',
+                width: 300,
               },
             ]}
             defaultData={[...formData]}

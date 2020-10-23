@@ -142,7 +142,7 @@ const HealthInformation = ({history}) => {
                 <h1>Loading...</h1>
               </div>
             ) : (
-              <form onSubmit={handleSubmit} className='mt-2 text-left'>
+              <form onSubmit={handleSubmit} className='mt-2 text-right'>
                 <div className='form-group row p-2'>
                   <label className='col-sm-3 col-form-label'>
                     <span style={{ color: 'red' }}>*</span> Blood Group
@@ -198,7 +198,7 @@ const HealthInformation = ({history}) => {
                 </div>
 
                 <div className='form-group row p-2'>
-                  <label className='col-sm-4 col-form-label'>
+                  <label className='col-sm-3 col-form-label'>
                     <span style={{ color: 'red' }}>*</span> Power of Glass
                   </label>
                   <div className='col-sm-4'>
@@ -213,7 +213,7 @@ const HealthInformation = ({history}) => {
                       required
                     />
                   </div>
-                  <div className='col-sm-4'>
+                  <div className='col-sm-5'>
                     <input
                       type='text'
                       className='form-control'
@@ -228,7 +228,7 @@ const HealthInformation = ({history}) => {
                 </div>
 
                 <div className='form-group row p-2'>
-                  <label className='col-sm-4 col-form-label'>
+                  <label className='col-sm-3 col-form-label'>
                     <span style={{ color: 'red' }}>*</span> Identification marks
                   </label>
                   <div className='col-sm-4'>
@@ -243,7 +243,7 @@ const HealthInformation = ({history}) => {
                       required
                     />
                   </div>
-                  <div className='col-sm-4'>
+                  <div className='col-sm-5'>
                     <input
                       type='text'
                       className='form-control'

@@ -106,7 +106,7 @@ const FamilyInformation = () => {
                 'bloodGroup',
                 'occupation',
               ]}
-              textFieldDetails={[
+              columnNames={[
                 {
                   label: 'Family Member Name',
                   key: 'name',

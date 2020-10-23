@@ -19,8 +19,14 @@ const DesignationInformation = ({ history }) => {
     department: '',
     reporting: '',
     jobLevel: '',
-    officeLocation: '',
+    custLoc: '',
+    custSerName: '',
     entryVia: '',
+    collegeName: '',
+    hrName: '',
+    empNameId: '',
+    agencyName: '',
+    consultancyName: '',
     nomination: '',
   });
   const {
@@ -29,8 +35,14 @@ const DesignationInformation = ({ history }) => {
     department,
     reporting,
     jobLevel,
-    officeLocation,
+    custLoc,
+    custSerName,
     entryVia,
+    collegeName,
+    hrName,
+    empNameId,
+    agencyName,
+    consultancyName,
     nomination,
   } = formData;
 
@@ -44,7 +56,7 @@ const DesignationInformation = ({ history }) => {
         withCredentials: true,
       };
       const result = await axios.get(
-        '/api/employee?select=joiningDate,designation,department,reporting,jobLevel,officeLocation,entryVia,,nomination,',
+        '/api/employee?select=joiningDate,designation,department,reporting,jobLevel,custLoc,custSerName,entryVia,collegeName,hrName,empNameId,agencyName,consultancyName,nomination,',
         config
       );
 
@@ -73,8 +85,14 @@ const DesignationInformation = ({ history }) => {
     department,
     reporting,
     jobLevel,
-    officeLocation,
+    custLoc,
+    custSerName,
     entryVia,
+    collegeName,
+    hrName,
+    empNameId,
+    agencyName,
+    consultancyName,
     nomination,
   }) => {
     try {
@@ -91,8 +109,14 @@ const DesignationInformation = ({ history }) => {
           department,
           reporting,
           jobLevel,
-          officeLocation,
+          custLoc,
+          custSerName,
           entryVia,
+          collegeName,
+          hrName,
+          empNameId,
+          agencyName,
+          consultancyName,
           nomination,
         },
       });
@@ -155,10 +179,10 @@ const DesignationInformation = ({ history }) => {
                 <h1>Loading...</h1>
               </div>
             ) : (
-              <form onSubmit={handleSubmit} className='mt-2 text-left'>
+              <form onSubmit={handleSubmit} className='mt-2 text-right'>
                 <div className='form-group row p-2'>
                   <label className='col-sm-3 col-form-label'>
-                    <span style={{ color: 'red' }}>*</span> Joining Date
+                    <span style={{ color: 'red' }}></span> Date of Joining
                   </label>
                   <div className='col-sm-9'>
                     <input
@@ -167,8 +191,9 @@ const DesignationInformation = ({ history }) => {
                       id='joiningDate'
                       name='joiningDate'
                       value={joiningDate || ''}
-                      onChange={(e) => handleChange(e)}
-                      required
+                      // onChange={(e) => handleChange(e)}
+                      // required
+                      disabled
                     />
                   </div>
                 </div>
@@ -185,8 +210,9 @@ const DesignationInformation = ({ history }) => {
                       placeholder=''
                       name='designation'
                       value={designation || ''}
-                      onChange={(e) => handleChange(e)}
-                      required
+                      // onChange={(e) => handleChange(e)}
+                      // required
+                      disabled
                     />
                   </div>
                 </div>
@@ -203,15 +229,17 @@ const DesignationInformation = ({ history }) => {
                       placeholder=''
                       name='department'
                       value={department || ''}
-                      onChange={(e) => handleChange(e)}
-                      required
+                      // onChange={(e) => handleChange(e)}
+                      // required
+                      disabled
                     />
                   </div>
                 </div>
 
                 <div className='form-group row p-2'>
                   <label className='col-sm-3 col-form-label'>
-                    <span style={{ color: 'red' }}>*</span> Reporting to
+                    <span style={{ color: 'red' }}>*</span> Reporting Manager
+                    Name
                   </label>
                   <div className='col-sm-9'>
                     <input
@@ -247,53 +275,75 @@ const DesignationInformation = ({ history }) => {
 
                 <div className='form-group row p-2'>
                   <label className='col-sm-3 col-form-label'>
-                    <span style={{ color: 'red' }}>*</span> Location
+                    <span style={{ color: 'red' }}>*</span> Customer Serving
+                    Name
                   </label>
                   <div className='col-sm-9'>
                     <input
                       type='text'
                       className='form-control'
-                      id='officeLocation'
+                      id='custSerName'
                       placeholder=''
-                      name='officeLocation'
-                      value={officeLocation || ''}
+                      name='custSerName'
+                      value={custSerName || ''}
                       onChange={(e) => handleChange(e)}
                       required
                     />
                   </div>
                 </div>
 
-                <fieldset className='form-group p-2'>
+                <div className='form-group row p-2'>
+                  <label className='col-sm-3 col-form-label'>
+                    <span style={{ color: 'red' }}>*</span> Customer Location
+                  </label>
+                  <div className='col-sm-9'>
+                    <input
+                      type='text'
+                      className='form-control'
+                      id='custLoc'
+                      placeholder=''
+                      name='custLoc'
+                      value={custLoc || ''}
+                      onChange={(e) => handleChange(e)}
+                      required
+                    />
+                  </div>
+                </div>
+
+                <fieldset className='form-group p-2 mb-2'>
                   <div className='row'>
                     <legend className='col-form-label col-sm-3 pt-0'>
-                      <span style={{ color: 'red' }}>*</span> Manner of Entry
+                      <span style={{ color: 'red' }}>*</span> Mode of
+                      Recruitment
                     </legend>
-                    <div className='col-sm-9'>
-                      <div className='form-check'>
+                    <div className='col-sm-9 text-left'>
+                      <div className='form-check form-check-inline'>
                         <input
                           className='form-check-input'
                           type='radio'
                           name='entryVia'
                           id='Placement'
                           value='Placement'
-                          onClick={(e) => handleChange(e)}
+                          onChange={(e) => handleChange(e)}
                           checked={entryVia === 'Placement'}
                         />
-                        <label className='form-check-label'>Placement</label>
+                        <label className='form-check-label'>
+                          Campus Placement
+                        </label>
                       </div>
-                      <div className='form-check'>
+                      <div className='form-check form-check-inline'>
                         <input
                           className='form-check-input'
                           type='radio'
                           name='entryVia'
                           id='Direct'
                           value='Direct'
-                          onClick={(e) => handleChange(e)}
+                          onChange={(e) => handleChange(e)}
                           checked={entryVia === 'Direct'}
                         />
                         <label className='form-check-label'>Direct</label>
                       </div>
-                      <div className='form-check'>
+                      {/* <div className='form-check'>
                         <input
                           className='form-check-input'
                           type='radio'
@@ -304,43 +354,125 @@ const DesignationInformation = ({ history }) => {
                           checked={entryVia === 'Campus'}
                         />
                         <label className='form-check-label'>Campus</label>
-                      </div>
-                      <div className='form-check'>
+                      </div> */}
+                      <div className='form-check form-check-inline'>
                         <input
                           className='form-check-input'
                           type='radio'
                           name='entryVia'
                           id='Referal'
                           value='Referal'
-                          onClick={(e) => handleChange(e)}
+                          onChange={(e) => handleChange(e)}
                           checked={entryVia === 'Referal'}
                         />
                         <label className='form-check-label'>Referal</label>
                       </div>
-                      <div className='form-check'>
+                      <div className='form-check form-check-inline'>
                         <input
                           className='form-check-input'
                           type='radio'
                           name='entryVia'
                           id='ADVT'
                           value='ADVT'
-                          onClick={(e) => handleChange(e)}
+                          onChange={(e) => handleChange(e)}
                           checked={entryVia === 'ADVT'}
                         />
                         <label className='form-check-label'>ADVT</label>
                       </div>
-                      <div className='form-check'>
+                      <div className='form-check form-check-inline'>
                         <input
                           className='form-check-input'
                           type='radio'
                           name='entryVia'
                           id='Consultant'
                           value='Consultant'
-                          onClick={(e) => handleChange(e)}
+                          onChange={(e) => handleChange(e)}
                           checked={entryVia === 'Consultant'}
                         />
                         <label className='form-check-label'>Consultant</label>
                       </div>
+                    </div>
+                  </div>
+
+                  <div className='form-group row p-2'>
+                    <label className='col-sm-3 col-form-label'>
+                      <div />
+                    </label>
+                    <div className='col-sm-9'>
+                      {(() => {
+                        switch (entryVia) {
+                          case 'Placement':
+                            return (
+                              <input
+                                type='text'
+                                className='form-control'
+                                id='collegeName'
+                                placeholder='College Name'
+                                name='collegeName'
+                                value={collegeName || ''}
+                                onChange={(e) => handleChange(e)}
+                                required
+                              />
+                            );
+                          case 'Direct':
+                            return (
+                              <input
+                                type='text'
+                                className='form-control'
+                                id='hrName'
+                                placeholder='FutureWorld HR name'
+                                name='hrName'
+                                value={hrName || ''}
+                                onChange={(e) => handleChange(e)}
+                                required
+                              />
+                            );
+
+                          case 'Referal':
+                            return (
+                              <input
+                                type='text'
+                                className='form-control'
+                                id='empNameId'
+                                placeholder='empNameId'
+                                name='empNameId'
+                                value={empNameId || ''}
+                                onChange={(e) => handleChange(e)}
+                                required
+                              />
+                            );
+
+                          case 'ADVT':
+                            return (
+                              <input
+                                type='text'
+                                className='form-control'
+                                id='agencyName'
+                                placeholder='Agency Name'
+                                name='agencyName'
+                                value={agencyName || ''}
+                                onChange={(e) => handleChange(e)}
+                                required
+                              />
+                            );
+                          case 'Consultant':
+                            return (
+                              <input
+                                type='text'
+                                className='form-control'
+                                id='consultancyName'
+                                placeholder='Company Name'
+                                name='consultancyName'
+                                value={consultancyName || ''}
+                                onChange={(e) => handleChange(e)}
+                                required
+                              />
+                            );
+
+                          default:
+                            return '';
+                        }
+                      })()}
                     </div>
                   </div>
                 </fieldset>

@@ -144,7 +144,7 @@ const OtherInformation = ({history}) => {
                 <h1>Loading...</h1>
               </div>
             ) : (
-              <form onSubmit={handleSubmit} className='mt-2 text-left'>
+              <form onSubmit={handleSubmit} className='mt-2 text-right'>
                 <div className='form-group row p-2'>
                   <label className='col-sm-3 col-form-label'>
                     <span style={{ color: 'red' }}>*</span> Relatives in the
@@ -165,12 +165,12 @@ const OtherInformation = ({history}) => {
                 </div>
 
                 <div className='form-row p-2'>
-                  <label>
+                  <label className='col-sm-3 col-form-label'>
                     <span style={{ color: 'red' }}>*</span> References : (Please
                     specify any two other than your relatives, one should be
                     from your last Company)
                   </label>
-                  <div className='col-sm-12 col-lg-6 col-md-6 p-2'>
+                  <div className='col-sm-4 p-2'>
                     <input
                       type='text'
                       className='form-control'
@@ -212,7 +212,7 @@ const OtherInformation = ({history}) => {
                       placeholder='Contact No.'
                     />
                   </div>
-                  <div className='col-sm-12 col-lg-6 col-md-6 p-2'>
+                  <div className='col-sm-5 p-2'>
                     <input
                       type='text'
                       className='form-control'
@@ -383,7 +383,7 @@ const OtherInformation = ({history}) => {
                   <div className='col-sm-10'>
                     <button
                       type='submit'
-                      className='btn btn-primary w-100 font-weight-bold'
+                      className='btn selected-crumb submit-button crumb-item w-100 font-weight-bold'
                     >
                       <i className='far fa-check-circle'></i> Save and Continue
                     </button>
