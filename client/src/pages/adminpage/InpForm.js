@@ -1,19 +1,83 @@
 import React, { useState } from 'react';
 import { FormMain } from './AdminPage.styles';
 import { Form, Row, Col, Button } from 'react-bootstrap';
-
-export const InpForm = () => {
+import axios from 'axios';
+import moment from 'moment';
+import { toast } from '../../util/ToastUtil';
+export const InpForm = ({ getUsers }) => {
   const [input, setInput] = useState({
     FName: '',
     LName: '',
-    Phone: '',
+    phoneNumber: '',
     Address: '',
-    Email: '',
+    email: '',
     FWEmail: '',
     Manager: '',
     CustName: '',
     CustLocation: '',
+    BillingPH: '',
+    annualCTC: '',
+    designation: '',
+    increment: '',
+    lwd: '',
+    comments: '',
   });
+
+  const {
+    FName,
+    LName,
+    designation,
+    phoneNumber,
+    Address,
+    email,
+    FWEmail,
+    Manager,
+    CustLocation,
+    CustName,
+    BillingPH,
+    annualCTC,
+    increment,
+    lwd,
+    comments,
+  } = input;
+  const name = FName + '' + LName;
+
+  var resu = '';
+  var joiningDate = moment();
+  const addUser = async () => {
+    try {
+      resu = await axios.post('/api/auth/register', {
+        email,
+        name,
+        phoneNumber,
+        extraFields: {
+          email,
+          FName,
+          LName,
+          designation,
+          phoneNumber,
+          Address,
+          FWEmail,
+          Manager,
+          CustLocation,
+          CustName,
+          BillingPH,
+          annualCTC,
+          increment,
+          lwd,
+          comments,
+          joiningDate,
+        },
+      });
+      toast('Added a new User');
+      getUsers();
+    } catch (error) {
+      if (error.response.status === 400) toast('User Already Exists');
+      else toast('Error : Please Login Again');
+    }
+
+    console.log(resu);
+  };
 
   const fields1 = [
     {
@@ -33,13 +97,13 @@ export const InpForm = () => {
   ];
   const fields2 = [
     {
-      fName: 'Phone',
+      fName: 'phoneNumber',
       type: 'Number',
       min: 1000000000,
       max: 9999999999,
       required: 'required',
       defaultValue: 'Phone Number',
-      name: 'Phone',
+      name: 'phoneNumber',
     },
     {
       fName: 'Address',
@@ -53,7 +117,7 @@ export const InpForm = () => {
       fName: 'Email Id',
       type: 'email',
       defaultValue: 'Email@ID.com',
-      name: 'Email',
+      name: 'email',
       required: 'required',
     },
   ];
@@ -64,6 +128,13 @@ export const InpForm = () => {
       type: 'email',
       defaultValue: 'Email@ID.com',
       name: 'FWEmail',
+      required: 'required',
+    },
+    {
+      fName: 'Designation  ',
+      type: 'text',
+      defaultValue: 'Designation',
+      name: 'designation',
       required: 'required',
     },
     {
@@ -87,22 +158,56 @@ export const InpForm = () => {
       name: 'CustLocation',
       required: 'required',
     },
+    {
+      fName: 'Billing Per Hour  ',
+      type: 'number',
+      defaultValue: ' Enter Amount',
+      name: 'BillingPH',
+      required: 'required',
+    },
+    {
+      fName: 'Annual CTC ',
+      type: 'number',
+      defaultValue: ' Enter Amount',
+      name: 'annualCTC',
+      required: 'required',
+    },
+    {
+      fName: 'Increment  ',
+      type: 'number',
+      defaultValue: ' Enter Amount',
+      name: 'increment',
+      required: 'required',
+    },
+    {
+      fName: 'LWD ',
+      type: 'text',
+      defaultValue: ' ',
+      name: 'lwd',
+      required: '',
+    },
+    {
+      fName: 'Comments ',
+      type: 'text',
+      defaultValue: 'Comments',
+      name: 'comments',
+      required: 'required',
+    },
   ];
 
   const submitHandler = (e) => {
     e.preventDefault();
-    console.log(input);
+    addUser();
   };
 
   const onChangeHandler = (e) => {
     setInput({ ...input, [e.target.name]: e.target.value });
-    console.log(input);
   };
 
   const set1 = fields1.map(
     ({ type, name, required, defaultValue, min, max, fName }, i) => {
       return (
-        <Form.Group as={Row}>
+        <Form.Group key={i} as={Row}>
           <Form.Label className='form-label' column sm='4'>
             {fName}
           </Form.Label>
@@ -128,7 +233,7 @@ export const InpForm = () => {
 
   const set2 = fields2.map((field, i) => {
     return (
-      <Form.Group as={Row}>
+      <Form.Group key={i} as={Row}>
         <Form.Label className='form-label' column sm='4'>
           {field.fName}
         </Form.Label>
@@ -151,7 +256,7 @@ export const InpForm = () => {
   });
   const set3 = fields3.map((field, i) => {
     return (
-      <Form.Group as={Row}>
+      <Form.Group key={i} as={Row}>
         <Form.Label className='form-label' column sm='4'>
           {field.fName}
         </Form.Label>

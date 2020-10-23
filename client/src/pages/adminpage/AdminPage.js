@@ -26,7 +26,7 @@ const AdminPage = () => {
   const [ViewPanel, setViewPanel] = useState('Table');
   const [selectUser, setSelectUser] = useState('');
   const history = useHistory();
-
+  const [Id, setId] = useState('');
   const getUsers = async () => {
     const users = await axios.get('/api/admin/users');
 
@@ -96,6 +96,8 @@ const AdminPage = () => {
     if (e.target.value === '0') {
       // window.open(`/api/ejs/pdf-gen?employeeId=${retrievedId}`);
       setSelectUser(retrievedId);
+      setId(retrievedId);
+      console.log('asmin page', retrievedId);
       setViewPanel('Profile');
     }
 
@@ -164,7 +166,7 @@ const AdminPage = () => {
         <div className='form-head'>
           <h2>Create a new employee</h2>
         </div>
-        <InpForm />
+        <InpForm getUsers={getUsers} />
       </FormWrapper>
     </React.Fragment>
   );
@@ -192,7 +194,7 @@ const AdminPage = () => {
         {SidebarChild}
         <AdminMain>
           {ViewPanel === 'Profile' ? (
-            <ProfilePage userId={selectUser} />
+            <ProfilePage userId={selectUser} retrievedId={Id} />
           ) : (
             <></>
           )}

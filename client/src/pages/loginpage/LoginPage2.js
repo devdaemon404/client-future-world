@@ -11,6 +11,7 @@ import {
   Footer,
 } from './LoginPage2.styles';
 import LOGO from '../../assets/img/logo.png';
+import { toast } from '../../util/ToastUtil';
 
 export const LoginPage2 = () => {
   const history = useHistory();
@@ -43,6 +44,7 @@ export const LoginPage2 = () => {
     } catch (err) {
       setIsLoading(false);
       setError(true);
+      toast('Error While Logging');
     }
   };
 
@@ -123,7 +125,7 @@ export const LoginPage2 = () => {
               src={BG}
               alt={'bgsy'}
               style={{
-                width: 800,
+                width: 1080,
 
                 objectFit: 'fill',
               }}
