@@ -10,18 +10,18 @@ import axios from 'axios';
 import 'antd/dist/antd.css';
 import { DatePicker, Space } from 'antd';
 import { config } from '../../util/RequestUtil';
+import { toast } from '../../util/ToastUtil.js';
+import { OPLoader } from '../../util/LoaderUtil.js';
+import moment from 'moment';
 
 // import { OPLoader } from '../../util/LoaderUtil.js';
 
 const Payslippage = ({ history }) => {
   const [isLoading, setIsLoading] = useState(false);
-  const [payMonth, setPayMonth] = useState(' ');
-  const [payYear, setPayYear] = useState(' ');
-  const [timeMonth, setTimeMonth] = useState(' ');
-  const [timeYear, setTimeYear] = useState(' ');
-
-  const [month, setMonth] = useState(' ');
-  const [year, setYear] = useState(' ');
+  const [payMonth, setPayMonth] = useState('');
+  const [payYear, setPayYear] = useState('');
+  const [timeMonth, setTimeMonth] = useState('');
+  const [timeYear, setTimeYear] = useState('');
 
   function onPayChange(date, dateString) {
     console.log(date, dateString);
@@ -58,8 +58,11 @@ const Payslippage = ({ history }) => {
           });
       } catch (error) {
         console.log(error);
+        toast('Pay Slip not available for the selected month');
       } finally {
         setIsLoading(false);
+        setPayMonth('');
+        setPayYear('');
       }
     } else if (documentType === 'timeSheet') {
       try {
@@ -79,9 +82,12 @@ const Payslippage = ({ history }) => {
             window.open(url);
           });
       } catch (error) {
+        toast('Time Sheet not available for the selected month');
         console.log(error);
       } finally {
         setIsLoading(false);
+        setTimeMonth('');
+        setTimeYear('');
       }
     }
   };
@@ -106,6 +112,7 @@ const Payslippage = ({ history }) => {
           </p>
         </div>
       </div>
+      <OPLoader isLoading={isLoading} />
       <div className='container'>
         <div className='row'>
           <div className='col-lg-6 col-md-12'>
@@ -123,7 +130,15 @@ const Payslippage = ({ history }) => {
               </div>
               <div className='col-sm-9'>
                 <Space direction='vertical'>
-                  <DatePicker onChange={onPayChange} picker='month' />
+                  <DatePicker
+                    onChange={onPayChange}
+                    picker='month'
+                    value={
+                      payMonth === undefined || payMonth.trim() === ''
+                        ? undefined
+                        : moment(`${payYear}-${payMonth}`, 'YYYY-MM')
+                    }
+                  />
                 </Space>
               </div>
             </div>
@@ -135,7 +150,7 @@ const Payslippage = ({ history }) => {
                   className='btn selected-crumb submit-button crumb-item w-100 font-weight-bold'
                   name='paySlip'
                   disabled={
-                    payMonth === ' ' ||
+                    payMonth === '' ||
                     payMonth === undefined ||
                     payMonth === null
                   }
@@ -162,7 +177,15 @@ const Payslippage = ({ history }) => {
               </div>
               <div className='col-sm-9'>
                 <Space direction='vertical'>
-                  <DatePicker onChange={onTimeChange} picker='month' />
+                  <DatePicker
+                    onChange={onTimeChange}
+                    picker='month'
+                    value={
+                      timeMonth === undefined || timeMonth.trim() === ''
+                        ? undefined
+                        : moment(`${timeYear}-${timeMonth}`, 'YYYY-MM')
+                    }
+                  />
                 </Space>
               </div>
             </div>
@@ -174,7 +197,7 @@ const Payslippage = ({ history }) => {
                   className='btn selected-crumb submit-button crumb-item w-100 font-weight-bold'
                   name='timeSheet'
                   disabled={
-                    timeMonth === ' ' ||
+                    timeMonth === '' ||
                     timeMonth === undefined ||
                     timeMonth === null
                   }
