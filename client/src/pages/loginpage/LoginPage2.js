@@ -64,10 +64,10 @@ export const LoginPage2 = () => {
                 <div className='form-group'>
                   <input
                     type='email'
-                    className='form-control lg'
+                    className='lg'
                     id='exampleInputEmail1'
                     aria-describedby='emailHelp'
-                    placeholder='Enter Here'
+                    placeholder='EmailId@FW.com'
                     onChange={(e) => {
                       setemail(e.target.value);
                     }}
@@ -87,9 +87,9 @@ export const LoginPage2 = () => {
                     onChange={(e) => {
                       setpassword(e.target.value);
                     }}
-                    className='form-control lg'
+                    className=' lg'
                     id='exampleInputPassword1'
-                    placeholder='Enter Here'
+                    placeholder='Enter your Password'
                     style={{
                       background: 'none',
 
@@ -102,10 +102,15 @@ export const LoginPage2 = () => {
                 <div className='form-grou'>
                   <button
                     type='submit'
-                    className='btn btn-primary'
-                    style={{ width: '190px', margin: '10px 13% ' }}
+                    className='btn'
+                    style={{
+                      width: '190px',
+                      margin: '10px 13% ',
+                      background: '#3f47cc',
+                      color: 'white',
+                    }}
                   >
-                    {isLoading ? 'Logging you in ... ' : 'sign in'}
+                    {isLoading ? 'Logging you in ... ' : 'Sign In'}
                   </button>
                   <br />
                 </div>
@@ -125,7 +130,7 @@ export const LoginPage2 = () => {
               src={BG}
               alt={'bgsy'}
               style={{
-                width: 1080,
+                width: 800,
 
                 objectFit: 'fill',
               }}
@@ -148,7 +153,7 @@ export const LoginPage2 = () => {
               Terms of service
             </Link>
             {'   '}|
-            <Link className='Link' to='/profile'>
+            <Link className='Link' to='#!'>
               Privacy policy
             </Link>
           </div>

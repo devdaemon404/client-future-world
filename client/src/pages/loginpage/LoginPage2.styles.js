@@ -22,14 +22,19 @@ export const MainLogin = styled.div`
     align-items: center;
   }
 
-  .form-group input {
-    padding: 4px;
-    height: 18px;
+  input {
+    padding: 8px;
+    height: 24px;
     outline: none;
     font-size: 16px;
     margin: 0 0;
   }
-
+  input:focus,
+  textarea:focus,
+  select:focus {
+    outline: none;
+    border: none;
+  }
   @media only screen and (max-width: 780px) {
     width: 100vw;
   }
