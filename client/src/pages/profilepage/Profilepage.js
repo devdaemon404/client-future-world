@@ -18,9 +18,12 @@ import { Form, Row, Col, DropdownButton, Dropdown } from 'react-bootstrap';
 import GPS from '../../assets/img/placeholder.png';
 import moment from 'moment';
 import PHONE from '../../assets/img/phone.png';
+import { uploadDocument, uploadFinancialDocument } from '../../util/UploadFile';
 
 const Profilepage = ({ retrievedId }) => {
   const [userData, setUserData] = useState({});
+  const [pSlipDate, setPSlipDate] = useState();
+  const [tSheetDate, setTSheetDate] = useState();
   const [toggle, setToggle] = useState(true);
   const [pSlip, setPSlip] = useState({});
   const [tSheet, setTSheet] = useState({});
@@ -46,26 +49,31 @@ const Profilepage = ({ retrievedId }) => {
     }
   }, [toggle]);
 
-  const onUploadHandler1 = (e) => {
-    let paySlip = e.target.files;
-
-    try {
-      if (paySlip[0].name) {
-        setPSlip(paySlip[0]);
-      }
-    } catch (error) {
-      setPSlip({});
-    }
+  const onUploadHandler1 = async (e) => {
+    let file = e.target.files[0];
+    await uploadFinancialDocument(file, {
+      uploadUrl: '/api/file/financial-document',
+      confirmationUrl: '/api/admin/register',
+      userId: retrievedId,
+      fileType: 'paySlip',
+      date: {
+        month: 10,
+        year: 2020,
+      },
+    });
   };
-  const onUploadHandler2 = (e) => {
-    let timeSheet = e.target.files;
-    try {
-      if (timeSheet[0].name) {
-        setTSheet(timeSheet[0]);
-      }
-    } catch (error) {
-      setTSheet({});
-    }
+  const onUploadHandler2 = async (e) => {
+    let file = e.target.files;
+    await uploadFinancialDocument(file, {
+      uploadUrl: '/api/file/financial-document',
+      confirmationUrl: '/api/admin/register',
+      userId: retrievedId,
+      fileType: 'timeSheet',
+      date: {
+        month: 10,
+        year: 2020,
+      },
+    });
   };
   return (
     <ProfContainer>
@@ -168,14 +176,22 @@ const Profilepage = ({ retrievedId }) => {
                   </div>
                   <div className='select'>
                     <p>Select Month </p>{' '}
-                    <input type='month' id='Month1' name='PaySlipCal' />
+                    <input
+                      type='month'
+                      id='Month1'
+                      name='PaySlipCal'
+                      value={pSlipDate}
+                      onChange={(e) => {
+                        setPSlipDate(e.target.value);
+                      }}
+                    />
                     <div
                       id='btn1'
                       onClick={(e) => {
                         document.getElementById('FileUpload1').click();
                       }}
                     >
-                      {pSlip.name || 'Click To Upload'}
+                      {'Click To Upload'}
                     </div>
                     <input
                       type='file'
@@ -192,14 +208,22 @@ const Profilepage = ({ retrievedId }) => {
                   </div>
                   <div className='select'>
                     <p>Select Month </p>{' '}
-                    <input type='month' id='Month1' name='TimeSheetCal' />
+                    <input
+                      type='month'
+                      id='Month1'
+                      value={tSheetDate}
+                      onChange={(e) => {
+                        setTSheetDate(e.target.value);
+                      }}
+                      name='TimeSheetCal'
+                    />
                     <div
                       id='btn2'
                       onClick={(e) => {
                         document.getElementById('FileUpload2').click();
                       }}
                     >
-                      {tSheet.name || 'Click To Upload'}
+                      {'Click To Upload'}
                     </div>
                     <input
                       type='file'
