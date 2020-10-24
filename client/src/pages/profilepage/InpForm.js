@@ -226,7 +226,18 @@ export const InpForm = (props) => {
             <div className='info-type'>Work Information</div>
             {set3}
             <br />
-            <Button type='submit'>Update Information</Button>
+            <button
+              className='btn'
+              style={{
+                width: '190px',
+                margin: '10px 13% ',
+                background: '#3f47cc',
+                color: 'white',
+              }}
+              type='submit'
+            >
+              Update Data
+            </button>
           </Form>
           <br />
         </FormMain>

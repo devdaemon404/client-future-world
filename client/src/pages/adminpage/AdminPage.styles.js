@@ -214,4 +214,12 @@ export const FormMain = styled.div`
 
   .form-control {
   }
+
+  .sbmt-btn {
+    height: 26px;
+    color: white;
+    font-size: 18px;
+    background: ;
+    border-radius: 5px;
+  }
 `;

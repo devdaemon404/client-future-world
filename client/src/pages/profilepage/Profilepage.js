@@ -13,6 +13,7 @@ import {
   BodySection,
 } from './ProfilePage.styles';
 import axios from 'axios';
+import IMGDEFAULT from '../../assets/img/imgplaceholder.png';
 import { Form, Row, Col, DropdownButton, Dropdown } from 'react-bootstrap';
 import GPS from '../../assets/img/placeholder.png';
 import moment from 'moment';
@@ -115,7 +116,7 @@ const Profilepage = ({ retrievedId }) => {
               <img
                 alt='User Image Not uploaded'
                 width={220}
-                src={userData.photo}
+                src={userData.photo || IMGDEFAULT}
               />
             </DisplayPic>
             <SidebarDetails>
