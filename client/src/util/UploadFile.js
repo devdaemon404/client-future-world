@@ -22,7 +22,7 @@ export const uploadDocument = async (
     {
       fileName: file.name,
       fileType,
-      fileExtension,
+      fileExtension: file.type.split('/')[1],
     },
     config
   );

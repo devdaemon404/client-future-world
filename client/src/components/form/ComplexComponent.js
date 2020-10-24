@@ -100,7 +100,7 @@ function ComplexComponent({
       .map((col) => col.label);
     const neededDateColNames = columnNames
       .filter((col) => col.type === 'date')
-      .map((col) => col.name);
+      .map((col) => col.label);
     const colNames = tempCols.map((col) => col.name);
     const actionCols = tempCols.filter((col) => col.name === 'Actions');
     if (actionCols.length > 0) {
@@ -119,27 +119,34 @@ function ComplexComponent({
           resizable: true,
           name: col.label,
           key: col.key,
-          formatter: (formatter) => (
-            <label
-              className='btn btn-default'
-              style={{
-                height: 30,
-                textDecoration: data[formatter.rowIdx][col.key] || 'underline',
-              }}
-            >
-              {data[formatter.rowIdx][col.key] || 'Upload File'}
-              <input
-                hidden
-                style={{ width: 50 }}
-                type='file'
-                id='file'
-                onChange={(e) => {
-                  const file = e.target.files[0];
-                  onUploadFile(formatter.rowIdx, col.key, file);
+          formatter: (formatter) => {
+            const id = formatter.rowIdx;
+            let value;
+            if (id) {
+              value = data[formatter.rowIdx][col.key];
+            }
+            return (
+              <label
+                className='btn btn-default'
+                style={{
+                  height: 30,
+                  textDecoration: value || 'underline',
                 }}
-              />
-            </label>
-          ),
+              >
+                {value || 'Upload File'}
+                <input
+                  hidden
+                  style={{ width: 50 }}
+                  type='file'
+                  id='file'
+                  onChange={(e) => {
+                    const file = e.target.files[0];
+                    onUploadFile(formatter.rowIdx, col.key, file);
+                  }}
+                />
+              </label>
+            );
+          },
         });
       }
     });
@@ -201,7 +208,7 @@ function ComplexComponent({
           onClick={() => {
             const placeholderData = {};
             for (const obj of columnNames) {
-              placeholderData[obj.key] = `Enter ${obj.label}`;
+              placeholderData[obj.key] = `-`;
             }
             const tempData = [...data, { ...placeholderData, deletable: true }];
             saveData(tempData);

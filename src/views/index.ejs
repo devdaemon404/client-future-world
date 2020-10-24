@@ -275,8 +275,9 @@
 </body>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/1.8.349/pdf.min.js"></script>
 <script>
-  const drawPdf = async (url) => {
-    const pdfUrl = url.replaceAll('&amp;','&')
+  (async () => {
+
+  const drawPdf = async (pdfUrl) => {
     const loadingTask = PDFJS.getDocument(pdfUrl);
     const pdf = await loadingTask.promise;
 
@@ -305,9 +306,16 @@
       console.log("Page rendered!" + i);
     }
   };
-  for(let url of '<%= pdf %>') {
-    drawPdf(url);
+  const pdfs = '<%= pdf %>';
+  console.log('PDFs', (pdfs))
+  for(let url of pdfs.split('@@@')) {
+    const pdfUrl = url.replaceAll('&amp;','&')
+    console.log(pdfUrl)
+    await drawPdf(pdfUrl)
   }
+  })()
+  // for(let url of '<%= pdf %>') {
+  // }
 </script>
 
 </html>
