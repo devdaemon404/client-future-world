@@ -41,7 +41,7 @@ const AdminPage = () => {
             : employee.active === 1
             ? 'Active'
             : 'Inactive',
-
+        empNo: !employee.empNo ? 'FW-----' : employee.empNo,
         joinDate: moment(employee.createdAt).format('DD/MMM/YYYY'),
         id: employee._id,
       });
@@ -57,6 +57,10 @@ const AdminPage = () => {
   const columns = [
     {
       Header: '#',
+    },
+    {
+      Header: 'FW-ID',
+      accessor: 'empNo',
     },
     {
       Header: 'Name',

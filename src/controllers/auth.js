@@ -12,7 +12,7 @@ const Employee = require('../models/Employee');
 // @route     POST /api/auth/register
 // @access    Public
 exports.register = asyncHandler(async (req, res, next) => {
-  const { name, email, role, phoneNumber, extraFields } = req.body;
+  const { name, email, role, phoneNumber, empNo, extraFields } = req.body;
 
   let password = crypto.randomBytes(8).toString('hex');
 
@@ -24,6 +24,7 @@ exports.register = asyncHandler(async (req, res, next) => {
     name,
     email,
     phoneNumber,
+    empNo,
     password: hashedPassword,
     role,
   });

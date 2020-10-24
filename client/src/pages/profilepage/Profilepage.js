@@ -48,7 +48,7 @@ const Profilepage = ({ retrievedId }) => {
 
   const getUserData = async () => {
     temp = await axios.get(
-      `/api/admin/employee-info/${retrievedId}?select=FName,photo,LName,email,joiningDate,designation,phoneNumber,Address,FWEmail,Manager,custLoc,custName,BillingPH,annualCTC,increment,lwd,comments`
+      `/api/admin/employee-info/${retrievedId}?select=FName,photo,empNo,LName,email,joiningDate,designation,phoneNumber,Address,FWEmail,Manager,custLoc,custName,BillingPH,annualCTC,increment,lwd,comments`
     );
     temp = temp.data.data;
     if (!temp) temp = {};
@@ -130,6 +130,10 @@ const Profilepage = ({ retrievedId }) => {
                     Date Of Joining ::{' '}
                     {moment(userData.joiningDate).format('DD/MM/YYYY')}{' '}
                   </span>
+                </p>
+                <p>
+                  {' '}
+                  <span>FW-ID:: {userData.empNo} </span>
                 </p>
                 <p>
                   <span> Full Time</span>

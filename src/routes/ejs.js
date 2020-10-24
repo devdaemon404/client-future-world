@@ -66,11 +66,12 @@ router.get('/pdf-gen', protect, authorize('admin'), async (req, res, next) => {
   console.log(urls.length);
 
   res.render('index', {
+    name: `${e.FName} ${e.LName}`,
     pdf: urls.join('@@@') || [],
     photo: e.photo || '',
     basicInformation: {
       'Company Name': e.custName || '',
-      'Emp No.': e.empNo || '',
+      'Future World No.': e.empNo || '',
       'Name in Full': `${e.firstName} ${e.middleName} ${e.lastName}` || '',
       'Name in HRIS': `${e.FName} ${e.LName}` || '',
       'Father Name': e.fatherName || '',
