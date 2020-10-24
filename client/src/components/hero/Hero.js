@@ -49,10 +49,18 @@ function Hero(...props) {
           <br />
           <br />
           <div className='col-lg-6 order-1 order-lg-2'>
+            <div className="mt-2 mb-3">
+              <button
+                type='submit'
+                className='btn selected-crumb submit-button crumb-item w-100 font-weight-bold'
+              >
+                <i className='far fa-check-circle'></i> Submmit Application
+              </button>
+            </div>
             <div
               style={{
                 width: 600,
-                height: 1000,
+                height: 820,
               }}
             >
               <div className='d-flex flex-column'>
