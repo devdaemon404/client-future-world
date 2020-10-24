@@ -1,101 +1,91 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Container,
   HeroContainer,
   MainHeader,
-  //  MainPara, CardHeader, CardPara
 } from '../formpages/formpage.styles.js';
 
 import Header from '../../components/header/Header';
-import FormPageComponent from '../../components/form/FormPageComponent';
-// import OPBreadCrumb from '../../../components/form/OPBreadCrumb.js';
+import axios from 'axios';
+import 'antd/dist/antd.css';
+import { DatePicker, Space } from 'antd';
 
-// import axios from 'axios';
-import { OPLoader } from '../../util/LoaderUtil.js';
+
+// import { OPLoader } from '../../util/LoaderUtil.js';
 
 const Payslippage = ({ history }) => {
   const [isLoading, setIsLoading] = useState(false);
-  // const [formData, setFormData] = useState({
-  //   presentAddress: '',
-  //   phoneNumber: '',
-  //   permanentAddress: '',
-  //   phoneNumberPermAdd: '',
-  //   contactPersonName: '',
-  //   contactPersonPhone: '',
-  //   contactPersonAddress: '',
-  // });
-  // const {
-  //   presentAddress,
-  //   phoneNumberPresAdd,
-  //   permanentAddress,
-  //   phoneNumberPermAdd,
-  //   contactPersonName,
-  //   contactPersonPhone,
-  //   contactPersonAddress,
-  // } = formData;
+  const [selectedDate, handleDateChange] = useState(new Date());
+  const [formData, setFormData] = useState({
+    paySlipMonth: '',
+    paySlipYear: '',
+    timeStampMonth: '',
+    timeStampYear: '',
+  });
 
-  // useEffect(() => {
-  //   const fetchData = async () => {
-  //     setIsLoading(true);
-  //     const result = await axios.get(
-  //       '/api/employee?select=presentAddress,phoneNumberPresAdd,permanentAddress,phoneNumberPermAdd,contactPersonName,contactPersonPhone,contactPersonAddress,'
-  //     );
+  const { paySlipMonth, paySlipYear, timeStampMonth, timeStampYear } = formData;
 
-  //     console.log(result.data.data);
-  //     setFormData({ ...result.data.data });
-  //     setIsLoading(false);
-  //   };
+  useEffect(() => {
+    const fetchData = async () => {
+      setIsLoading(true);
+      const result = await axios.get(
+        '/api/employee?select=paySlipMonth, paySlipYear, timeStampMonth , timeStampYear'
+      );
 
-  //   fetchData();
-  // }, []);
+      console.log(result.data.data);
+      setFormData({ ...result.data.data });
+      setIsLoading(false);
+    };
 
-  // const handleChange = (e) => {
-  //   const target = e.target;
-  //   const value = target.type === 'checkbox' ? target.checked : target.value;
-  //   const name = target.name;
+    fetchData();
+  }, []);
 
-  //   setFormData({
-  //     ...formData,
-  //     [name]: value,
-  //   });
-  // };
 
-  // const updateAddress = async ({
-  //   presentAddress,
-  //   phoneNumberPresAdd,
-  //   permanentAddress,
-  //   phoneNumberPermAdd,
-  //   contactPersonName,
-  //   contactPersonPhone,
-  //   contactPersonAddress,
-  // }) => {
-  //   try {
-  //     const body = JSON.stringify({
-  //       postParams: {
-  //         presentAddress,
-  //         phoneNumberPresAdd,
-  //         permanentAddress,
-  //         phoneNumberPermAdd,
-  //         contactPersonName,
-  //         contactPersonPhone,
-  //         contactPersonAddress,
-  //       },
-  //     });
+  function onChange(date, dateString) {
+    console.log(date, dateString);
+  } 
 
-  //     setIsLoading(true);
-  //     await axios.post('/api/employee', body);
-  //     history.push('/information/languageInformation');
-  //   } catch (error) {
-  //     console.log(error);
-  //   } finally {
-  //     setIsLoading(false);
-  //   }
-  // };
+  const handleChange = (e) => {
+    const target = e.target;
+    const value = target.type === 'checkbox' ? target.checked : target.value;
+    const name = target.name;
 
-  // const handleSubmit = async (e) => {
-  //   e.preventDefault();
-  //   updateAddress(formData);
-  // };
+    setFormData({
+      ...formData,
+      [name]: value,
+    });
+  };
+
+  const updateMonthYear = async ({
+    paySlipMonth,
+    paySlipYear,
+    timeStampMonth,
+    timeStampYear,
+  }) => {
+    try {
+      const body = JSON.stringify({
+        postParams: {
+          paySlipMonth,
+          paySlipYear,
+          timeStampMonth,
+          timeStampYear,
+        },
+      });
+
+      setIsLoading(true);
+      await axios.post('/api/employee', body);
+      history.push('/information/languageInformation');
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    updateMonthYear(formData);
+  };
 
   return (
     <Container>
@@ -128,37 +118,19 @@ const Payslippage = ({ history }) => {
           <div className='form-group row p-2'>
             <div className='col-sm-3'>
               <span className='text-danger'>*</span>
-              Select A Month
+              Select Month and Year
             </div>
             <div className='col-sm-4'>
-              <select class='form-control' id='exampleFormControlSelect1'>
-                <option selected>Select A Month</option>
-                <option>2</option>
-                <option>3</option>
-                <option>4</option>
-                <option>5</option>
-              </select>
+              <Space direction='vertical'>
+                <DatePicker onChange={onChange} picker='month' />
+              </Space>
             </div>
           </div>
 
-          <div className='form-group row p-2'>
-            <div className='col-sm-3'>
-              <span className='text-danger'>*</span>
-              Select A year
-            </div>
-            <div className='col-sm-4'>
-              <select class='form-control' id='exampleFormControlSelect1'>
-                <option selected> Select A Year</option>
-                <option>2</option>
-                <option>3</option>
-                <option>4</option>
-                <option>5</option>
-              </select>
-            </div>
-          </div>
+          
 
           <div className='form-group row p-2 d-flex justify-content-start mt-4 mb-5'>
-            <div className='col-sm-7'>
+            <div className='col-sm-5'>
               <button
                 type='submit'
                 className='btn selected-crumb submit-button crumb-item w-100 font-weight-bold'
@@ -181,37 +153,17 @@ const Payslippage = ({ history }) => {
           <div className='form-group row p-2'>
             <div className='col-sm-3'>
               <span className='text-danger'>*</span>
-              Select A Month
+              Select Month and Year 
             </div>
             <div className='col-sm-4'>
-              <select class='form-control' id='exampleFormControlSelect1'>
-                <option selected>Select A Month</option>
-                <option>2</option>
-                <option>3</option>
-                <option>4</option>
-                <option>5</option>
-              </select>
-            </div>
-          </div>
-
-          <div className='form-group row p-2'>
-            <div className='col-sm-3'>
-              <span className='text-danger'>*</span>
-              Select A year
-            </div>
-            <div className='col-sm-4'>
-              <select class='form-control' id='exampleFormControlSelect1'>
-                <option selected> Select A Year</option>
-                <option>2</option>
-                <option>3</option>
-                <option>4</option>
-                <option>5</option>
-              </select>
+            <Space direction='vertical'>
+                <DatePicker onChange={onChange} picker='month' />
+              </Space>
             </div>
           </div>
 
           <div className='form-group row p-2 d-flex justify-content-start mt-4 mb-5'>
-            <div className='col-sm-7'>
+            <div className='col-sm-5'>
               <button
                 type='submit'
                 className='btn selected-crumb submit-button crumb-item w-100 font-weight-bold'
