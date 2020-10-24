@@ -4,6 +4,7 @@ import Card from '../card/Card';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import Card3 from '../card/Card3';
+import CustomModal from '../modal/CustomModal';
 
 function Hero(...props) {
   const [userData, setUserData] = useState({ name: 'User', photo: '' });
@@ -50,12 +51,13 @@ function Hero(...props) {
           <br />
           <div className='col-lg-6 order-1 order-lg-2'>
             <div className="mt-2 mb-3">
-              <button
+              {/* <button
                 type='submit'
                 className='btn selected-crumb submit-button crumb-item w-100 font-weight-bold'
               >
                 <i className='far fa-check-circle'></i> Submmit Application
-              </button>
+              </button> */}
+              <CustomModal />
             </div>
             <div
               style={{

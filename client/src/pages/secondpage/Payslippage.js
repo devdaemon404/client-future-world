@@ -9,82 +9,81 @@ import Header from '../../components/header/Header';
 import axios from 'axios';
 import 'antd/dist/antd.css';
 import { DatePicker, Space } from 'antd';
-
+import { config } from '../../util/RequestUtil';
 
 // import { OPLoader } from '../../util/LoaderUtil.js';
 
 const Payslippage = ({ history }) => {
   const [isLoading, setIsLoading] = useState(false);
-  const [selectedDate, handleDateChange] = useState(new Date());
-  const [formData, setFormData] = useState({
-    paySlipMonth: '',
-    paySlipYear: '',
-    timeStampMonth: '',
-    timeStampYear: '',
-  });
+  const [payMonth, setPayMonth] = useState(' ');
+  const [payYear, setPayYear] = useState(' ');
+  const [timeMonth, setTimeMonth] = useState(' ');
+  const [timeYear, setTimeYear] = useState(' ');
 
-  const { paySlipMonth, paySlipYear, timeStampMonth, timeStampYear } = formData;
+  const [month, setMonth] = useState(' ');
+  const [year, setYear] = useState(' ');
 
-  useEffect(() => {
-    const fetchData = async () => {
-      setIsLoading(true);
-      const result = await axios.get(
-        '/api/employee?select=paySlipMonth, paySlipYear, timeStampMonth , timeStampYear'
-      );
-
-      console.log(result.data.data);
-      setFormData({ ...result.data.data });
-      setIsLoading(false);
-    };
-
-    fetchData();
-  }, []);
-
-
-  function onChange(date, dateString) {
+  function onPayChange(date, dateString) {
     console.log(date, dateString);
-  } 
+    let dateArray = dateString.split('-');
+    setPayMonth(dateArray[1]);
+    setPayYear(dateArray[0]);
+  }
 
-  const handleChange = (e) => {
-    const target = e.target;
-    const value = target.type === 'checkbox' ? target.checked : target.value;
-    const name = target.name;
+  function onTimeChange(date, dateString) {
+    console.log(date, dateString);
+    let dateArray = dateString.split('-');
+    setTimeMonth(dateArray[1]);
+    setTimeYear(dateArray[0]);
+  }
 
-    setFormData({
-      ...formData,
-      [name]: value,
-    });
-  };
+  const updateChange = async (e) => {
+    let documentType = e.target.name;
+    if (documentType === 'paySlip') {
+      try {
+        const body = JSON.stringify({
+          documentType,
+          documentedDate: {
+            month: payMonth,
+            year: payYear,
+          },
+        });
 
-  const updateMonthYear = async ({
-    paySlipMonth,
-    paySlipYear,
-    timeStampMonth,
-    timeStampYear,
-  }) => {
-    try {
-      const body = JSON.stringify({
-        postParams: {
-          paySlipMonth,
-          paySlipYear,
-          timeStampMonth,
-          timeStampYear,
-        },
-      });
+        setIsLoading(true);
+        await axios
+          .post('/api/employee/financial-docs', body, config)
+          .then((res) => {
+            let url = res.data.data.url;
+            window.open(url);
+          });
+      } catch (error) {
+        console.log(error);
+      } finally {
+        setIsLoading(false);
+      }
+    } else if (documentType === 'timeSheet') {
+      try {
+        const body = JSON.stringify({
+          documentType,
+          documentedDate: {
+            month: timeMonth,
+            year: timeYear,
+          },
+        });
 
-      setIsLoading(true);
-      await axios.post('/api/employee', body);
-      history.push('/information/languageInformation');
-    } catch (error) {
-      console.log(error);
-    } finally {
-      setIsLoading(false);
+        setIsLoading(true);
+        await axios
+          .post('/api/employee/financial-docs', body, config)
+          .then((res) => {
+            let url = res.data.data.url;
+            window.open(url);
+          });
+      } catch (error) {
+        console.log(error);
+      } finally {
+        setIsLoading(false);
+      }
     }
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    updateMonthYear(formData);
   };
 
   return (
@@ -108,69 +107,84 @@ const Payslippage = ({ history }) => {
         </div>
       </div>
       <div className='container'>
-        <div className='d-flex flex-column right justify-content-center ml-5 mt-5'>
-          <div className='row'>
-            <div className='col-12 text-left mb-3'>
-              <h1>Generate Pay Slip</h1>
+        <div className='row'>
+          <div className='col-lg-6 col-md-12'>
+            {/* <div className='d-flex flex-column right justify-content-center ml-5 mt-5'> */}
+            <div className='row'>
+              <div className='col-12 text-left mb-3'>
+                <h1>Generate Pay Slip</h1>
+              </div>
             </div>
+
+            <div className='form-group row p-2'>
+              <div className='col-sm-3'>
+                <span className='text-danger'>*</span>
+                Select Month and Year
+              </div>
+              <div className='col-sm-9'>
+                <Space direction='vertical'>
+                  <DatePicker onChange={onPayChange} picker='month' />
+                </Space>
+              </div>
+            </div>
+
+            <div className='form-group row p-2 d-flex justify-content-start mt-4 mb-5'>
+              <div className='col-sm-8'>
+                <button
+                  type='submit'
+                  className='btn selected-crumb submit-button crumb-item w-100 font-weight-bold'
+                  name='paySlip'
+                  disabled={
+                    payMonth === ' ' ||
+                    payMonth === undefined ||
+                    payMonth === null
+                  }
+                  onClick={updateChange}
+                >
+                  <i className='fas fa-download'></i> Get Pay Slip
+                </button>
+              </div>
+            </div>
+            {/* </div> */}
           </div>
+          <div className='col-lg-6 col-md-12'>
+            {/* <div className='d-flex flex-column right justify-content-center ml-5 mt-5'> */}
+            <div className='row'>
+              <div className='col-12 text-left mb-3'>
+                <h1>Time Sheet</h1>
+              </div>
+            </div>
 
-          <div className='form-group row p-2'>
-            <div className='col-sm-3'>
-              <span className='text-danger'>*</span>
-              Select Month and Year
+            <div className='form-group row p-2'>
+              <div className='col-sm-3'>
+                <span className='text-danger'>*</span>
+                Select Month and Year
+              </div>
+              <div className='col-sm-9'>
+                <Space direction='vertical'>
+                  <DatePicker onChange={onTimeChange} picker='month' />
+                </Space>
+              </div>
             </div>
-            <div className='col-sm-4'>
-              <Space direction='vertical'>
-                <DatePicker onChange={onChange} picker='month' />
-              </Space>
-            </div>
-          </div>
 
-          
-
-          <div className='form-group row p-2 d-flex justify-content-start mt-4 mb-5'>
-            <div className='col-sm-5'>
-              <button
-                type='submit'
-                className='btn selected-crumb submit-button crumb-item w-100 font-weight-bold'
-              >
-                <i className='fas fa-download'></i> Get Pay Slip
-              </button>
+            <div className='form-group row p-2 d-flex justify-content-start mt-4 mb-5'>
+              <div className='col-sm-8'>
+                <button
+                  type='submit'
+                  className='btn selected-crumb submit-button crumb-item w-100 font-weight-bold'
+                  name='timeSheet'
+                  disabled={
+                    timeMonth === ' ' ||
+                    timeMonth === undefined ||
+                    timeMonth === null
+                  }
+                  onClick={updateChange}
+                >
+                  <i className='fas fa-eye'></i> View Time Sheet
+                </button>
+              </div>
             </div>
-          </div>
-        </div>
-      </div>
-
-      <div className='container'>
-        <div className='d-flex flex-column right justify-content-center ml-5 mt-5'>
-          <div className='row'>
-            <div className='col-12 text-left mb-3'>
-              <h1>Time Sheet</h1>
-            </div>
-          </div>
-
-          <div className='form-group row p-2'>
-            <div className='col-sm-3'>
-              <span className='text-danger'>*</span>
-              Select Month and Year 
-            </div>
-            <div className='col-sm-4'>
-            <Space direction='vertical'>
-                <DatePicker onChange={onChange} picker='month' />
-              </Space>
-            </div>
-          </div>
-
-          <div className='form-group row p-2 d-flex justify-content-start mt-4 mb-5'>
-            <div className='col-sm-5'>
-              <button
-                type='submit'
-                className='btn selected-crumb submit-button crumb-item w-100 font-weight-bold'
-              >
-                <i className='fas fa-eye'></i> View Time Sheet
-              </button>
-            </div>
+            {/* </div> */}
           </div>
         </div>
       </div>
