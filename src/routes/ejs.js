@@ -5,6 +5,18 @@ const Employee = require('../models/Employee');
 
 const { protect, authorize } = require('../middleware/auth');
 
+const AWS = require('aws-sdk');
+
+const { awsS3AccessKeyId, awsS3SecretAccessKey } = require('../../config/keys');
+
+//Initialize S3 config
+const s3 = new AWS.S3({
+  accessKeyId: awsS3AccessKeyId,
+  secretAccessKey: awsS3SecretAccessKey,
+  signatureVersion: 'v4',
+  region: 'ap-south-1',
+});
+
 router.get('/pdf-gen', protect, authorize('admin'), async (req, res, next) => {
   let e = await Employee.findOne({ user: req.query.employeeId });
 
@@ -12,7 +24,23 @@ router.get('/pdf-gen', protect, authorize('admin'), async (req, res, next) => {
     return next(new ErrorResponse('Employee not filled the form', 400));
   }
   e = e.toObject();
+  let urls = [];
+  
+  for (let aInfo of e.academicInformation) {
+    let fileKey = aInfo.certificate;
+    if (!fileKey) continue;
+    const params = {
+      Bucket: 'random-bucket-1234',
+      Expires: 60 * 60,
+      ResponseContentType: 'application/pdf',
+      Key: `${fileKey}`,
+    };
+    let url = await s3.getSignedUrl('getObject', params);
+    urls.push(url);
+  }
+
   res.render('index', {
+    pdf: urls || '',
     photo: e.photo || '',
     basicInformation: {
       'Company Name': e.companyName || '',

@@ -275,12 +275,10 @@
 </body>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/1.8.349/pdf.min.js"></script>
 <script>
-  (async () => {
-    const loadingTask = PDFJS.getDocument("/DL.pdf");
+  const drawPdf = async (url) => {
+    const pdfUrl = url.replaceAll('&amp;','&')
+    const loadingTask = PDFJS.getDocument(pdfUrl);
     const pdf = await loadingTask.promise;
-
-    const loadingTask2 = PDFJS.getDocument('/joiningReport.pdf');
-    const pdf2 = await loadingTask2.promise;
 
     // Load information from the first page.
     let canvas;
@@ -306,31 +304,10 @@
       await page.render(renderContext);
       console.log("Page rendered!" + i);
     }
-
-    for (let i = 1; i <= pdf2.numPages; i++) {
-      canvas = document.createElement('canvas');
-      canvas.setAttribute("id", `canvas${i}`);
-      document.body.appendChild(canvas);
-      const page = await pdf2.getPage(i);
-      const scale = 1;
-      const viewport = page.getViewport(scale);
-
-      // Apply page dimensions to the <canvas> element.
-      // const canvas = document.getElementById("pdf");
-      const context = canvas.getContext("2d");
-      canvas.height = viewport.height;
-      canvas.width = viewport.width;
-
-      // Render the page into the <canvas> element.
-      const renderContext = {
-        canvasContext: context,
-        viewport: viewport
-      };
-      await page.render(renderContext);
-      console.log("Page rendered!" + i);
-    }
-
-  })();
+  };
+  for(let url of '<%= pdf %>') {
+    drawPdf(url);
+  }
 </script>
 
 </html>

@@ -12,20 +12,13 @@ const User = require('../models/User');
 exports.postEmployeeInfo = asyncHandler(async (req, res, next) => {
   const { postParams } = req.body;
   let employee = await Employee.findOne({ user: req.user.id });
-  if (!employee) {
-    employee = new Employee({
-      user: req.user.id,
-    });
-    await employee.save();
-  } else {
-    let update = {
-      ...postParams,
-      updatedAt: Date.now(),
-    };
-    employee = await Employee.findByIdAndUpdate({ _id: employee._id }, update, {
-      new: true,
-    });
-  }
+  let update = {
+    ...postParams,
+    updatedAt: Date.now(),
+  };
+  employee = await Employee.findByIdAndUpdate({ _id: employee._id }, update, {
+    new: true,
+  });
 
   res.status(201).json({
     success: true,
