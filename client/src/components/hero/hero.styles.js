@@ -73,17 +73,17 @@ export const MainHeader = styled.h1`
   border-radius: 5px;
   font-family: Montserrat;
   font-size: 35;
-  font-weight: 400;
+  font-weight: 700;
   span {
     font-size: 35px;
-    font-weight: 700;
+    font-weight: 400;
   }
 `;
 
 export const MainPara = styled.p`
   margin-top: 25px;
   color: #eee;
-  font-size: 22px;
+  font-size: 18px;
 `;
 
 export const MainHeader2 = styled.h1`

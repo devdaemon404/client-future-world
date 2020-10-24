@@ -373,6 +373,7 @@ const BasicInformation1 = ({ history }) => {
               <div className='form-group row p-2'>
                 <label className='col-sm-3 col-form-label'>
                   <span style={{ color: 'red' }}>*</span> Passport Sized Photo
+                  (Max file size 50KB)
                 </label>
                 <div className='col-sm-9'>
                   <ImageUploading
@@ -381,7 +382,7 @@ const BasicInformation1 = ({ history }) => {
                     onChange={onImageAdd}
                     maxNumber={maxNumber}
                     dataURLKey='data_url'
-                    maxFileSize={46000}
+                    maxFileSize={50000}
                   >
                     {({
                       imageList,

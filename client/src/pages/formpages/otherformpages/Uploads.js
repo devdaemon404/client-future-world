@@ -188,11 +188,13 @@ const Uploads = ({ history }) => {
                         {
                           postParams: {
                             uploads: formData,
+                            TUploadInformation: true,
                           },
                         },
                         config
                       );
                       setIsLoading(false);
+                      toast('Your application is complete');
                       history.push('/');
                     }}
                   >

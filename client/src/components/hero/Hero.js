@@ -29,18 +29,20 @@ function Hero(...props) {
                 />
               </div>
               <MainHeader className='col-10'>
+                Hi {`${userData.name}`},<br />{' '}
                 <span>
-                  Hi {`${userData.name}`},<br /> Welcome to <b>Future World</b>.
+                  Welcome to <b>Future World</b>.
                 </span>
               </MainHeader>
               <MainPara className='col-12'>
-                Please fill in your on-boarding application form. We are
-                delighted to have you here
+                Please fill in your on-boarding application form.
+                <br />
+                We are delighted to have you here
               </MainPara>
               <div className='col-12'>
                 <Card3
                   className='mt-5'
-                  title='Pay Slip and Time Sheet'
+                  title='Payslips and Time Sheet'
                   subTitle='Click view to download Payslip or view Timesheet'
                 />
               </div>
@@ -93,10 +95,7 @@ function Hero(...props) {
                   <Link className='link' to={{ pathname: '/other' }}>
                     <Card
                       title='Other Information'
-                      subTitle='4/4 Sections Completed'
-                      iconClass='fas fa-clipboard fa-2x'
                       sectionNames={['TOtherInformation', 'TUploadInformation']}
-                      percentage='100'
                     ></Card>
                   </Link>
                 </div>
