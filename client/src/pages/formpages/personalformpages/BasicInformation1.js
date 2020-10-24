@@ -370,6 +370,8 @@ const BasicInformation1 = ({ history }) => {
                   />
                 </div>
               </div>
+              <img src={photo} />
+              {JSON.stringify(photo)}
               <div className='form-group row p-2'>
                 <label className='col-sm-3 col-form-label'>
                   <span style={{ color: 'red' }}>*</span> Passport Sized Photo
@@ -386,19 +388,20 @@ const BasicInformation1 = ({ history }) => {
                               accept='image/**'
                               hidden
                               onChange={async (e) => {
-                                console.log('On Change');
+                                console.log('On Change - ', e.target.files[0]);
                                 const fileKey = await uploadDocument(
                                   e.target.files[0],
                                   {
                                     fileType: 'photo',
-                                    fileExtension: 'jpg',
                                     confirmationUrl: null,
                                   }
                                 );
+                                console.log('FILE KEY', fileKey);
+
                                 setFormData({
                                   ...formData,
                                   photo:
-                                    'https://random-bucket-1234.s3.ap-south-1.amazonaws.com' +
+                                    'https://random-bucket-1234.s3.ap-south-1.amazonaws.com/' +
                                     fileKey,
                                 });
                               }}

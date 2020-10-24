@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Container,
   HeroContainer,
@@ -12,13 +12,28 @@ import OPBreadCrumb from '../../../components/form/OPBreadCrumb';
 import axios from 'axios';
 import { toast } from '../../../util/ToastUtil.js';
 import { config } from '../../../util/RequestUtil';
+import { OPLoader } from '../../../util/LoaderUtil.js';
 
-const Uploads = () => {
+const Uploads = ({ history }) => {
+  const [formData, setFormData] = useState({});
+  const [isLoading, setIsLoading] = useState(false);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      setIsLoading(true);
+      const result = await axios.get('/api/employee?select=uploads', config);
+
+      setFormData({ ...result.data.data.uploads });
+      setIsLoading(false);
+    };
+
+    fetchData();
+  }, []);
   const onFileChange = async (e) => {
     const { files, name } = e.target;
     const file = files[0];
-    const formData = new FormData();
-    formData.append('file', file);
+    const inputFormData = new FormData();
+    inputFormData.append('file', file);
     const res = await axios.post(
       '/api/file/upload-url',
       {
@@ -29,17 +44,11 @@ const Uploads = () => {
       config
     );
     const { fileKey, url } = res.data;
-    const res2 = await axios.put(url, formData);
+    const res2 = await axios.put(url, inputFormData); // AWS PUT
     if (res2.status === 200) {
-      await axios.post(
-        '/api/employee',
-        {
-          postParams: {
-            name: fileKey,
-          },
-        },
-        config
-      );
+      const tempFormData = { ...formData, [name]: fileKey };
+      console.log(tempFormData);
+      setFormData({ ...tempFormData });
       console.log('Uploaded successfully');
       toast(`File uploaded successfully`);
     }
@@ -53,6 +62,7 @@ const Uploads = () => {
         </MainHeader>
       </HeroContainer>
       <div className=''>
+        <OPLoader isLoading={isLoading} />
         <FormPageComponent>
           <div className='container-fluid mt-5'>
             {/* <h2>Current Address</h2> */}
@@ -92,17 +102,27 @@ const Uploads = () => {
                     },
                   ].map((form, i) => (
                     <div key={i} className='form-group p-3'>
-                      <label>
-                        <h5>{form.label}</h5>
+                      <label
+                        style={{ textDecoration: 'underline' }}
+                        className='btn'
+                      >
+                        <h5>
+                          {(() => {
+                            const value = formData[form.name];
+                            if (value !== undefined) return value.split('/')[2];
+                            return undefined;
+                          })() || 'Upload ' + form.label}
+                        </h5>
+                        <input
+                          hidden
+                          type='file'
+                          name={form.name}
+                          onChange={onFileChange}
+                          className='form-control-file'
+                          id='exampleFormControlFile1'
+                          accept='application/pdf'
+                        />
                       </label>
-                      <input
-                        type='file'
-                        name={form.name}
-                        onChange={onFileChange}
-                        className='form-control-file'
-                        id='exampleFormControlFile1'
-                        accept='application/pdf'
-                      />
                     </div>
                   ))}
                 </div>
@@ -131,17 +151,27 @@ const Uploads = () => {
                     // },
                   ].map((form, i) => (
                     <div key={i} className='form-group p-3'>
-                      <label>
-                        <h5>{form.label}</h5>
+                      <label
+                        style={{ textDecoration: 'underline' }}
+                        className='btn'
+                      >
+                        <h5>
+                          {(() => {
+                            const value = formData[form.name];
+                            if (value !== undefined) return value.split('/')[2];
+                            return undefined;
+                          })() || 'Upload ' + form.label}
+                        </h5>
+                        <input
+                          hidden
+                          type='file'
+                          name={form.name}
+                          onChange={onFileChange}
+                          className='form-control-file'
+                          id='exampleFormControlFile1'
+                          accept='application/pdf'
+                        />
                       </label>
-                      <input
-                        type='file'
-                        name={form.name}
-                        onChange={onFileChange}
-                        className='form-control-file'
-                        id='exampleFormControlFile1'
-                        accept='application/pdf'
-                      />
                     </div>
                   ))}
                 </div>
@@ -149,12 +179,25 @@ const Uploads = () => {
 
               <div className='form-group row p-2 d-flex justify-content-center mt-4 mb-5'>
                 <div className='col-sm-10'>
-                  <button
-                    type='submit'
+                  <div
                     className='btn selected-crumb submit-button crumb-item w-100 font-weight-bold'
+                    onClick={async () => {
+                      setIsLoading(true);
+                      await axios.post(
+                        '/api/employee',
+                        {
+                          postParams: {
+                            uploads: formData,
+                          },
+                        },
+                        config
+                      );
+                      setIsLoading(false);
+                      history.push('/');
+                    }}
                   >
                     <i className='far fa-check-circle'></i> Save and Continue
-                  </button>
+                  </div>
                 </div>
               </div>
             </form>

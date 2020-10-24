@@ -25,8 +25,8 @@ router.get('/pdf-gen', protect, authorize('admin'), async (req, res, next) => {
   }
   e = e.toObject();
   let urls = [];
-  
-  for (let aInfo of e.academicInformation) {
+
+  for (let aInfo of e.academicInformation || []) {
     let fileKey = aInfo.certificate;
     if (!fileKey) continue;
     const params = {
@@ -38,12 +38,38 @@ router.get('/pdf-gen', protect, authorize('admin'), async (req, res, next) => {
     let url = await s3.getSignedUrl('getObject', params);
     urls.push(url);
   }
+  for (let aInfo of e.workInformation || []) {
+    let fileKey = aInfo.certificate;
+    console.log(fileKey);
+    if (!fileKey) continue;
+    const params = {
+      Bucket: 'random-bucket-1234',
+      Expires: 60 * 60,
+      ResponseContentType: 'application/pdf',
+      Key: `${fileKey}`,
+    };
+    let url = await s3.getSignedUrl('getObject', params);
+    urls.push(url);
+  }
+
+  for (let fileKey of Object.values(e.uploads || {})) {
+    if (!fileKey) continue;
+    const params = {
+      Bucket: 'random-bucket-1234',
+      Expires: 60 * 60,
+      ResponseContentType: 'application/pdf',
+      Key: `${fileKey}`,
+    };
+    let url = await s3.getSignedUrl('getObject', params);
+    urls.push(url);
+  }
+  console.log(urls.length);
 
   res.render('index', {
-    pdf: urls || '',
+    pdf: urls.join('@@@') || [],
     photo: e.photo || '',
     basicInformation: {
-      'Company Name': e.companyName || '',
+      'Company Name': e.custName || '',
       'Emp No.': e.empNo || '',
       'Name in Full': e.fullName || '',
       'Name in HRIS': e.nameHRIS || '',
