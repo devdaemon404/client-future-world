@@ -66,7 +66,7 @@ exports.changeUserActiveStatus = asyncHandler(async (req, res, next) => {
 exports.updateRegisteredUser = asyncHandler(async (req, res, next) => {
   let { userId, updateParams, financialDocument } = req.body;
 
-  updateParams.password && delete updateParams.password;
+  if (updateParams) updateParams.password && delete updateParams.password;
 
   if (financialDocument !== undefined) {
     financialDocument = new FinancialDocument({

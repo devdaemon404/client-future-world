@@ -5,7 +5,7 @@ export const MainWrapper = styled.div`
   boxsizing: 'border-box';
   padding: 0px;
   backgroundcolor: '#f4f4f4';
-  height: '100vh';
+
   display: block;
   @media only screen and (max-width: 720px) {
     display: none;
@@ -61,7 +61,7 @@ export const SideBar = styled.div`
   position: fixed;
   left: 320px;
   width: 320px;
-  height: 100%;
+  height: 100vh;
   margin-left: -320px;
   overflow-y: auto;
   background: #11154c;
@@ -168,5 +168,50 @@ export const TableContainer = styled.div`
   }
   .FormInputs {
     margin: 10px 0;
+  }
+`;
+export const FormWrapper = styled.div`
+  width: 85%;
+  margin: 10px 0px;
+  height: 100vh;
+  margin: 0 auto;
+
+  .form-head {
+    padding: 55px;
+    border-bottom: 2px solid rgba(0, 0, 0, 0.1);
+  }
+
+  .form-head h2 {
+    font-family: montserrat;
+    text-transform: uppercase;
+    padding-top: 30px;
+    font-weight: 700;
+  }
+`;
+
+export const FormMain = styled.div`
+  width: 700px;
+  span {
+    font-size: 18px;
+  }
+  .formsInp {
+    width: 400px;
+  }
+  .form-label {
+    font-size: 15px;
+
+    padding-left: 20px;
+  }
+
+  .info-type {
+    border-bottom: 2px solid #3f46cc;
+    color: #3f46cc;
+    font-family: montserrat;
+    text-transform: uppercase;
+    width: 100%;
+    margin: 40px 0px;
+  }
+
+  .form-control {
   }
 `;
