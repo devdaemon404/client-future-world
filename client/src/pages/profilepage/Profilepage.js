@@ -17,7 +17,7 @@ import { Form, Row, Col, DropdownButton, Dropdown } from 'react-bootstrap';
 import GPS from '../../assets/img/placeholder.png';
 import moment from 'moment';
 import PHONE from '../../assets/img/phone.png';
-import { uploadDocument, uploadFinancialDocument } from '../../util/UploadFile';
+import { uploadFinancialDocument } from '../../util/UploadFile';
 import { DatePicker, Space } from 'antd';
 
 const Profilepage = ({ retrievedId }) => {
@@ -25,8 +25,6 @@ const Profilepage = ({ retrievedId }) => {
   const [pSlipDate, setPSlipDate] = useState();
   const [tSheetDate, setTSheetDate] = useState();
   const [toggle, setToggle] = useState(true);
-  const [pSlip, setPSlip] = useState({});
-  const [tSheet, setTSheet] = useState({});
 
   const [view, setview] = useState('data');
   let temp;
