@@ -12,6 +12,7 @@ import axios from 'axios';
 import OPBreadCrumb from '../../../components/form/OPBreadCrumb.js';
 import { OPLoader } from '../../../util/LoaderUtil.js';
 import { config } from '../../../util/RequestUtil';
+import { uploadDocument } from '../../../util/UploadFile.js';
 
 const BasicInformation1 = ({ history }) => {
   const [isLoading, setIsLoading] = useState(false);
@@ -29,6 +30,7 @@ const BasicInformation1 = ({ history }) => {
     fMiddleName: '',
     fLastName: '',
     upload: '',
+    photo: '',
   });
   const {
     companyName,
@@ -43,6 +45,7 @@ const BasicInformation1 = ({ history }) => {
     fFirstName,
     fMiddleName,
     fLastName,
+    photo,
     upload,
   } = formData;
   const [images, setImages] = React.useState([]);
@@ -102,6 +105,7 @@ const BasicInformation1 = ({ history }) => {
     fFirstName,
     fMiddleName,
     fLastName,
+    photo,
     upload,
   }) => {
     let postParams = {};
@@ -119,6 +123,7 @@ const BasicInformation1 = ({ history }) => {
       fMiddleName,
       fLastName,
       upload,
+      photo,
       TBasicInformation1: true,
     };
     if (images.length !== 0)
@@ -370,64 +375,53 @@ const BasicInformation1 = ({ history }) => {
                   <span style={{ color: 'red' }}>*</span> Passport Sized Photo
                 </label>
                 <div className='col-sm-9'>
-                  <ImageUploading
-                    multiple
-                    value={images}
-                    onChange={onImageAdd}
-                    maxNumber={maxNumber}
-                    dataURLKey='data_url'
-                  >
-                    {({
-                      imageList,
-                      onImageUpload,
-                      onImageRemoveAll,
-                      onImageUpdate,
-                      onImageRemove,
-                      isDragging,
-                      dragProps,
-                    }) => (
+                  <label>
+                    {(() => (
                       <div className='upload__image-wrapper'>
                         {images.length === 0 ? (
-                          <div
-                            className='btn selected-crumb'
-                            style={isDragging ? { color: 'red' } : undefined}
-                            onClick={async () => {
-                              onImageUpload();
-                            }}
-                            {...dragProps}
-                          >
-                            Click or Drop here
+                          <div className='btn selected-crumb'>
+                            Click to upload
+                            <input
+                              type='file'
+                              accept='image/**'
+                              hidden
+                              onChange={async (e) => {
+                                console.log('On Change');
+                                const fileKey = await uploadDocument(
+                                  e.target.files[0],
+                                  {
+                                    fileType: 'photo',
+                                    fileExtension: 'jpg',
+                                    confirmationUrl: null,
+                                  }
+                                );
+                                setFormData({
+                                  ...formData,
+                                  photo:
+                                    'https://random-bucket-1234.s3.ap-south-1.amazonaws.com' +
+                                    fileKey,
+                                });
+                              }}
+                            />
                           </div>
                         ) : (
                           <div />
                         )}
                         &nbsp;
-                        {imageList.map((image, index) => (
-                          <div key={index} className='row ml-5'>
-                            <img src={image['data_url']} alt='' width='100' />
-                            <div className='ml-5 col'>
-                              <div className='row mb-5'>
-                                <div
-                                  className='btn selected-crumb'
-                                  onClick={() => onImageUpdate(index)}
-                                >
-                                  Update
-                                </div>
-                              </div>
-                              <div className='row'>
-                                <div
-                                  className='btn selected-crumb'
-                                  onClick={() => onImageRemove(index)}
-                                >
-                                  Remove
-                                </div>
-                              </div>
+                        <div className='row ml-5'>
+                          <img src={photo} alt='' width='100' />
+                          <div className='ml-5 col'>
+                            <div className='row mb-5'>
+                              <div className='btn selected-crumb'>Update</div>
+                            </div>
+                            <div className='row'>
+                              <div className='btn selected-crumb'>Remove</div>
                             </div>
                           </div>
-                        ))}
+                        </div>
                       </div>
-                    )}
-                  </ImageUploading>
+                    ))()}
+                  </label>
                 </div>
               </div>
 

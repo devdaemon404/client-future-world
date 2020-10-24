@@ -116,7 +116,7 @@ function OPTable({ data, columns, getCellProps, onClickHandler }) {
                             {' '}
                             Choose an action
                           </option>
-                          <option value='0'>Download</option>
+                          <option value='0'>View Profile </option>
                           <option value='1'>Relieve</option>
                           <option value='2'>Active</option>
                           <option value='3'>Inactive</option>

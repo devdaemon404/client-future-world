@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { Route, useHistory } from 'react-router-dom';
 import { AnimatedSwitch } from 'react-router-transition';
 import homepage from '../pages/homepage/homepage';
-import LoginPage from '../pages/loginpage/loginpage';
+import LoginPage2 from '../pages/loginpage/LoginPage2';
 import PersonalPage from '../pages/secondpage/personalpage';
 // import formpage from '../pages/formpages/formpage';
 import Address from '../pages/formpages/personalformpages/Address';
@@ -54,7 +54,8 @@ const Routes = () => {
       className='switch-wrapper'
     >
       <Route exact path='/' component={homepage} />
-      <Route exact path='/login' component={LoginPage} />
+      <Route exact path='/login' component={LoginPage2} />
+
       <Route exact path='/payslip' component={Payslippage} />
       <Route exact path='/personal' component={PersonalPage} />
       <Route exact path='/information/address' component={Address} />
