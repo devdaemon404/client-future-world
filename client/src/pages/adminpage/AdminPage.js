@@ -42,7 +42,7 @@ const AdminPage = () => {
             ? 'Active'
             : 'Inactive',
 
-        joinDate: moment(employee.createdAt).format('DD/MMM/YYYY hh:mm:ss'),
+        joinDate: moment(employee.createdAt).format('DD/MMM/YYYY'),
         id: employee._id,
       });
     });

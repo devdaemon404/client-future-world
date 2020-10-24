@@ -19,6 +19,7 @@ import GPS from '../../assets/img/placeholder.png';
 import moment from 'moment';
 import PHONE from '../../assets/img/phone.png';
 import { uploadDocument, uploadFinancialDocument } from '../../util/UploadFile';
+import { DatePicker, Space } from 'antd';
 
 const Profilepage = ({ retrievedId }) => {
   const [userData, setUserData] = useState({});
@@ -30,6 +31,14 @@ const Profilepage = ({ retrievedId }) => {
 
   const [view, setview] = useState('data');
   let temp;
+
+  const paySlipMonthUpdater = (date, dateString) => {
+    setPSlipDate(dateString);
+  };
+
+  const timeSheetMonthUpdater = (date, dateString) => {
+    setTSheetDate(dateString);
+  };
 
   const getUserData = async () => {
     temp = await axios.get(
@@ -51,27 +60,30 @@ const Profilepage = ({ retrievedId }) => {
 
   const onUploadHandler1 = async (e) => {
     let file = e.target.files[0];
-    await uploadFinancialDocument(file, {
+    let time = pSlipDate.split('-');
+    await uploadFinancialDocument(file, pSlipDate, {
       uploadUrl: '/api/file/financial-document',
       confirmationUrl: '/api/admin/register',
+
       userId: retrievedId,
       fileType: 'paySlip',
       date: {
-        month: 10,
-        year: 2020,
+        month: time[1],
+        year: time[0],
       },
     });
   };
   const onUploadHandler2 = async (e) => {
     let file = e.target.files;
-    await uploadFinancialDocument(file, {
+    let time = tSheetDate.split('-');
+    await uploadFinancialDocument(file, tSheetDate, {
       uploadUrl: '/api/file/financial-document',
       confirmationUrl: '/api/admin/register',
       userId: retrievedId,
       fileType: 'timeSheet',
       date: {
-        month: 10,
-        year: 2020,
+        month: time[1],
+        year: time[0],
       },
     });
   };
@@ -176,15 +188,12 @@ const Profilepage = ({ retrievedId }) => {
                   </div>
                   <div className='select'>
                     <p>Select Month </p>{' '}
-                    <input
-                      type='month'
-                      id='Month1'
-                      name='PaySlipCal'
-                      value={pSlipDate}
-                      onChange={(e) => {
-                        setPSlipDate(e.target.value);
-                      }}
-                    />
+                    <Space direction='vertical'>
+                      <DatePicker
+                        onChange={paySlipMonthUpdater}
+                        picker='month'
+                      />
+                    </Space>
                     <div
                       id='btn1'
                       onClick={(e) => {
@@ -208,15 +217,12 @@ const Profilepage = ({ retrievedId }) => {
                   </div>
                   <div className='select'>
                     <p>Select Month </p>{' '}
-                    <input
-                      type='month'
-                      id='Month1'
-                      value={tSheetDate}
-                      onChange={(e) => {
-                        setTSheetDate(e.target.value);
-                      }}
-                      name='TimeSheetCal'
-                    />
+                    <Space direction='vertical'>
+                      <DatePicker
+                        onChange={timeSheetMonthUpdater}
+                        picker='month'
+                      />
+                    </Space>
                     <div
                       id='btn2'
                       onClick={(e) => {
