@@ -67,7 +67,7 @@ const Profilepage = ({ retrievedId }) => {
 
   const onUploadHandler1 = async (e) => {
     let file = e.target.files[0];
-    let time = pSlipDate.split('-');
+    let time1 = pSlipDate.split('-');
 
     if (pSlipDate !== 'end') {
       await uploadFinancialDocument(file, pSlipDate, {
@@ -77,8 +77,8 @@ const Profilepage = ({ retrievedId }) => {
         userId: retrievedId,
         fileType: 'paySlip',
         date: {
-          month: time[1],
-          year: time[0],
+          month: time1[1],
+          year: time1[0],
         },
       });
       setPSlipDate('end');
@@ -260,9 +260,9 @@ const Profilepage = ({ retrievedId }) => {
                             onChange={timeSheetMonthUpdater}
                             picker='month'
                             value={
-                              tSheetDate === 'end' || pSlipDate.trim() === ''
+                              tSheetDate === 'end' || tSheetDate.trim() === ''
                                 ? undefined
-                                : moment(pSlipDate, 'YYYY-MM')
+                                : moment(tSheetDate, 'YYYY-MM')
                             }
                           />
                         </Space>
