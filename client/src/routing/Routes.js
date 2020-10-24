@@ -29,24 +29,24 @@ import axios from 'axios';
 
 const Routes = () => {
   let history = useHistory();
-  // useEffect(() => {
-  //   const checkLogin = async () => {
-  //     try {
-  //       const res = await axios.get('/api/auth/validate-token').then();
-  //       console.log(res.data.role);
-  //       if (res.data.role === 'admin') {
-  //         history.push('/admin');
-  //       } else {
-  //         history.push('/');
-  //       }
-  //     } catch (error) {
-  //       history.push('/login2');
-  //     }
-  //   };
+  useEffect(() => {
+    const checkLogin = async () => {
+      try {
+        const res = await axios.get('/api/auth/validate-token').then();
+        console.log(res.data.role);
+        if (res.data.role === 'admin') {
+          history.push('/admin');
+        } else {
+          history.push('/');
+        }
+      } catch (error) {
+        history.push('/login');
+      }
+    };
 
-  //   checkLogin();
-  //   // eslint-disable-next-line
-  // }, []);
+    checkLogin();
+    // eslint-disable-next-line
+  }, []);
   return (
     <AnimatedSwitch
       atEnter={{ opacity: 0 }}
@@ -55,7 +55,7 @@ const Routes = () => {
       className='switch-wrapper'
     >
       <Route exact path='/' component={homepage} />
-      <Route exact path='/login' component={LoginPage} />
+      <Route exact path='/login' component={LoginPage2} />
       <Route exact path='/login2' component={LoginPage2} />
 
       <Route exact path='/personal' component={personalpage} />

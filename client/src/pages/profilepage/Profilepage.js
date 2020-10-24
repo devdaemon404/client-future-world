@@ -49,12 +49,23 @@ const Profilepage = ({ retrievedId }) => {
   const onUploadHandler1 = (e) => {
     let paySlip = e.target.files;
 
-    setPSlip(paySlip[0]);
+    try {
+      if (paySlip[0].name) {
+        setPSlip(paySlip[0]);
+      }
+    } catch (error) {
+      setPSlip({});
+    }
   };
   const onUploadHandler2 = (e) => {
     let timeSheet = e.target.files;
-
-    setTSheet(timeSheet[0]);
+    try {
+      if (timeSheet[0].name) {
+        setTSheet(timeSheet[0]);
+      }
+    } catch (error) {
+      setTSheet({});
+    }
   };
   return (
     <ProfContainer>
