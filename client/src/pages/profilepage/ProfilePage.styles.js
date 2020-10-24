@@ -4,21 +4,20 @@ export const ProfContainer = styled.div`
   width: 100vw;
 `;
 export const LeftCol = styled.div`
-  width: 25%;
+  width: 23%;
   // height: 100vh;
   // background: gray;
 `;
 export const RightCol = styled.div`
-  width: 75%;
+  width: 77%;
   // height: 100vh;
   // background: #3f46cc17;
   padding: 20px;
 `;
 export const DisplayPic = styled.div`
   width: 80%;
-  height: 500px;
-  padding: 80px;
-  overflow: hidden;
+  height: 450px;
+  padding: 40px;
 `;
 export const SidebarDetails = styled.div`
   width: 100%;
@@ -44,7 +43,7 @@ export const NameSection = styled.div`
   }
   h3 {
     font-size: 25px;
-    margin-left: 40px;
+    // margin-left: 40px;
   }
   #Address {
     width: 40%;
@@ -94,5 +93,57 @@ export const FormMain = styled.div`
   }
 
   .form-control {
+  }
+`;
+export const DocumentUpload = styled.div`
+  overflow: hidden;
+  width: 300px;
+  border: 1px solid rgba(0, 0, 0, 0.4);
+`;
+export const UploadContainer = styled.div`
+  padding: 30px;
+  color: #3f46cc;
+  .heading {
+    width: 600px;
+    font-weight: 700;
+    color: #3f46cc;
+
+    border-bottom: 2px solid #3f46cc;
+  }
+  .form-group {
+    margin: 20px 0;
+  }
+  .select {
+    margin: 30px 0px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    width: 500px;
+  }
+  .select input {
+    width: 250px;
+    font-size: 20px;
+    height: 26px;
+  }
+  .select p {
+    font-size: 20px;
+  }
+  #btn1,
+  #btn2 {
+    width: 500px;
+    background: #3f46cc;
+    color: white;
+    border-radius: 5px;
+    margin-top: 40px;
+    text-align: center;
+    padding: 10px 0px;
+    cursor: pointer;
+  }
+  .realupload {
+    border: none;
+    background: white;
+    outline: none;
+    width: 0px;
+    height: 0px;
   }
 `;

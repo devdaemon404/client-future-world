@@ -208,7 +208,7 @@ export const InpForm = ({ getUsers }) => {
     ({ type, name, required, defaultValue, min, max, fName }, i) => {
       return (
         <Form.Group key={i} as={Row}>
-          <Form.Label className='form-label' column sm='4'>
+          <Form.Label className='form-label text-right' column sm='4'>
             {fName}
           </Form.Label>
           <Col sm='6'>
@@ -234,7 +234,7 @@ export const InpForm = ({ getUsers }) => {
   const set2 = fields2.map((field, i) => {
     return (
       <Form.Group key={i} as={Row}>
-        <Form.Label className='form-label' column sm='4'>
+        <Form.Label className='form-label text-right' column sm='4'>
           {field.fName}
         </Form.Label>
         <Col sm='6'>
@@ -257,7 +257,7 @@ export const InpForm = ({ getUsers }) => {
   const set3 = fields3.map((field, i) => {
     return (
       <Form.Group key={i} as={Row}>
-        <Form.Label className='form-label' column sm='4'>
+        <Form.Label className='form-label  text-right' column sm='4'>
           {field.fName}
         </Form.Label>
         <Col sm='6'>

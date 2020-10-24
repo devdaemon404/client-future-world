@@ -211,7 +211,6 @@ export const InpForm = (props) => {
             className='formsInp'
             defaultValue={field.defaultValue}
             onChange={onChangeHandler}
-            required={field.required}
           />
         </Col>{' '}
       </Form.Group>
