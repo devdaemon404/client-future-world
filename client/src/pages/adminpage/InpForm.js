@@ -13,8 +13,8 @@ export const InpForm = ({ getUsers }) => {
     email: '',
     FWEmail: '',
     Manager: '',
-    CustName: '',
-    CustLocation: '',
+    custName: '',
+    custLoc: '',
     BillingPH: '',
     annualCTC: '',
     designation: '',
@@ -32,8 +32,8 @@ export const InpForm = ({ getUsers }) => {
     email,
     FWEmail,
     Manager,
-    CustLocation,
-    CustName,
+    custLoc,
+    custName,
     BillingPH,
     annualCTC,
     increment,
@@ -59,8 +59,8 @@ export const InpForm = ({ getUsers }) => {
           Address,
           FWEmail,
           Manager,
-          CustLocation,
-          CustName,
+          custLoc,
+          custName,
           BillingPH,
           annualCTC,
           increment,
@@ -94,17 +94,17 @@ export const InpForm = ({ getUsers }) => {
       name: 'LName',
       required: 'required',
     },
-  ];
-  const fields2 = [
     {
-      fName: 'phoneNumber',
-      type: 'Number',
-      min: 1000000000,
-      max: 9999999999,
+      fName: 'Phone Number',
+      type: 'tel',
+      min: 10,
+      max: 10,
       required: 'required',
       defaultValue: 'Phone Number',
       name: 'phoneNumber',
     },
+  ];
+  const fields2 = [
     {
       fName: 'Address',
       as: 'textarea',
@@ -128,7 +128,7 @@ export const InpForm = ({ getUsers }) => {
       type: 'email',
       defaultValue: 'Email@ID.com',
       name: 'FWEmail',
-      required: 'required',
+      required: '',
     },
     {
       fName: 'Designation  ',
@@ -148,14 +148,14 @@ export const InpForm = ({ getUsers }) => {
       fName: 'Customer Name  ',
       type: 'text',
       defaultValue: 'Customer Name',
-      name: 'CustName',
+      name: 'custName',
       required: 'required',
     },
     {
       fName: 'Customer Location',
       as: 'textarea',
       defaultValue: 'Location',
-      name: 'CustLocation',
+      name: 'custLoc',
       required: 'required',
     },
     {
@@ -177,7 +177,7 @@ export const InpForm = ({ getUsers }) => {
       type: 'text',
       defaultValue: ' Enter Amount',
       name: 'increment',
-      required: 'required',
+      required: '',
     },
     {
       fName: 'LWD ',
@@ -216,12 +216,13 @@ export const InpForm = ({ getUsers }) => {
               className='form-control'
               type={type}
               key={i}
+              pattern={type === 'tel' ? '[0-9]*' : undefined}
               // eslint-disable-next-line
               className='formsInp'
               name={name}
               placeholder={defaultValue}
-              min={min}
-              max={max}
+              minLength={min}
+              maxLength={max}
               required={required}
               onChange={onChangeHandler}
             />
@@ -241,8 +242,10 @@ export const InpForm = ({ getUsers }) => {
           <Form.Control
             className='form-control'
             type={field.type}
-            as={field.as}
             key={i}
+            minlength={field.min}
+            maxlength={field.max}
+            as={field.as}
             name={field.name}
             required={field.required}
             // eslint-disable-next-line
@@ -289,7 +292,18 @@ export const InpForm = ({ getUsers }) => {
             <div className='info-type'>Work Information</div>
             {set3}
             <br />
-            <Button type='submit'>Add Employee</Button>
+            <button
+              className='btn'
+              style={{
+                width: '190px',
+                margin: '10px 13% ',
+                background: '#3f47cc',
+                color: 'white',
+              }}
+              type='submit'
+            >
+              Add Employee
+            </button>
           </Form>
         </FormMain>
       </h4>

@@ -13,8 +13,8 @@ export const InpForm = (props) => {
     email,
     FWEmail,
     Manager,
-    CustLocation,
-    CustName,
+    custLoc,
+    custName,
     BillingPH,
     annualCTC,
     increment,
@@ -66,15 +66,15 @@ export const InpForm = (props) => {
     {
       fName: 'Customer Name  ',
       type: 'text',
-      defaultValue: props.userData.CustName,
-      name: 'CustName',
+      defaultValue: props.userData.custName,
+      name: 'custName',
       required: 'required',
     },
     {
       fName: 'Customer Location',
       as: 'textarea',
-      defaultValue: props.userData.CustLocation,
-      name: 'CustLocation',
+      defaultValue: props.userData.custLoc,
+      name: 'custLoc',
       required: 'required',
     },
     {
@@ -132,8 +132,8 @@ export const InpForm = (props) => {
         email,
         FWEmail,
         Manager,
-        CustLocation,
-        CustName,
+        custLoc,
+        custName,
         BillingPH,
         annualCTC,
         increment,
@@ -155,8 +155,8 @@ export const InpForm = (props) => {
       email,
       FWEmail,
       Manager,
-      CustLocation,
-      CustName,
+      custLoc,
+      custName,
       BillingPH,
       annualCTC,
       increment,
@@ -226,7 +226,18 @@ export const InpForm = (props) => {
             <div className='info-type'>Work Information</div>
             {set3}
             <br />
-            <Button type='submit'>Update Information</Button>
+            <button
+              className='btn'
+              style={{
+                width: '190px',
+                margin: '10px 13% ',
+                background: '#3f47cc',
+                color: 'white',
+              }}
+              type='submit'
+            >
+              Update Data
+            </button>
           </Form>
           <br />
         </FormMain>

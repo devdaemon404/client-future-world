@@ -107,8 +107,6 @@ export const UploadContainer = styled.div`
     width: 600px;
     font-weight: 700;
     color: #3f46cc;
-
-    border-bottom: 2px solid #3f46cc;
   }
   .form-group {
     margin: 20px 0;
@@ -145,5 +143,14 @@ export const UploadContainer = styled.div`
     outline: none;
     width: 0px;
     height: 0px;
+  }
+
+  .heading h4 {
+    border-bottom: 2px solid #3f46cc;
+    color: #3f46cc;
+    font-family: montserrat;
+    text-transform: uppercase;
+    width: 100%;
+    margin: 40px 0px;
   }
 `;

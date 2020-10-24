@@ -18,7 +18,7 @@ import FamilyInformation from '../pages/formpages/healthformpages/FamilyInformat
 import OtherPage from '../pages/secondpage/otherpage';
 import OtherInformation from '../pages/formpages/otherformpages/OtherInformation';
 import Uploads from '../pages/formpages/otherformpages/Uploads';
-import Profilepage from '../pages/profilepage/Profilepage';
+
 import AdminPage from '../pages/adminpage/AdminPage';
 import SchoolAndWorkPage from '../pages/secondpage/schoolandworkpage';
 import AcademicInformation from '../pages/formpages/workformpages/AcademicInformation';
@@ -118,8 +118,6 @@ const Routes = () => {
       <Route exact path='/information/uploads' component={Uploads} />
 
       <Route exact path='/admin' component={AdminPage} />
-
-      <Route exact path='/profile' component={Profilepage} />
     </AnimatedSwitch>
   );
 };
