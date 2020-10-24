@@ -11,7 +11,7 @@ export const uploadDocument = async (
     uploadUrl = '/api/file/upload-url',
     fileType = 'doc',
     fileExtension = 'pdf',
-  }
+  } = {}
 ) => {
   const formData = new FormData();
   formData.append('file', file);
