@@ -1,6 +1,5 @@
 import React, { useMemo, useState } from 'react';
 import InpForm from './InpForm';
-import ReactDropZone from '../../util/ReactDropZone';
 import {
   LeftCol,
   RightCol,

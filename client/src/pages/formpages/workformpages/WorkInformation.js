@@ -113,6 +113,11 @@ const WorkInformation = ({ history }) => {
                 key: 'reasonForLeaving',
                 isRequired: true,
               },
+              {
+                label: 'Relieving Certificate',
+                key: 'certificate',
+                type: 'file',
+              },
             ]}
             defaultData={[...formData]}
           />
