@@ -11,6 +11,7 @@ import FormPageComponent from '../../../components/form/FormPageComponent';
 import OPBreadCrumb from '../../../components/form/OPBreadCrumb.js';
 import axios from 'axios';
 import { OPLoader } from '../../../util/LoaderUtil.js';
+import { config } from '../../../util/RequestUtil';
 // import { Link } from 'react-router-dom';
 
 const HealthInformation = ({ history }) => {
@@ -40,7 +41,8 @@ const HealthInformation = ({ history }) => {
     const fetchData = async () => {
       setIsLoading(true);
       const result = await axios.get(
-        '/api/employee?select=bloodGroup,height,weight,lEyePower,rEyePower,indentification1,indentification2,illnesses,'
+        '/api/employee?select=bloodGroup,height,weight,lEyePower,rEyePower,indentification1,indentification2,illnesses,',
+        config
       );
 
       console.log(result.data.data);
@@ -83,11 +85,12 @@ const HealthInformation = ({ history }) => {
           indentification1,
           indentification2,
           illnesses,
+          THealthInformation: true,
         },
       });
 
       setIsLoading(true);
-      await axios.post('/api/employee', body);
+      await axios.post('/api/employee', body, config);
       history.push('/other');
     } catch (error) {
       console.log(error);

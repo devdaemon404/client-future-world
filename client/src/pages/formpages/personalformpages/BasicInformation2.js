@@ -1,15 +1,11 @@
 import React, { useState, useEffect, Fragment } from 'react';
-import {
-  Container,
-  HeroContainer,
-  MainHeader,
-  //  MainPara, CardHeader, CardPara
-} from '../formpage.styles.js';
+import { Container, HeroContainer, MainHeader } from '../formpage.styles.js';
 import Header from '../../../components/header/Header';
 import OPBreadCrumb from '../../../components/form/OPBreadCrumb';
 import axios from 'axios';
 import FormPageComponent from '../../../components/form/FormPageComponent.js';
 import { OPLoader } from '../../../util/LoaderUtil.js';
+import { config } from '../../../util/RequestUtil';
 
 const BasicInformation2 = ({ history }) => {
   const [isLoading, setIsLoading] = useState(false);
@@ -40,7 +36,8 @@ const BasicInformation2 = ({ history }) => {
     const fetchData = async () => {
       setIsLoading(true);
       const result = await axios.get(
-        '/api/employee?select=dob,originalDob,sex,district,state,country,maritalStatus,marriageDate,religion,'
+        '/api/employee?select=dob,originalDob,sex,district,state,country,maritalStatus,marriageDate,religion,',
+        config
       );
 
       console.log(result.data.data);
@@ -52,9 +49,9 @@ const BasicInformation2 = ({ history }) => {
   }, []);
 
   const handleChange = (e) => {
-    console.log(e.target);
+    console.log(e.target.name, e.target.value);
     const target = e.target;
-    const value = target.type === 'checkbox' ? target.checked : target.value;
+    const value = target.value;
     const name = target.name;
 
     setFormData({
@@ -86,10 +83,11 @@ const BasicInformation2 = ({ history }) => {
           maritalStatus,
           marriageDate,
           religion,
+          TBasicInformation2: true,
         },
       });
       setIsLoading(true);
-      await axios.post('/api/employee', body);
+      await axios.post('/api/employee', body, config);
       history.push('/information/designationInformation');
     } catch (error) {
       console.log(error);
@@ -163,7 +161,6 @@ const BasicInformation2 = ({ history }) => {
                     value={dob || ''}
                     onChange={(e) => handleChange(e)}
                     required
-                    // disabled
                   />
                 </div>
               </div>
@@ -181,7 +178,6 @@ const BasicInformation2 = ({ history }) => {
                     value={originalDob || ''}
                     onChange={(e) => handleChange(e)}
                     required
-                    // disabled
                   />
                 </div>
               </div>
@@ -199,8 +195,8 @@ const BasicInformation2 = ({ history }) => {
                         name='sex'
                         id='male'
                         value='male'
-                        onClick={(e) => handleChange(e)}
-                        defaultChecked={sex === 'male'}
+                        checked={sex === 'male'}
+                        onChange={(e) => handleChange(e)}
                       />
                       <label className='form-check-label'>Male</label>
                     </div>
@@ -211,32 +207,14 @@ const BasicInformation2 = ({ history }) => {
                         name='sex'
                         id='female'
                         value='female'
-                        onClick={(e) => handleChange(e)}
-                        defaultChecked={sex === 'female'}
+                        checked={sex === 'female'}
+                        onChange={(e) => handleChange(e)}
                       />
                       <label className='form-check-label'>Female</label>
                     </div>
                   </div>
                 </div>
               </fieldset>
-
-              {/* <div className='form-group row p-2'>
-                  <label className='col-sm-3 col-form-label'>
-                    <span style={{ color: 'red' }}>*</span> Birth Place
-                  </label>
-                  <div className='col-sm-9'>
-                    <input
-                      type='text'
-                      className='form-control'
-                      id='birthPlace'
-                      placeholder=''
-                      name='birthPlace'
-                      value={birthPlace || ''}
-                      onChange={(e) => handleChange(e)}
-                      required
-                    />
-                  </div>
-                </div> */}
 
               <div className='form-group row p-2'>
                 <label className='col-sm-3 form-label'>
@@ -280,24 +258,6 @@ const BasicInformation2 = ({ history }) => {
                 </div>
               </div>
 
-              {/* <div className='form-group row p-2'>
-                  <label className='col-sm-3 col-form-label'>
-                    <span style={{ color: 'red' }}>*</span> Marital Status
-                  </label>
-                  <div className='col-sm-9'>
-                    <input
-                      type='text'
-                      className='form-control'
-                      id='maritalStatus'
-                      placeholder=''
-                      name='maritalStatus'
-                      value={maritalStatus || ''}
-                      onChange={(e) => handleChange(e)}
-                      required
-                    />
-                  </div>
-                </div> */}
-
               <fieldset className='form-group p-2'>
                 <div className='row'>
                   <legend className='col-form-label col-sm-3 pt-0'>
@@ -311,8 +271,8 @@ const BasicInformation2 = ({ history }) => {
                         name='maritalStatus'
                         id='single'
                         value='single'
-                        onClick={(e) => handleChange(e)}
-                        defaultChecked={maritalStatus === 'single'}
+                        onChange={(e) => handleChange(e)}
+                        checked={maritalStatus === 'single'}
                       />
                       <label className='form-check-label'>Single</label>
                     </div>
@@ -323,8 +283,8 @@ const BasicInformation2 = ({ history }) => {
                         name='maritalStatus'
                         id='married'
                         value='married'
-                        onClick={(e) => handleChange(e)}
-                        defaultChecked={maritalStatus === 'married'}
+                        onChange={(e) => handleChange(e)}
+                        checked={maritalStatus === 'married'}
                       />
                       <label className='form-check-label'>Married</label>
                     </div>

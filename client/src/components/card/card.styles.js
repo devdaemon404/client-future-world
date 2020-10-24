@@ -57,3 +57,49 @@ export const Card2Header = styled.h1`
   letter-spacing: -1px;
   line-height: 1;
 `;
+
+export const PayslipCard = styled.div`
+  border-radius: 0px;
+  background: #f7f7f7 0% 0% no-repeat padding-box;
+  opacity: 0.9;
+
+  .sub-card-container {
+    height: 50px;
+    background-color: #265b7e;
+    // border-bottom: 1px solid white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    transition: all 0.4s ease-in-out;
+    text-decoration: none;
+  }
+
+  .sub-card-container:hover {
+    background-color: #6fa7cd;
+  }
+
+  .sub-card-content {
+    color: white;
+    margin-left: 30px;
+    font-size: 22px;
+    font-weight: bold;
+  }
+`;
+
+export const Title = styled.div`
+  text-align: center;
+  // font: normal normal medium 50px Montserrat;
+  font-size: 24px;
+  letter-spacing: 0px;
+  color: #000;
+  opacity: 1;
+  padding-top: 35px;
+`;
+
+export const Subtitle = styled.div`
+  text-align: center;
+  letter-spacing: 0px;
+  opacity: 1;
+  font-size: 20px;
+  padding-bottom: 35px;
+`;

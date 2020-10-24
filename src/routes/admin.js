@@ -15,7 +15,7 @@ router
   .route('/change-activity')
   .post(protect, authorize('admin'), changeUserActiveStatus);
 router
-  .route('/employee-info/:employeeId')
+  .route('/employee-info/:userId')
   .get(protect, authorize('admin'), getEmployeeInfo);
 router
   .route('/register')

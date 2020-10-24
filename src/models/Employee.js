@@ -6,6 +6,14 @@ const EmployeeSchema = new mongoose.Schema(
       type: mongoose.Schema.ObjectId,
       ref: 'users',
     },
+    photo: {
+      type: String,
+      default: '',
+    },
+    paySlipDownloads: {
+      type: Number,
+      default: 0,
+    },
     createdAt: {
       type: Date,
       default: Date.now,
@@ -13,10 +21,6 @@ const EmployeeSchema = new mongoose.Schema(
     updatedAt: {
       type: Date,
       default: Date.now,
-    },
-    photo: {
-      type: String,
-      default: '',
     },
   },
   { strict: false }

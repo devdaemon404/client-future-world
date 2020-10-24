@@ -1,4 +1,5 @@
 import React from 'react';
+import LoadingGIF from '../assets/img/loading.gif';
 
 export const OPLoader = ({ isLoading }) => {
   if (!isLoading) return <div />;
@@ -11,7 +12,7 @@ export const OPLoader = ({ isLoading }) => {
             top: 0,
             left: 0,
             zIndex: 100,
-            backgroundColor: 'rgba(0,0,0,0.6)',
+            backgroundColor: 'rgba(0,0,0,0.5)',
             width: '100%',
             height: '100%',
           }}
@@ -26,16 +27,18 @@ export const OPLoader = ({ isLoading }) => {
           }}
         >
           <div className='col'>
-            <div className='spinner-grow row' role='status'>
-              <span className='sr-only'>Loading...</span>
+            <div>
+              <img alt='Page Loading' src={LoadingGIF}></img>
             </div>
             <span
-              className='row'
+              className='row text-center'
               style={{
-                marginLeft: -35,
+                marginLeft: '5px',
+                fontSize: '24px',
+                color: '#f8f8f8',
               }}
             >
-              Uploading...
+              Saving...
             </span>
           </div>
         </div>

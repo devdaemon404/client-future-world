@@ -11,6 +11,7 @@ import OPBreadCrumb from '../../../components/form/OPBreadCrumb.js';
 
 import axios from 'axios';
 import { OPLoader } from '../../../util/LoaderUtil.js';
+import { config } from '../../../util/RequestUtil.js';
 
 const LanguageInformation = ({ history }) => {
   const [isLoading, setIsLoading] = useState(false);
@@ -26,7 +27,8 @@ const LanguageInformation = ({ history }) => {
     const fetchData = async () => {
       setIsLoading(true);
       const result = await axios.get(
-        '/api/employee?select=canRead, canWrite, canSpeak, motherLang'
+        '/api/employee?select=canRead, canWrite, canSpeak, motherLang',
+        config
       );
 
       console.log(result.data.data);
@@ -61,11 +63,12 @@ const LanguageInformation = ({ history }) => {
           canWrite,
           canSpeak,
           motherLang,
+          TLanguageInformation: true,
         },
       });
 
       setIsLoading(true);
-      await axios.post('/api/employee', body);
+      await axios.post('/api/employee', body, config);
       history.push('/work');
     } catch (error) {
       console.log(error);

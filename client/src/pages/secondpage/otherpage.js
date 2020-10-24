@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   Container,
   HeroContainer,
@@ -7,10 +7,34 @@ import {
 } from './secondpage.styles';
 import Header from '../../components/header/Header';
 import Card2 from '../../components/card/Card2';
+import axios from 'axios';
+import { config } from '../../util/RequestUtil';
 
-function otherpage() {
+function OtherPage() {
+  const [isLoading, setIsLoading] = useState(false);
+  const [completedSectionsCount, setCompletedSectionsCount] = useState(0);
+
   const list = ['Other Information', 'Uploading Documents'];
   const pathname = ['otherInformation', 'uploads'];
+  const sectionNames = ['TOtherInformation', 'TUploadInformation'];
+
+  useEffect(() => {
+    const getState = async () => {
+      setIsLoading(true);
+      const result = await axios.get(
+        '/api/employee?select=' + sectionNames.join(','),
+        config
+      );
+      setIsLoading(false);
+      const { data } = result.data;
+      let count = 0;
+      for (const sectionName of sectionNames) {
+        if (data[sectionName]) count++;
+      }
+      setCompletedSectionsCount(count);
+    };
+    getState();
+  }, []);
 
   return (
     <Container>
@@ -28,9 +52,15 @@ function otherpage() {
             <div className='col-lg-7 order-1 order-lg-2'>
               <Card2
                 title='Other Information'
-                subTitle='1/4 Sections Completed'
-                iconClass='fas fa-clipboard fa-2x'
-                percentage='25'
+                subTitle={
+                  isLoading
+                    ? 'Loading...'
+                    : `${completedSectionsCount}/${sectionNames.length} Sections Completed`
+                }
+                iconClass='fas fa-address-card fa-2x'
+                percentage={Math.floor(
+                  (completedSectionsCount / sectionNames.length) * 100
+                ).toString()}
                 list={list}
                 pathname={pathname}
               />
@@ -42,4 +72,4 @@ function otherpage() {
   );
 }
 
-export default otherpage;
+export default OtherPage;
