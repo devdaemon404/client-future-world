@@ -11,6 +11,7 @@ import Header from '../../../components/header/Header';
 import FormPageComponent from '../../../components/form/FormPageComponent';
 import ComplexComponent from '../../../components/form/ComplexComponent';
 import OPBreadCrumb from '../../../components/form/OPBreadCrumb.js';
+import { config } from '../../../util/RequestUtil.js';
 
 const AcademicInformation = ({ history }) => {
   // eslint-disable-next-line
@@ -58,15 +59,8 @@ const AcademicInformation = ({ history }) => {
           deletable: false,
         },
       ];
-      const config = {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        withCredentials: true,
-      };
       const result = await axios.get(
-        '/api/employee?select=academicInformation,',
-        config
+        '/api/employee?select=academicInformation,', config
       );
       const resData = result.data.data;
       let tempData = [];
@@ -122,12 +116,6 @@ const AcademicInformation = ({ history }) => {
             onSubmit={async (data) => {
               /// Make your API call here
               setFormData([...data]);
-              const config = {
-                headers: {
-                  'Content-Type': 'application/json',
-                },
-                withCredentials: true,
-              };
               await axios.post(
                 '/api/employee',
                 JSON.stringify({

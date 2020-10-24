@@ -1,5 +1,5 @@
 import React from 'react';
-import Loading from '../assets/img/loading.gif'
+import LoadingGIF from '../assets/img/loading.gif';
 
 export const OPLoader = ({ isLoading }) => {
   if (!isLoading) return <div />;
@@ -28,14 +28,14 @@ export const OPLoader = ({ isLoading }) => {
         >
           <div className='col'>
             <div>
-              <img src={Loading}></img>
+              <img alt='Page Loading' src={LoadingGIF}></img>
             </div>
             <span
               className='row text-center'
               style={{
-                marginLeft: "5px",
-                fontSize: "24px",
-                color: "#f8f8f8",
+                marginLeft: '5px',
+                fontSize: '24px',
+                color: '#f8f8f8',
               }}
             >
               Saving...

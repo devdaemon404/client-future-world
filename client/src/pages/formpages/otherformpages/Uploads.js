@@ -11,6 +11,7 @@ import FormPageComponent from '../../../components/form/FormPageComponent';
 import OPBreadCrumb from '../../../components/form/OPBreadCrumb';
 import axios from 'axios';
 import { toast } from '../../../util/ToastUtil.js';
+import { config } from '../../../util/RequestUtil';
 
 const Uploads = () => {
   const onFileChange = async (e) => {
@@ -18,19 +19,27 @@ const Uploads = () => {
     const file = files[0];
     const formData = new FormData();
     formData.append('file', file);
-    const res = await axios.post('/api/file/upload-url', {
-      fileName: name,
-      fileType: 'doc',
-      fileExtension: 'pdf',
-    });
+    const res = await axios.post(
+      '/api/file/upload-url',
+      {
+        fileName: name,
+        fileType: 'doc',
+        fileExtension: 'pdf',
+      },
+      config
+    );
     const { fileKey, url } = res.data;
     const res2 = await axios.put(url, formData);
     if (res2.status === 200) {
-      await axios.post('/api/employee', {
-        postParams: {
-          name: fileKey,
+      await axios.post(
+        '/api/employee',
+        {
+          postParams: {
+            name: fileKey,
+          },
         },
-      });
+        config
+      );
       console.log('Uploaded successfully');
       toast(`File uploaded successfully`);
     }

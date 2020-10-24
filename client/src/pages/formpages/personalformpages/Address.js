@@ -12,6 +12,7 @@ import OPBreadCrumb from '../../../components/form/OPBreadCrumb.js';
 
 import axios from 'axios';
 import { OPLoader } from '../../../util/LoaderUtil.js';
+import { config } from '../../../util/RequestUtil';
 
 const Address = ({ history }) => {
   const [isLoading, setIsLoading] = useState(false);
@@ -38,7 +39,8 @@ const Address = ({ history }) => {
     const fetchData = async () => {
       setIsLoading(true);
       const result = await axios.get(
-        '/api/employee?select=presentAddress,phoneNumberPresAdd,permanentAddress,phoneNumberPermAdd,contactPersonName,contactPersonPhone,contactPersonAddress,'
+        '/api/employee?select=presentAddress,phoneNumberPresAdd,permanentAddress,phoneNumberPermAdd,contactPersonName,contactPersonPhone,contactPersonAddress,',
+        config
       );
 
       console.log(result.data.data);
@@ -83,7 +85,7 @@ const Address = ({ history }) => {
       });
 
       setIsLoading(true);
-      await axios.post('/api/employee', body);
+      await axios.post('/api/employee', body, config);
       history.push('/information/languageInformation');
     } catch (error) {
       console.log(error);

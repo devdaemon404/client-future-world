@@ -43,7 +43,7 @@ const Routes = () => {
       }
     };
 
-    checkLogin();
+    if (process.env.NODE_ENV === 'production') checkLogin();
     // eslint-disable-next-line
   }, []);
   return (

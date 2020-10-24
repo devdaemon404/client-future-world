@@ -11,6 +11,7 @@ import OPBreadCrumb from '../../../components/form/OPBreadCrumb.js';
 
 import axios from 'axios';
 import { OPLoader } from '../../../util/LoaderUtil.js';
+import { config } from '../../../util/RequestUtil.js';
 
 const DocumentalInformation = ({ history }) => {
   const [isLoading, setIsLoading] = useState(false);
@@ -27,7 +28,8 @@ const DocumentalInformation = ({ history }) => {
     const fetchData = async () => {
       setIsLoading(true);
       const result = await axios.get(
-        '/api/employee?select=panNo,passportNo,issue,place,validity'
+        '/api/employee?select=panNo,passportNo,issue,place,validity',
+        config
       );
 
       console.log(result.data.data);
@@ -68,7 +70,7 @@ const DocumentalInformation = ({ history }) => {
       });
 
       setIsLoading(true);
-      await axios.post('/api/employee', body);
+      await axios.post('/api/employee', body, config);
       history.push('/information/address');
     } catch (error) {
       console.log(error);

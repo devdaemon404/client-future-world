@@ -11,6 +11,7 @@ import FormPageComponent from '../../../components/form/FormPageComponent';
 import axios from 'axios';
 import OPBreadCrumb from '../../../components/form/OPBreadCrumb.js';
 import { OPLoader } from '../../../util/LoaderUtil.js';
+import { config } from '../../../util/RequestUtil';
 
 const BasicInformation1 = ({ history }) => {
   const [isLoading, setIsLoading] = useState(false);
@@ -56,12 +57,6 @@ const BasicInformation1 = ({ history }) => {
   useEffect(() => {
     const fetchData = async () => {
       setIsLoading(true);
-      const config = {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        withCredentials: true,
-      };
       const result = await axios.get(
         '/api/employee?select=companyName,empNo,custName,firstName,middleName,lastName,panFirstName,panMiddleName,panLastName,fFirstName,fMiddleName,fLastName,upload,photo',
         config
@@ -134,7 +129,7 @@ const BasicInformation1 = ({ history }) => {
         postParams,
       });
 
-      await axios.post('/api/employee', body);
+      await axios.post('/api/employee', body, config);
       history.push('/information/basicInformation-2');
     } catch (error) {
       console.log(error);

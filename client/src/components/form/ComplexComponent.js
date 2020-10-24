@@ -23,7 +23,6 @@ function ComplexComponent({
   const [columns, setColumns] = useState([]);
   // Show loading indicator
   const [isUploading, setIsUploading] = useState(false);
-  const [selectedRow, setSelectedRow] = useState(0);
   /**
    *
    * @param {Array<Object>} incomingData
