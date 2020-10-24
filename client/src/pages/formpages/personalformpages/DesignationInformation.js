@@ -11,6 +11,7 @@ import OPBreadCrumb from '../../../components/form/OPBreadCrumb.js';
 
 import axios from 'axios';
 import { OPLoader } from '../../../util/LoaderUtil.js';
+import { config } from '../../../util/RequestUtil.js';
 
 const DesignationInformation = ({ history }) => {
   const [isLoading, setIsLoading] = useState(false);
@@ -51,7 +52,8 @@ const DesignationInformation = ({ history }) => {
     const fetchData = async () => {
       setIsLoading(true);
       const result = await axios.get(
-        '/api/employee?select=joiningDate,designation,department,reporting,jobLevel,custLoc,custSerName,entryVia,collegeName,hrName,empNameId,agencyName,consultancyName,nomination,'
+        '/api/employee?select=joiningDate,designation,department,reporting,jobLevel,custLoc,custSerName,entryVia,collegeName,hrName,empNameId,agencyName,consultancyName,nomination,',
+        config
       );
 
       console.log(result.data.data);
@@ -106,11 +108,12 @@ const DesignationInformation = ({ history }) => {
           agencyName,
           consultancyName,
           nomination,
+          TDesignationInformation: true,
         },
       });
 
       setIsLoading(true);
-      await axios.post('/api/employee', body);
+      await axios.post('/api/employee', body, config);
       history.push('/information/documentalInformation');
     } catch (error) {
       console.log(error);

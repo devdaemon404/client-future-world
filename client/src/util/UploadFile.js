@@ -5,13 +5,20 @@ import { toast } from './ToastUtil.js';
  *
  * @param {File} file
  */
-export const uploadDocument = async (file) => {
+export const uploadDocument = async (
+  file,
+  {
+    uploadUrl = '/api/file/upload-url',
+    fileType = 'doc',
+    fileExtension = 'pdf',
+  } = {}
+) => {
   const formData = new FormData();
   formData.append('file', file);
-  const res = await axios.post('/api/file/upload-url', {
+  const res = await axios.post(uploadUrl, {
     fileName: file.name,
-    fileType: 'doc',
-    fileExtension: 'pdf',
+    fileType,
+    fileExtension,
   });
   const { fileKey, url } = res.data;
   const res2 = await axios.put(url, formData);

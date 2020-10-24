@@ -11,7 +11,7 @@ const cors = require('cors');
 
 const errorHandler = require('./middleware/error');
 const dbConnect = require('./db/dbConnect');
-const { validateUserActivity } = require('./utils/cronjob')
+const { validateUserActivity } = require('./utils/cronjob');
 
 //Run cronjob to validate user activity;
 validateUserActivity();
@@ -45,19 +45,21 @@ app.set('view engine', 'ejs');
 //Logging middleware
 app.use(require('morgan')('dev'));
 
+//Body parser for parsing form data
+app.use(express.urlencoded({ extended: true }));
+
 //Body parser for parsing json
 app.use(express.json());
 
 // Cookie parser
 app.use(cookieParser());
 
-//Body parser for parsing form data
-app.use(express.urlencoded({ extended: true }));
-
 // Set security headers
-app.use(helmet({
-  contentSecurityPolicy: false
-}));
+app.use(
+  helmet({
+    contentSecurityPolicy: false,
+  })
+);
 
 // Sanitize data
 app.use(mongoSanitize());

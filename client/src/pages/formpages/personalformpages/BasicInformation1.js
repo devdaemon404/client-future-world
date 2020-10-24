@@ -11,6 +11,7 @@ import FormPageComponent from '../../../components/form/FormPageComponent';
 import axios from 'axios';
 import OPBreadCrumb from '../../../components/form/OPBreadCrumb.js';
 import { OPLoader } from '../../../util/LoaderUtil.js';
+import { config } from '../../../util/RequestUtil';
 
 const BasicInformation1 = ({ history }) => {
   const [isLoading, setIsLoading] = useState(false);
@@ -56,12 +57,6 @@ const BasicInformation1 = ({ history }) => {
   useEffect(() => {
     const fetchData = async () => {
       setIsLoading(true);
-      const config = {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        withCredentials: true,
-      };
       const result = await axios.get(
         '/api/employee?select=companyName,empNo,custName,firstName,middleName,lastName,panFirstName,panMiddleName,panLastName,fFirstName,fMiddleName,fLastName,upload,photo',
         config
@@ -124,9 +119,13 @@ const BasicInformation1 = ({ history }) => {
       fMiddleName,
       fLastName,
       upload,
+      TBasicInformation1: true,
     };
     if (images.length !== 0)
-      postParams = { ...formFieldData, photo: images[0]['data_url'] };
+      postParams = {
+        ...formFieldData,
+        photo: images[0]['data_url'],
+      };
     else postParams = { ...formFieldData, photo: '' };
     try {
       setIsLoading(true);
@@ -134,7 +133,7 @@ const BasicInformation1 = ({ history }) => {
         postParams,
       });
 
-      await axios.post('/api/employee', body);
+      await axios.post('/api/employee', body, config);
       history.push('/information/basicInformation-2');
     } catch (error) {
       console.log(error);
@@ -269,7 +268,6 @@ const BasicInformation1 = ({ history }) => {
                     name='middleName'
                     value={middleName || ''}
                     onChange={(e) => handleChange(e)}
-                    required
                   />
                 </div>
                 <div className='col-sm-3'>
@@ -311,7 +309,6 @@ const BasicInformation1 = ({ history }) => {
                     name='panMiddleName'
                     value={panMiddleName || ''}
                     onChange={(e) => handleChange(e)}
-                    required
                   />
                 </div>
                 <div className='col-sm-3'>
@@ -353,7 +350,6 @@ const BasicInformation1 = ({ history }) => {
                     name='fMiddleName'
                     value={fMiddleName || ''}
                     onChange={(e) => handleChange(e)}
-                    required
                   />
                 </div>
                 <div className='col-sm-3'>

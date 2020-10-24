@@ -13,6 +13,8 @@ import OPBreadCrumb from '../../../components/form/OPBreadCrumb';
 import axios from 'axios';
 import FormPageComponent from '../../../components/form/FormPageComponent.js';
 import { OPLoader } from '../../../util/LoaderUtil.js';
+import { config } from '../../../util/RequestUtil.js';
+import { toast } from '../../../util/ToastUtil.js';
 
 const WorkInformation = ({ history }) => {
   // eslint-disable-next-line
@@ -21,12 +23,6 @@ const WorkInformation = ({ history }) => {
   useEffect(() => {
     const fetchData = async () => {
       setIsLoading(true);
-      const config = {
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        withCredentials: true,
-      };
       const result = await axios.get(
         '/api/employee?select=workInformation,',
         config
@@ -78,21 +74,6 @@ const WorkInformation = ({ history }) => {
             onSubmit={async (data) => {
               /// Make your API call here
               setFormData([...data]);
-              const config = {
-                headers: {
-                  'Content-Type': 'application/json',
-                },
-                withCredentials: true,
-              };
-              await axios.post(
-                '/api/employee',
-                JSON.stringify({
-                  postParams: {
-                    workInformation: data,
-                  },
-                }),
-                config
-              );
             }}
             columnNames={[
               {
@@ -139,8 +120,25 @@ const WorkInformation = ({ history }) => {
             <div className='col-sm-10'>
               <button
                 type='submit'
-                onClick={() => {
-                  history.push('/health');
+                onClick={async () => {
+                  try {
+                    setIsLoading(true);
+                    await axios.post(
+                      '/api/employee',
+                      JSON.stringify({
+                        postParams: {
+                          workInformation: formData,
+                          TWorkInformation: true,
+                        },
+                      }),
+                      config
+                    );
+                    history.push('/health');
+                  } catch (e) {
+                    toast('Error saving your data. Try again');
+                  } finally {
+                    setIsLoading(false);
+                  }
                 }}
                 className='btn selected-crumb submit-button crumb-item w-100 font-weight-bold'
               >
