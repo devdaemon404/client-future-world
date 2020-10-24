@@ -60,17 +60,23 @@ function Hero(...props) {
                   <Link className='link' to={{ pathname: '/personal' }}>
                     <Card
                       title='Personal Information'
-                      subTitle='2/4 Sections Completed'
-                      iconClass='fas fa-address-card fa-2x'
-                      percentage='50'
+                      sectionNames={[
+                        'TBasicInformation1',
+                        'TBasicInformation2',
+                        'TDesignationInformation',
+                        'TDocumentalInformation',
+                        'TAddressInformation',
+                        'TLanguageInformation',
+                      ]}
                     ></Card>
                   </Link>
                   <Link className='link' to={{ pathname: '/work' }}>
                     <Card
                       title='Academic Information'
-                      subTitle='3/4 Sections Completed'
-                      iconClass='fas fa-user-graduate fa-2x'
-                      percentage='75'
+                      sectionNames={[
+                        'TWorkInformation',
+                        'TAcademicInformation',
+                      ]}
                     ></Card>
                   </Link>
                 </div>
@@ -78,9 +84,10 @@ function Hero(...props) {
                   <Link className='link' to={{ pathname: '/health' }}>
                     <Card
                       title='Health & Family'
-                      subTitle='4/4 Sections Completed'
-                      iconClass='fas fa-briefcase-medical fa-2x'
-                      percentage='10'
+                      sectionNames={[
+                        'THealthInformation',
+                        'TFamilyInformation',
+                      ]}
                     ></Card>
                   </Link>
                   <Link className='link' to={{ pathname: '/other' }}>
@@ -88,6 +95,7 @@ function Hero(...props) {
                       title='Other Information'
                       subTitle='4/4 Sections Completed'
                       iconClass='fas fa-clipboard fa-2x'
+                      sectionNames={['TOtherInformation', 'TUploadInformation']}
                       percentage='100'
                     ></Card>
                   </Link>

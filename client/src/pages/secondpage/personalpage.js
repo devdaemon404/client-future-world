@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import {
   Container,
   HeroContainer,
@@ -7,8 +7,37 @@ import {
 } from './secondpage.styles';
 import Header from '../../components/header/Header';
 import Card2 from '../../components/card/Card2';
+import axios from 'axios';
+import { config } from '../../util/RequestUtil';
 
-function personalpage() {
+function PersonalPage() {
+  const [completedSectionsCount, setCompletedSectionsCount] = useState(0);
+  const [isLoading, setIsLoading] = useState(false);
+  const sectionNames = [
+    'TBasicInformation1',
+    'TBasicInformation2',
+    'TDesignationInformation',
+    'TDocumentalInformation',
+    'TAddressInformation',
+    'TLanguageInformation',
+  ];
+  useEffect(() => {
+    const getState = async () => {
+      setIsLoading(true);
+      const result = await axios.get(
+        '/api/employee?select=' + sectionNames.join(','),
+        config
+      );
+      setIsLoading(false);
+      const { data } = result.data;
+      let count = 0;
+      for (const sectionName of sectionNames) {
+        if (data[sectionName]) count++;
+      }
+      setCompletedSectionsCount(count);
+    };
+    getState();
+  }, []);
   const list = [
     'Basic Information-1',
     'Basic Information-2',
@@ -42,9 +71,15 @@ function personalpage() {
             <div className='col-lg-7 order-1 order-lg-2'>
               <Card2
                 title='Personal Information'
-                subTitle='2/4 Sections Completed'
+                subTitle={
+                  isLoading
+                    ? 'Loading...'
+                    : `${completedSectionsCount}/${sectionNames.length} Sections Completed`
+                }
                 iconClass='fas fa-address-card fa-2x'
-                percentage='50'
+                percentage={Math.floor(
+                  (completedSectionsCount / sectionNames.length) * 100
+                ).toString()}
                 list={list}
                 pathname={pathname}
               />
@@ -56,4 +91,4 @@ function personalpage() {
   );
 }
 
-export default personalpage;
+export default PersonalPage;

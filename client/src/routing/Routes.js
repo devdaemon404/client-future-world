@@ -2,8 +2,8 @@ import React, { useEffect } from 'react';
 import { Route, useHistory } from 'react-router-dom';
 import { AnimatedSwitch } from 'react-router-transition';
 import homepage from '../pages/homepage/homepage';
-import LoginPage from '../pages/loginpage/loginpage';
-import personalpage from '../pages/secondpage/personalpage';
+import LoginPage2 from '../pages/loginpage/LoginPage2';
+import PersonalPage from '../pages/secondpage/personalpage';
 // import formpage from '../pages/formpages/formpage';
 import Address from '../pages/formpages/personalformpages/Address';
 import BasicInformation1 from '../pages/formpages/personalformpages/BasicInformation1';
@@ -12,15 +12,15 @@ import DesignationInformation from '../pages/formpages/personalformpages/Designa
 import DocumentalInformation from '../pages/formpages/personalformpages/DocumentalInformation';
 import LanguageInformation from '../pages/formpages/personalformpages/LanguageInformation';
 
-import healthpage from '../pages/secondpage/healthpage';
+import HealthPage from '../pages/secondpage/healthpage';
 import HealthInformation from '../pages/formpages/healthformpages/HealthInformation';
 import FamilyInformation from '../pages/formpages/healthformpages/FamilyInformation';
-import otherpage from '../pages/secondpage/otherpage';
+import OtherPage from '../pages/secondpage/otherpage';
 import OtherInformation from '../pages/formpages/otherformpages/OtherInformation';
 import Uploads from '../pages/formpages/otherformpages/Uploads';
 import Profilepage from '../pages/profilepage/Profilepage';
 import AdminPage from '../pages/adminpage/AdminPage';
-import schoolandworkpage from '../pages/secondpage/schoolandworkpage';
+import SchoolAndWorkPage from '../pages/secondpage/schoolandworkpage';
 import AcademicInformation from '../pages/formpages/workformpages/AcademicInformation';
 import WorkInformation from '../pages/formpages/workformpages/WorkInformation';
 import axios from 'axios';
@@ -43,7 +43,7 @@ const Routes = () => {
       }
     };
 
-    checkLogin();
+    if (process.env.NODE_ENV === 'production') checkLogin();
     // eslint-disable-next-line
   }, []);
   return (
@@ -54,9 +54,10 @@ const Routes = () => {
       className='switch-wrapper'
     >
       <Route exact path='/' component={homepage} />
-      <Route exact path='/login' component={LoginPage} />
+      <Route exact path='/login' component={LoginPage2} />
+
       <Route exact path='/payslip' component={Payslippage} />
-      <Route exact path='/personal' component={personalpage} />
+      <Route exact path='/personal' component={PersonalPage} />
       <Route exact path='/information/address' component={Address} />
       <Route
         exact
@@ -84,7 +85,7 @@ const Routes = () => {
         component={LanguageInformation}
       />
 
-      <Route exact path='/work' component={schoolandworkpage} />
+      <Route exact path='/work' component={SchoolAndWorkPage} />
       <Route
         exact
         path='/information/academicInformation'
@@ -96,7 +97,7 @@ const Routes = () => {
         component={WorkInformation}
       />
 
-      <Route exact path='/health' component={healthpage} />
+      <Route exact path='/health' component={HealthPage} />
       <Route
         exact
         path='/information/healthInformation'
@@ -108,7 +109,7 @@ const Routes = () => {
         component={FamilyInformation}
       />
 
-      <Route exact path='/other' component={otherpage} />
+      <Route exact path='/other' component={OtherPage} />
       <Route
         exact
         path='/information/otherInformation'

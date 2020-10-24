@@ -5,6 +5,7 @@ import OPBreadCrumb from '../../../components/form/OPBreadCrumb';
 import axios from 'axios';
 import FormPageComponent from '../../../components/form/FormPageComponent.js';
 import { OPLoader } from '../../../util/LoaderUtil.js';
+import { config } from '../../../util/RequestUtil';
 
 const BasicInformation2 = ({ history }) => {
   const [isLoading, setIsLoading] = useState(false);
@@ -35,7 +36,8 @@ const BasicInformation2 = ({ history }) => {
     const fetchData = async () => {
       setIsLoading(true);
       const result = await axios.get(
-        '/api/employee?select=dob,originalDob,sex,district,state,country,maritalStatus,marriageDate,religion,'
+        '/api/employee?select=dob,originalDob,sex,district,state,country,maritalStatus,marriageDate,religion,',
+        config
       );
 
       console.log(result.data.data);
@@ -47,9 +49,9 @@ const BasicInformation2 = ({ history }) => {
   }, []);
 
   const handleChange = (e) => {
-    console.log(e.target);
+    console.log(e.target.name, e.target.value);
     const target = e.target;
-    const value = target.type === 'checkbox' ? target.checked : target.value;
+    const value = target.value;
     const name = target.name;
 
     setFormData({
@@ -81,10 +83,11 @@ const BasicInformation2 = ({ history }) => {
           maritalStatus,
           marriageDate,
           religion,
+          TBasicInformation2: true,
         },
       });
       setIsLoading(true);
-      await axios.post('/api/employee', body);
+      await axios.post('/api/employee', body, config);
       history.push('/information/designationInformation');
     } catch (error) {
       console.log(error);
@@ -192,8 +195,8 @@ const BasicInformation2 = ({ history }) => {
                         name='sex'
                         id='male'
                         value='male'
+                        checked={sex === 'male'}
                         onChange={(e) => handleChange(e)}
-                        defaultChecked={sex === 'male'}
                       />
                       <label className='form-check-label'>Male</label>
                     </div>
@@ -204,8 +207,8 @@ const BasicInformation2 = ({ history }) => {
                         name='sex'
                         id='female'
                         value='female'
+                        checked={sex === 'female'}
                         onChange={(e) => handleChange(e)}
-                        defaultChecked={sex === 'female'}
                       />
                       <label className='form-check-label'>Female</label>
                     </div>
@@ -269,7 +272,7 @@ const BasicInformation2 = ({ history }) => {
                         id='single'
                         value='single'
                         onChange={(e) => handleChange(e)}
-                        defaultChecked={maritalStatus === 'single'}
+                        checked={maritalStatus === 'single'}
                       />
                       <label className='form-check-label'>Single</label>
                     </div>
@@ -281,7 +284,7 @@ const BasicInformation2 = ({ history }) => {
                         id='married'
                         value='married'
                         onChange={(e) => handleChange(e)}
-                        defaultChecked={maritalStatus === 'married'}
+                        checked={maritalStatus === 'married'}
                       />
                       <label className='form-check-label'>Married</label>
                     </div>

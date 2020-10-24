@@ -11,6 +11,7 @@ import FormPageComponent from '../../../components/form/FormPageComponent';
 import OPBreadCrumb from '../../../components/form/OPBreadCrumb.js';
 import axios from 'axios';
 import { OPLoader } from '../../../util/LoaderUtil.js';
+import { config } from '../../../util/RequestUtil';
 
 const OtherInformation = ({ history }) => {
   const [isLoading, setIsLoading] = useState(false);
@@ -41,7 +42,8 @@ const OtherInformation = ({ history }) => {
     const fetchData = async () => {
       setIsLoading(true);
       const result = await axios.get(
-        '/api/employee?select=relativeInfo,ref1Name,ref1Company,ref1Designation,ref1Contact,ref2Name,ref2Company,ref2Designation,ref2Contact,'
+        '/api/employee?select=relativeInfo,ref1Name,ref1Company,ref1Designation,ref1Contact,ref2Name,ref2Company,ref2Designation,ref2Contact,',
+        config
       );
 
       console.log(result.data.data);
@@ -86,11 +88,12 @@ const OtherInformation = ({ history }) => {
           ref2Company,
           ref2Designation,
           ref2Contact,
+          TOtherInformation: true,
         },
       });
 
       setIsLoading(true);
-      await axios.post('/api/employee', body);
+      await axios.post('/api/employee', body, config);
       history.push('/information/uploads');
     } catch (error) {
       console.log(error);

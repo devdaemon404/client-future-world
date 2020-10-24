@@ -6,13 +6,15 @@ import {
   TableContainer,
   MainWrapper,
   NotPhone,
+  FormWrapper,
 } from './AdminPage.styles';
-import { Form, Button } from 'react-bootstrap';
+import ProfilePage from './../profilepage/Profilepage';
 import LOGO from '../../assets/img/logo.png';
 import axios from 'axios';
 import { useHistory } from 'react-router-dom';
 import OPTable from './AdminTable';
 import Gears from './../../assets/img/gears.gif';
+import InpForm from './InpForm';
 // const selectUserContext = React.createContext({});
 const AdminPage = () => {
   let retrievedId = '';
@@ -21,17 +23,10 @@ const AdminPage = () => {
   let formattedData = [];
   const [data, setData] = useState([]);
   const [selectedEmp, setselectedEmp] = useState(false);
-  const [formTable, setFormTable] = useState('Table');
-  const [newUserDetails, setNewUserDetails] = useState({
-    name: '',
-    email: '',
-    phoneNumber: '',
-  });
-  const [authMessage, setauthMessage] = useState('');
-  const [authorized, setAuthorized] = useState(0);
-  const [loading, setLoading] = useState(false);
+  const [ViewPanel, setViewPanel] = useState('Table');
+  const [selectUser, setSelectUser] = useState('');
   const history = useHistory();
-
+  const [Id, setId] = useState('');
   const getUsers = async () => {
     const users = await axios.get('/api/admin/users');
 
@@ -47,7 +42,7 @@ const AdminPage = () => {
             ? 'Active'
             : 'Inactive',
 
-        joinDate: moment(employee.createdAt).format('DD/MMM/YYYY hh:mm:ss'),
+        joinDate: moment(employee.createdAt).format('DD/MMM/YYYY'),
         id: employee._id,
       });
     });
@@ -94,39 +89,16 @@ const AdminPage = () => {
     history.push('/login');
   };
 
-  const onFormSubmit = async (e) => {
-    e.preventDefault();
-    setAuthorized(0);
-    setLoading(true);
-    try {
-      const { name, email, phoneNumber } = newUserDetails;
-      var result = await axios.post('/api/auth/register', {
-        name,
-        email,
-        phoneNumber,
-      });
-      if (result) {
-        setAuthorized(1);
-        await getUsers();
-        setLoading(false);
-      }
-    } catch (error) {
-      setAuthorized(2);
-      if (error.response.status === 400) {
-        setLoading(false);
-        setauthMessage('User Already registered');
-      } else if (error.response.status === 401) {
-        setauthMessage('Try Login again, Not Authorized');
-      }
-    }
-  };
-
   const onClickHandler = async (e) => {
     retrievedId = e.target.children[5].innerHTML.toString().trim();
 
     retrievedEmployee = data.find((o) => o.id === retrievedId);
     if (e.target.value === '0') {
-      window.open(`/api/ejs/pdf-gen?employeeId=${retrievedId}`);
+      // window.open(`/api/ejs/pdf-gen?employeeId=${retrievedId}`);
+      setSelectUser(retrievedId);
+      setId(retrievedId);
+      console.log('asmin page', retrievedId);
+      setViewPanel('Profile');
     }
 
     if (e.target.value === '1') {
@@ -150,161 +122,102 @@ const AdminPage = () => {
     setselectedEmp(!selectedEmp);
   };
 
+  // ``` Child components starts here ```;
+  var SidebarChild = (
+    <SideBar>
+      <div className='logoContainer'>
+        <img alt='logo' src={LOGO}></img>
+      </div>
+      <div className='SideBarCompMain'>Dashboard</div>
+      <div
+        className='SideBarCompItem'
+        style={ViewPanel === 'Table' ? { color: 'yellow' } : {}}
+        onClick={(e) => setViewPanel('Table')}
+        id='Table'
+      >
+        Employees
+      </div>
+      <div
+        className='SideBarCompItem'
+        id='Form'
+        style={ViewPanel === 'Form' ? { color: 'yellow' } : {}}
+        onClick={(e) => setViewPanel('Form')}
+      >
+        Add an Employee
+      </div>
+      <div className='Logout' onClick={logoutHandler}>
+        <span>LOGOUT</span>
+      </div>
+    </SideBar>
+  );
+
+  var OpTableChild = (
+    <OPTable
+      data={data}
+      columns={columns}
+      onClickHandler={onClickHandler}
+      getCellProps={() => ({})}
+    />
+  );
+
+  var AddEmployeeChild = (
+    <React.Fragment>
+      <FormWrapper>
+        <div className='form-head'>
+          <h2>Create a new employee</h2>
+        </div>
+        <InpForm getUsers={getUsers} />
+      </FormWrapper>
+    </React.Fragment>
+  );
+
+  var NoPhoneChild = (
+    <NotPhone>
+      <div className='NotPhone-Main'>
+        <div className='ErrorContainer'>
+          <div style={{ display: 'flex', justifyContent: 'center' }}>
+            <img src={Gears} className='gears' alt='Loading...' />
+          </div>
+          <br />
+          <p className='PhoneError'>Sorry, We Don't Support Mobile View</p>
+          <p className='PhoneError'> Please Switch to a Desktop</p>
+        </div>
+      </div>
+    </NotPhone>
+  );
+
+  // ``` Child components Ends here ```;
+
   return (
     <React.Fragment>
       <MainWrapper>
-        {/* <selectUserContext.Provider value={retrievedEmployee} /> */}
-        <SideBar>
-          <div className='logoContainer'>
-            <img alt='logo' src={LOGO}></img>
-          </div>
-          <div className='SideBarCompMain'>Dashboard</div>
-          <div
-            className='SideBarCompItem'
-            style={formTable === 'Table' ? { color: 'yellow' } : {}}
-            onClick={(e) => setFormTable('Table')}
-            id='Table'
-          >
-            Employees
-          </div>
-          <div
-            className='SideBarCompItem'
-            id='Form'
-            style={formTable === 'Form' ? { color: 'yellow' } : {}}
-            onClick={(e) => setFormTable('Form')}
-          >
-            Add an Employee
-          </div>
-          <div className='Logout' onClick={logoutHandler}>
-            <span>LOGOUT</span>
-          </div>
-        </SideBar>
+        {SidebarChild}
         <AdminMain>
-          <div className='Admin'>Admin Panel</div>
-          <div className='EmpInfo'>
-            {formTable === 'Table' ? 'Employee Information' : ''}
-          </div>
+          {ViewPanel === 'Profile' ? (
+            <ProfilePage userId={selectUser} retrievedId={Id} />
+          ) : (
+            <></>
+          )}
+          {ViewPanel === 'Table' ? (
+            <div className='Admin'>Admin Panel</div>
+          ) : (
+            <></>
+          )}
+
+          {ViewPanel === 'Table' ? (
+            <div className='EmpInfo'>'Employee Information'</div>
+          ) : (
+            <></>
+          )}
+
+          {ViewPanel === 'Form' ? AddEmployeeChild : <></>}
 
           <TableContainer>
-            {formTable === 'Table' ? (
-              <OPTable
-                data={data}
-                columns={columns}
-                onClickHandler={onClickHandler}
-                getCellProps={() => ({})}
-              />
-            ) : (
-              <React.Fragment>
-                <Form className='addEmployeeForm' onSubmit={onFormSubmit}>
-                  <h4 className='addEmpHead'>Add a new Employee</h4>
-                  <Form.Group>
-                    <Form.Control
-                      type='text'
-                      className='FormInputs'
-                      placeholder='Employee Name'
-                      required
-                      name='Name'
-                      onChange={(e) =>
-                        setNewUserDetails({
-                          ...newUserDetails,
-                          name: e.target.value,
-                        })
-                      }
-                    />
-
-                    <Form.Control
-                      type='email'
-                      className='FormInputs'
-                      placeholder='Employee Email'
-                      name='Email'
-                      required
-                      onChange={(e) =>
-                        setNewUserDetails({
-                          ...newUserDetails,
-                          email: e.target.value,
-                        })
-                      }
-                    />
-
-                    <Form.Control
-                      type='number'
-                      className='FormInputs'
-                      placeholder='Employe PhoneNo. (without country code)'
-                      min={1000000000}
-                      max={9999999999}
-                      name='phoneNumber'
-                      required
-                      onChange={(e) =>
-                        setNewUserDetails({
-                          ...newUserDetails,
-                          phoneNumber: e.target.value,
-                        })
-                      }
-                    />
-                  </Form.Group>
-                  <Button
-                    variant='secondary'
-                    type='submit'
-                    className='ButtonForm'
-                  >
-                    {!loading ? 'Add Employee' : 'Loading'}
-                  </Button>
-                  {authorized === 1 ? (
-                    <p
-                      id='confirm'
-                      style={{
-                        color: 'green',
-                        width: '100%',
-                        textAlign: 'Center',
-                        fontWeight: 500,
-                      }}
-                    >
-                      New User Added (Confirmation Mail has been sent){' '}
-                    </p>
-                  ) : authorized === 2 ? (
-                    <p
-                      id='confirm'
-                      style={{
-                        color: 'red',
-                        width: '100%',
-                        textAlign: 'Center',
-                        fontWeight: 500,
-                      }}
-                    >
-                      {authMessage}
-                    </p>
-                  ) : (
-                    <p
-                      id='confirm'
-                      style={{
-                        color: 'red',
-                        width: '100%',
-                        height: '24px',
-                        textAlign: 'Center',
-                        fontWeight: 500,
-                      }}
-                    >
-                      {'    '}
-                    </p>
-                  )}
-                </Form>
-              </React.Fragment>
-            )}
+            {ViewPanel === 'Table' ? OpTableChild : <></>}
           </TableContainer>
         </AdminMain>
       </MainWrapper>
-      <NotPhone>
-        <div className='NotPhone-Main'>
-          <div className='ErrorContainer'>
-            <div style={{ display: 'flex', justifyContent: 'center' }}>
-              <img src={Gears} className='gears' alt='Loading...' />
-            </div>
-            <br />
-            <p className='PhoneError'>Sorry, We Don't Support Mobile View</p>
-            <p className='PhoneError'> Please Switch to a Desktop</p>
-          </div>
-        </div>
-      </NotPhone>
+      {NoPhoneChild}
     </React.Fragment>
   );
 };
