@@ -28,7 +28,7 @@ export const uploadDocument = async (
   );
   const { fileKey, url } = res.data;
   const res2 = await axios.put(url, formData);
-  if (res2.status === 200) {
+  if (res2.status === 200 && confirmationUrl !== null) {
     await axios.post(
       confirmationUrl,
       {
@@ -41,6 +41,7 @@ export const uploadDocument = async (
     toast(`File uploaded successfully`);
     return fileKey;
   }
+  if (fileKey) return fileKey;
   return null;
 };
 
