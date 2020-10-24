@@ -4,7 +4,9 @@ import { Form, Row, Col, Button } from 'react-bootstrap';
 import axios from 'axios';
 import moment from 'moment';
 import { toast } from '../../util/ToastUtil';
+import { OPLoader } from '../../util/LoaderUtil';
 export const InpForm = ({ getUsers }) => {
+  const [isLoading, setIsLoading] = useState(false);
   const [input, setInput] = useState({
     FName: '',
     LName: '',
@@ -23,7 +25,7 @@ export const InpForm = ({ getUsers }) => {
     comments: '',
   });
 
-  const {
+  let {
     FName,
     LName,
     designation,
@@ -41,15 +43,25 @@ export const InpForm = ({ getUsers }) => {
     comments,
   } = input;
   const name = FName + '' + LName;
-
+  if (!FName) {
+    FName = 'X';
+  }
+  if (!LName) {
+    LName = 'X';
+  }
   var resu = '';
   var joiningDate = moment();
+  let FWiD = `FW-${FName[0]}${LName[0]}${Math.round(Math.random() + Date.now())
+    .toString()
+    .slice(-5)}`;
   const addUser = async () => {
+    setIsLoading(true);
     try {
       resu = await axios.post('/api/auth/register', {
         email,
         name,
         phoneNumber,
+        empNo: FWiD,
         extraFields: {
           email,
           FName,
@@ -65,10 +77,13 @@ export const InpForm = ({ getUsers }) => {
           annualCTC,
           increment,
           lwd,
+          empNo: FWiD,
           comments,
           joiningDate,
         },
       });
+      setIsLoading(false);
+
       toast('Added a new User');
       getUsers();
     } catch (error) {
@@ -282,6 +297,7 @@ export const InpForm = ({ getUsers }) => {
   });
   return (
     <React.Fragment>
+      <OPLoader isLoading={isLoading} />
       <h4>
         <FormMain>
           <Form onSubmit={submitHandler}>
