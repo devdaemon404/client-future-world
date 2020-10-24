@@ -119,9 +119,13 @@ const BasicInformation1 = ({ history }) => {
       fMiddleName,
       fLastName,
       upload,
+      TBasicInformation1: true,
     };
     if (images.length !== 0)
-      postParams = { ...formFieldData, photo: images[0]['data_url'] };
+      postParams = {
+        ...formFieldData,
+        photo: images[0]['data_url'],
+      };
     else postParams = { ...formFieldData, photo: '' };
     try {
       setIsLoading(true);
@@ -264,7 +268,6 @@ const BasicInformation1 = ({ history }) => {
                     name='middleName'
                     value={middleName || ''}
                     onChange={(e) => handleChange(e)}
-                    required
                   />
                 </div>
                 <div className='col-sm-3'>
@@ -306,7 +309,6 @@ const BasicInformation1 = ({ history }) => {
                     name='panMiddleName'
                     value={panMiddleName || ''}
                     onChange={(e) => handleChange(e)}
-                    required
                   />
                 </div>
                 <div className='col-sm-3'>
@@ -348,7 +350,6 @@ const BasicInformation1 = ({ history }) => {
                     name='fMiddleName'
                     value={fMiddleName || ''}
                     onChange={(e) => handleChange(e)}
-                    required
                   />
                 </div>
                 <div className='col-sm-3'>

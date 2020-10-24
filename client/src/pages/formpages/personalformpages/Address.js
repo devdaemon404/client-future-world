@@ -81,6 +81,7 @@ const Address = ({ history }) => {
           contactPersonName,
           contactPersonPhone,
           contactPersonAddress,
+          TAddressInformation: true,
         },
       });
 

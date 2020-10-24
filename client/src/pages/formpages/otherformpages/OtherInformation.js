@@ -88,6 +88,7 @@ const OtherInformation = ({ history }) => {
           ref2Company,
           ref2Designation,
           ref2Contact,
+          TOtherInformation: true,
         },
       });
 

@@ -66,6 +66,7 @@ const DocumentalInformation = ({ history }) => {
           issue,
           place,
           validity,
+          TDocumentalInformation: true,
         },
       });
 

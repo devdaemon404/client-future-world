@@ -75,32 +75,20 @@ const Uploads = () => {
               <div className='form-row p-2'>
                 <div className='col-sm-12 col-lg-6 col-md-6 p-2'>
                   <label>
-                    <h3>Upload (required)*</h3>
+                    <h3>Optional Uploads</h3>
                   </label>
                   {[
                     {
-                      label: '10th Class / SSC / SSLC',
-                      name: 'tenthGradeCertificateU',
+                      label: 'Bio Data',
+                      name: 'bioDataForm',
                     },
                     {
-                      label: 'Intermediate / PUC / 10 + 2',
-                      name: 'twelvethGradeCertificateU',
+                      label: 'Joining Report / Company Application Form',
+                      name: 'joiningReportU',
                     },
                     {
-                      label: 'Degree Certificate',
-                      name: 'degreeCertificateU',
-                    },
-                    {
-                      label: 'PG Degree Certificate',
-                      name: 'pgDegreeCertificate',
-                    },
-                    {
-                      label: 'Diploma / PG Diploma',
-                      name: 'diplomaCertificateU',
-                    },
-                    {
-                      label: 'Previous Expereince(s) & Relieving Letter (s)',
-                      name: 'previousExperienceCertificateU',
+                      label: 'Mediclaim Declaration',
+                      name: 'mediclaimDeclarationU',
                     },
                   ].map((form, i) => (
                     <div key={i} className='form-group p-3'>
@@ -122,21 +110,9 @@ const Uploads = () => {
                 <div className='col-sm-12 col-lg-6 col-md-6 p-2'>
                   <label>
                     {' '}
-                    <h3>Upload (optional)</h3>
+                    <h3></h3>
                   </label>
                   {[
-                    {
-                      label: 'Bio Data',
-                      name: 'bioDataForm',
-                    },
-                    {
-                      label: 'Joining Report / Company Application Form',
-                      name: 'joiningReportU',
-                    },
-                    {
-                      label: 'Mediclaim Declaration',
-                      name: 'mediclaimDeclarationU',
-                    },
                     {
                       label: 'PF Nomination Form',
                       name: 'pfNominationU',
@@ -149,10 +125,10 @@ const Uploads = () => {
                       label: 'Gratuity Nomination Form',
                       name: 'gratuityNominationU',
                     },
-                    {
-                      label: 'Other Document',
-                      name: 'otherDocsU',
-                    },
+                    // {
+                    //   label: 'Other Document',
+                    //   name: 'otherDocsU',
+                    // },
                   ].map((form, i) => (
                     <div key={i} className='form-group p-3'>
                       <label>

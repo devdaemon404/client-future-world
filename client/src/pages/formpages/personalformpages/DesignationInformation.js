@@ -108,6 +108,7 @@ const DesignationInformation = ({ history }) => {
           agencyName,
           consultancyName,
           nomination,
+          TDesignationInformation: true,
         },
       });
 

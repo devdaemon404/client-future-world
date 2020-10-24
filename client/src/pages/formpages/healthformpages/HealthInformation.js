@@ -85,6 +85,7 @@ const HealthInformation = ({ history }) => {
           indentification1,
           indentification2,
           illnesses,
+          THealthInformation: true,
         },
       });
 

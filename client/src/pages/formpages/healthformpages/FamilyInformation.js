@@ -12,6 +12,7 @@ import FormPageComponent from '../../../components/form/FormPageComponent';
 import ComplexComponent from '../../../components/form/ComplexComponent';
 import OPBreadCrumb from '../../../components/form/OPBreadCrumb.js';
 import { config } from '../../../util/RequestUtil';
+import { toast } from '../../../util/ToastUtil.js';
 
 const FamilyInformation = ({ history }) => {
   // eslint-disable-next-line
@@ -71,15 +72,6 @@ const FamilyInformation = ({ history }) => {
               onSubmit={async (data) => {
                 /// Make your API call here
                 setFormData([...data]);
-                await axios.post(
-                  '/api/employee',
-                  JSON.stringify({
-                    postParams: {
-                      familyInformation: data,
-                    },
-                  }),
-                  config
-                );
               }}
               columnNames={[
                 {
@@ -115,8 +107,25 @@ const FamilyInformation = ({ history }) => {
               <div className='col-sm-10'>
                 <button
                   type='submit'
-                  onClick={() => {
-                    history.push('/information/healthInformation');
+                  onClick={async () => {
+                    try {
+                      setIsLoading(true);
+                      await axios.post(
+                        '/api/employee',
+                        JSON.stringify({
+                          postParams: {
+                            familyInformation: formData,
+                            TFamilyInformation: true,
+                          },
+                        }),
+                        config
+                      );
+                      history.push('/information/healthInformation');
+                    } catch (e) {
+                      toast('Error saving your data. Try again');
+                    } finally {
+                      setIsLoading(false);
+                    }
                   }}
                   className='btn selected-crumb submit-button crumb-item w-100 font-weight-bold'
                 >

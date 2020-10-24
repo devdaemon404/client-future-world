@@ -63,6 +63,7 @@ const LanguageInformation = ({ history }) => {
           canWrite,
           canSpeak,
           motherLang,
+          TLanguageInformation: true,
         },
       });
 

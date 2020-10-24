@@ -12,6 +12,7 @@ import FormPageComponent from '../../../components/form/FormPageComponent';
 import ComplexComponent from '../../../components/form/ComplexComponent';
 import OPBreadCrumb from '../../../components/form/OPBreadCrumb.js';
 import { config } from '../../../util/RequestUtil.js';
+import { toast } from '../../../util/ToastUtil.js';
 
 const AcademicInformation = ({ history }) => {
   // eslint-disable-next-line
@@ -60,7 +61,8 @@ const AcademicInformation = ({ history }) => {
         },
       ];
       const result = await axios.get(
-        '/api/employee?select=academicInformation,', config
+        '/api/employee?select=academicInformation,',
+        config
       );
       const resData = result.data.data;
       let tempData = [];
@@ -116,15 +118,6 @@ const AcademicInformation = ({ history }) => {
             onSubmit={async (data) => {
               /// Make your API call here
               setFormData([...data]);
-              await axios.post(
-                '/api/employee',
-                JSON.stringify({
-                  postParams: {
-                    academicInformation: data,
-                  },
-                }),
-                config
-              );
             }}
             columnNames={[
               {
@@ -164,8 +157,25 @@ const AcademicInformation = ({ history }) => {
             <div className='col-sm-10'>
               <button
                 type='submit'
-                onClick={() => {
-                  history.push('/information/workInformation');
+                onClick={async () => {
+                  try {
+                    setIsLoading(true);
+                    await axios.post(
+                      '/api/employee',
+                      JSON.stringify({
+                        postParams: {
+                          academicInformation: formData,
+                          TAcademicInformation: true,
+                        },
+                      }),
+                      config
+                    );
+                    history.push('/information/workInformation');
+                  } catch (e) {
+                    toast('Error saving your data. Try again');
+                  } finally {
+                    setIsLoading(false);
+                  }
                 }}
                 className='btn selected-crumb submit-button crumb-item w-100 font-weight-bold'
               >

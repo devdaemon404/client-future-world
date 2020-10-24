@@ -83,6 +83,7 @@ const BasicInformation2 = ({ history }) => {
           maritalStatus,
           marriageDate,
           religion,
+          TBasicInformation2: true,
         },
       });
       setIsLoading(true);
