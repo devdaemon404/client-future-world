@@ -19,7 +19,7 @@ const Uploads = ({ history }) => {
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    const fetchData = async () => {
+    const fetchData = async () => { 
       setIsLoading(true);
       const result = await axios.get('/api/employee?select=uploads', config);
 

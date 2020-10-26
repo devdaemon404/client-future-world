@@ -6,7 +6,14 @@ const OPBreadCrumb = ({ crumbs, activeIndex = 0 }) => {
     <div>
       <ul className='nav nav-pills nav-fill'>
         {crumbs.map((crumb, index) => (
-          <li className='nav-item' key={index}>
+          <li
+            className='nav-item'
+            key={index}
+            style={{
+              fontWeight: 'bold',
+              fontSize: '18px',
+            }}
+          >
             <Link
               className={
                 index === activeIndex

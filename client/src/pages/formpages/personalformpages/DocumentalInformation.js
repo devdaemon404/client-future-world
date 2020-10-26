@@ -214,7 +214,7 @@ const DocumentalInformation = ({ history }) => {
               </div>
 
               <div className='form-group row p-2 d-flex justify-content-center mt-4 mb-5'>
-                <div className='col-sm-10'>
+                <div className='col-sm-12'>
                   <button
                     type='submit'
                     className='btn selected-crumb submit-button crumb-item w-100 font-weight-bold'
