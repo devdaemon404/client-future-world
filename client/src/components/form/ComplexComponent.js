@@ -121,7 +121,7 @@ function ComplexComponent({
           key: col.key,
           formatter: (formatter) => {
             const id = formatter.rowIdx;
-            let value;
+            let value = '';
             if (id) {
               value = data[formatter.rowIdx][col.key];
             }
@@ -133,7 +133,7 @@ function ComplexComponent({
                   textDecoration: value || 'underline',
                 }}
               >
-                {value || 'Upload File'}
+                {data[formatter.rowIdx][col.key].split('/')[2] || 'Upload File'}
                 <input
                   hidden
                   style={{ width: 50 }}
