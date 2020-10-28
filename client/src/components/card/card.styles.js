@@ -91,6 +91,7 @@ export const Title = styled.div`
   // font: normal normal medium 50px Montserrat;
   font-size: 24px;
   letter-spacing: 0px;
+  font-weight: 800;
   color: #000;
   opacity: 1;
   padding-top: 35px;

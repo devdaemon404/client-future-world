@@ -262,7 +262,7 @@ const DesignationInformation = ({ history }) => {
                 </div>
               </div>
 
-              <div className='form-group row p-2'>
+              {/* <div className='form-group row p-2'>
                 <label className='col-sm-3 col-form-label'>
                   <span style={{ color: 'red' }}>*</span> Customer Serving Name
                 </label>
@@ -278,7 +278,7 @@ const DesignationInformation = ({ history }) => {
                     required
                   />
                 </div>
-              </div>
+              </div> */}
 
               <div className='form-group row p-2'>
                 <label className='col-sm-3 col-form-label'>

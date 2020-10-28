@@ -78,18 +78,18 @@ const WorkInformation = ({ history }) => {
             columnNames={[
               {
                 label: 'Company ',
-                key: 'company ',
+                key: 'company',
                 isRequired: true,
               },
               {
-                label: 'DOJ',
-                key: 'fromDate ',
+                label: 'From Date',
+                key: 'fromDate',
                 isRequired: true,
                 type: 'date',
               },
               {
                 label: 'To date',
-                key: 'toDate ',
+                key: 'toDate',
                 isRequired: true,
                 type: 'date',
               },

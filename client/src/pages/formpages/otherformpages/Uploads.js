@@ -37,7 +37,7 @@ const Uploads = ({ history }) => {
     const res = await axios.post(
       '/api/file/upload-url',
       {
-        fileName: name,
+        fileName: file.name,
         fileType: 'doc',
         fileExtension: 'pdf',
       },
@@ -80,13 +80,10 @@ const Uploads = ({ history }) => {
               activeIndex={1}
             />
             <hr></hr>
-            <form className='mt-2 text-left'>
+            <form className='mt-2 '>
               <p>Files once uploaded, need not be uploaded again</p>
               <div className='form-row p-2'>
                 <div className='col-sm-12 col-lg-6 col-md-6 p-2'>
-                  <label>
-                    <h3>Optional Uploads</h3>
-                  </label>
                   {[
                     {
                       label: 'Bio Data',
@@ -101,18 +98,22 @@ const Uploads = ({ history }) => {
                       name: 'mediclaimDeclarationU',
                     },
                   ].map((form, i) => (
-                    <div key={i} className='form-group p-3'>
+                    <div key={i} className='form-group p-3 row text-right'>
+                      <label className='col-sm-7 col-form-label'>
+                        <b>{form.label}&nbsp;:</b>
+                      </label>
                       <label
                         style={{ textDecoration: 'underline' }}
-                        className='btn'
+                        className='col-sm-5 btn text-truncate text-left'
                       >
-                        <h5>
+                        <span className='' style={{ width: 50 }}>
                           {(() => {
                             const value = formData[form.name];
-                            if (value !== undefined) return value.split('/')[2];
+                            if (value !== undefined)
+                              return `${value.split('/')[2]}`;
                             return undefined;
-                          })() || 'Upload ' + form.label}
-                        </h5>
+                          })() || 'Upload '}
+                        </span>
                         <input
                           hidden
                           type='file'
@@ -128,10 +129,6 @@ const Uploads = ({ history }) => {
                 </div>
 
                 <div className='col-sm-12 col-lg-6 col-md-6 p-2'>
-                  <label>
-                    {' '}
-                    <h3></h3>
-                  </label>
                   {[
                     {
                       label: 'PF Nomination Form',
@@ -150,22 +147,25 @@ const Uploads = ({ history }) => {
                     //   name: 'otherDocsU',
                     // },
                   ].map((form, i) => (
-                    <div key={i} className='form-group p-3'>
+                    <div key={i} className='form-group p-3 text-right'>
+                      <label className='col-sm-7'>
+                        <b>{form.label}&nbsp;:</b>
+                      </label>
                       <label
                         style={{ textDecoration: 'underline' }}
-                        className='btn'
+                        className='col-sm-5 btn text-truncate text-left'
                       >
-                        <h5>
+                        <span className='text-truncate'>
                           {(() => {
-                            const value = formData[form.name];
+                            const value = formData[form.label];
                             if (value !== undefined) return value.split('/')[2];
                             return undefined;
-                          })() || 'Upload ' + form.label}
-                        </h5>
+                          })() || 'Upload'}
+                        </span>
                         <input
                           hidden
                           type='file'
-                          name={form.name}
+                          name={form.label}
                           onChange={onFileChange}
                           className='form-control-file'
                           id='exampleFormControlFile1'
@@ -188,11 +188,13 @@ const Uploads = ({ history }) => {
                         {
                           postParams: {
                             uploads: formData,
+                            TUploadInformation: true,
                           },
                         },
                         config
                       );
                       setIsLoading(false);
+                      toast('Your application is complete');
                       history.push('/');
                     }}
                   >

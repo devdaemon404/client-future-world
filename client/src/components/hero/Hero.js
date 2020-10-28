@@ -4,6 +4,7 @@ import Card from '../card/Card';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import Card3 from '../card/Card3';
+import CustomModal from '../modal/CustomModal';
 
 function Hero(...props) {
   const [userData, setUserData] = useState({ name: 'User', photo: '' });
@@ -29,18 +30,32 @@ function Hero(...props) {
                 />
               </div>
               <MainHeader className='col-10'>
+                Hi {`${userData.name}`},<br />{' '}
                 <span>
-                  Hi {`${userData.name}`},<br /> Welcome to <b>Future World</b>.
+                  Welcome to <b>Future World</b>.
                 </span>
               </MainHeader>
               <MainPara className='col-12'>
-                Please fill in your on-boarding application form. We are
-                delighted to have you here
+                {(() => {
+                  if (userData.isFormComplete) {
+                    return (
+                      <div className='col-6'>
+                        <b>FWID :{userData.fwId}</b>
+                        <b>FWID :{userData.fwId}</b>
+                        <b>FWID :{userData.fwId}</b>
+                        <b>FWID :{userData.fwId}</b>
+                      </div>
+                    );
+                  }
+                })()}
+                Please fill in your on-boarding application form.
+                <br />
+                We are delighted to have you here
               </MainPara>
               <div className='col-12'>
                 <Card3
                   className='mt-5'
-                  title='Pay Slip and Time Sheet'
+                  title='Payslips and Time Sheet'
                   subTitle='Click view to download Payslip or view Timesheet'
                 />
               </div>
@@ -49,10 +64,19 @@ function Hero(...props) {
           <br />
           <br />
           <div className='col-lg-6 order-1 order-lg-2'>
+            <div className='mt-2 mb-3'>
+              {/* <button
+                type='submit'
+                className='btn selected-crumb submit-button crumb-item w-100 font-weight-bold'
+              >
+                <i className='far fa-check-circle'></i> Submmit Application
+              </button> */}
+              <CustomModal />
+            </div>
             <div
               style={{
                 width: 600,
-                height: 1000,
+                height: 820,
               }}
             >
               <div className='d-flex flex-column'>
@@ -93,10 +117,7 @@ function Hero(...props) {
                   <Link className='link' to={{ pathname: '/other' }}>
                     <Card
                       title='Other Information'
-                      subTitle='4/4 Sections Completed'
-                      iconClass='fas fa-clipboard fa-2x'
                       sectionNames={['TOtherInformation', 'TUploadInformation']}
-                      percentage='100'
                     ></Card>
                   </Link>
                 </div>

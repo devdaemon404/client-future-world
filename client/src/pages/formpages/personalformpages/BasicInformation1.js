@@ -195,7 +195,7 @@ const BasicInformation1 = ({ history }) => {
             <hr></hr>
             <OPLoader isLoading={isLoading} />
             <form onSubmit={handleSubmit} className='mt-2 text-right'>
-              <div className='form-group row p-2'>
+              {/* <div className='form-group row p-2'>
                 <label className='col-sm-3 col-form-label'>
                   <span style={{ color: 'red' }}></span> Company Name
                 </label>
@@ -211,7 +211,7 @@ const BasicInformation1 = ({ history }) => {
                     disabled
                   />
                 </div>
-              </div>
+              </div> */}
               <div className='form-group row p-2'>
                 <label className='col-sm-3 col-form-label'>
                   <span style={{ color: 'red' }}></span> FWID
@@ -242,8 +242,8 @@ const BasicInformation1 = ({ history }) => {
                     placeholder='Future World'
                     name='custName'
                     value={custName || ''}
-                    onChange={(e) => handleChange(e)}
-                    required
+                    // onChange={(e) => handleChange(e)}
+                    disabled
                   />
                 </div>
               </div>
@@ -373,6 +373,7 @@ const BasicInformation1 = ({ history }) => {
               <div className='form-group row p-2'>
                 <label className='col-sm-3 col-form-label'>
                   <span style={{ color: 'red' }}>*</span> Passport Sized Photo
+                  (Max file size 50KB)
                 </label>
                 <div className='col-sm-9'>
                   <ImageUploading
@@ -381,7 +382,7 @@ const BasicInformation1 = ({ history }) => {
                     onChange={onImageAdd}
                     maxNumber={maxNumber}
                     dataURLKey='data_url'
-                    maxFileSize={46000}
+                    maxFileSize={50000}
                   >
                     {({
                       imageList,

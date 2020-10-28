@@ -6,11 +6,19 @@ const FinancialDocument = require('../models/FinancialDocument');
 
 /**
  * @desc    Get all users
- * @route   GET /api/admin/users
+ * @route   GET /api/admin/users?role=employee
  * @access  Private
  */
 exports.getAllUsers = asyncHandler(async (req, res, next) => {
-  const users = await User.find({});
+  const { role } = req.query;
+  let and = [{ reportingTo: { $in: [req.user.id] } }];
+
+  if (role === 'employee') and.push({ role: 'employee' });
+  else if (role === 'sub-admin') and.push({ role: 'sub-admin' });
+
+  const users = await User.find({
+    $and: and,
+  });
 
   res.status(200).json({
     success: true,
@@ -94,5 +102,33 @@ exports.updateRegisteredUser = asyncHandler(async (req, res, next) => {
     success: true,
     message: 'Updated user employee',
     data: employee,
+  });
+});
+
+/**
+ * @desc    Add reportingTo to user
+ * @route   POST /api/admin/add-reportee
+ * @access  Private
+ */
+exports.addReportee = asyncHandler(async (req, res, next) => {
+  const { userId, reporteeId } = req.body;
+
+  const user = await User.findByIdAndUpdate(
+    userId,
+    {
+      $addToSet: {
+        reportingTo: reporteeId,
+      },
+    },
+    {
+      new: true,
+      runValidators: true,
+    }
+  );
+
+  res.status(201).json({
+    success: true,
+    message: 'Added reportee to the specified user',
+    data: user,
   });
 });
