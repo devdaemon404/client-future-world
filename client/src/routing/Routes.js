@@ -46,7 +46,7 @@ const Routes = () => {
       }
     };
 
-    // checkLogin();
+    checkLogin();
     // eslint-disable-next-line
   }, []);
   return (
