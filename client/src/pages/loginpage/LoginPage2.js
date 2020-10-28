@@ -32,10 +32,12 @@ export const LoginPage2 = () => {
       });
 
       if (loginResult.data.success) {
-        console.log('done');
         setIsLoading(false);
         setError(false);
-        if (loginResult.data.role === 'admin') {
+        if (
+          loginResult.data.role === 'admin' ||
+          loginResult.data.role === 'sub-admin'
+        ) {
           history.push('/admin');
         } else {
           history.push('/');

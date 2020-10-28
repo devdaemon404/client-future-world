@@ -222,4 +222,10 @@ export const FormMain = styled.div`
     background: ;
     border-radius: 5px;
   }
+  .radio {
+    display: flex;
+    justify-content: space-evenly;
+    width: innherit;
+    font-size: 15px;
+  }
 `;

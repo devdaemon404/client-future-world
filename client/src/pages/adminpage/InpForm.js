@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
 import { FormMain } from './AdminPage.styles';
-import { Form, Row, Col, Button } from 'react-bootstrap';
+import { Form, Row, Col } from 'react-bootstrap';
 import axios from 'axios';
 import moment from 'moment';
 import { toast } from '../../util/ToastUtil';
 import { OPLoader } from '../../util/LoaderUtil';
 export const InpForm = ({ getUsers }) => {
   const [isLoading, setIsLoading] = useState(false);
+  const [selectedOption, setSelectedOption] = useState('');
   const [input, setInput] = useState({
     FName: '',
     LName: '',
@@ -42,24 +43,28 @@ export const InpForm = ({ getUsers }) => {
     lwd,
     comments,
   } = input;
-  const name = FName + '' + LName;
+  const name = FName + ' ' + LName;
   if (!FName) {
     FName = 'X';
   }
   if (!LName) {
     LName = 'X';
   }
-  var resu = '';
-  var joiningDate = moment();
-  let FWiD = `FW-${FName[0]}${LName[0]}${Math.round(Math.random() + Date.now())
+
+  let joiningDate = moment();
+  let fLetter = FName[0].toUpperCase();
+  let lLetter = LName[0].toUpperCase();
+  let FWiD = `FW-${fLetter}${lLetter}${Math.round(Math.random() + Date.now())
     .toString()
     .slice(-5)}`;
   const addUser = async () => {
     setIsLoading(true);
     try {
-      resu = await axios.post('/api/auth/register', {
+      // eslint-disable-next-line
+      let resu = await axios.post('/api/auth/register', {
         email,
         name,
+        role: selectedOption,
         phoneNumber,
         empNo: FWiD,
         extraFields: {
@@ -87,11 +92,10 @@ export const InpForm = ({ getUsers }) => {
       toast('Added a new User');
       getUsers();
     } catch (error) {
+      setIsLoading(false);
       if (error.response.status === 400) toast('User Already Exists');
       else toast('Error : Please Login Again');
     }
-
-    console.log(resu);
   };
 
   const fields1 = [
@@ -150,42 +154,42 @@ export const InpForm = ({ getUsers }) => {
       type: 'text',
       defaultValue: 'Designation',
       name: 'designation',
-      required: 'required',
+      required: '',
     },
     {
       fName: 'Reporting Manager ',
       type: 'text',
       defaultValue: 'Reporting Manager',
       name: 'Manager',
-      required: 'required',
+      required: '',
     },
     {
       fName: 'Customer Name  ',
       type: 'text',
       defaultValue: 'Customer Name',
       name: 'custName',
-      required: 'required',
+      required: '',
     },
     {
       fName: 'Customer Location',
       as: 'textarea',
       defaultValue: 'Location',
       name: 'custLoc',
-      required: 'required',
+      required: '',
     },
     {
       fName: 'Billing Per Hour  ',
       type: 'text',
       defaultValue: ' Enter Amount',
       name: 'BillingPH',
-      required: 'required',
+      required: '',
     },
     {
       fName: 'Annual CTC ',
       type: 'text',
       defaultValue: ' Enter Amount',
       name: 'annualCTC',
-      required: 'required',
+      required: '',
     },
     {
       fName: 'Increment  ',
@@ -206,7 +210,7 @@ export const InpForm = ({ getUsers }) => {
       type: 'text',
       defaultValue: 'Comments',
       name: 'comments',
-      required: 'required',
+      required: '',
     },
   ];
 
@@ -258,8 +262,8 @@ export const InpForm = ({ getUsers }) => {
             className='form-control'
             type={field.type}
             key={i}
-            minlength={field.min}
-            maxlength={field.max}
+            minLength={field.min}
+            maxLength={field.max}
             as={field.as}
             name={field.name}
             required={field.required}
@@ -307,6 +311,33 @@ export const InpForm = ({ getUsers }) => {
             {set2}
             <div className='info-type'>Work Information</div>
             {set3}
+            <div className='radio'>
+              <p style={{ marginLeft: 38 }}>User Type</p>{' '}
+              <div>
+                <input
+                  type='radio'
+                  value='employee'
+                  checked={selectedOption === 'employee'}
+                  onChange={(e) => {
+                    setSelectedOption(e.target.value);
+                  }}
+                  required='required'
+                />{' '}
+                Employee
+              </div>
+              <div>
+                <input
+                  type='radio'
+                  value='sub-admin'
+                  checked={selectedOption === 'sub-admin'}
+                  onChange={(e) => {
+                    setSelectedOption(e.target.value);
+                  }}
+                  required='required'
+                />{' '}
+                Sub-Admin
+              </div>
+            </div>
             <br />
             <button
               className='btn'
@@ -317,6 +348,7 @@ export const InpForm = ({ getUsers }) => {
                 color: 'white',
               }}
               type='submit'
+              disabled={selectedOption === '' ? 'disabled' : ''}
             >
               Add Employee
             </button>
