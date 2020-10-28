@@ -18,7 +18,7 @@ const UserSchema = new mongoose.Schema({
   },
   role: {
     type: String,
-    enum: ['employee'],
+    enum: ['employee', 'sub-admin'],
     default: 'employee',
   },
   phoneNumber: {
@@ -27,6 +27,12 @@ const UserSchema = new mongoose.Schema({
   empNo: {
     type: String,
   },
+  reportingTo: [
+    {
+      type: mongoose.Schema.ObjectId,
+      ref: 'users',
+    },
+  ],
   password: {
     type: String,
     required: [true, 'Please add a password'],

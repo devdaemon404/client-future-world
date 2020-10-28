@@ -26,6 +26,7 @@ exports.register = asyncHandler(async (req, res, next) => {
     phoneNumber,
     empNo,
     password: hashedPassword,
+    reportingTo: [req.user.id],
     role,
   });
 
