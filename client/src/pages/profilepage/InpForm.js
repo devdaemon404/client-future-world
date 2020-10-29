@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { FormMain } from './ProfilePage.styles';
-import { Form, Row, Col, Button } from 'react-bootstrap';
+import { Form, Row, Col } from 'react-bootstrap';
 import axios from 'axios';
 import { toast } from '../../util/ToastUtil';
 export const InpForm = (props) => {
