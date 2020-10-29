@@ -14,7 +14,7 @@ import { toast } from '../../util/ToastUtil.js';
 import { OPLoader } from '../../util/LoaderUtil.js';
 
 const Payslippage = () => {
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading] = useState(false);
   const [payMonth, setPayMonth] = useState('');
   const [payYear, setPayYear] = useState('');
   const [timeMonth, setTimeMonth] = useState('');
@@ -209,8 +209,7 @@ const Payslippage = () => {
                     payMonth === undefined ||
                     payMonth === null
                   }
-                  onClick={updateChange}
-                >
+                  onClick={updateChange}>
                   <i className='fas fa-download'></i> Get Pay Slip
                 </button>
                 <div className='text-muted mt-1'>
@@ -258,8 +257,7 @@ const Payslippage = () => {
                     timeMonth === undefined ||
                     timeMonth === null
                   }
-                  onClick={updateChange}
-                >
+                  onClick={updateChange}>
                   <i className='fas fa-eye'></i> View Time Sheet
                 </button>
                 <div className='text-muted mt-1'>
@@ -273,12 +271,12 @@ const Payslippage = () => {
       </div>
 
       <Modal
-        title='Basic Modal'
+        title='Time Sheet'
         visible={visible}
         onOk={handleOk}
         onCancel={handleCancel}
-        width={1000}
-      >
+        closable={false}
+        width={1000}>
         <div
           className='container text-center'
           id='viewTimeSheet'

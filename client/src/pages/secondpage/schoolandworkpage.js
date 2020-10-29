@@ -33,6 +33,7 @@ function SchoolAndWorkPage() {
       setCompletedSectionsCount(count);
     };
     getState();
+    //eslint-disable-next-line
   }, []);
   return (
     <Container>

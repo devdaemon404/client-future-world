@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import BG from '../../assets/img/smart.png';
 
 import axios from 'axios';
 
@@ -129,7 +128,7 @@ export const LoginPage2 = () => {
           <div className='image'>
             {' '}
             <img
-              src={BG}
+              src='/smart-min.png'
               alt={'bgsy'}
               style={{
                 width: 800,

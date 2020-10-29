@@ -3,6 +3,7 @@ import { FormMain } from './ProfilePage.styles';
 import { Form, Row, Col } from 'react-bootstrap';
 import axios from 'axios';
 import { toast } from '../../util/ToastUtil';
+
 export const InpForm = (props) => {
   const [input, setInput] = useState({});
 
@@ -23,7 +24,7 @@ export const InpForm = (props) => {
   } = input;
   const fields2 = [
     {
-      fName: 'phoneNumber',
+      fName: 'Phone Number',
       type: 'Number',
       min: 1000000000,
       max: 9999999999,
@@ -123,8 +124,9 @@ export const InpForm = (props) => {
 
   let temp = {};
   const putUserData = async () => {
+
     temp = await axios.put('/api/admin/register', {
-      employeeId: [props.retrievedId],
+      userId: props.retrievedId,
       updateParams: {
         designation,
         phoneNumber,
@@ -141,8 +143,6 @@ export const InpForm = (props) => {
         comments,
       },
     });
-
-    await console.log(temp);
     toast('User Updated');
   };
 
@@ -234,8 +234,7 @@ export const InpForm = (props) => {
                 background: '#3f47cc',
                 color: 'white',
               }}
-              type='submit'
-            >
+              type='submit'>
               Update Data
             </button>
           </Form>

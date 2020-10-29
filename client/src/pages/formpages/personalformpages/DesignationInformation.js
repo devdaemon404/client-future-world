@@ -1,15 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import {
-  Container,
-  HeroContainer,
-  MainHeader,
-  //  MainPara, CardHeader, CardPara
-} from '../formpage.styles.js';
+import axios from 'axios';
+
+import { Container, HeroContainer, MainHeader } from '../formpage.styles.js';
 import Header from '../../../components/header/Header';
 import FormPageComponent from '../../../components/form/FormPageComponent';
 import OPBreadCrumb from '../../../components/form/OPBreadCrumb.js';
 
-import axios from 'axios';
 import { OPLoader } from '../../../util/LoaderUtil.js';
 import { config } from '../../../util/RequestUtil.js';
 
@@ -38,7 +34,6 @@ const DesignationInformation = ({ history }) => {
     reporting,
     jobLevel,
     custLoc,
-    custSerName,
     entryVia,
     collegeName,
     hrName,
@@ -474,8 +469,7 @@ const DesignationInformation = ({ history }) => {
                 <div className='col-sm-12'>
                   <button
                     type='submit'
-                    className='btn selected-crumb submit-button crumb-item w-100 font-weight-bold'
-                  >
+                    className='btn selected-crumb submit-button crumb-item w-100 font-weight-bold'>
                     <i className='far fa-check-circle'></i> Save and Continue
                   </button>
                 </div>

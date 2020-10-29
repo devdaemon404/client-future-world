@@ -48,10 +48,6 @@ const BasicInformation1 = ({ history }) => {
     fFirstName,
     fMiddleName,
     fLastName,
-    //// eslint-disable-next-line
-    photo,
-    //
-    upload,
   } = formData;
   const [images, setImages] = React.useState([]);
   const maxNumber = 1;
@@ -387,8 +383,7 @@ const BasicInformation1 = ({ history }) => {
                     onChange={onImageAdd}
                     maxNumber={maxNumber}
                     dataURLKey='data_url'
-                    maxFileSize={50000}
-                  >
+                    maxFileSize={50000}>
                     {({
                       imageList,
                       onImageUpload,
@@ -406,8 +401,7 @@ const BasicInformation1 = ({ history }) => {
                             onClick={async () => {
                               onImageUpload();
                             }}
-                            {...dragProps}
-                          >
+                            {...dragProps}>
                             Click or Drop here
                           </div>
                         ) : (
@@ -421,16 +415,14 @@ const BasicInformation1 = ({ history }) => {
                               <div className='row mb-5'>
                                 <div
                                   className='btn selected-crumb'
-                                  onClick={() => onImageUpdate(index)}
-                                >
+                                  onClick={() => onImageUpdate(index)}>
                                   Update
                                 </div>
                               </div>
                               <div className='row'>
                                 <div
                                   className='btn selected-crumb'
-                                  onClick={() => onImageRemove(index)}
-                                >
+                                  onClick={() => onImageRemove(index)}>
                                   Remove
                                 </div>
                               </div>
@@ -447,8 +439,7 @@ const BasicInformation1 = ({ history }) => {
                 <div className='col-sm-12'>
                   <button
                     type='submit'
-                    className='btn selected-crumb submit-button crumb-item w-100 font-weight-bold'
-                  >
+                    className='btn selected-crumb submit-button crumb-item w-100 font-weight-bold'>
                     <i className='far fa-check-circle'></i> Save and Continue
                   </button>
                 </div>

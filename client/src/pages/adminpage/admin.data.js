@@ -35,7 +35,7 @@ export const fields2 = [
   {
     fName: 'Email Id',
     type: 'email',
-    defaultValue: 'Email@ID.com',
+    defaultValue: 'email@company.com',
     name: 'email',
     required: 'required',
   },
@@ -45,7 +45,7 @@ export const fields3 = [
   {
     fName: 'FW Email',
     type: 'email',
-    defaultValue: 'Email@ID.com',
+    defaultValue: 'email@company.com',
     name: 'FWEmail',
     required: '',
   },
