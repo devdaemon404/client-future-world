@@ -190,7 +190,7 @@ const Profilepage = ({ retrievedId }) => {
                 <div
                   style={{
                     display: 'flex',
-                    width: 800,
+                    width: '80%',
                     justifyContent: 'space-between',
                   }}
                 >
@@ -299,7 +299,7 @@ const Profilepage = ({ retrievedId }) => {
                         <input
                           type='file'
                           className='realupload'
-                          accept="application/pdf"
+                          accept='application/pdf'
                           id='FileUpload1'
                           style={{ opacity: 0 }}
                           disabled={
@@ -337,7 +337,7 @@ const Profilepage = ({ retrievedId }) => {
                         <input
                           type='file'
                           className='realupload'
-                          accept="application/pdf"
+                          accept='application/pdf'
                           id='FileUpload2'
                           disabled={
                             tSheetDate === 'end' || pSlipDate.trim() === ''

@@ -5,11 +5,9 @@ export const ProfContainer = styled.div`
 `;
 export const LeftCol = styled.div`
   width: 23%;
-  // height: 100vh;
-  // background: gray;
 `;
 export const RightCol = styled.div`
-  width: 77%;
+  width: 60%;
   // height: 100vh;
   // background: #3f46cc17;
   padding: 20px;
@@ -55,6 +53,14 @@ export const NameSection = styled.div`
     height: 250px;
     width: 100%;
   }
+  @media only screen and (max-width: 1500px) {
+    h2 {
+      font-size: 36px;
+    }
+    h3 {
+      font-size: 22px;
+    }
+  }
 `;
 export const NavSection = styled.div`
   border-bottom: 3px solid rgba(0, 00, 0, 0.1);
@@ -64,6 +70,13 @@ export const NavSection = styled.div`
     font-size: 25px;
     font-weight: 700;
     cursor: pointer;
+  }
+  @media only screen and (max-width: 1500px) {
+    span {
+      font-size: 20px;
+      margin-left: 20px;
+      padding: 10px 20px;
+    }
   }
 `;
 export const BodySection = styled.div`
@@ -88,7 +101,7 @@ export const FormMain = styled.div`
     color: #3f46cc;
     font-family: montserrat;
     text-transform: uppercase;
-    width: 100%;
+    width: 52%;
     margin: 40px 0px;
   }
 
