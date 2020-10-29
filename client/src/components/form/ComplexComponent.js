@@ -138,6 +138,7 @@ function ComplexComponent({
                   hidden
                   style={{ width: 50 }}
                   type='file'
+                  accept="application/pdf"
                   id='file'
                   onChange={(e) => {
                     const file = e.target.files[0];
