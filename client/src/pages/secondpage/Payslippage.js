@@ -273,7 +273,7 @@ const Payslippage = () => {
       </div>
 
       <Modal
-        title='Basic Modal'
+        title='Time Sheet'
         visible={visible}
         onOk={handleOk}
         onCancel={handleCancel}
@@ -282,7 +282,7 @@ const Payslippage = () => {
         <div
           className='container text-center'
           id='viewTimeSheet'
-          // style={{ border: '1px solid black' }}
+        // style={{ border: '1px solid black' }}
         ></div>
       </Modal>
     </Container>

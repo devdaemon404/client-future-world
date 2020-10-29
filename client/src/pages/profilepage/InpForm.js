@@ -23,7 +23,7 @@ export const InpForm = (props) => {
   } = input;
   const fields2 = [
     {
-      fName: 'phoneNumber',
+      fName: 'Phone Number',
       type: 'Number',
       min: 1000000000,
       max: 9999999999,

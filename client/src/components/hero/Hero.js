@@ -45,6 +45,8 @@ function Hero(...props) {
                             <div> <b style={{ fontSize: 22 }}>{key.toString()}:&nbsp;&nbsp;</b><span className=''>{value.toString()} </span> </div>
                           ))
                         }
+                        <br />
+                        <br />
                       </div>
                     );
                   }
