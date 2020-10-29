@@ -14,7 +14,7 @@ import { toast } from '../../util/ToastUtil.js';
 import { OPLoader } from '../../util/LoaderUtil.js';
 
 const Payslippage = () => {
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading] = useState(false);
   const [payMonth, setPayMonth] = useState('');
   const [payYear, setPayYear] = useState('');
   const [timeMonth, setTimeMonth] = useState('');

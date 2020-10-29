@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { HeroContainer, MainHeader, MainPara } from './hero.styles';
 import Card from '../card/Card';
 import { Link } from 'react-router-dom';
@@ -40,23 +40,32 @@ function Hero(...props) {
                   if (userData.isFormComplete) {
                     return (
                       <div className='col'>
-                        {
-                          Object.entries({ Department: userData.department, Designation: userData.designation, 'Joining Date': userData.joiningDate, 'FWID': userData.empNo }).map(([key, value]) => (
-                            <div> <b style={{ fontSize: 22 }}>{key.toString()}:&nbsp;&nbsp;</b><span className=''>{value.toString()} </span> </div>
-                          ))
-                        }
+                        {Object.entries({
+                          Department: userData.department,
+                          Designation: userData.designation,
+                          'Joining Date': userData.joiningDate,
+                          FWID: userData.empNo,
+                        }).map(([key, value], index) => (
+                          <div key={index}>
+                            {' '}
+                            <b style={{ fontSize: 22 }}>
+                              {key.toString()}:&nbsp;&nbsp;
+                            </b>
+                            <span className=''>{value.toString()} </span>{' '}
+                          </div>
+                        ))}
                         <br />
                         <br />
                       </div>
                     );
-                  }
-                  else {
+                  } else {
                     return (
                       <div>
                         Please fill in your on-boarding application form.
                         <br />
-                We are delighted to have you here
-                      </div>)
+                        We are delighted to have you here
+                      </div>
+                    );
                   }
                 })()}
               </MainPara>
@@ -85,8 +94,7 @@ function Hero(...props) {
               style={{
                 width: 600,
                 height: 820,
-              }}
-            >
+              }}>
               <div className='d-flex flex-column'>
                 <div className='hero-row d-flex flex-row justify-content-around'>
                   <Link className='link' to={{ pathname: '/personal' }}>
@@ -99,8 +107,7 @@ function Hero(...props) {
                         'TDocumentalInformation',
                         'TAddressInformation',
                         'TLanguageInformation',
-                      ]}
-                    ></Card>
+                      ]}></Card>
                   </Link>
                   <Link className='link' to={{ pathname: '/work' }}>
                     <Card
@@ -108,8 +115,7 @@ function Hero(...props) {
                       sectionNames={[
                         'TWorkInformation',
                         'TAcademicInformation',
-                      ]}
-                    ></Card>
+                      ]}></Card>
                   </Link>
                 </div>
                 <div className='hero-row d-flex flex-row justify-content-around '>
@@ -119,14 +125,15 @@ function Hero(...props) {
                       sectionNames={[
                         'THealthInformation',
                         'TFamilyInformation',
-                      ]}
-                    ></Card>
+                      ]}></Card>
                   </Link>
                   <Link className='link' to={{ pathname: '/other' }}>
                     <Card
                       title='Other Information'
-                      sectionNames={['TOtherInformation', 'TUploadInformation']}
-                    ></Card>
+                      sectionNames={[
+                        'TOtherInformation',
+                        'TUploadInformation',
+                      ]}></Card>
                   </Link>
                 </div>
               </div>

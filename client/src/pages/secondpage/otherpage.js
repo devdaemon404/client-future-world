@@ -34,6 +34,7 @@ function OtherPage() {
       setCompletedSectionsCount(count);
     };
     getState();
+    //eslint-disable-next-line
   }, []);
 
   return (

@@ -35,6 +35,7 @@ function HealthPage() {
       setCompletedSectionsCount(count);
     };
     getState();
+    //eslint-disable-next-line
   }, []);
   return (
     <Container>

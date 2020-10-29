@@ -131,14 +131,13 @@ function ComplexComponent({
                 style={{
                   height: 30,
                   textDecoration: value || 'underline',
-                }}
-              >
-                {data[formatter.rowIdx][col.key].split('/')[2] || 'Upload File'}
+                }}>
+                {data[formatter.rowIdx][col.key] || 'Upload File'}
                 <input
                   hidden
                   style={{ width: 50 }}
                   type='file'
-                  accept="application/pdf"
+                  accept='application/pdf'
                   id='file'
                   onChange={(e) => {
                     const file = e.target.files[0];
@@ -187,8 +186,7 @@ function ComplexComponent({
           <div
             className='btn'
             style={{ textDecoration: 'underline' }}
-            onClick={() => onDelete(formatter.rowIdx)}
-          >
+            onClick={() => onDelete(formatter.rowIdx)}>
             Delete
           </div>
         </span>
@@ -213,8 +211,7 @@ function ComplexComponent({
             }
             const tempData = [...data, { ...placeholderData, deletable: true }];
             saveData(tempData);
-          }}
-        >
+          }}>
           <span style={{ textDecoration: 'underline' }}>
             + &nbsp;{buttonName}
           </span>

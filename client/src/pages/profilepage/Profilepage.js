@@ -1,4 +1,8 @@
-import React, { useEffect, useMemo, useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import moment from 'moment';
+import { DatePicker, Space } from 'antd';
+import axios from 'axios';
+
 import InpForm from './InpForm';
 import {
   LeftCol,
@@ -12,17 +16,14 @@ import {
   BodySection,
   FormMain,
 } from './ProfilePage.styles';
-import axios from 'axios';
 import IMGDEFAULT from '../../assets/img/imgplaceholder.png';
-// eslint-disable-next-line
-import { Form } from 'react-bootstrap';
+
 import GPS from '../../assets/img/placeholder.png';
-import moment from 'moment';
 import PHONE from '../../assets/img/phone.png';
 import { uploadFinancialDocument } from '../../util/UploadFile';
-import { DatePicker, Space } from 'antd';
 import { toast } from '../../util/ToastUtil';
 import { OPLoader } from '../../util/LoaderUtil';
+
 const Profilepage = ({ retrievedId }) => {
   const [subAdminId, setSubAdminId] = useState();
   const [userData, setUserData] = useState({});
@@ -32,14 +33,15 @@ const Profilepage = ({ retrievedId }) => {
   const [loading, setLoading] = useState(1);
   const [view, setview] = useState('data');
   const [role, setRole] = useState('sub-admin');
-  const [subList, setSubList] = useState([]);
-  const [adminList, setadminList] = useState(<option>Loading...</option>);
+  const [subAdmins, setSubAdminList] = useState([]);
+
   const checkLogin = async () => {
     try {
       const res = await axios.get('/api/auth/validate-token').then();
       setRole(res.data.role);
     } catch (err) {}
   };
+
   const addRepor = async (e) => {
     e.preventDefault();
 
@@ -55,25 +57,17 @@ const Profilepage = ({ retrievedId }) => {
   };
 
   let temp;
-  let options = [];
+
   const paySlipMonthUpdater = (date, dateString) => {
     setPSlipDate(dateString);
   };
 
   const getSubAdmins = async () => {
-    let list = await axios.get('/api/admin/users?role=sub-admin');
-
-    list = list.data.data;
-    if (list) {
-      setSubList(list);
-
-      options = await list.map((data) => (
-        <option key={data._id} value={data._id}>
-          {data.name} {data.empNo}
-        </option>
-      ));
-
-      setadminList(options);
+    try {
+      let res = await axios.get('/api/admin/users?role=sub-admin');
+      setSubAdminList(res.data.data);
+    } catch (error) {
+      console.error(error);
     }
   };
 
@@ -85,8 +79,10 @@ const Profilepage = ({ retrievedId }) => {
 
       body.scrollTop -= 10000;
     } catch (error) {}
+    //eslint-disable-next-line
   }, [loading]);
-  const timeSheetMonthUpdater = (date, dateString) => {
+
+  const timeSheetMonthUpdater = (_, dateString) => {
     setTSheetDate(dateString);
   };
 
@@ -99,13 +95,14 @@ const Profilepage = ({ retrievedId }) => {
     setUserData({ ...temp });
     setLoading(0);
   };
+
   const downloadFile = () => {
     window.open(`/api/ejs/pdf-gen?employeeId=${retrievedId}`);
   };
-  useMemo(() => {
-    {
-      getUserData();
-    }
+
+  useEffect(() => {
+    getUserData();
+    //eslint-disable-next-line
   }, [toggle]);
 
   const onUploadHandler1 = async (e) => {
@@ -129,6 +126,7 @@ const Profilepage = ({ retrievedId }) => {
       toast('Please Select Pay Slip Month');
     }
   };
+
   const onUploadHandler2 = async (e) => {
     let file = e.target.files[0];
     let time = tSheetDate.split('-');
@@ -148,6 +146,7 @@ const Profilepage = ({ retrievedId }) => {
       setTSheetDate('end');
     }
   };
+
   return (
     <React.Fragment>
       {loading ? (
@@ -157,7 +156,7 @@ const Profilepage = ({ retrievedId }) => {
           <LeftCol>
             <DisplayPic>
               <img
-                alt='User Image Not uploaded'
+                alt='user profile'
                 width={220}
                 src={userData.photo || IMGDEFAULT}
               />
@@ -192,8 +191,7 @@ const Profilepage = ({ retrievedId }) => {
                     display: 'flex',
                     width: 800,
                     justifyContent: 'space-between',
-                  }}
-                >
+                  }}>
                   {' '}
                   <h2>{userData.FName + ' ' + userData.LName}</h2>{' '}
                   <button
@@ -205,8 +203,7 @@ const Profilepage = ({ retrievedId }) => {
                       fontWeight: 700,
                       fontSize: 22,
                       color: '#707070',
-                    }}
-                  >
+                    }}>
                     ⤓ Download Profile
                   </button>{' '}
                 </div>
@@ -226,8 +223,7 @@ const Profilepage = ({ retrievedId }) => {
                       ? { textDecoration: 'underline solid blue' }
                       : {}
                   }
-                  onClick={(e) => setview('data')}
-                >
+                  onClick={(e) => setview('data')}>
                   About
                 </span>{' '}
                 <span
@@ -236,8 +232,7 @@ const Profilepage = ({ retrievedId }) => {
                       ? { textDecoration: 'underline solid blue' }
                       : {}
                   }
-                  onClick={(e) => setview('upload')}
-                >
+                  onClick={(e) => setview('upload')}>
                   Documents
                 </span>
                 {role === 'admin' ? (
@@ -249,8 +244,7 @@ const Profilepage = ({ retrievedId }) => {
                     }
                     onClick={(e) => {
                       setview('Add Reportee');
-                    }}
-                  >
+                    }}>
                     Add Reportee
                   </span>
                 ) : (
@@ -267,10 +261,6 @@ const Profilepage = ({ retrievedId }) => {
                   />
                 ) : view === 'upload' ? (
                   <React.Fragment>
-                    {/* <DocumentUpload>
-                  <ReactDropZone />
-                </DocumentUpload> */}
-
                     <UploadContainer>
                       <div className='heading'>
                         <h4>Upload Payslip</h4>
@@ -292,14 +282,13 @@ const Profilepage = ({ retrievedId }) => {
                           id='btn1'
                           onClick={(e) => {
                             document.getElementById('FileUpload1').click();
-                          }}
-                        >
+                          }}>
                           {'Click To Upload'}
                         </div>
                         <input
                           type='file'
                           className='realupload'
-                          accept="application/pdf"
+                          accept='application/pdf'
                           id='FileUpload1'
                           style={{ opacity: 0 }}
                           disabled={
@@ -330,14 +319,13 @@ const Profilepage = ({ retrievedId }) => {
                           id='btn2'
                           onClick={(e) => {
                             document.getElementById('FileUpload2').click();
-                          }}
-                        >
+                          }}>
                           {'Click To Upload'}
                         </div>
                         <input
                           type='file'
                           className='realupload'
-                          accept="application/pdf"
+                          accept='application/pdf'
                           id='FileUpload2'
                           disabled={
                             tSheetDate === 'end' || pSlipDate.trim() === ''
@@ -351,31 +339,48 @@ const Profilepage = ({ retrievedId }) => {
                 ) : (
                   <>
                     <FormMain>
-                      <Form onSubmit={addRepor}>
+                      <form onSubmit={addRepor}>
                         <h4>
                           {' '}
                           <div className='info-type'>
                             Assign Employee to Sub Admin
                           </div>
                         </h4>
-                        <Form.Group style={{ paddingLeft: 70 }}>
-                          <Form.Control
+                        <div className='form-group' style={{ paddingLeft: 70 }}>
+                          <select
+                            className='form-control'
+                            onChange={(e) => setSubAdminId(e.target.value)}
+                            defaultValue={''}>
+                            <option value='' disabled>
+                              Select sub-admin ...
+                            </option>
+                            {subAdmins.map((subAdmin, key) => (
+                              <option key={key} value={subAdmin._id}>
+                                {subAdmin.name}
+                              </option>
+                            ))}
+                          </select>
+                          {/* <input
                             as='select'
                             required
                             size='md'
-                            className='selectBox'
-                            onChange={(e) => setSubAdminId(e.target.value)}
-                          >
+                            className='form-control'
+                            onChange={(e) => setSubAdminId(e.target.value)}>
                             {adminList}
-                          </Form.Control>
-                          '
-                          <Form.Check
-                            required
-                            type='checkbox'
-                            id='Checkbox'
-                            label={`Are you sure you want to add the reportee`}
-                          />
-                        </Form.Group>
+                          </input> */}
+                          <br />
+                          <div className='form-group form-check'>
+                            <input
+                              className='form-check-input'
+                              required
+                              type='checkbox'
+                              id='Checkbox'
+                            />
+                            <label className='form-check-label'>
+                              Are you sure you want to add the reportee
+                            </label>
+                          </div>
+                        </div>
                         <button
                           className='btn'
                           style={{
@@ -384,11 +389,10 @@ const Profilepage = ({ retrievedId }) => {
                             background: '#3f47cc',
                             color: 'white',
                           }}
-                          type='submit'
-                        >
+                          type='submit'>
                           Continue
                         </button>
-                      </Form>
+                      </form>
                     </FormMain>
                   </>
                 )}
@@ -398,18 +402,6 @@ const Profilepage = ({ retrievedId }) => {
         </ProfContainer>
       )}
     </React.Fragment>
-  );
-
-  const notMain = (
-    <div
-      style={{
-        width: '100vw',
-        height: '100vh',
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-      }}
-    ></div>
   );
 };
 export default Profilepage;

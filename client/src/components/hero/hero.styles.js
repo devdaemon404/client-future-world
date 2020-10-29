@@ -80,7 +80,7 @@ export const MainHeader = styled.h1`
   }
 `;
 
-export const MainPara = styled.p`
+export const MainPara = styled.div`
   margin-top: 25px;
   color: #eee;
   font-size: 18px;
