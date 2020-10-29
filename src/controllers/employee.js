@@ -49,7 +49,7 @@ exports.getEmployeeInfo = asyncHandler(async (req, res, next) => {
   if (!req.query.select) {
     const userData = await User.findById(req.user.id).select('name');
     let userPhoto = await Employee.findOne({ user: req.user.id }).select(
-      'photo'
+      'photo isFormComplete joiningDate designation department'
     );
     let data;
     if (userPhoto !== null) {

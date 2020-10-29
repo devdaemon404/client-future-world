@@ -36,6 +36,18 @@ function Hero(...props) {
                 </span>
               </MainHeader>
               <MainPara className='col-12'>
+                {(() => {
+                  if (userData.isFormComplete) {
+                    return (
+                      <div className='col-6'>
+                        <b>FWID :{userData.fwId}</b>
+                        <b>FWID :{userData.fwId}</b>
+                        <b>FWID :{userData.fwId}</b>
+                        <b>FWID :{userData.fwId}</b>
+                      </div>
+                    );
+                  }
+                })()}
                 Please fill in your on-boarding application form.
                 <br />
                 We are delighted to have you here
@@ -52,7 +64,7 @@ function Hero(...props) {
           <br />
           <br />
           <div className='col-lg-6 order-1 order-lg-2'>
-            <div className="mt-2 mb-3">
+            <div className='mt-2 mb-3'>
               {/* <button
                 type='submit'
                 className='btn selected-crumb submit-button crumb-item w-100 font-weight-bold'
