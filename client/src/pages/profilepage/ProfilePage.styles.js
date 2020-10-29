@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 export const ProfContainer = styled.div`
   display: flex;
-  width: 100vw;
+  width: 70vw;
 `;
 export const LeftCol = styled.div`
   width: 23%;
@@ -16,6 +16,14 @@ export const DisplayPic = styled.div`
   width: 80%;
   height: 450px;
   padding: 40px;
+  .imageDp {
+    width: 220px;
+  }
+  @media only screen and (max-width: 1500px) {
+    .imageDp {
+      width: 120px;
+    }
+  }
 `;
 export const SidebarDetails = styled.div`
   width: 100%;
@@ -65,9 +73,9 @@ export const NameSection = styled.div`
 export const NavSection = styled.div`
   border-bottom: 3px solid rgba(0, 00, 0, 0.1);
   span {
-    padding: 10px 50px;
-    margin-left: 40px;
-    font-size: 25px;
+    padding: 10px 30px;
+    margin-left: 30px;
+    font-size: 20px;
     font-weight: 700;
     cursor: pointer;
   }
@@ -76,6 +84,13 @@ export const NavSection = styled.div`
       font-size: 20px;
       margin-left: 20px;
       padding: 10px 20px;
+    }
+  }
+  @media only screen and (max-width: 1300px) {
+    span {
+      font-size: 16px;
+      margin-left: 10px;
+      padding: 10px 10px;
     }
   }
 `;
@@ -101,7 +116,7 @@ export const FormMain = styled.div`
     color: #3f46cc;
     font-family: montserrat;
     text-transform: uppercase;
-    width: 52%;
+    width: 57%;
     margin: 40px 0px;
   }
 
@@ -110,6 +125,16 @@ export const FormMain = styled.div`
   .selectBox {
     width: 280px;
   }
+
+  @media only screen and (max-width: 1300px) {
+    width: 500px;
+    .formsInp {
+      width: 300px;
+    }
+    .info-type {
+      font-size: 24px;
+    }
+  }
 `;
 export const DocumentUpload = styled.div`
   overflow: hidden;
@@ -117,12 +142,14 @@ export const DocumentUpload = styled.div`
   border: 1px solid rgba(0, 0, 0, 0.4);
 `;
 export const UploadContainer = styled.div`
-  padding: 30px;
   color: #3f46cc;
   .heading {
-    width: 600px;
-    font-weight: 700;
+    border-bottom: 2px solid #3f46cc;
     color: #3f46cc;
+    font-family: montserrat;
+    text-transform: uppercase;
+    width: 54%;
+    margin: 30px 0px;
   }
   .form-group {
     margin: 20px 0;
@@ -162,11 +189,15 @@ export const UploadContainer = styled.div`
   }
 
   .heading h4 {
-    border-bottom: 2px solid #3f46cc;
     color: #3f46cc;
     font-family: montserrat;
     text-transform: uppercase;
-    width: 100%;
-    margin: 40px 0px;
+  }
+
+  @media only screen and (max-width: 1500px) {
+    #btn1,
+    #btn2 {
+      width: 300px;
+    }
   }
 `;

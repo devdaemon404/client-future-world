@@ -157,7 +157,7 @@ const Profilepage = ({ retrievedId }) => {
             <DisplayPic>
               <img
                 alt='user profile'
-                width={220}
+                className='imageDp'
                 src={userData.photo || IMGDEFAULT}
               />
             </DisplayPic>
@@ -191,7 +191,8 @@ const Profilepage = ({ retrievedId }) => {
                     display: 'flex',
                     width: '80%',
                     justifyContent: 'space-between',
-                  }}>
+                  }}
+                >
                   {' '}
                   <h2>{userData.FName + ' ' + userData.LName}</h2>{' '}
                   <button
@@ -203,7 +204,8 @@ const Profilepage = ({ retrievedId }) => {
                       fontWeight: 700,
                       fontSize: 22,
                       color: '#707070',
-                    }}>
+                    }}
+                  >
                     ⤓ Download Profile
                   </button>{' '}
                 </div>
@@ -223,7 +225,8 @@ const Profilepage = ({ retrievedId }) => {
                       ? { textDecoration: 'underline solid blue' }
                       : {}
                   }
-                  onClick={(e) => setview('data')}>
+                  onClick={(e) => setview('data')}
+                >
                   About
                 </span>{' '}
                 <span
@@ -232,7 +235,8 @@ const Profilepage = ({ retrievedId }) => {
                       ? { textDecoration: 'underline solid blue' }
                       : {}
                   }
-                  onClick={(e) => setview('upload')}>
+                  onClick={(e) => setview('upload')}
+                >
                   Documents
                 </span>
                 {role === 'admin' ? (
@@ -244,7 +248,8 @@ const Profilepage = ({ retrievedId }) => {
                     }
                     onClick={(e) => {
                       setview('Add Reportee');
-                    }}>
+                    }}
+                  >
                     Add Reportee
                   </span>
                 ) : (
@@ -282,7 +287,8 @@ const Profilepage = ({ retrievedId }) => {
                           id='btn1'
                           onClick={(e) => {
                             document.getElementById('FileUpload1').click();
-                          }}>
+                          }}
+                        >
                           {'Click To Upload'}
                         </div>
                         <input
@@ -319,7 +325,8 @@ const Profilepage = ({ retrievedId }) => {
                           id='btn2'
                           onClick={(e) => {
                             document.getElementById('FileUpload2').click();
-                          }}>
+                          }}
+                        >
                           {'Click To Upload'}
                         </div>
                         <input
@@ -342,15 +349,14 @@ const Profilepage = ({ retrievedId }) => {
                       <form onSubmit={addRepor}>
                         <h4>
                           {' '}
-                          <div className='info-type'>
-                            Assign Employee to Sub Admin
-                          </div>
+                          <div className='info-type'>Assign to Sub Admin</div>
                         </h4>
                         <div className='form-group' style={{ paddingLeft: 70 }}>
                           <select
                             className='form-control'
                             onChange={(e) => setSubAdminId(e.target.value)}
-                            defaultValue={''}>
+                            defaultValue={''}
+                          >
                             <option value='' disabled>
                               Select sub-admin ...
                             </option>
@@ -389,7 +395,8 @@ const Profilepage = ({ retrievedId }) => {
                             background: '#3f47cc',
                             color: 'white',
                           }}
-                          type='submit'>
+                          type='submit'
+                        >
                           Continue
                         </button>
                       </form>
