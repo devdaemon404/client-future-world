@@ -14,6 +14,13 @@ const Employee = require('../models/Employee');
 exports.register = asyncHandler(async (req, res, next) => {
   const { name, email, role, phoneNumber, empNo, extraFields } = req.body;
 
+  if (req.user.role === 'sub-admin' && role === 'sub-admin')
+    return next(
+      new ErrorResponse(
+        'Cannot register an user as a sub-admin with your access role'
+      )
+    );
+
   let password = crypto.randomBytes(8).toString('hex');
 
   const salt = await bcrypt.genSalt(10);
@@ -26,7 +33,7 @@ exports.register = asyncHandler(async (req, res, next) => {
     phoneNumber,
     empNo,
     password: hashedPassword,
-    reportingTo: [req.user.id],
+    reportingTo: [req.user.id, ...req.user.reportingTo],
     role,
   });
 

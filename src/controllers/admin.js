@@ -11,11 +11,15 @@ const FinancialDocument = require('../models/FinancialDocument');
  */
 exports.getAllUsers = asyncHandler(async (req, res, next) => {
   const { role } = req.query;
-  let and = [{ reportingTo: { $in: [req.user.id] } }];
+
+  let and = [{}];
 
   if (role === 'employee') and.push({ role: 'employee' });
   else if (role === 'sub-admin') and.push({ role: 'sub-admin' });
 
+  if (req.user.role === 'sub-admin') {
+    and.push({ reportingTo: { $in: [req.user.id] } });
+  }
   const users = await User.find({
     $and: and,
   });

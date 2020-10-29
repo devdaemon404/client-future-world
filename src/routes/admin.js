@@ -23,8 +23,6 @@ router
 router
   .route('/register')
   .put(protect, authorize('admin', 'sub-admin'), updateRegisteredUser);
-router
-  .route('/add-reportee')
-  .post(protect, authorize('admin', 'sub-admin'), addReportee);
+router.route('/add-reportee').post(protect, authorize('admin'), addReportee);
 
 module.exports = router;
