@@ -39,7 +39,7 @@ const Profilepage = ({ retrievedId }) => {
     try {
       const res = await axios.get('/api/auth/validate-token').then();
       setRole(res.data.role);
-    } catch (err) {}
+    } catch (err) { }
   };
   const addRepor = async (e) => {
     e.preventDefault();
@@ -85,7 +85,7 @@ const Profilepage = ({ retrievedId }) => {
       var body = document.documentElement;
 
       body.scrollTop -= 10000;
-    } catch (error) {}
+    } catch (error) { }
   }, [loading]);
   const timeSheetMonthUpdater = (date, dateString) => {
     setTSheetDate(dateString);
@@ -131,7 +131,7 @@ const Profilepage = ({ retrievedId }) => {
     }
   };
   const onUploadHandler2 = async (e) => {
-    let file = e.target.files;
+    let file = e.target.files[0];
     let time = tSheetDate.split('-');
     if (tSheetDate === 'end') {
       toast('Please Select Time Sheet Month');
@@ -154,248 +154,248 @@ const Profilepage = ({ retrievedId }) => {
       {loading ? (
         <OPLoader isLoading={loading} />
       ) : (
-        <ProfContainer>
-          <LeftCol>
-            <DisplayPic>
-              <img
-                alt='User Image Not uploaded'
-                width={220}
-                src={userData.photo || IMGDEFAULT}
-              />
-            </DisplayPic>
-            <SidebarDetails>
-              <div className='join-and-end'>
-                <p>
-                  <img alt='altey' src={PHONE} />
-                  <span className='sidebar-item'> {userData.phoneNumber}</span>
-                </p>
-                <p>
-                  <span>
-                    Date Of Joining ::{' '}
-                    {moment(userData.joiningDate).format('DD/MM/YYYY')}{' '}
-                  </span>
-                </p>
-                <p>
-                  {' '}
-                  <span>FW-ID:: {userData.empNo} </span>
-                </p>
-                <p>
-                  <span> Full Time</span>
-                </p>
-              </div>
-            </SidebarDetails>
-          </LeftCol>
-          <RightCol>
-            <NameSection>
-              <div className='Head'>
-                <div
-                  style={{
-                    display: 'flex',
-                    width: 800,
-                    justifyContent: 'space-between',
-                  }}
-                >
-                  {' '}
-                  <h2>{userData.FName + ' ' + userData.LName}</h2>{' '}
-                  <button
-                    onClick={downloadFile}
+          <ProfContainer>
+            <LeftCol>
+              <DisplayPic>
+                <img
+                  alt='User Image Not uploaded'
+                  width={220}
+                  src={userData.photo || IMGDEFAULT}
+                />
+              </DisplayPic>
+              <SidebarDetails>
+                <div className='join-and-end'>
+                  <p>
+                    <img alt='altey' src={PHONE} />
+                    <span className='sidebar-item'> {userData.phoneNumber}</span>
+                  </p>
+                  <p>
+                    <span>
+                      Date Of Joining ::{' '}
+                      {moment(userData.joiningDate).format('DD/MM/YYYY')}{' '}
+                    </span>
+                  </p>
+                  <p>
+                    {' '}
+                    <span>FW-ID:: {userData.empNo} </span>
+                  </p>
+                  <p>
+                    <span> Full Time</span>
+                  </p>
+                </div>
+              </SidebarDetails>
+            </LeftCol>
+            <RightCol>
+              <NameSection>
+                <div className='Head'>
+                  <div
                     style={{
-                      outline: 'none',
-                      background: 'inherit',
-                      border: 'none',
-                      fontWeight: 700,
-                      fontSize: 22,
-                      color: '#707070',
+                      display: 'flex',
+                      width: 800,
+                      justifyContent: 'space-between',
                     }}
                   >
-                    ⤓ Download Profile
+                    {' '}
+                    <h2>{userData.FName + ' ' + userData.LName}</h2>{' '}
+                    <button
+                      onClick={downloadFile}
+                      style={{
+                        outline: 'none',
+                        background: 'inherit',
+                        border: 'none',
+                        fontWeight: 700,
+                        fontSize: 22,
+                        color: '#707070',
+                      }}
+                    >
+                      ⤓ Download Profile
                   </button>{' '}
-                </div>
-                <h3>{userData.designation}</h3>
-                <h3>
-                  <div id='Address'>
-                    <img alt='altey' src={GPS} />
-                    {userData.Address}
                   </div>
-                </h3>
-              </div>
+                  <h3>{userData.designation}</h3>
+                  <h3>
+                    <div id='Address'>
+                      <img alt='altey' src={GPS} />
+                      {userData.Address}
+                    </div>
+                  </h3>
+                </div>
 
-              <NavSection>
-                <span
-                  style={
-                    view === 'data'
-                      ? { textDecoration: 'underline solid blue' }
-                      : {}
-                  }
-                  onClick={(e) => setview('data')}
-                >
-                  About
-                </span>{' '}
-                <span
-                  style={
-                    view === 'upload'
-                      ? { textDecoration: 'underline solid blue' }
-                      : {}
-                  }
-                  onClick={(e) => setview('upload')}
-                >
-                  Documents
-                </span>
-                {role === 'admin' ? (
+                <NavSection>
                   <span
                     style={
-                      view === 'Add Reportee'
+                      view === 'data'
                         ? { textDecoration: 'underline solid blue' }
                         : {}
                     }
-                    onClick={(e) => {
-                      setview('Add Reportee');
-                    }}
+                    onClick={(e) => setview('data')}
                   >
-                    Add Reportee
-                  </span>
-                ) : (
-                  <></>
-                )}
-              </NavSection>
-              <BodySection>
-                {view === 'data' ? (
-                  <InpForm
-                    userData={userData}
-                    retrievedId={retrievedId}
-                    toggle={toggle}
-                    setToggle={setToggle}
-                  />
-                ) : view === 'upload' ? (
-                  <React.Fragment>
-                    {/* <DocumentUpload>
+                    About
+                </span>{' '}
+                  <span
+                    style={
+                      view === 'upload'
+                        ? { textDecoration: 'underline solid blue' }
+                        : {}
+                    }
+                    onClick={(e) => setview('upload')}
+                  >
+                    Documents
+                </span>
+                  {role === 'admin' ? (
+                    <span
+                      style={
+                        view === 'Add Reportee'
+                          ? { textDecoration: 'underline solid blue' }
+                          : {}
+                      }
+                      onClick={(e) => {
+                        setview('Add Reportee');
+                      }}
+                    >
+                      Add Reportee
+                    </span>
+                  ) : (
+                      <></>
+                    )}
+                </NavSection>
+                <BodySection>
+                  {view === 'data' ? (
+                    <InpForm
+                      userData={userData}
+                      retrievedId={retrievedId}
+                      toggle={toggle}
+                      setToggle={setToggle}
+                    />
+                  ) : view === 'upload' ? (
+                    <React.Fragment>
+                      {/* <DocumentUpload>
                   <ReactDropZone />
                 </DocumentUpload> */}
 
-                    <UploadContainer>
-                      <div className='heading'>
-                        <h4>Upload Payslip</h4>
-                      </div>
-                      <div className='select'>
-                        <p>Select Month </p>{' '}
-                        <Space direction='vertical'>
-                          <DatePicker
-                            onChange={paySlipMonthUpdater}
-                            picker='month'
-                            value={
-                              pSlipDate === 'end' || pSlipDate.trim() === ''
-                                ? undefined
-                                : moment(pSlipDate, 'YYYY-MM')
-                            }
-                          />
-                        </Space>
-                        <div
-                          id='btn1'
-                          onClick={(e) => {
-                            document.getElementById('FileUpload1').click();
-                          }}
-                        >
-                          {'Click To Upload'}
+                      <UploadContainer>
+                        <div className='heading'>
+                          <h4>Upload Payslip</h4>
                         </div>
-                        <input
-                          type='file'
-                          className='realupload'
-                          id='FileUpload1'
-                          style={{ opacity: 0 }}
-                          disabled={
-                            pSlipDate === 'end' || pSlipDate.trim() === ''
-                          }
-                          onChange={onUploadHandler1}
-                        />
-                      </div>
-                    </UploadContainer>
-                    <UploadContainer>
-                      <div className='heading'>
-                        <h4>Upload Time Sheet</h4>
-                      </div>
-                      <div className='select'>
-                        <p>Select Month </p>{' '}
-                        <Space direction='vertical'>
-                          <DatePicker
-                            onChange={timeSheetMonthUpdater}
-                            picker='month'
-                            value={
-                              tSheetDate === 'end' || tSheetDate.trim() === ''
-                                ? undefined
-                                : moment(tSheetDate, 'YYYY-MM')
-                            }
-                          />
-                        </Space>
-                        <div
-                          id='btn2'
-                          onClick={(e) => {
-                            document.getElementById('FileUpload2').click();
-                          }}
-                        >
-                          {'Click To Upload'}
-                        </div>
-                        <input
-                          type='file'
-                          className='realupload'
-                          id='FileUpload2'
-                          disabled={
-                            tSheetDate === 'end' || pSlipDate.trim() === ''
-                          }
-                          style={{ opacity: 0, width: 0, height: 0 }}
-                          onChange={onUploadHandler2}
-                        />
-                      </div>
-                    </UploadContainer>
-                  </React.Fragment>
-                ) : (
-                  <>
-                    <FormMain>
-                      <Form onSubmit={addRepor}>
-                        <h4>
-                          {' '}
-                          <div className='info-type'>
-                            Assign Employee to Sub Admin
-                          </div>
-                        </h4>
-                        <Form.Group style={{ paddingLeft: 70 }}>
-                          <Form.Control
-                            as='select'
-                            required
-                            size='md'
-                            className='selectBox'
-                            onChange={(e) => setSubAdminId(e.target.value)}
+                        <div className='select'>
+                          <p>Select Month </p>{' '}
+                          <Space direction='vertical'>
+                            <DatePicker
+                              onChange={paySlipMonthUpdater}
+                              picker='month'
+                              value={
+                                pSlipDate === 'end' || pSlipDate.trim() === ''
+                                  ? undefined
+                                  : moment(pSlipDate, 'YYYY-MM')
+                              }
+                            />
+                          </Space>
+                          <div
+                            id='btn1'
+                            onClick={(e) => {
+                              document.getElementById('FileUpload1').click();
+                            }}
                           >
-                            {adminList}
-                          </Form.Control>
+                            {'Click To Upload'}
+                          </div>
+                          <input
+                            type='file'
+                            className='realupload'
+                            id='FileUpload1'
+                            style={{ opacity: 0 }}
+                            disabled={
+                              pSlipDate === 'end' || pSlipDate.trim() === ''
+                            }
+                            onChange={onUploadHandler1}
+                          />
+                        </div>
+                      </UploadContainer>
+                      <UploadContainer>
+                        <div className='heading'>
+                          <h4>Upload Time Sheet</h4>
+                        </div>
+                        <div className='select'>
+                          <p>Select Month </p>{' '}
+                          <Space direction='vertical'>
+                            <DatePicker
+                              onChange={timeSheetMonthUpdater}
+                              picker='month'
+                              value={
+                                tSheetDate === 'end' || tSheetDate.trim() === ''
+                                  ? undefined
+                                  : moment(tSheetDate, 'YYYY-MM')
+                              }
+                            />
+                          </Space>
+                          <div
+                            id='btn2'
+                            onClick={(e) => {
+                              document.getElementById('FileUpload2').click();
+                            }}
+                          >
+                            {'Click To Upload'}
+                          </div>
+                          <input
+                            type='file'
+                            className='realupload'
+                            id='FileUpload2'
+                            disabled={
+                              tSheetDate === 'end' || pSlipDate.trim() === ''
+                            }
+                            style={{ opacity: 0, width: 0, height: 0 }}
+                            onChange={onUploadHandler2}
+                          />
+                        </div>
+                      </UploadContainer>
+                    </React.Fragment>
+                  ) : (
+                        <>
+                          <FormMain>
+                            <Form onSubmit={addRepor}>
+                              <h4>
+                                {' '}
+                                <div className='info-type'>
+                                  Assign Employee to Sub Admin
+                          </div>
+                              </h4>
+                              <Form.Group style={{ paddingLeft: 70 }}>
+                                <Form.Control
+                                  as='select'
+                                  required
+                                  size='md'
+                                  className='selectBox'
+                                  onChange={(e) => setSubAdminId(e.target.value)}
+                                >
+                                  {adminList}
+                                </Form.Control>
                           '
                           <Form.Check
-                            required
-                            type='checkbox'
-                            id='Checkbox'
-                            label={`Are you sure you want to Add the reportee`}
-                          />
-                        </Form.Group>
-                        <button
-                          className='btn'
-                          style={{
-                            width: '190px',
-                            margin: '10px 13% ',
-                            background: '#3f47cc',
-                            color: 'white',
-                          }}
-                          type='submit'
-                        >
-                          Continue
+                                  required
+                                  type='checkbox'
+                                  id='Checkbox'
+                                  label={`Are you sure you want to add the reportee`}
+                                />
+                              </Form.Group>
+                              <button
+                                className='btn'
+                                style={{
+                                  width: '190px',
+                                  margin: '10px 13% ',
+                                  background: '#3f47cc',
+                                  color: 'white',
+                                }}
+                                type='submit'
+                              >
+                                Continue
                         </button>
-                      </Form>
-                    </FormMain>
-                  </>
-                )}
-              </BodySection>
-            </NameSection>
-          </RightCol>
-        </ProfContainer>
-      )}
+                            </Form>
+                          </FormMain>
+                        </>
+                      )}
+                </BodySection>
+              </NameSection>
+            </RightCol>
+          </ProfContainer>
+        )}
     </React.Fragment>
   );
 

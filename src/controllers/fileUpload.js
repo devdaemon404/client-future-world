@@ -85,7 +85,7 @@ exports.uploadPaySlip = asyncHandler(async (req, res, next) => {
 
   const params = {
     Bucket: 'random-bucket-1234',
-    ContentType: fileExtension,
+    ContentType: 'application/pdf',
     Expires: 60 * 60,
     Key: fileKey,
   };

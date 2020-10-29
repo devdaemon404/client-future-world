@@ -5,6 +5,7 @@ import axios from 'axios';
 import moment from 'moment';
 import { toast } from '../../util/ToastUtil';
 import { OPLoader } from '../../util/LoaderUtil';
+import { fields1, fields2, fields3 } from './admin.data'
 export const InpForm = ({ getUsers }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [selectedOption, setSelectedOption] = useState('');
@@ -61,7 +62,7 @@ export const InpForm = ({ getUsers }) => {
     setIsLoading(true);
     try {
       // eslint-disable-next-line
-      let resu = await axios.post('/api/auth/register', {
+      let res = await axios.post('/api/auth/register', {
         email,
         name,
         role: selectedOption,
@@ -93,126 +94,18 @@ export const InpForm = ({ getUsers }) => {
       getUsers();
     } catch (error) {
       setIsLoading(false);
+      const err = error.response.data.error;
+      if (err) {
+        toast(err);
+        return;
+      }
       if (error.response.status === 400) toast('User Already Exists');
       else toast('Error : Please Login Again');
+
     }
   };
 
-  const fields1 = [
-    {
-      fName: 'First Name',
-      type: 'text',
-      defaultValue: 'First Name',
-      name: 'FName',
-      required: 'required',
-    },
-    {
-      fName: 'Last Name',
-      type: 'text',
-      defaultValue: 'Last Name',
-      name: 'LName',
-      required: 'required',
-    },
-    {
-      fName: 'Phone Number',
-      type: 'tel',
-      min: 10,
-      max: 10,
-      required: 'required',
-      defaultValue: 'Phone Number',
-      name: 'phoneNumber',
-    },
-  ];
-  const fields2 = [
-    {
-      fName: 'Address',
-      as: 'textarea',
-      defaultValue: 'Address',
-      name: 'Address',
-      required: 'required',
-    },
 
-    {
-      fName: 'Email Id',
-      type: 'email',
-      defaultValue: 'Email@ID.com',
-      name: 'email',
-      required: 'required',
-    },
-  ];
-
-  const fields3 = [
-    {
-      fName: 'FW Email',
-      type: 'email',
-      defaultValue: 'Email@ID.com',
-      name: 'FWEmail',
-      required: '',
-    },
-    {
-      fName: 'Designation  ',
-      type: 'text',
-      defaultValue: 'Designation',
-      name: 'designation',
-      required: '',
-    },
-    {
-      fName: 'Reporting Manager ',
-      type: 'text',
-      defaultValue: 'Reporting Manager',
-      name: 'Manager',
-      required: '',
-    },
-    {
-      fName: 'Customer Name  ',
-      type: 'text',
-      defaultValue: 'Customer Name',
-      name: 'custName',
-      required: '',
-    },
-    {
-      fName: 'Customer Location',
-      as: 'textarea',
-      defaultValue: 'Location',
-      name: 'custLoc',
-      required: '',
-    },
-    {
-      fName: 'Billing Per Hour  ',
-      type: 'text',
-      defaultValue: ' Enter Amount',
-      name: 'BillingPH',
-      required: '',
-    },
-    {
-      fName: 'Annual CTC ',
-      type: 'text',
-      defaultValue: ' Enter Amount',
-      name: 'annualCTC',
-      required: '',
-    },
-    {
-      fName: 'Increment  ',
-      type: 'text',
-      defaultValue: ' Enter Amount',
-      name: 'increment',
-      required: '',
-    },
-    {
-      fName: 'LWD ',
-      type: 'text',
-      defaultValue: ' ',
-      name: 'lwd',
-      required: '',
-    },
-    {
-      fName: 'Comments ',
-      type: 'text',
-      defaultValue: 'Comments',
-      name: 'comments',
-      required: '',
-    },
-  ];
 
   const submitHandler = (e) => {
     e.preventDefault();
@@ -317,6 +210,7 @@ export const InpForm = ({ getUsers }) => {
                 <input
                   type='radio'
                   value='employee'
+                  name='employee-name'
                   checked={selectedOption === 'employee'}
                   onChange={(e) => {
                     setSelectedOption(e.target.value);
@@ -329,6 +223,7 @@ export const InpForm = ({ getUsers }) => {
                 <input
                   type='radio'
                   value='sub-admin'
+                  name='employee-name'
                   checked={selectedOption === 'sub-admin'}
                   onChange={(e) => {
                     setSelectedOption(e.target.value);

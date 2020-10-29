@@ -69,7 +69,7 @@ export const LoginPage2 = () => {
                     className='lg'
                     id='exampleInputEmail1'
                     aria-describedby='emailHelp'
-                    placeholder='EmailId@FW.com'
+                    placeholder='Enter your email'
                     onChange={(e) => {
                       setemail(e.target.value);
                     }}
@@ -91,7 +91,7 @@ export const LoginPage2 = () => {
                     }}
                     className=' lg'
                     id='exampleInputPassword1'
-                    placeholder='Enter your Password'
+                    placeholder='Enter your password'
                     style={{
                       background: 'none',
 
