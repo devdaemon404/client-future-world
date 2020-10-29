@@ -13,6 +13,8 @@ import { config } from '../../util/RequestUtil';
 import { toast } from '../../util/ToastUtil.js';
 import { OPLoader } from '../../util/LoaderUtil.js';
 import moment from 'moment';
+// import { Document, Page, pdfjs } from 'react-pdf';
+// import './pdf.css';
 
 // import { OPLoader } from '../../util/LoaderUtil.js';
 
@@ -23,19 +25,29 @@ const Payslippage = ({ history }) => {
   const [timeMonth, setTimeMonth] = useState('');
   const [timeYear, setTimeYear] = useState('');
 
+  // pdfjs.GlobalWorkerOptions.workerSrc = `//cdnjs.cloudflare.com/ajax/libs/pdf.js/${pdfjs.version}/pdf.worker.js`;
+  // const [numPages, setNumPages] = useState(null);
+  // const [pageNumber, setPageNumber] = useState(1);
+
   function onPayChange(date, dateString) {
-    console.log(date, dateString);
+    // console.log(date, dateString);
     let dateArray = dateString.split('-');
     setPayMonth(dateArray[1]);
     setPayYear(dateArray[0]);
   }
 
   function onTimeChange(date, dateString) {
-    console.log(date, dateString);
+    // console.log(date, dateString);
     let dateArray = dateString.split('-');
     setTimeMonth(dateArray[1]);
     setTimeYear(dateArray[0]);
   }
+
+  // const showTimeSheet = (url) => {
+  //   return (
+     
+  //   );
+  // };
 
   const updateChange = async (e) => {
     let documentType = e.target.name;
@@ -53,8 +65,8 @@ const Payslippage = ({ history }) => {
         await axios
           .post('/api/employee/financial-docs', body, config)
           .then((res) => {
-            let url = res.data.data.url;
-            window.open(url);
+            let pdf_url = res.data.data.url;
+            window.open(pdf_url);
           });
       } catch (error) {
         console.log(error);
@@ -78,8 +90,9 @@ const Payslippage = ({ history }) => {
         await axios
           .post('/api/employee/financial-docs', body, config)
           .then((res) => {
-            let url = res.data.data.url;
-            window.open(url);
+            let pdf_url = res.data.data.url;
+            window.open(pdf_url);
+            // showTimeSheet({ url });
           });
       } catch (error) {
         toast('Time Sheet not available for the selected month');
