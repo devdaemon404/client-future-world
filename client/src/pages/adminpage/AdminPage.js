@@ -101,7 +101,7 @@ const AdminPage = () => {
       // window.open(`/api/ejs/pdf-gen?employeeId=${retrievedId}`);
       setSelectUser(retrievedId);
       setId(retrievedId);
-      console.log('asmin page', retrievedId);
+
       setViewPanel('Profile');
     }
 

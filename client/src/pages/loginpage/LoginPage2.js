@@ -32,10 +32,12 @@ export const LoginPage2 = () => {
       });
 
       if (loginResult.data.success) {
-        console.log('done');
         setIsLoading(false);
         setError(false);
-        if (loginResult.data.role === 'admin') {
+        if (
+          loginResult.data.role === 'admin' ||
+          loginResult.data.role === 'sub-admin'
+        ) {
           history.push('/admin');
         } else {
           history.push('/');
@@ -67,7 +69,7 @@ export const LoginPage2 = () => {
                     className='lg'
                     id='exampleInputEmail1'
                     aria-describedby='emailHelp'
-                    placeholder='EmailId@FW.com'
+                    placeholder='Enter your email'
                     onChange={(e) => {
                       setemail(e.target.value);
                     }}
@@ -89,7 +91,7 @@ export const LoginPage2 = () => {
                     }}
                     className=' lg'
                     id='exampleInputPassword1'
-                    placeholder='Enter your Password'
+                    placeholder='Enter your password'
                     style={{
                       background: 'none',
 

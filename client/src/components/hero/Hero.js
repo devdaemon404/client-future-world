@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useState } from 'react';
 import { HeroContainer, MainHeader, MainPara } from './hero.styles';
 import Card from '../card/Card';
 import { Link } from 'react-router-dom';
@@ -8,7 +8,7 @@ import CustomModal from '../modal/CustomModal';
 
 function Hero(...props) {
   const [userData, setUserData] = useState({ name: 'User', photo: '' });
-  useMemo(() => {
+  useEffect(() => {
     const fetchUserData = async () => {
       const result = await axios.get('/api/employee');
       setUserData({ ...result.data.data });
@@ -39,18 +39,24 @@ function Hero(...props) {
                 {(() => {
                   if (userData.isFormComplete) {
                     return (
-                      <div className='col-6'>
-                        <b>FWID :{userData.fwId}</b>
-                        <b>FWID :{userData.fwId}</b>
-                        <b>FWID :{userData.fwId}</b>
-                        <b>FWID :{userData.fwId}</b>
+                      <div className='col'>
+                        {
+                          Object.entries({ Department: userData.department, Designation: userData.designation, 'Joining Date': userData.joiningDate, 'FWID': userData.empNo }).map(([key, value]) => (
+                            <div> <b style={{ fontSize: 22 }}>{key.toString()}:&nbsp;&nbsp;</b><span className=''>{value.toString()} </span> </div>
+                          ))
+                        }
                       </div>
                     );
                   }
-                })()}
-                Please fill in your on-boarding application form.
-                <br />
+                  else {
+                    return (
+                      <div>
+                        Please fill in your on-boarding application form.
+                        <br />
                 We are delighted to have you here
+                      </div>)
+                  }
+                })()}
               </MainPara>
               <div className='col-12'>
                 <Card3

@@ -94,6 +94,9 @@ export const FormMain = styled.div`
 
   .form-control {
   }
+  .selectBox {
+    width: 280px;
+  }
 `;
 export const DocumentUpload = styled.div`
   overflow: hidden;

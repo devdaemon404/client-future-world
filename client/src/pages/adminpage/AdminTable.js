@@ -1,4 +1,5 @@
 import React from 'react';
+
 import {
   useTable,
   useSortBy,
@@ -117,9 +118,10 @@ function OPTable({ data, columns, getCellProps, onClickHandler }) {
                             Choose an action
                           </option>
                           <option value='0'>View Profile </option>
-                          <option value='1'>Relieve</option>
-                          <option value='2'>Active</option>
-                          <option value='3'>Inactive</option>
+                          <option value='1'>Relieve Employee</option>
+                          <option value='2'>Change to Active</option>
+                          <option value='3'>Change to Inactive</option>
+
                           <option disabled style={{ color: 'rgba(0,0,0,0)' }}>
                             {cell.render('Cell').props.cell.value}
                           </option>

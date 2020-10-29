@@ -12,6 +12,7 @@ import axios from 'axios';
 import OPBreadCrumb from '../../../components/form/OPBreadCrumb.js';
 import { OPLoader } from '../../../util/LoaderUtil.js';
 import { config } from '../../../util/RequestUtil';
+// eslint-disable-next-line
 import { uploadDocument } from '../../../util/UploadFile.js';
 
 const BasicInformation1 = ({ history }) => {
@@ -32,7 +33,9 @@ const BasicInformation1 = ({ history }) => {
     upload: '',
     photo: '',
   });
+  // eslint-disable-next-line
   const {
+    // eslint-disable-next-line
     companyName,
     empNo,
     custName,
@@ -45,7 +48,9 @@ const BasicInformation1 = ({ history }) => {
     fFirstName,
     fMiddleName,
     fLastName,
+    //// eslint-disable-next-line
     photo,
+    //
     upload,
   } = formData;
   const [images, setImages] = React.useState([]);

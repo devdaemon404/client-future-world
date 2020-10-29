@@ -3,6 +3,7 @@ import { Route, useHistory } from 'react-router-dom';
 import { AnimatedSwitch } from 'react-router-transition';
 import homepage from '../pages/homepage/homepage';
 import LoginPage2 from '../pages/loginpage/LoginPage2';
+import ProfilePage from '../pages/profilepage/Profilepage';
 import PersonalPage from '../pages/secondpage/personalpage';
 // import formpage from '../pages/formpages/formpage';
 import Address from '../pages/formpages/personalformpages/Address';
@@ -32,8 +33,10 @@ const Routes = () => {
     const checkLogin = async () => {
       try {
         const res = await axios.get('/api/auth/validate-token').then();
-        console.log(res.data.role);
+        // console.log(res.data.role);
         if (res.data.role === 'admin') {
+          history.push('/admin');
+        } else if (res.data.role === 'sub-admin') {
           history.push('/admin');
         } else {
           history.push('/');
@@ -43,7 +46,7 @@ const Routes = () => {
       }
     };
 
-    // checkLogin();
+    checkLogin();
     // eslint-disable-next-line
   }, []);
   return (
@@ -55,6 +58,7 @@ const Routes = () => {
     >
       <Route exact path='/' component={homepage} />
       <Route exact path='/login' component={LoginPage2} />
+      <Route exact path='/profile' component={ProfilePage} />
 
       <Route exact path='/payslip' component={Payslippage} />
       <Route exact path='/personal' component={PersonalPage} />

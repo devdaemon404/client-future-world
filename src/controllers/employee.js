@@ -48,15 +48,20 @@ exports.postEmployeeInfo = asyncHandler(async (req, res, next) => {
 exports.getEmployeeInfo = asyncHandler(async (req, res, next) => {
   if (!req.query.select) {
     const userData = await User.findById(req.user.id).select('name');
-    let userPhoto = await Employee.findOne({ user: req.user.id }).select(
-      'photo isFormComplete joiningDate designation department'
+    let employeeData = await Employee.findOne({ user: req.user.id }).select(
+      'photo isFormComplete joiningDate designation department empNo'
     );
     let data;
-    if (userPhoto !== null) {
-      userPhoto = userPhoto.toObject();
+    if (employeeData !== null) {
+      employeeData = employeeData.toObject();
       data = {
         name: userData.name,
-        photo: userPhoto.photo,
+        photo: employeeData.photo,
+        isFormComplete: employeeData.isFormComplete,
+        joiningDate: employeeData.joiningDate,
+        designation: employeeData.designation,
+        department: employeeData.department,
+        empNo: employeeData.empNo,
       };
     } else {
       data = {
