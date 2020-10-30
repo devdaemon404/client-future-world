@@ -122,10 +122,8 @@ export const InpForm = (props) => {
     },
   ];
 
-  let temp = {};
   const putUserData = async () => {
-
-    temp = await axios.put('/api/admin/register', {
+    await axios.put('/api/admin/register', {
       userId: props.retrievedId,
       updateParams: {
         designation,

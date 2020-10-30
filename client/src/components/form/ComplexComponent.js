@@ -121,11 +121,6 @@ function ComplexComponent({
           name: col.label,
           key: col.key,
           formatter: (formatter) => {
-            const id = formatter.rowIdx;
-            let value = '';
-            if (id) {
-              value = data[formatter.rowIdx][col.key];
-            }
             return (
               <label
                 className='btn btn-default'
