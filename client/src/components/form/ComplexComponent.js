@@ -1,5 +1,6 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import DataGrid from 'react-data-grid';
+
 import 'react-data-grid/dist/react-data-grid.css';
 import { OPLoader } from '../../util/LoaderUtil';
 import { toast } from '../../util/ToastUtil';
@@ -130,9 +131,12 @@ function ComplexComponent({
                 className='btn btn-default'
                 style={{
                   height: 30,
-                  textDecoration: value || 'underline',
+                  textDecoration: 'underline',
                 }}>
-                {data[formatter.rowIdx][col.key] || 'Upload File'}
+                {typeof data[formatter.rowIdx][col.key] === 'string' &&
+                data[formatter.rowIdx][col.key].split('/').length > 2
+                  ? data[formatter.rowIdx][col.key].split('/')[2]
+                  : 'Upload File'}
                 <input
                   hidden
                   style={{ width: 50 }}
