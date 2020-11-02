@@ -148,14 +148,14 @@ export const AdminMain = styled.div`
   }
 `;
 export const TableContainer = styled.div`
-  margin-top: 100px;
+  margin-top: 50px;
   margin-left: 20px;
+
   text-align: center;
   width: inherit;
   display: flex;
   justify-content: center;
   align-items: center;
-  overflow-y: hidden;
 
   .addEmployeeForm {
     width: 40%;
