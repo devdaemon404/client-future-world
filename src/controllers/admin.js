@@ -1,4 +1,5 @@
 const asyncHandler = require('../middleware/async');
+const ErrorResponse = require('../utils/errorResponse');
 
 const User = require('../models/User');
 const Employee = require('../models/Employee');
@@ -12,7 +13,7 @@ const FinancialDocument = require('../models/FinancialDocument');
 exports.getAllUsers = asyncHandler(async (req, res, next) => {
   const { role } = req.query;
 
-  let and = [{}];
+  let and = [{ isDeleted: false }];
 
   if (role === 'employee') and.push({ role: 'employee' });
   else if (role === 'sub-admin') and.push({ role: 'sub-admin' });
@@ -48,15 +49,42 @@ exports.getEmployeeInfo = asyncHandler(async (req, res, next) => {
 });
 
 /**
+ * @desc    Delete an employee
+ * @route   DELETE /api/admin/employee/:id
+ * @access  Private
+ */
+exports.deleteUser = asyncHandler(async (req, res, next) => {
+  let user = await User.findById(req.params.id);
+
+  if (user.role === 'sub-admin') {
+    return next(new ErrorResponse('Cannot delete of user role sub-admin'));
+  }
+  user = await User.findByIdAndUpdate(
+    req.params.id,
+    { isDeleted: true },
+    {
+      new: true,
+      runValidators: true,
+    }
+  );
+
+  res.status(201).json({
+    success: true,
+    message: 'Deleted User',
+    data: user,
+  });
+});
+
+/**
  * @desc    Change active status
  * @route   POST /api/admin/change-activity
  * @access  Private
  */
 exports.changeUserActiveStatus = asyncHandler(async (req, res, next) => {
-  const { employeeId, active } = req.body;
+  const { userId, active } = req.body;
 
   await User.findByIdAndUpdate(
-    employeeId,
+    userId,
     { active },
     {
       new: true,
@@ -81,15 +109,41 @@ exports.updateRegisteredUser = asyncHandler(async (req, res, next) => {
   if (updateParams) updateParams.password && delete updateParams.password;
 
   if (financialDocument !== undefined) {
-    financialDocument = new FinancialDocument({
-      user: userId,
-      ...financialDocument,
+    let { documentType, documentedDate } = financialDocument;
+    let finDoc = await FinancialDocument.findOne({
+      $and: [{ user: userId }, { documentedDate }, { documentType }],
     });
-    await financialDocument.save();
+
+    if (!finDoc) {
+      console.log('new doc');
+      financialDocument = new FinancialDocument({
+        user: userId,
+        ...financialDocument,
+      });
+      await financialDocument.save();
+      return res.status(201).json({
+        success: true,
+        message: `Document: ${documentType} added for user employee`,
+        data: financialDocument,
+      });
+    }
+    console.log('update doc');
+    finDoc = await FinancialDocument.findByIdAndUpdate(
+      finDoc._id,
+      {
+        ...financialDocument,
+        updatedAt: Date.now(),
+      },
+      {
+        new: true,
+        runValidators: true,
+      }
+    );
+
     return res.status(201).json({
       success: true,
-      message: 'Document added for user employee',
-      data: financialDocument,
+      message: `Document: ${documentType} updated for user employee`,
+      data: finDoc,
     });
   }
 
@@ -134,5 +188,46 @@ exports.addReportee = asyncHandler(async (req, res, next) => {
     success: true,
     message: 'Added reportee to the specified user',
     data: user,
+  });
+});
+
+/**
+ * @desc    Toggle isFormComplete for a user
+ * @route   POST /api/admin/toggle-form-completion
+ * @access  Private
+ */
+
+exports.toggleFormComplete = asyncHandler(async (req, res, next) => {
+  const { userId, isFormComplete } = req.body;
+
+  employee = await Employee.findOneAndUpdate(
+    { user: userId },
+    {
+      isFormComplete,
+    }
+  );
+
+  res.status(200).json({
+    success: true,
+    message: `Employee form filling ${isFormComplete ? 'Locked' : 'UnLocked'}`,
+  });
+});
+
+/**
+ * @desc    Get all type of financial documents for a employee
+ * @route   POST /api/admin/financial-documents
+ * @access  Private
+ */
+exports.getFinancialDocs = asyncHandler(async (req, res, next) => {
+  const { userId, documentType } = req.body;
+
+  const findoc = await FinancialDocument.find({
+    $and: [{ user: userId }, { documentType }],
+  });
+
+  res.status(200).json({
+    success: true,
+    message: `Got all documents of type ${documentType} for particular employee`,
+    data: findoc,
   });
 });
