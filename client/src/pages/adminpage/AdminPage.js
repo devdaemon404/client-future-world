@@ -119,19 +119,19 @@ const AdminPage = () => {
 
     if (e.target.value === '1') {
       await axios.post('/api/admin/change-activity', {
-        employeeId: retrievedId,
+        userId: retrievedId,
         active: 0,
       });
 
       setselectedEmp(!selectedEmp);
     } else if (e.target.value === '2') {
       await axios.post('/api/admin/change-activity', {
-        employeeId: retrievedId,
+        userId: retrievedId,
         active: 1,
       });
     } else if (e.target.value === '3') {
       await axios.post('/api/admin/change-activity', {
-        employeeId: retrievedId,
+        userId: retrievedId,
         active: 2,
       });
     }

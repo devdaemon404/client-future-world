@@ -39,7 +39,7 @@ exports.uploadFile = asyncHandler(async (req, res, next) => {
 
   res.status(200).json({
     success: true,
-    message: 'Created PUT url for file upload',
+    message: `Created PUT url for file upload for ${fileName}`,
     fileKey,
     url,
   });
@@ -65,11 +65,11 @@ exports.getFile = asyncHandler(async (req, res, next) => {
 });
 
 /**
- * @desc    Upload payslip by admin to aws s3
+ * @desc    Upload payslip or timesheet by admin to aws s3
  * @route   GET /api/file/financial-document
  * @access  Private
  */
-exports.uploadPaySlip = asyncHandler(async (req, res, next) => {
+exports.uploadFinancialDocument = asyncHandler(async (req, res, next) => {
   const { fileType, fileExtension, userId, date } = req.body;
 
   if (!userId || !date || !fileExtension || !fileType) {
@@ -94,7 +94,7 @@ exports.uploadPaySlip = asyncHandler(async (req, res, next) => {
 
   res.status(200).json({
     success: true,
-    message: 'Created PUT url for uploading Pay Slip',
+    message: `Created PUT url for uploading for ${fileType}`,
     fileKey,
     url,
   });

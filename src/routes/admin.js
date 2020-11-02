@@ -7,6 +7,9 @@ const {
   changeUserActiveStatus,
   updateRegisteredUser,
   addReportee,
+  deleteUser,
+  getFinancialDocs,
+  toggleFormComplete,
 } = require('../controllers/admin');
 
 const { protect, authorize } = require('../middleware/auth');
@@ -14,6 +17,9 @@ const { protect, authorize } = require('../middleware/auth');
 router
   .route('/users')
   .get(protect, authorize('admin', 'sub-admin'), getAllUsers);
+router
+  .route('/employee/:id')
+  .delete(protect, authorize('admin', 'sub-admin'), deleteUser);
 router
   .route('/change-activity')
   .post(protect, authorize('admin', 'sub-admin'), changeUserActiveStatus);
@@ -24,5 +30,11 @@ router
   .route('/register')
   .put(protect, authorize('admin', 'sub-admin'), updateRegisteredUser);
 router.route('/add-reportee').post(protect, authorize('admin'), addReportee);
+router
+  .route('/financial-documents')
+  .post(protect, authorize('admin'), getFinancialDocs);
+router
+  .route('/toggle-form-completion')
+  .post(protect, authorize('admin'), toggleFormComplete);
 
 module.exports = router;

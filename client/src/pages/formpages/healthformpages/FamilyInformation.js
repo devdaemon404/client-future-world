@@ -1,12 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import {
-  Container,
-  HeroContainer,
-  MainHeader,
-  //  MainPara, CardHeader, CardPara
-} from '../formpage.styles.js';
-// import { Link } from 'react-router-dom';
+import { Container, HeroContainer, MainHeader } from '../formpage.styles.js';
+
 import Header from '../../../components/header/Header';
 import FormPageComponent from '../../../components/form/FormPageComponent';
 import ComplexComponent from '../../../components/form/ComplexComponent';
@@ -15,7 +10,6 @@ import { config } from '../../../util/RequestUtil';
 import { toast } from '../../../util/ToastUtil.js';
 
 const FamilyInformation = ({ history }) => {
-  // eslint-disable-next-line
   const [isLoading, setIsLoading] = useState(false);
   const [formData, setFormData] = useState([]);
   useEffect(() => {
@@ -34,6 +28,7 @@ const FamilyInformation = ({ history }) => {
     };
 
     fetchData();
+    // eslint-disable-next-line
   }, []);
 
   return (
@@ -127,8 +122,7 @@ const FamilyInformation = ({ history }) => {
                       setIsLoading(false);
                     }
                   }}
-                  className='btn selected-crumb submit-button crumb-item w-100 font-weight-bold'
-                >
+                  className='btn selected-crumb submit-button crumb-item w-100 font-weight-bold'>
                   <i className='far fa-check-circle'></i> Save and Continue
                 </button>
               </div>
