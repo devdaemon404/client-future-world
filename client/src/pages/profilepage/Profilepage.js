@@ -34,7 +34,7 @@ const Profilepage = ({ retrievedId }) => {
   const [view, setview] = useState('data');
   const [role, setRole] = useState('sub-admin');
   const [subAdmins, setSubAdminList] = useState([]);
-
+  const [isFormComplete, setIsFormComplete] = useState(false);
   const checkLogin = async () => {
     try {
       const res = await axios.get('/api/auth/validate-token').then();
@@ -88,7 +88,7 @@ const Profilepage = ({ retrievedId }) => {
 
   const getUserData = async () => {
     temp = await axios.get(
-      `/api/admin/employee-info/${retrievedId}?select=FName,photo,empNo,LName,email,joiningDate,designation,phoneNumber,Address,FWEmail,Manager,custLoc,custName,BillingPH,annualCTC,increment,lwd,comments`
+      `/api/admin/employee-info/${retrievedId}?select=FName,photo,isFormComplete,empNo,LName,email,joiningDate,designation,phoneNumber,Address,FWEmail,Manager,custLoc,custName,BillingPH,annualCTC,increment,lwd,comments`
     );
     temp = temp.data.data;
     if (!temp) temp = {};
@@ -144,6 +144,24 @@ const Profilepage = ({ retrievedId }) => {
         },
       });
       setTSheetDate('end');
+    }
+  };
+
+  const toggleFormComplete = async () => {
+    try {
+      let res = await axios.post('/api/admin/toggle-form-completion', {
+        userId: retrievedId,
+        isFormComplete: !isFormComplete,
+      });
+      setIsFormComplete(!isFormComplete);
+      if (!isFormComplete) {
+        toast('Form Unlocked');
+      } else {
+        toast('Form Locked');
+      }
+      getUserData();
+    } catch (error) {
+      toast('Server Error Try Again');
     }
   };
 
@@ -208,6 +226,20 @@ const Profilepage = ({ retrievedId }) => {
                   >
                     ⤓ Download Profile
                   </button>{' '}
+                  <button
+                    onClick={toggleFormComplete}
+                    style={{
+                      outline: 'none',
+                      background: 'inherit',
+                      border: 'none',
+                      fontWeight: 700,
+                      marginLeft: 20,
+                      fontSize: 22,
+                      color: '#707070',
+                    }}
+                  >
+                    {userData.isFormComplete ? 'Lock Form' : 'UnLock Form'}
+                  </button>
                 </div>
                 <h3>{userData.designation}</h3>
                 <h3>

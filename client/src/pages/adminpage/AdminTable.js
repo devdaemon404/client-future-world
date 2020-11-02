@@ -33,7 +33,6 @@ function DefaultColumnFilter({
 
 function OPTable({ data, columns, getCellProps, onClickHandler, adminId }) {
   const [adminIdNum, setadminIdNum] = useState();
-  const [state, setstate] = useState();
   const defaultColumn = useMemo(
     () => ({
       // Let's set up our default Filter UI
@@ -133,6 +132,7 @@ function OPTable({ data, columns, getCellProps, onClickHandler, adminId }) {
                               <option value='1'>Relieve Employee</option>
                               <option value='2'>Change to Active</option>
                               <option value='3'>Change to Inactive</option>
+                              <option value='4'>Delete Employee</option>
 
                               <option
                                 disabled

@@ -15,6 +15,7 @@ import { useHistory } from 'react-router-dom';
 import OPTable from './AdminTable';
 import Gears from './../../assets/img/gears.gif';
 import InpForm from './InpForm';
+import { toast } from '../../util/ToastUtil';
 // const selectUserContext = React.createContext({});
 const AdminPage = () => {
   let retrievedId = '';
@@ -106,13 +107,15 @@ const AdminPage = () => {
   };
 
   const onClickHandler = async (e) => {
-    retrievedId = e.target.children[5].innerHTML.toString().trim();
+    retrievedId = e.target.children[6].innerHTML.toString().trim();
 
     retrievedEmployee = data.find((o) => o.id === retrievedId);
+    setSelectUser(retrievedId);
+    setId(retrievedId);
     if (e.target.value === '0') {
       // window.open(`/api/ejs/pdf-gen?employeeId=${retrievedId}`);
-      setSelectUser(retrievedId);
-      setId(retrievedId);
+      // setSelectUser(retrievedId);
+      // setId(retrievedId);
 
       setViewPanel('Profile');
     }
@@ -129,6 +132,14 @@ const AdminPage = () => {
         userId: retrievedId,
         active: 1,
       });
+    } else if (e.target.value === '4') {
+      try {
+        await axios.delete(`/api/admin/employee/${retrievedId}`);
+      } catch (err) {
+        if (err.response.status === 403) {
+          toast('NOT AUTHORIZED:  Deleting employee is an admin only function');
+        }
+      }
     } else if (e.target.value === '3') {
       await axios.post('/api/admin/change-activity', {
         userId: retrievedId,
