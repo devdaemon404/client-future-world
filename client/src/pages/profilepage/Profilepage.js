@@ -149,7 +149,7 @@ const Profilepage = ({ retrievedId }) => {
 
   const toggleFormComplete = async () => {
     try {
-      let res = await axios.post('/api/admin/toggle-form-completion', {
+      await axios.post('/api/admin/toggle-form-completion', {
         userId: retrievedId,
         isFormComplete: !isFormComplete,
       });

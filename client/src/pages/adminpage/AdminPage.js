@@ -28,7 +28,7 @@ const AdminPage = () => {
   const [selectUser, setSelectUser] = useState('');
   const history = useHistory();
   const [Id, setId] = useState('');
-  const [adminId, setAdminId] = useState();
+  const [adminId, setAdminId] = useState([]);
   const getUsers = async () => {
     const users = await axios.get('/api/admin/users');
 
@@ -54,11 +54,12 @@ const AdminPage = () => {
       });
     });
     setData(formattedData);
-
+    let a = [];
     for (let i = 0; i < formattedData.length; i++) {
       if (formattedData[i].role === 'admin') {
-        setAdminId(formattedData[i].id);
+        a.push(formattedData[i].id);
       }
+      setAdminId(a);
     }
   };
 

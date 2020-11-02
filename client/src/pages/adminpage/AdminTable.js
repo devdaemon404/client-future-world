@@ -111,8 +111,9 @@ function OPTable({ data, columns, getCellProps, onClickHandler, adminId }) {
                   else if (cell.column.Header === 'Action') {
                     return (
                       <td key='random-key2'>
-                        {String(adminIdNum) ===
-                        cell.render('Cell').props.cell.value ? (
+                        {adminIdNum.includes(
+                          cell.render('Cell').props.cell.value
+                        ) ? (
                           <b>ADMIN PROFILE</b>
                         ) : (
                           <>
