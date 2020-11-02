@@ -32,7 +32,7 @@ function DefaultColumnFilter({
 }
 
 function OPTable({ data, columns, getCellProps, onClickHandler, adminId }) {
-  const [adminIdNum, setadminIdNum] = useState();
+  const [adminIdNum, setadminIdNum] = useState([]);
   const defaultColumn = useMemo(
     () => ({
       // Let's set up our default Filter UI
@@ -41,7 +41,7 @@ function OPTable({ data, columns, getCellProps, onClickHandler, adminId }) {
     []
   );
   useEffect(() => {
-    setadminIdNum(adminId);
+    setadminIdNum([...adminId]);
   }, [adminId]);
 
   const {

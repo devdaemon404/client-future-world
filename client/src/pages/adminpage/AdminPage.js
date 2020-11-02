@@ -15,7 +15,9 @@ import { useHistory } from 'react-router-dom';
 import OPTable from './AdminTable';
 import Gears from './../../assets/img/gears.gif';
 import InpForm from './InpForm';
+
 import { toast } from '../../util/ToastUtil';
+import { PopUp } from '../../util/DeleteConfirmUtil';
 // const selectUserContext = React.createContext({});
 const AdminPage = () => {
   let retrievedId = '';
@@ -28,7 +30,8 @@ const AdminPage = () => {
   const [selectUser, setSelectUser] = useState('');
   const history = useHistory();
   const [Id, setId] = useState('');
-  const [adminId, setAdminId] = useState([]);
+  const [adminId, setAdminId] = useState([123456]);
+  const [confirm, setConfirm] = useState(false);
   const getUsers = async () => {
     const users = await axios.get('/api/admin/users');
 
@@ -59,7 +62,7 @@ const AdminPage = () => {
       if (formattedData[i].role === 'admin') {
         a.push(formattedData[i].id);
       }
-      setAdminId(a);
+      setAdminId([...a] || []);
     }
   };
 
@@ -107,6 +110,18 @@ const AdminPage = () => {
     history.push('/login');
   };
 
+  const DeleteUserFunction = async () => {
+    try {
+      await axios.delete(`/api/admin/employee/${Id}`);
+      getUsers();
+      toast('Employee Deleted');
+    } catch (err) {
+      if (err.response.status === 403) {
+        toast('NOT AUTHORIZED:  Deleting employee is an admin only function');
+      }
+    }
+  };
+
   const onClickHandler = async (e) => {
     retrievedId = e.target.children[6].innerHTML.toString().trim();
 
@@ -134,13 +149,7 @@ const AdminPage = () => {
         active: 1,
       });
     } else if (e.target.value === '4') {
-      try {
-        await axios.delete(`/api/admin/employee/${retrievedId}`);
-      } catch (err) {
-        if (err.response.status === 403) {
-          toast('NOT AUTHORIZED:  Deleting employee is an admin only function');
-        }
-      }
+      setConfirm(true);
     } else if (e.target.value === '3') {
       await axios.post('/api/admin/change-activity', {
         userId: retrievedId,
@@ -227,6 +236,15 @@ const AdminPage = () => {
 
   return (
     <React.Fragment>
+      {confirm ? (
+        <PopUp
+          Funct={(e) => DeleteUserFunction()}
+          state={confirm}
+          setState={setConfirm}
+        />
+      ) : (
+        <></>
+      )}
       <MainWrapper>
         {SidebarChild}
         <AdminMain>

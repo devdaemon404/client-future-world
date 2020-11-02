@@ -23,6 +23,7 @@ import PHONE from '../../assets/img/phone.png';
 import { uploadFinancialDocument } from '../../util/UploadFile';
 import { toast } from '../../util/ToastUtil';
 import { OPLoader } from '../../util/LoaderUtil';
+import { PopUp } from '../../util/DeleteConfirmUtil';
 
 const Profilepage = ({ retrievedId }) => {
   const [subAdminId, setSubAdminId] = useState();
@@ -170,6 +171,7 @@ const Profilepage = ({ retrievedId }) => {
       {loading ? (
         <OPLoader isLoading={loading} />
       ) : (
+        // <PopUp></PopUp>
         <ProfContainer>
           <LeftCol>
             <DisplayPic>
