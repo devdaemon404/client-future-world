@@ -13,6 +13,6 @@ router.route('/get-url').get(protect, getFile);
 router.route('/upload-url').post(protect, uploadFile);
 router
   .route('/financial-document')
-  .post(protect, authorize('admin'), uploadFinancialDocument);
+  .post(protect, uploadFinancialDocument);
 
 module.exports = router;

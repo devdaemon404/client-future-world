@@ -6,13 +6,17 @@ const {
   getEmployeeInfo,
   getFinancialDocsUrl,
   getFinancialDocument,
+  createOrUpdateFinDoc,
 } = require('../controllers/employee');
 
 const { protect } = require('../middleware/auth');
 
 router.route('/').post(protect, postEmployeeInfo);
 router.route('/').get(protect, getEmployeeInfo);
-router.route('/financial-docs').get(protect, getFinancialDocument);
-router.route('/financial-docs').post(protect, getFinancialDocsUrl);
+router
+  .route('/financial-docs')
+  .get(protect, getFinancialDocument)
+  .post(protect, getFinancialDocsUrl)
+  .put(protect, createOrUpdateFinDoc);
 
 module.exports = router;
