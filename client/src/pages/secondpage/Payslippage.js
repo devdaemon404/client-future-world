@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import moment from 'moment';
 
 import {
@@ -15,37 +15,68 @@ import { OPLoader } from '../../util/LoaderUtil.js';
 import { UploadContainer } from './paySlipPage.styles';
 import { uploadFinancialDocument } from '../../util/UploadFile';
 
-const Payslippage = () => {
+const PaySlipPage = () => {
   const [isLoading] = useState(false);
   const [payMonth, setPayMonth] = useState('');
   const [payYear, setPayYear] = useState('');
   const [timeMonth, setTimeMonth] = useState('');
   const [timeYear, setTimeYear] = useState('');
-  const [pSlipDate, setPSlipDate] = useState('end');
+  const [reimbursmentDate, setReimbursmentDate] = useState('end');
+  const [enabledDates, setEnabledDates] = useState({
+    paySlip: [],
+    timeSheet: [],
+  });
 
   const paySlipMonthUpdater = (date, dateString) => {
-    setPSlipDate(dateString);
+    setReimbursmentDate(dateString);
   };
+
+  useEffect(() => {
+    const fetchDates = async () => {
+      const paySlipEnabledDates = [],
+        timeSheetEnabledDates = [];
+
+      await apiCall('paySlip', paySlipEnabledDates);
+      await apiCall('timeSheet', timeSheetEnabledDates);
+      setEnabledDates({
+        paySlip: [...paySlipEnabledDates],
+        timeSheet: [...timeSheetEnabledDates],
+      });
+    };
+
+    const apiCall = async (fileType, resArr) => {
+      const res = await axios.get(
+        `/api/employee/financial-docs?documentType=${fileType}`,
+        config
+      );
+      const tempArr = res.data.data;
+      // console.log(tempArr);
+      const tempArr2 = tempArr.forEach((o) => {
+        resArr.push(`${o.documentedDate.year}-${o.documentedDate.month}`);
+      });
+    };
+    fetchDates();
+  }, []);
 
   const onUploadHandler1 = async (e) => {
     let file = e.target.files[0];
-    let time1 = pSlipDate.split('-');
+    let time1 = reimbursmentDate.split('-');
 
-    if (pSlipDate !== 'end') {
-      await uploadFinancialDocument(file, pSlipDate, {
+    if (reimbursmentDate !== 'end') {
+      await uploadFinancialDocument(file, reimbursmentDate, {
         uploadUrl: '/api/file/financial-document',
         confirmationUrl: '/api/admin/register',
 
         // userId: retrievedId,
-        fileType: 'paySlip',
+        fileType: 'reimbursement',
         date: {
           month: time1[1],
           year: time1[0],
         },
       });
-      setPSlipDate('end');
+      setReimbursmentDate('end');
     } else {
-      toast('Please Select Pay Slip Month');
+      toast('Please Select a Month');
     }
   };
 
@@ -61,9 +92,13 @@ const Payslippage = () => {
     setTimeYear(dateArray[0]);
   }
 
-  function disabledDate(current) {
+  function disabledDate(current, fileType) {
     // Can not select days before today and today
-    return current && current > moment().endOf('day');
+    const formatted = current.format('YYYY-MM');
+    if (fileType === 'paySlip') {
+      return !enabledDates.paySlip.includes(formatted);
+    }
+    return !enabledDates.timeSheet.includes(formatted);
   }
 
   const [visible, setVisible] = useState(false);
@@ -221,7 +256,7 @@ const Payslippage = () => {
                 <Space direction='vertical'>
                   <DatePicker
                     onChange={onPayChange}
-                    disabledDate={disabledDate}
+                    disabledDate={(current) => disabledDate(current, 'paySlip')}
                     picker='month'
                     value={
                       payMonth === undefined || payMonth.trim() === ''
@@ -272,7 +307,9 @@ const Payslippage = () => {
                 <Space direction='vertical'>
                   <DatePicker
                     onChange={onTimeChange}
-                    disabledDate={disabledDate}
+                    disabledDate={(current) =>
+                      disabledDate(current, 'timeSheet')
+                    }
                     picker='month'
                     value={
                       timeMonth === undefined || timeMonth.trim() === ''
@@ -325,9 +362,10 @@ const Payslippage = () => {
                     <DatePicker
                       onChange={paySlipMonthUpdater}
                       value={
-                        pSlipDate === 'end' || pSlipDate.trim() === ''
+                        reimbursmentDate === 'end' ||
+                        reimbursmentDate.trim() === ''
                           ? undefined
-                          : moment(pSlipDate, 'YYYY-MM')
+                          : moment(reimbursmentDate, 'YYYY-MM')
                       }
                       picker='month'
                       placeholder='2020-01'
@@ -349,7 +387,9 @@ const Payslippage = () => {
                   accept='application/pdf'
                   id='FileUpload1'
                   style={{ opacity: 0 }}
-                  disabled={pSlipDate === 'end' || pSlipDate.trim() === ''}
+                  disabled={
+                    reimbursmentDate === 'end' || reimbursmentDate.trim() === ''
+                  }
                   onChange={onUploadHandler1}
                 />
                 <div className='text-muted col-sm-9 mt-1'>
@@ -369,14 +409,10 @@ const Payslippage = () => {
         closable={false}
         width={1000}
       >
-        <div
-          className='container text-center'
-          id='viewTimeSheet'
-          // style={{ border: '1px solid black' }}
-        ></div>
+        <div className='container text-center' id='viewTimeSheet'></div>
       </Modal>
     </Container>
   );
 };
 
-export default Payslippage;
+export default PaySlipPage;
