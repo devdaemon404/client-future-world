@@ -59,7 +59,7 @@ const FamilyInformation = ({ history }) => {
             />
             <hr></hr>
             <h5 className='mt-3 mb-4'>
-              Add at max five members of your family
+              Add at max four members of your family
               <span style={{ color: 'red' }}>*</span>
             </h5>
             <ComplexComponent

@@ -125,7 +125,7 @@ export const AdminMain = styled.div`
   margin-left: 320px;
 
   .Admin {
-    padding-top: 120px;
+    padding-top: 70px;
     padding-left: 125px;
     width: 464px;
     height: 49px;
@@ -136,7 +136,7 @@ export const AdminMain = styled.div`
     font-size: 48px;
   }
   .EmpInfo {
-    padding-top: 90px;
+    padding-top: 70px;
     padding-left: 125px;
     width: 400px;
     height: 58px;
@@ -148,14 +148,14 @@ export const AdminMain = styled.div`
   }
 `;
 export const TableContainer = styled.div`
-  margin-top: 100px;
+  margin-top: 50px;
   margin-left: 20px;
+
   text-align: center;
   width: inherit;
   display: flex;
   justify-content: center;
   align-items: center;
-  overflow-y: hidden;
 
   .addEmployeeForm {
     width: 40%;

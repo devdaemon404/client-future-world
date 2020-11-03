@@ -18,9 +18,7 @@ const { protect, authorize } = require('../middleware/auth');
 router
   .route('/users')
   .get(protect, authorize('admin', 'sub-admin'), getAllUsers);
-router
-  .route('/employee/:id')
-  .delete(protect, authorize('admin', 'sub-admin'), deleteUser);
+router.route('/employee/:id').delete(protect, authorize('admin'), deleteUser);
 router
   .route('/change-activity')
   .post(protect, authorize('admin', 'sub-admin'), changeUserActiveStatus);

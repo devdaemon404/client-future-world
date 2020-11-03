@@ -11,7 +11,7 @@ export const uploadDocument = async (
   {
     uploadUrl = '/api/file/upload-url',
     confirmationUrl = '/api/employee',
-    fileType = 'doc',
+    fileType = 'doc',np,
     fileExtension = 'pdf',
   } = {}
 ) => {
