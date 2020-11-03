@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 
 import {
   useTable,
@@ -31,7 +31,8 @@ function DefaultColumnFilter({
   );
 }
 
-function OPTable({ data, columns, getCellProps, onClickHandler }) {
+function OPTable({ data, columns, getCellProps, onClickHandler, adminId }) {
+  const [adminIdNum, setadminIdNum] = useState([]);
   const defaultColumn = useMemo(
     () => ({
       // Let's set up our default Filter UI
@@ -39,6 +40,9 @@ function OPTable({ data, columns, getCellProps, onClickHandler }) {
     }),
     []
   );
+  useEffect(() => {
+    setadminIdNum([...adminId]);
+  }, [adminId]);
 
   const {
     getTableProps,
@@ -61,7 +65,7 @@ function OPTable({ data, columns, getCellProps, onClickHandler }) {
     <div
       style={{
         overflow: 'auto',
-        // maxHeight: '70vh',
+        maxHeight: '59vh',
       }}
       className='mx-auto mt-3 text-center'
     >
@@ -107,25 +111,39 @@ function OPTable({ data, columns, getCellProps, onClickHandler }) {
                   else if (cell.column.Header === 'Action') {
                     return (
                       <td key='random-key2'>
-                        <select
-                          style={{ width: '100%' }}
-                          onChange={onClickHandler}
-                          defaultValue='Choose an action'
-                          {...cell.getCellProps([{ ...getCellProps(cell) }])}
-                        >
-                          <option disabled style={{ width: 'inherit' }}>
-                            {' '}
-                            Choose an action
-                          </option>
-                          <option value='0'>View Profile </option>
-                          <option value='1'>Relieve Employee</option>
-                          <option value='2'>Change to Active</option>
-                          <option value='3'>Change to Inactive</option>
+                        {adminIdNum.includes(
+                          cell.render('Cell').props.cell.value
+                        ) ? (
+                          <b>ADMIN PROFILE</b>
+                        ) : (
+                          <>
+                            <select
+                              style={{ width: '100%' }}
+                              onChange={onClickHandler}
+                              defaultValue='Choose an action'
+                              {...cell.getCellProps([
+                                { ...getCellProps(cell) },
+                              ])}
+                            >
+                              <option disabled style={{ width: 'inherit' }}>
+                                {' '}
+                                Choose an action
+                              </option>
+                              <option value='0'>View Profile </option>
+                              <option value='1'>Relieve Employee</option>
+                              <option value='2'>Change to Active</option>
+                              <option value='3'>Change to Inactive</option>
+                              <option value='4'>Delete Employee</option>
 
-                          <option disabled style={{ color: 'rgba(0,0,0,0)' }}>
-                            {cell.render('Cell').props.cell.value}
-                          </option>
-                        </select>
+                              <option
+                                disabled
+                                style={{ color: 'rgba(0,0,0,0)' }}
+                              >
+                                {cell.render('Cell').props.cell.value}
+                              </option>
+                            </select>
+                          </>
+                        )}
                       </td>
                     );
                   } else if (cell.column.Header === 'Name') {
@@ -142,12 +160,11 @@ function OPTable({ data, columns, getCellProps, onClickHandler }) {
                       <td
                         {...cell.getCellProps([{ ...getCellProps(cell) }])}
                         style={
-                          cell.render('Cell').props.cell.value === 'Inactive'
+                          cell.render('Cell').props.cell.value[0] === 'I'
                             ? { color: 'red', fontWeight: 700 }
-                            : cell.render('Cell').props.cell.value === 'Active'
+                            : cell.render('Cell').props.cell.value[0] === 'A'
                             ? { color: 'green', fontWeight: 700 }
-                            : cell.render('Cell').props.cell.value ===
-                              'Relieved'
+                            : cell.render('Cell').props.cell.value[0] === 'R'
                             ? { fontWeight: 700 }
                             : {}
                         }
