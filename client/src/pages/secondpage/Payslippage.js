@@ -21,13 +21,13 @@ const PaySlipPage = () => {
   const [payYear, setPayYear] = useState('');
   const [timeMonth, setTimeMonth] = useState('');
   const [timeYear, setTimeYear] = useState('');
-  const [reimbursmentDate, setReimbursmentDate] = useState('end');
+  const [reimbursmentDate, setReimbursmentDate] = useState('');
   const [enabledDates, setEnabledDates] = useState({
     paySlip: [],
     timeSheet: [],
   });
 
-  const paySlipMonthUpdater = (date, dateString) => {
+  const reimburseMonthUpdater = (date, dateString) => {
     setReimbursmentDate(dateString);
   };
 
@@ -51,32 +51,48 @@ const PaySlipPage = () => {
       );
       const tempArr = res.data.data;
       // console.log(tempArr);
-      const tempArr2 = tempArr.forEach((o) => {
+      tempArr.forEach((o) => {
         resArr.push(`${o.documentedDate.year}-${o.documentedDate.month}`);
       });
     };
     fetchDates();
   }, []);
 
-  const onUploadHandler1 = async (e) => {
-    let file = e.target.files[0];
-    let time1 = reimbursmentDate.split('-');
-
-    if (reimbursmentDate !== 'end') {
-      await uploadFinancialDocument(file, reimbursmentDate, {
-        uploadUrl: '/api/file/financial-document',
-        confirmationUrl: '/api/admin/register',
-
-        // userId: retrievedId,
-        fileType: 'reimbursement',
-        date: {
-          month: time1[1],
-          year: time1[0],
+  const reimburseAPIcall = async (fileKey, reimburseDate, documentType) => {
+    try {
+      const body = JSON.stringify({
+        documentType,
+        fileKey,
+        documentedDate: {
+          month: reimburseDate[1],
+          year: reimburseDate[0],
         },
       });
-      setReimbursmentDate('end');
-    } else {
-      toast('Please Select a Month');
+      await axios.put('/api/employee/financial-docs', body, config);
+      toast(`File Uploaded for Reimbursment, admin will get back to you`);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const onUploadHandler1 = async (e) => {
+    let documentType = 'reimburse';
+    let reimburseDate = reimbursmentDate.split('-');
+    if (reimbursmentDate !== '') {
+      try {
+        const body = JSON.stringify({
+          fileName: `reimburse${reimburseDate[1]}-${reimburseDate[0]}`,
+          fileType: 'doc',
+          fileExtension: 'pdf',
+        });
+        const res = await axios.post('/api/file/upload-url', body, config);
+        let fileKey = res.data.fileKey;
+        console.log('FILEKEY', fileKey);
+        await reimburseAPIcall(fileKey, reimburseDate, documentType);
+        setReimbursmentDate('');
+      } catch (error) {
+        console.log(error);
+      }
     }
   };
 
@@ -222,7 +238,7 @@ const PaySlipPage = () => {
       <Header pathname='/' />
       <HeroContainer className='box d-flex align-items-center justify-content-center'>
         <MainHeader className='text-center'>
-          Pay Slip, Time Sheet and Reimbursement Information
+          Pay Slip, Time Sheet and Reimbursement
         </MainHeader>
       </HeroContainer>
       <div className='jumbotron jumbotron-fluid'>
@@ -349,7 +365,7 @@ const PaySlipPage = () => {
               <div
               // className='heading'
               >
-                <h2>Upload Payslip</h2>
+                <h2>Reimbursement</h2>
               </div>
 
               <div className='form-group row p-2'>
@@ -360,9 +376,9 @@ const PaySlipPage = () => {
                 <div className='col-sm-9'>
                   <Space direction='vertical'>
                     <DatePicker
-                      onChange={paySlipMonthUpdater}
+                      onChange={reimburseMonthUpdater}
                       value={
-                        reimbursmentDate === 'end' ||
+                        reimbursmentDate === '' ||
                         reimbursmentDate.trim() === ''
                           ? undefined
                           : moment(reimbursmentDate, 'YYYY-MM')
@@ -372,15 +388,20 @@ const PaySlipPage = () => {
                     />
                   </Space>
                 </div>
-                <div
+                <button
                   className='col-sm-8 p-2 mt-5 btn selected-crumb submit-button crumb-item w-100 font-weight-bold'
+                  disabled={
+                    reimbursmentDate === '' ||
+                    reimbursmentDate === undefined ||
+                    reimbursmentDate === null
+                  }
                   onClick={(e) => {
                     document.getElementById('FileUpload1').click();
                   }}
                 >
                   <i class='fas fa-cloud-upload-alt'></i>{' '}
                   {'Click To Upload Bill'}
-                </div>
+                </button>
                 <input
                   type='file'
                   className='realupload'
@@ -388,12 +409,13 @@ const PaySlipPage = () => {
                   id='FileUpload1'
                   style={{ opacity: 0 }}
                   disabled={
-                    reimbursmentDate === 'end' || reimbursmentDate.trim() === ''
+                    reimbursmentDate === '' || reimbursmentDate.trim() === ''
                   }
                   onChange={onUploadHandler1}
                 />
                 <div className='text-muted col-sm-9 mt-1'>
-                  (Select the month and year and your Time Sheet will Pop-up)
+                  (Select the month and year for which you want to be
+                  reimbursed)
                 </div>
               </div>
             </UploadContainer>
@@ -406,8 +428,7 @@ const PaySlipPage = () => {
         visible={visible}
         onOk={handleOk}
         onCancel={handleCancel}
-        closable={false}
-        width={1000}
+        width={1500}
       >
         <div className='container text-center' id='viewTimeSheet'></div>
       </Modal>
