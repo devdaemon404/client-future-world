@@ -46,7 +46,7 @@ const Routes = () => {
       }
     };
 
-    checkLogin();
+    // checkLogin();
     // eslint-disable-next-line
   }, []);
   return (
@@ -54,8 +54,7 @@ const Routes = () => {
       atEnter={{ opacity: 0 }}
       atLeave={{ opacity: 0 }}
       atActive={{ opacity: 1 }}
-      className='switch-wrapper'
-    >
+      className='switch-wrapper'>
       <Route exact path='/' component={homepage} />
       <Route exact path='/login' component={LoginPage2} />
       <Route exact path='/profile' component={ProfilePage} />

@@ -33,6 +33,10 @@ const UserSchema = new mongoose.Schema({
       ref: 'users',
     },
   ],
+  isDeleted: {
+    type: Boolean,
+    default: false,
+  },
   password: {
     type: String,
     required: [true, 'Please add a password'],

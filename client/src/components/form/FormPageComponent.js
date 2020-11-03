@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { Fragment, useEffect, useState } from 'react';
 import axios from 'axios';
 import { config } from '../../util/RequestUtil';
 
@@ -16,7 +16,7 @@ const FormPageComponent = ({ children }) => {
     fetchValidity();
   }, []);
   return (
-    <>
+    <Fragment>
       <div className='container'>
         <div className='order-1 order-lg-2 d-flex flex-column right justify-content-start mt-5'>
           <fieldset disabled={isFormDisabled ? 'disabled' : undefined}>
@@ -24,7 +24,7 @@ const FormPageComponent = ({ children }) => {
           </fieldset>
         </div>
       </div>
-    </>
+    </Fragment>
   );
 };
 

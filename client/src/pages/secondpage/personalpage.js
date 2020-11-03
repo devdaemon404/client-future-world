@@ -37,6 +37,7 @@ function PersonalPage() {
       setCompletedSectionsCount(count);
     };
     getState();
+    //eslint-disable-next-line
   }, []);
   const list = [
     'Basic Information-1',

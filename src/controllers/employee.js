@@ -94,7 +94,7 @@ exports.getEmployeeInfo = asyncHandler(async (req, res, next) => {
 exports.getFinancialDocs = asyncHandler(async (req, res, next) => {
   const { documentedDate, documentType } = req.body;
 
-  let financialDocuments = await FinancialDocument.find({
+  let financialDocument = await FinancialDocument.findOne({
     $and: [
       {
         user: req.user.id,
@@ -108,12 +108,10 @@ exports.getFinancialDocs = asyncHandler(async (req, res, next) => {
     ],
   }).select('-user -_id -createdAt -__v');
 
-  financialDocuments = JSON.parse(JSON.stringify(financialDocuments));
+  if (financialDocument !== null) {
+    financialDocument = financialDocument.toObject();
 
-  for (let financialDocument of financialDocuments) {
     let { fileKey } = financialDocument;
-
-    if (!fileKey) continue;
 
     const params = {
       Bucket: 'random-bucket-1234',
@@ -125,10 +123,10 @@ exports.getFinancialDocs = asyncHandler(async (req, res, next) => {
     let url = await s3.getSignedUrl('getObject', params);
     financialDocument.url = url;
   }
-  let financialDoc = financialDocuments[financialDocuments.length - 1];
+
   res.status(200).json({
     success: true,
     message: 'Fetched financial docs',
-    data: financialDoc,
+    data: financialDocument,
   });
 });

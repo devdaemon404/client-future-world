@@ -39,8 +39,8 @@ const AdminPage = () => {
           employee.active === 0
             ? 'Relieved'
             : employee.active === 1
-            ? 'Active'
-            : 'Inactive',
+              ? 'Active'
+              : 'Inactive',
         empNo: !employee.empNo ? 'FW-----' : employee.empNo,
         joinDate: moment(employee.createdAt).format('DD/MMM/YYYY'),
         id: employee._id,
@@ -107,19 +107,19 @@ const AdminPage = () => {
 
     if (e.target.value === '1') {
       await axios.post('/api/admin/change-activity', {
-        employeeId: retrievedId,
+        userId: retrievedId,
         active: 0,
       });
 
       setselectedEmp(!selectedEmp);
     } else if (e.target.value === '2') {
       await axios.post('/api/admin/change-activity', {
-        employeeId: retrievedId,
+        userId: retrievedId,
         active: 1,
       });
     } else if (e.target.value === '3') {
       await axios.post('/api/admin/change-activity', {
-        employeeId: retrievedId,
+        userId: retrievedId,
         active: 2,
       });
     }
@@ -165,14 +165,22 @@ const AdminPage = () => {
   );
 
   var AddEmployeeChild = (
-    <React.Fragment>
-      <FormWrapper>
-        <div className='form-head'>
-          <h2>Create a new employee</h2>
-        </div>
-        <InpForm getUsers={getUsers} />
-      </FormWrapper>
-    </React.Fragment>
+    <div>
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <div>
+        <span className="Admin">Create a new employee</span>
+      </div>
+      <br />
+      <React.Fragment>
+        <FormWrapper>
+          <InpForm getUsers={getUsers} />
+        </FormWrapper>
+      </React.Fragment>
+    </div>
   );
 
   var NoPhoneChild = (
@@ -200,19 +208,19 @@ const AdminPage = () => {
           {ViewPanel === 'Profile' ? (
             <ProfilePage userId={selectUser} retrievedId={Id} />
           ) : (
-            <></>
-          )}
+              <></>
+            )}
           {ViewPanel === 'Table' ? (
             <div className='Admin'>Admin Panel</div>
           ) : (
-            <></>
-          )}
+              <></>
+            )}
 
           {ViewPanel === 'Table' ? (
-            <div className='EmpInfo'>'Employee Information'</div>
+            <div className='EmpInfo'>Employee Information</div>
           ) : (
-            <></>
-          )}
+              <></>
+            )}
 
           {ViewPanel === 'Form' ? AddEmployeeChild : <></>}
 

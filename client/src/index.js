@@ -5,6 +5,13 @@ import App from './App';
 import * as serviceWorker from './serviceWorker';
 import 'antd/dist/antd.css';
 
+if (process.env.NODE_ENV === 'production') {
+  document.addEventListener('contextmenu', (event) => event.preventDefault());
+  console.log = () => {};
+  console.error = () => {};
+  console.warn = () => {};
+}
+
 ReactDOM.render(
   <React.StrictMode>
     <App />

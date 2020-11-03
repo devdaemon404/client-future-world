@@ -1,5 +1,6 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import DataGrid from 'react-data-grid';
+
 import 'react-data-grid/dist/react-data-grid.css';
 import { OPLoader } from '../../util/LoaderUtil';
 import { toast } from '../../util/ToastUtil';
@@ -120,25 +121,22 @@ function ComplexComponent({
           name: col.label,
           key: col.key,
           formatter: (formatter) => {
-            const id = formatter.rowIdx;
-            let value = '';
-            if (id) {
-              value = data[formatter.rowIdx][col.key];
-            }
             return (
               <label
                 className='btn btn-default'
                 style={{
                   height: 30,
-                  textDecoration: value || 'underline',
-                }}
-              >
-                {data[formatter.rowIdx][col.key].split('/')[2] || 'Upload File'}
+                  textDecoration: 'underline',
+                }}>
+                {typeof data[formatter.rowIdx][col.key] === 'string' &&
+                data[formatter.rowIdx][col.key].split('/').length > 2
+                  ? data[formatter.rowIdx][col.key].split('/')[2]
+                  : 'Upload File'}
                 <input
                   hidden
                   style={{ width: 50 }}
                   type='file'
-                  accept="application/pdf"
+                  accept='application/pdf'
                   id='file'
                   onChange={(e) => {
                     const file = e.target.files[0];
@@ -187,8 +185,7 @@ function ComplexComponent({
           <div
             className='btn'
             style={{ textDecoration: 'underline' }}
-            onClick={() => onDelete(formatter.rowIdx)}
-          >
+            onClick={() => onDelete(formatter.rowIdx)}>
             Delete
           </div>
         </span>
@@ -213,8 +210,7 @@ function ComplexComponent({
             }
             const tempData = [...data, { ...placeholderData, deletable: true }];
             saveData(tempData);
-          }}
-        >
+          }}>
           <span style={{ textDecoration: 'underline' }}>
             + &nbsp;{buttonName}
           </span>

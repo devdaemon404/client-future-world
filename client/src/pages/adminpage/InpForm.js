@@ -234,19 +234,21 @@ export const InpForm = ({ getUsers }) => {
               </div>
             </div>
             <br />
-            <button
-              className='btn'
-              style={{
-                width: '190px',
-                margin: '10px 13% ',
-                background: '#3f47cc',
-                color: 'white',
-              }}
-              type='submit'
-              disabled={selectedOption === '' ? 'disabled' : ''}
-            >
-              Add Employee
+            <div className="text-center">
+              <button
+                className='btn'
+                style={{
+                  width: '190px',
+                  margin: '10px 13% ',
+                  background: '#3f47cc',
+                  color: 'white',
+                }}
+                type='submit'
+                disabled={selectedOption === '' ? 'disabled' : ''}
+              >
+                Add Employee
             </button>
+            </div>
           </Form>
         </FormMain>
       </h4>
