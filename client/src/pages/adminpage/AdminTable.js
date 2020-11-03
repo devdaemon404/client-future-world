@@ -65,7 +65,7 @@ function OPTable({ data, columns, getCellProps, onClickHandler, adminId }) {
     <div
       style={{
         overflow: 'auto',
-        maxHeight: '59vh',
+        maxHeight: '74vh',
       }}
       className='mx-auto mt-3 text-center'
     >

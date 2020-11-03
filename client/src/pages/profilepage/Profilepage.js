@@ -23,14 +23,12 @@ import PHONE from '../../assets/img/phone.png';
 import { uploadFinancialDocument } from '../../util/UploadFile';
 import { toast } from '../../util/ToastUtil';
 import { OPLoader } from '../../util/LoaderUtil';
-import { PopUp } from '../../util/DeleteConfirmUtil';
-
 const Profilepage = ({ retrievedId }) => {
   const [subAdminId, setSubAdminId] = useState();
   const [userData, setUserData] = useState({});
   const [pSlipDate, setPSlipDate] = useState('end');
   const [tSheetDate, setTSheetDate] = useState('end');
-  const [reimburseDate, setReimburseDate] = useState('end');
+
   const [toggle, setToggle] = useState(true);
   const [loading, setLoading] = useState(1);
   const [view, setview] = useState('data');
@@ -38,6 +36,7 @@ const Profilepage = ({ retrievedId }) => {
   const [subAdmins, setSubAdminList] = useState([]);
   const [isFormComplete, setIsFormComplete] = useState(false);
   const [enabledDates, setEnabledDates] = useState([]);
+  const [reimburseURL, setReimburseURL] = useState('');
   const checkLogin = async () => {
     try {
       const res = await axios.get('/api/auth/validate-token').then();
@@ -134,6 +133,19 @@ const Profilepage = ({ retrievedId }) => {
     getUserData();
     //eslint-disable-next-line
   }, [toggle]);
+  const GetFileDownloaded = async (_, datestring) => {
+    let a = datestring.split('-');
+    let res = await axios.post('/api/admin/single-fin-doc', {
+      userId: retrievedId,
+      documentType: 'reimburse',
+      documentedDate: {
+        month: a[1],
+        year: a[0],
+      },
+    });
+    res = res.data.data.url;
+    setReimburseURL(res);
+  };
 
   const onUploadHandler1 = async (e) => {
     let file = e.target.files[0];
@@ -413,33 +425,20 @@ const Profilepage = ({ retrievedId }) => {
                         <p>Select Month </p>{' '}
                         <Space direction='vertical'>
                           <DatePicker
-                            onChange={timeSheetMonthUpdater}
+                            onChange={GetFileDownloaded}
                             disabledDate={(current) => disabledDate(current)}
                             picker='month'
-                            value={
-                              tSheetDate === 'end' || tSheetDate.trim() === ''
-                                ? undefined
-                                : moment(tSheetDate, 'YYYY-MM')
-                            }
+                            placeholder={enabledDates[enabledDates.length - 1]}
                           />
                         </Space>
                         <div
                           id='btn2'
                           onClick={(e) => {
-                            document.getElementById('FileUpload3').click();
+                            window.open(reimburseURL);
                           }}
                         >
                           {'Click To Download'}
                         </div>
-                        <input
-                          type='submit'
-                          id='FileUpload3'
-                          // disabled={
-                          //   tSheetDate === 'end' || pSlipDate.trim() === ''
-                          // }
-                          style={{ opacity: 0, width: 0, height: 0 }}
-                          // onClick={reimburseHandler}
-                        />
                       </div>
                     </UploadContainer>
                   </React.Fragment>
@@ -466,14 +465,7 @@ const Profilepage = ({ retrievedId }) => {
                               </option>
                             ))}
                           </select>
-                          {/* <input
-                            as='select'
-                            required
-                            size='md'
-                            className='form-control'
-                            onChange={(e) => setSubAdminId(e.target.value)}>
-                            {adminList}
-                          </input> */}
+
                           <br />
                           <div className='form-group form-check'>
                             <input
@@ -512,3 +504,5 @@ const Profilepage = ({ retrievedId }) => {
   );
 };
 export default Profilepage;
+
+/*https://random-bucket-1234.s3.ap-south-1.amazonaws.com/5f94ed69f3db28001749190d/doc/reimburse01-2020.pdf?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIA5VFN6YBMBX5CMK6T%2F20201103%2Fap-south-1%2Fs3%2Faws4_request&X-Amz-Date=20201103T123431Z&X-Amz-Expires=3600&X-Amz-Signature=4784ae76a4d2bb3b51c946dfeab3c84b7350a9a238f64453633add6d1a3c94a0&X-Amz-SignedHeaders=host */
