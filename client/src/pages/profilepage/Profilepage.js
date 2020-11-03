@@ -30,12 +30,14 @@ const Profilepage = ({ retrievedId }) => {
   const [userData, setUserData] = useState({});
   const [pSlipDate, setPSlipDate] = useState('end');
   const [tSheetDate, setTSheetDate] = useState('end');
+  const [reimburseDate, setReimburseDate] = useState('end');
   const [toggle, setToggle] = useState(true);
   const [loading, setLoading] = useState(1);
   const [view, setview] = useState('data');
   const [role, setRole] = useState('sub-admin');
   const [subAdmins, setSubAdminList] = useState([]);
   const [isFormComplete, setIsFormComplete] = useState(false);
+  const [enabledDates, setEnabledDates] = useState([]);
   const checkLogin = async () => {
     try {
       const res = await axios.get('/api/auth/validate-token').then();
@@ -72,6 +74,30 @@ const Profilepage = ({ retrievedId }) => {
     }
   };
 
+  const getAllPaySlips = async () => {
+    try {
+      let res = await axios.post('/api/admin/financial-documents', {
+        userId: retrievedId,
+        documentType: 'reimburse',
+      });
+      res = res.data.data;
+      console.log(res);
+      let temp = [];
+      res.forEach((o) => {
+        temp.push(`${o.documentedDate.year}-${o.documentedDate.month}`);
+      });
+
+      setEnabledDates([...temp]);
+    } catch (error) {}
+  };
+
+  function disabledDate(current) {
+    // Can not select days before today and today
+    const formatted = current.format('YYYY-MM');
+
+    return !enabledDates.includes(formatted);
+  }
+
   useEffect(() => {
     try {
       checkLogin();
@@ -80,6 +106,9 @@ const Profilepage = ({ retrievedId }) => {
 
       body.scrollTop -= 10000;
     } catch (error) {}
+
+    getAllPaySlips();
+
     //eslint-disable-next-line
   }, [loading]);
 
@@ -373,6 +402,43 @@ const Profilepage = ({ retrievedId }) => {
                           }
                           style={{ opacity: 0, width: 0, height: 0 }}
                           onChange={onUploadHandler2}
+                        />
+                      </div>
+                    </UploadContainer>
+                    <UploadContainer>
+                      <div className='heading'>
+                        <h4>Download Reimbursment</h4>
+                      </div>
+                      <div className='select'>
+                        <p>Select Month </p>{' '}
+                        <Space direction='vertical'>
+                          <DatePicker
+                            onChange={timeSheetMonthUpdater}
+                            disabledDate={(current) => disabledDate(current)}
+                            picker='month'
+                            value={
+                              tSheetDate === 'end' || tSheetDate.trim() === ''
+                                ? undefined
+                                : moment(tSheetDate, 'YYYY-MM')
+                            }
+                          />
+                        </Space>
+                        <div
+                          id='btn2'
+                          onClick={(e) => {
+                            document.getElementById('FileUpload3').click();
+                          }}
+                        >
+                          {'Click To Download'}
+                        </div>
+                        <input
+                          type='submit'
+                          id='FileUpload3'
+                          // disabled={
+                          //   tSheetDate === 'end' || pSlipDate.trim() === ''
+                          // }
+                          style={{ opacity: 0, width: 0, height: 0 }}
+                          // onClick={reimburseHandler}
                         />
                       </div>
                     </UploadContainer>
