@@ -66,12 +66,6 @@ const Payslippage = () => {
     return current && current > moment().endOf('day');
   }
 
-  function disabledReimbursmentDate(current) {
-    // Can not select days before today and today
-    console.log(current);
-    return current && current < moment().endOf('day');
-  }
-
   const [visible, setVisible] = useState(false);
 
   const showModal = () => {
@@ -234,6 +228,7 @@ const Payslippage = () => {
                         ? undefined
                         : moment(`${payYear}-${payMonth}`, 'YYYY-MM')
                     }
+                    placeholder='2020-01'
                   />
                 </Space>
               </div>
@@ -250,7 +245,8 @@ const Payslippage = () => {
                     payMonth === undefined ||
                     payMonth === null
                   }
-                  onClick={updateChange}>
+                  onClick={updateChange}
+                >
                   <i className='fas fa-download'></i> Get Pay Slip
                 </button>
                 <div className='text-muted mt-1'>
@@ -283,6 +279,7 @@ const Payslippage = () => {
                         ? undefined
                         : moment(`${timeYear}-${timeMonth}`, 'YYYY-MM')
                     }
+                    placeholder='2020-01'
                   />
                 </Space>
               </div>
@@ -299,7 +296,8 @@ const Payslippage = () => {
                     timeMonth === undefined ||
                     timeMonth === null
                   }
-                  onClick={updateChange}>
+                  onClick={updateChange}
+                >
                   <i className='fas fa-eye'></i> View Time Sheet
                 </button>
                 <div className='text-muted mt-1'>
@@ -331,8 +329,8 @@ const Payslippage = () => {
                           ? undefined
                           : moment(pSlipDate, 'YYYY-MM')
                       }
-                      disabledDate={disabledReimbursmentDate}
                       picker='month'
+                      placeholder='2020-01'
                     />
                   </Space>
                 </div>
@@ -369,7 +367,8 @@ const Payslippage = () => {
         onOk={handleOk}
         onCancel={handleCancel}
         closable={false}
-        width={1000}>
+        width={1000}
+      >
         <div
           className='container text-center'
           id='viewTimeSheet'
