@@ -147,7 +147,7 @@ function ComplexComponent({
             );
           },
         });
-      }
+      } 
     });
     columnNames.forEach((col) => {
       if (col.type === 'date') {

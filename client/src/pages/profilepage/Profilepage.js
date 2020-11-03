@@ -89,7 +89,7 @@ const Profilepage = ({ retrievedId }) => {
 
   const getUserData = async () => {
     temp = await axios.get(
-      `/api/admin/employee-info/${retrievedId}?select=FName,photo,isFormComplete,empNo,LName,email,joiningDate,designation,phoneNumber,Address,FWEmail,Manager,custLoc,custName,BillingPH,annualCTC,increment,lwd,comments`
+      `/api/admin/employee-info/${retrievedId}?select=FName,increments,photo,isFormComplete,empNo,LName,email,joiningDate,designation,phoneNumber,Address,FWEmail,Manager,custLoc,custName,BillingPH,annualCTC,increment,lwd,comments`
     );
     temp = temp.data.data;
     if (!temp) temp = {};
@@ -209,7 +209,7 @@ const Profilepage = ({ retrievedId }) => {
                 <div
                   style={{
                     display: 'flex',
-                    width: '80%',
+                    width: '100%',
                     justifyContent: 'space-between',
                   }}
                 >
@@ -222,7 +222,7 @@ const Profilepage = ({ retrievedId }) => {
                       background: 'inherit',
                       border: 'none',
                       fontWeight: 700,
-                      fontSize: 22,
+                      fontSize: 18,
                       color: '#707070',
                     }}
                   >

@@ -125,7 +125,7 @@ export const AdminMain = styled.div`
   margin-left: 320px;
 
   .Admin {
-    padding-top: 120px;
+    padding-top: 70px;
     padding-left: 125px;
     width: 464px;
     height: 49px;
@@ -136,7 +136,7 @@ export const AdminMain = styled.div`
     font-size: 48px;
   }
   .EmpInfo {
-    padding-top: 90px;
+    padding-top: 70px;
     padding-left: 125px;
     width: 400px;
     height: 58px;

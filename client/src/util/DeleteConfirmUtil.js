@@ -55,7 +55,9 @@ export const PopUp = ({ Funct, state, setState }) => {
               }}
             >
               <div style={{ width: '100vw' }}>
-                Are you sure you want to delete the employee
+                {role === 'admin'
+                  ? 'Are you sure you want to delete the employee'
+                  : ''}
               </div>
               <div className='col'>
                 {' '}
