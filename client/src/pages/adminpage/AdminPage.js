@@ -216,7 +216,11 @@ const AdminPage = () => {
 
           {ViewPanel === 'Form' ? AddEmployeeChild : <></>}
 
-          <TableContainer>
+          <TableContainer
+            style={{
+              scrollDirection: 'horizontal',
+            }}
+          >
             {ViewPanel === 'Table' ? OpTableChild : <></>}
           </TableContainer>
         </AdminMain>

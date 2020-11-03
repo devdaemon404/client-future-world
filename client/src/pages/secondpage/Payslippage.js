@@ -12,6 +12,8 @@ import Header from '../../components/header/Header';
 import { config } from '../../util/RequestUtil';
 import { toast } from '../../util/ToastUtil.js';
 import { OPLoader } from '../../util/LoaderUtil.js';
+import { UploadContainer } from './paySlipPage.styles';
+import { uploadFinancialDocument } from '../../util/UploadFile';
 
 const Payslippage = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -19,6 +21,33 @@ const Payslippage = () => {
   const [payYear, setPayYear] = useState('');
   const [timeMonth, setTimeMonth] = useState('');
   const [timeYear, setTimeYear] = useState('');
+  const [pSlipDate, setPSlipDate] = useState('end');
+
+  const paySlipMonthUpdater = (date, dateString) => {
+    setPSlipDate(dateString);
+  };
+
+  const onUploadHandler1 = async (e) => {
+    let file = e.target.files[0];
+    let time1 = pSlipDate.split('-');
+
+    if (pSlipDate !== 'end') {
+      await uploadFinancialDocument(file, pSlipDate, {
+        uploadUrl: '/api/file/financial-document',
+        confirmationUrl: '/api/admin/register',
+
+        // userId: retrievedId,
+        fileType: 'paySlip',
+        date: {
+          month: time1[1],
+          year: time1[0],
+        },
+      });
+      setPSlipDate('end');
+    } else {
+      toast('Please Select Pay Slip Month');
+    }
+  };
 
   function onPayChange(date, dateString) {
     let dateArray = dateString.split('-');
@@ -30,6 +59,17 @@ const Payslippage = () => {
     let dateArray = dateString.split('-');
     setTimeMonth(dateArray[1]);
     setTimeYear(dateArray[0]);
+  }
+
+  function disabledDate(current) {
+    // Can not select days before today and today
+    return current && current > moment().endOf('day');
+  }
+
+  function disabledReimbursmentDate(current) {
+    // Can not select days before today and today
+    console.log(current);
+    return current && current < moment().endOf('day');
   }
 
   const [visible, setVisible] = useState(false);
@@ -153,7 +193,7 @@ const Payslippage = () => {
       <Header pathname='/' />
       <HeroContainer className='box d-flex align-items-center justify-content-center'>
         <MainHeader className='text-center'>
-          Pay Slip and Time Stamp Information
+          Pay Slip, Time Sheet and Reimbursement Information
         </MainHeader>
       </HeroContainer>
       <div className='jumbotron jumbotron-fluid'>
@@ -171,10 +211,10 @@ const Payslippage = () => {
       <OPLoader isLoading={isLoading} />
       <div className='container'>
         <div className='row'>
-          <div className='col-lg-6 col-md-12'>
+          <div className='col-lg-4 col-md-12 '>
             <div className='row'>
               <div className='col-12 text-left mb-3'>
-                <h1>Generate Pay Slip</h1>
+                <h2>Generate Pay Slip</h2>
               </div>
             </div>
 
@@ -187,6 +227,7 @@ const Payslippage = () => {
                 <Space direction='vertical'>
                   <DatePicker
                     onChange={onPayChange}
+                    disabledDate={disabledDate}
                     picker='month'
                     value={
                       payMonth === undefined || payMonth.trim() === ''
@@ -220,10 +261,10 @@ const Payslippage = () => {
               </div>
             </div>
           </div>
-          <div className='col-lg-6 col-md-12'>
+          <div className='col-lg-4 col-md-12'>
             <div className='row'>
               <div className='col-12 text-left mb-3'>
-                <h1>Time Sheet</h1>
+                <h2>Time Sheet</h2>
               </div>
             </div>
 
@@ -236,6 +277,7 @@ const Payslippage = () => {
                 <Space direction='vertical'>
                   <DatePicker
                     onChange={onTimeChange}
+                    disabledDate={disabledDate}
                     picker='month'
                     value={
                       timeMonth === undefined || timeMonth.trim() === ''
@@ -268,6 +310,57 @@ const Payslippage = () => {
               </div>
             </div>
             {/* </div> */}
+          </div>
+          <div className='col-lg-4 col-md-12'>
+            <UploadContainer>
+              <div
+              // className='heading'
+              >
+                <h2>Upload Payslip</h2>
+              </div>
+
+              <div className='form-group row p-2'>
+                <div className='col-sm-3'>
+                  <span className='text-danger'>*</span>
+                  Select Month and Year
+                </div>
+                <div className='col-sm-9'>
+                  <Space direction='vertical'>
+                    <DatePicker
+                      onChange={paySlipMonthUpdater}
+                      value={
+                        pSlipDate === 'end' || pSlipDate.trim() === ''
+                          ? undefined
+                          : moment(pSlipDate, 'YYYY-MM')
+                      }
+                      disabledDate={disabledReimbursmentDate}
+                      picker='month'
+                    />
+                  </Space>
+                </div>
+                <div
+                  className='col-sm-8 p-2 mt-5 btn selected-crumb submit-button crumb-item w-100 font-weight-bold'
+                  onClick={(e) => {
+                    document.getElementById('FileUpload1').click();
+                  }}
+                >
+                  <i class='fas fa-cloud-upload-alt'></i>{' '}
+                  {'Click To Upload Bill'}
+                </div>
+                <input
+                  type='file'
+                  className='realupload'
+                  accept='application/pdf'
+                  id='FileUpload1'
+                  style={{ opacity: 0 }}
+                  disabled={pSlipDate === 'end' || pSlipDate.trim() === ''}
+                  onChange={onUploadHandler1}
+                />
+                <div className='text-muted col-sm-9 mt-1'>
+                  (Select the month and year and your Time Sheet will Pop-up)
+                </div>
+              </div>
+            </UploadContainer>
           </div>
         </div>
       </div>
