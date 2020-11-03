@@ -156,3 +156,52 @@ exports.getFinancialDocument = asyncHandler(async (req, res, next) => {
     data: financialDocument,
   });
 });
+
+/**
+ * @desc    Create or update financial document for a employee
+ * @route   PUT /api/employee/financial-docs
+ * @access  Private
+ */
+exports.createOrUpdateFinDoc = asyncHandler(async (req, res, next) => {
+  let { documentType, documentedDate, fileKey } = req.body;
+  let financialDocument;
+  let finDoc = await FinancialDocument.findOne({
+    $and: [{ user: req.user.id }, { documentedDate }, { documentType }],
+  });
+
+  if (!finDoc) {
+    console.log('new doc');
+    financialDocument = new FinancialDocument({
+      user: req.user.id,
+      documentType,
+      documentedDate,
+      fileKey,
+    });
+    await financialDocument.save();
+    return res.status(201).json({
+      success: true,
+      message: `Document: ${documentType} added`,
+      data: financialDocument,
+    });
+  }
+  console.log('update doc');
+  finDoc = await FinancialDocument.findByIdAndUpdate(
+    finDoc._id,
+    {
+      documentType,
+      documentedDate,
+      fileKey,
+      updatedAt: Date.now(),
+    },
+    {
+      new: true,
+      runValidators: true,
+    }
+  );
+
+  res.status(201).json({
+    success: true,
+    message: `Document: ${documentType} updated`,
+    data: finDoc,
+  });
+});
