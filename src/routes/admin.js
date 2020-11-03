@@ -10,6 +10,7 @@ const {
   deleteUser,
   getFinancialDocs,
   toggleFormComplete,
+  getSingleFinancialDoc,
 } = require('../controllers/admin');
 
 const { protect, authorize } = require('../middleware/auth');
@@ -33,6 +34,9 @@ router.route('/add-reportee').post(protect, authorize('admin'), addReportee);
 router
   .route('/financial-documents')
   .post(protect, authorize('admin'), getFinancialDocs);
+router
+  .route('/single-fin-doc')
+  .post(protect, authorize('admin'), getSingleFinancialDoc);
 router
   .route('/toggle-form-completion')
   .post(protect, authorize('admin'), toggleFormComplete);
