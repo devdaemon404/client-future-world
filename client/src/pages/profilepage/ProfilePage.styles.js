@@ -7,7 +7,7 @@ export const LeftCol = styled.div`
   width: 23%;
 `;
 export const RightCol = styled.div`
-  width: 60%;
+  width: 70%;
   // height: 100vh;
   // background: #3f46cc17;
   padding: 20px;
@@ -42,23 +42,24 @@ export const SidebarDetails = styled.div`
 `;
 export const NameSection = styled.div`
   padding: 10px;
-  margin-top: 120px;
+  margin-top: 0px;
   h2 {
     font-weight: 700;
-    font-size: 48px;
+    font-size: 40px;
   }
   h3 {
-    font-size: 25px;
+    font-size: 20px;
     // margin-left: 40px;
   }
   #Address {
     width: 40%;
+    font-size:22px
     word-wrap: break-word;
     // background: blue;
   }
 
   .Head {
-    height: 250px;
+    height: 170px;
     width: 100%;
   }
   @media only screen and (max-width: 1500px) {
@@ -68,12 +69,15 @@ export const NameSection = styled.div`
     h3 {
       font-size: 22px;
     }
+    .Head {
+      height:200px
+    }
   }
 `;
 export const NavSection = styled.div`
   border-bottom: 3px solid rgba(0, 00, 0, 0.1);
   span {
-    padding: 10px 30px;
+    padding: 0px 30px;
     margin-left: 30px;
     font-size: 20px;
     font-weight: 700;
@@ -110,14 +114,13 @@ export const FormMain = styled.div`
 
     padding-left: 20px;
   }
-
   .info-type {
     border-bottom: 2px solid #3f46cc;
     color: #3f46cc;
     font-family: montserrat;
     text-transform: uppercase;
     width: 57%;
-    margin: 40px 0px;
+    margin: 20px 0px;
   }
 
   .form-control {

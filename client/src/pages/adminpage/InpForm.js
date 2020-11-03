@@ -5,7 +5,7 @@ import axios from 'axios';
 import moment from 'moment';
 import { toast } from '../../util/ToastUtil';
 import { OPLoader } from '../../util/LoaderUtil';
-import { fields1, fields2, fields3 } from './admin.data'
+import { fields1, fields2, fields3 } from './admin.data';
 export const InpForm = ({ getUsers }) => {
   const [isLoading, setIsLoading] = useState(false);
   const [selectedOption, setSelectedOption] = useState('');
@@ -86,6 +86,7 @@ export const InpForm = ({ getUsers }) => {
           empNo: FWiD,
           comments,
           joiningDate,
+          isFormComplete: true,
         },
       });
       setIsLoading(false);
@@ -101,11 +102,8 @@ export const InpForm = ({ getUsers }) => {
       }
       if (error.response.status === 400) toast('User Already Exists');
       else toast('Error : Please Login Again');
-
     }
   };
-
-
 
   const submitHandler = (e) => {
     e.preventDefault();
@@ -234,7 +232,7 @@ export const InpForm = ({ getUsers }) => {
               </div>
             </div>
             <br />
-            <div className="text-center">
+            <div className='text-center'>
               <button
                 className='btn'
                 style={{
@@ -247,7 +245,7 @@ export const InpForm = ({ getUsers }) => {
                 disabled={selectedOption === '' ? 'disabled' : ''}
               >
                 Add Employee
-            </button>
+              </button>
             </div>
           </Form>
         </FormMain>

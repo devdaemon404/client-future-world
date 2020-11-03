@@ -1,11 +1,25 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { FormMain } from './ProfilePage.styles';
 import { Form, Row, Col } from 'react-bootstrap';
 import axios from 'axios';
 import { toast } from '../../util/ToastUtil';
+import ComplexComponent from '../../components/form/ComplexComponent';
 
 export const InpForm = (props) => {
   const [input, setInput] = useState({});
+  const [increments, setIncrements] = useState([
+    {
+      year: '2020',
+      increment: '-',
+      postIncrementCTC: '-',
+      CTC: '-',
+    },
+  ]);
+
+  useEffect(() => {
+    const { increments } = props.userData;
+    if (increments && increments.length !== 0) setIncrements([...increments]);
+  }, [props.userData]);
 
   const {
     designation,
@@ -137,6 +151,7 @@ export const InpForm = (props) => {
         BillingPH,
         annualCTC,
         increment,
+        increments,
         lwd,
         comments,
       },
@@ -219,11 +234,45 @@ export const InpForm = (props) => {
       <h4>
         <FormMain>
           <Form onSubmit={submitHandler}>
+            <div className='info-type'>Salary Information</div>
+            <div className='CCOM'>
+              <ComplexComponent
+                defaultData={increments}
+                columnNames={[
+                  {
+                    label: 'Year',
+                    key: 'year',
+                    isRequired: true,
+                  },
+                  {
+                    label: 'CTC',
+                    key: 'CTC',
+                    isRequired: true,
+                  },
+                  {
+                    label: 'Increment',
+                    key: 'increment',
+                    isRequired: true,
+                  },
+                  {
+                    label: 'CTC after Increment',
+                    key: 'postIncrementCTC',
+                    isRequired: true,
+                  },
+                ]}
+                onSubmit={(data) => {
+                  setIncrements([...data]);
+                }}
+                buttonName='Add Increment'
+              />
+            </div>
+            <br />
             <div className='info-type'>Contact Information</div>
             {set2}
             <div className='info-type'>Work Information</div>
             {set3}
             <br />
+
             <button
               className='btn'
               style={{
@@ -232,7 +281,8 @@ export const InpForm = (props) => {
                 background: '#3f47cc',
                 color: 'white',
               }}
-              type='submit'>
+              type='submit'
+            >
               Update Data
             </button>
           </Form>
