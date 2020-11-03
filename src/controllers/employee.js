@@ -91,7 +91,7 @@ exports.getEmployeeInfo = asyncHandler(async (req, res, next) => {
  * @route   POST /api/employee/financial-docs
  * @access  Private
  */
-exports.getFinancialDocs = asyncHandler(async (req, res, next) => {
+exports.getFinancialDocsUrl = asyncHandler(async (req, res, next) => {
   const { documentedDate, documentType } = req.body;
 
   let financialDocument = await FinancialDocument.findOne({
@@ -127,6 +127,32 @@ exports.getFinancialDocs = asyncHandler(async (req, res, next) => {
   res.status(200).json({
     success: true,
     message: 'Fetched financial docs',
+    data: financialDocument,
+  });
+});
+
+/**
+ * @desc    Change active status
+ * @route   GET /api/employee/financial-docs?documentType=''
+ * @access  Private
+ */
+exports.getFinancialDocument = asyncHandler(async (req, res, next) => {
+  const { documentType } = req.query;
+
+  let financialDocument = await FinancialDocument.find({
+    $and: [
+      {
+        user: req.user.id,
+      },
+      {
+        documentType,
+      },
+    ],
+  }).select('documentedDate');
+
+  res.status(200).json({
+    success: true,
+    message: `Fetched financial docs for ${documentType}`,
     data: financialDocument,
   });
 });
