@@ -167,7 +167,7 @@ const DesignationInformation = ({ history }) => {
             <form onSubmit={handleSubmit} className='mt-2 text-right'>
               <div className='form-group row p-2'>
                 <label className='col-sm-3 col-form-label'>
-                  <span style={{ color: 'red' }}></span> Date of Joining
+                  <span style={{ color: 'red' }}></span> Date Of Joining
                 </label>
                 <div className='col-sm-9'>
                   <input

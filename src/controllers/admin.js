@@ -209,7 +209,7 @@ exports.toggleFormComplete = asyncHandler(async (req, res, next) => {
 
   res.status(200).json({
     success: true,
-    message: `Employee form filling ${isFormComplete ? 'Locked' : 'UnLocked'}`,
+    message: `Employee form filling ${isFormComplete ? 'Locked' : 'Un-locked'}`,
   });
 });
 

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import moment from 'moment';
 import { DatePicker, Space } from 'antd';
+import { config } from '../../util/RequestUtil';
 import axios from 'axios';
 
 import InpForm from './InpForm';
@@ -42,7 +43,7 @@ const Profilepage = ({ retrievedId }) => {
     try {
       const res = await axios.get('/api/auth/validate-token').then();
       setRole(res.data.role);
-    } catch (err) {}
+    } catch (err) { }
   };
 
   const addRepor = async (e) => {
@@ -88,7 +89,7 @@ const Profilepage = ({ retrievedId }) => {
       });
 
       setEnabledDates([...temp]);
-    } catch (error) {}
+    } catch (error) { }
   };
 
   function disabledDate(current) {
@@ -105,7 +106,7 @@ const Profilepage = ({ retrievedId }) => {
       var body = document.documentElement;
 
       body.scrollTop -= 10000;
-    } catch (error) {}
+    } catch (error) { }
 
     getAllPaySlips();
 
@@ -182,7 +183,7 @@ const Profilepage = ({ retrievedId }) => {
       await axios.post('/api/admin/toggle-form-completion', {
         userId: retrievedId,
         isFormComplete: !isFormComplete,
-      });
+      }, config);
       setIsFormComplete(!isFormComplete);
       if (!isFormComplete) {
         toast('Form Unlocked');
@@ -200,273 +201,273 @@ const Profilepage = ({ retrievedId }) => {
       {loading ? (
         <OPLoader isLoading={loading} />
       ) : (
-        // <PopUp></PopUp>
-        <ProfContainer>
-          <LeftCol>
-            <DisplayPic>
-              <img
-                alt='user profile'
-                className='imageDp'
-                src={userData.photo || IMGDEFAULT}
-              />
-            </DisplayPic>
-            <SidebarDetails>
-              <div className='join-and-end'>
-                <p>
-                  <img alt='altey' src={PHONE} />
-                  <span className='sidebar-item'> {userData.phoneNumber}</span>
-                </p>
-                <p>
-                  <span>
-                    Date Of Joining ::{' '}
-                    {moment(userData.joiningDate).format('DD/MM/YYYY')}{' '}
-                  </span>
-                </p>
-                <p>
-                  {' '}
-                  <span>FW-ID:: {userData.empNo} </span>
-                </p>
-                <p>
-                  <span> Full Time</span>
-                </p>
-              </div>
-            </SidebarDetails>
-          </LeftCol>
-          <RightCol>
-            <NameSection>
-              <div className='Head'>
-                <div
-                  style={{
-                    display: 'flex',
-                    width: '100%',
-                    justifyContent: 'space-between',
-                  }}
-                >
-                  {' '}
-                  <h2>{userData.FName + ' ' + userData.LName}</h2>{' '}
-                  <button
-                    onClick={downloadFile}
-                    style={{
-                      outline: 'none',
-                      background: 'inherit',
-                      border: 'none',
-                      fontWeight: 700,
-                      fontSize: 18,
-                      color: '#707070',
-                    }}
-                  >
-                    ⤓ Download Profile
-                  </button>{' '}
-                  <button
-                    onClick={toggleFormComplete}
-                    style={{
-                      outline: 'none',
-                      background: 'inherit',
-                      border: 'none',
-                      fontWeight: 700,
-                      marginLeft: 20,
-                      fontSize: 22,
-                      color: '#707070',
-                    }}
-                  >
-                    {userData.isFormComplete ? 'Lock Form' : 'UnLock Form'}
-                  </button>
+          // <PopUp></PopUp>
+          <ProfContainer>
+            <LeftCol>
+              <DisplayPic>
+                <img
+                  alt='user profile'
+                  className='imageDp'
+                  src={userData.photo || IMGDEFAULT}
+                />
+              </DisplayPic>
+              <SidebarDetails>
+                <div className='join-and-end'>
+                  <p>
+                    <img alt='altey' src={PHONE} />
+                    <span className='sidebar-item'> {userData.phoneNumber}</span>
+                  </p>
+                  <p>
+                    <span>
+                      Date Of Joining ::{' '}
+                      {moment(userData.joiningDate).format('DD/MM/YYYY')}{' '}
+                    </span>
+                  </p>
+                  <p>
+                    {' '}
+                    <span>FW-ID:: {userData.empNo} </span>
+                  </p>
+                  <p>
+                    <span> Full Time</span>
+                  </p>
                 </div>
-                <h3>{userData.designation}</h3>
-                <h3>
-                  <div id='Address'>
-                    <img alt='altey' src={GPS} />
-                    {userData.Address}
+              </SidebarDetails>
+            </LeftCol>
+            <RightCol>
+              <NameSection>
+                <div className='Head'>
+                  <div
+                    style={{
+                      display: 'flex',
+                      width: '100%',
+                      justifyContent: 'space-between',
+                    }}
+                  >
+                    {' '}
+                    <h2>{userData.FName + ' ' + userData.LName}</h2>{' '}
+                    <button
+                      onClick={downloadFile}
+                      style={{
+                        outline: 'none',
+                        background: 'inherit',
+                        border: 'none',
+                        fontWeight: 700,
+                        fontSize: 18,
+                        color: '#707070',
+                      }}
+                    >
+                      ⤓ Download Profile
+                  </button>{' '}
+                    <button
+                      onClick={toggleFormComplete}
+                      style={{
+                        outline: 'none',
+                        background: 'inherit',
+                        border: 'none',
+                        fontWeight: 700,
+                        marginLeft: 20,
+                        fontSize: 22,
+                        color: '#707070',
+                      }}
+                    >
+                      {userData.isFormComplete ? 'Lock Form' : 'UnLock Form'}
+                    </button>
                   </div>
-                </h3>
-              </div>
+                  <h3>{userData.designation}</h3>
+                  <h3>
+                    <div id='Address'>
+                      <img alt='altey' src={GPS} />
+                      {userData.Address}
+                    </div>
+                  </h3>
+                </div>
 
-              <NavSection>
-                <span
-                  style={
-                    view === 'data'
-                      ? { textDecoration: 'underline solid blue' }
-                      : {}
-                  }
-                  onClick={(e) => setview('data')}
-                >
-                  About
-                </span>{' '}
-                <span
-                  style={
-                    view === 'upload'
-                      ? { textDecoration: 'underline solid blue' }
-                      : {}
-                  }
-                  onClick={(e) => setview('upload')}
-                >
-                  Documents
-                </span>
-                {role === 'admin' ? (
+                <NavSection>
                   <span
                     style={
-                      view === 'Add Reportee'
+                      view === 'data'
                         ? { textDecoration: 'underline solid blue' }
                         : {}
                     }
-                    onClick={(e) => {
-                      setview('Add Reportee');
-                    }}
+                    onClick={(e) => setview('data')}
                   >
-                    Add Reportee
-                  </span>
-                ) : (
-                  <></>
-                )}
-              </NavSection>
-              <BodySection>
-                {view === 'data' ? (
-                  <InpForm
-                    userData={userData}
-                    retrievedId={retrievedId}
-                    toggle={toggle}
-                    setToggle={setToggle}
-                  />
-                ) : view === 'upload' ? (
-                  <React.Fragment>
-                    <UploadContainer>
-                      <div className='heading'>
-                        <h4>Upload Payslip</h4>
-                      </div>
-                      <div className='select'>
-                        <p>Select Month </p>{' '}
-                        <Space direction='vertical'>
-                          <DatePicker
-                            onChange={paySlipMonthUpdater}
-                            picker='month'
-                            value={
-                              pSlipDate === 'end' || pSlipDate.trim() === ''
-                                ? undefined
-                                : moment(pSlipDate, 'YYYY-MM')
-                            }
-                          />
-                        </Space>
-                        <div
-                          id='btn1'
-                          onClick={(e) => {
-                            document.getElementById('FileUpload1').click();
-                          }}
-                        >
-                          {'Click To Upload'}
+                    About
+                </span>{' '}
+                  <span
+                    style={
+                      view === 'upload'
+                        ? { textDecoration: 'underline solid blue' }
+                        : {}
+                    }
+                    onClick={(e) => setview('upload')}
+                  >
+                    Documents
+                </span>
+                  {role === 'admin' ? (
+                    <span
+                      style={
+                        view === 'Add Reportee'
+                          ? { textDecoration: 'underline solid blue' }
+                          : {}
+                      }
+                      onClick={(e) => {
+                        setview('Add Reportee');
+                      }}
+                    >
+                      Add Reportee
+                    </span>
+                  ) : (
+                      <></>
+                    )}
+                </NavSection>
+                <BodySection>
+                  {view === 'data' ? (
+                    <InpForm
+                      userData={userData}
+                      retrievedId={retrievedId}
+                      toggle={toggle}
+                      setToggle={setToggle}
+                    />
+                  ) : view === 'upload' ? (
+                    <React.Fragment>
+                      <UploadContainer>
+                        <div className='heading'>
+                          <h4>Upload Payslip</h4>
                         </div>
-                        <input
-                          type='file'
-                          className='realupload'
-                          accept='application/pdf'
-                          id='FileUpload1'
-                          style={{ opacity: 0 }}
-                          disabled={
-                            pSlipDate === 'end' || pSlipDate.trim() === ''
-                          }
-                          onChange={onUploadHandler1}
-                        />
-                      </div>
-                    </UploadContainer>
-                    <UploadContainer>
-                      <div className='heading'>
-                        <h4>Upload Time Sheet</h4>
-                      </div>
-                      <div className='select'>
-                        <p>Select Month </p>{' '}
-                        <Space direction='vertical'>
-                          <DatePicker
-                            onChange={timeSheetMonthUpdater}
-                            picker='month'
-                            value={
-                              tSheetDate === 'end' || tSheetDate.trim() === ''
-                                ? undefined
-                                : moment(tSheetDate, 'YYYY-MM')
-                            }
-                          />
-                        </Space>
-                        <div
-                          id='btn2'
-                          onClick={(e) => {
-                            document.getElementById('FileUpload2').click();
-                          }}
-                        >
-                          {'Click To Upload'}
-                        </div>
-                        <input
-                          type='file'
-                          className='realupload'
-                          accept='application/pdf'
-                          id='FileUpload2'
-                          disabled={
-                            tSheetDate === 'end' || pSlipDate.trim() === ''
-                          }
-                          style={{ opacity: 0, width: 0, height: 0 }}
-                          onChange={onUploadHandler2}
-                        />
-                      </div>
-                    </UploadContainer>
-                    <UploadContainer>
-                      <div className='heading'>
-                        <h4>Download Reimbursment</h4>
-                      </div>
-                      <div className='select'>
-                        <p>Select Month </p>{' '}
-                        <Space direction='vertical'>
-                          <DatePicker
-                            onChange={timeSheetMonthUpdater}
-                            disabledDate={(current) => disabledDate(current)}
-                            picker='month'
-                            value={
-                              tSheetDate === 'end' || tSheetDate.trim() === ''
-                                ? undefined
-                                : moment(tSheetDate, 'YYYY-MM')
-                            }
-                          />
-                        </Space>
-                        <div
-                          id='btn2'
-                          onClick={(e) => {
-                            document.getElementById('FileUpload3').click();
-                          }}
-                        >
-                          {'Click To Download'}
-                        </div>
-                        <input
-                          type='submit'
-                          id='FileUpload3'
-                          // disabled={
-                          //   tSheetDate === 'end' || pSlipDate.trim() === ''
-                          // }
-                          style={{ opacity: 0, width: 0, height: 0 }}
-                          // onClick={reimburseHandler}
-                        />
-                      </div>
-                    </UploadContainer>
-                  </React.Fragment>
-                ) : (
-                  <>
-                    <FormMain>
-                      <form onSubmit={addRepor}>
-                        <h4>
-                          {' '}
-                          <div className='info-type'>Assign to Sub Admin</div>
-                        </h4>
-                        <div className='form-group' style={{ paddingLeft: 70 }}>
-                          <select
-                            className='form-control'
-                            onChange={(e) => setSubAdminId(e.target.value)}
-                            defaultValue={''}
+                        <div className='select'>
+                          <p>Select Month </p>{' '}
+                          <Space direction='vertical'>
+                            <DatePicker
+                              onChange={paySlipMonthUpdater}
+                              picker='month'
+                              value={
+                                pSlipDate === 'end' || pSlipDate.trim() === ''
+                                  ? undefined
+                                  : moment(pSlipDate, 'YYYY-MM')
+                              }
+                            />
+                          </Space>
+                          <div
+                            id='btn1'
+                            onClick={(e) => {
+                              document.getElementById('FileUpload1').click();
+                            }}
                           >
-                            <option value='' disabled>
-                              Select sub-admin ...
+                            {'Click To Upload'}
+                          </div>
+                          <input
+                            type='file'
+                            className='realupload'
+                            accept='application/pdf'
+                            id='FileUpload1'
+                            style={{ opacity: 0 }}
+                            disabled={
+                              pSlipDate === 'end' || pSlipDate.trim() === ''
+                            }
+                            onChange={onUploadHandler1}
+                          />
+                        </div>
+                      </UploadContainer>
+                      <UploadContainer>
+                        <div className='heading'>
+                          <h4>Upload Time Sheet</h4>
+                        </div>
+                        <div className='select'>
+                          <p>Select Month </p>{' '}
+                          <Space direction='vertical'>
+                            <DatePicker
+                              onChange={timeSheetMonthUpdater}
+                              picker='month'
+                              value={
+                                tSheetDate === 'end' || tSheetDate.trim() === ''
+                                  ? undefined
+                                  : moment(tSheetDate, 'YYYY-MM')
+                              }
+                            />
+                          </Space>
+                          <div
+                            id='btn2'
+                            onClick={(e) => {
+                              document.getElementById('FileUpload2').click();
+                            }}
+                          >
+                            {'Click To Upload'}
+                          </div>
+                          <input
+                            type='file'
+                            className='realupload'
+                            accept='application/pdf'
+                            id='FileUpload2'
+                            disabled={
+                              tSheetDate === 'end' || pSlipDate.trim() === ''
+                            }
+                            style={{ opacity: 0, width: 0, height: 0 }}
+                            onChange={onUploadHandler2}
+                          />
+                        </div>
+                      </UploadContainer>
+                      <UploadContainer>
+                        <div className='heading'>
+                          <h4>Download Reimbursment</h4>
+                        </div>
+                        <div className='select'>
+                          <p>Select Month </p>{' '}
+                          <Space direction='vertical'>
+                            <DatePicker
+                              onChange={timeSheetMonthUpdater}
+                              disabledDate={(current) => disabledDate(current)}
+                              picker='month'
+                              value={
+                                tSheetDate === 'end' || tSheetDate.trim() === ''
+                                  ? undefined
+                                  : moment(tSheetDate, 'YYYY-MM')
+                              }
+                            />
+                          </Space>
+                          <div
+                            id='btn2'
+                            onClick={(e) => {
+                              document.getElementById('FileUpload3').click();
+                            }}
+                          >
+                            {'Click To Download'}
+                          </div>
+                          <input
+                            type='submit'
+                            id='FileUpload3'
+                            // disabled={
+                            //   tSheetDate === 'end' || pSlipDate.trim() === ''
+                            // }
+                            style={{ opacity: 0, width: 0, height: 0 }}
+                          // onClick={reimburseHandler}
+                          />
+                        </div>
+                      </UploadContainer>
+                    </React.Fragment>
+                  ) : (
+                        <>
+                          <FormMain>
+                            <form onSubmit={addRepor}>
+                              <h4>
+                                {' '}
+                                <div className='info-type'>Assign to Sub Admin</div>
+                              </h4>
+                              <div className='form-group' style={{ paddingLeft: 70 }}>
+                                <select
+                                  className='form-control'
+                                  onChange={(e) => setSubAdminId(e.target.value)}
+                                  defaultValue={''}
+                                >
+                                  <option value='' disabled>
+                                    Select sub-admin ...
                             </option>
-                            {subAdmins.map((subAdmin, key) => (
-                              <option key={key} value={subAdmin._id}>
-                                {subAdmin.name}
-                              </option>
-                            ))}
-                          </select>
-                          {/* <input
+                                  {subAdmins.map((subAdmin, key) => (
+                                    <option key={key} value={subAdmin._id}>
+                                      {subAdmin.name}
+                                    </option>
+                                  ))}
+                                </select>
+                                {/* <input
                             as='select'
                             required
                             size='md'
@@ -474,40 +475,40 @@ const Profilepage = ({ retrievedId }) => {
                             onChange={(e) => setSubAdminId(e.target.value)}>
                             {adminList}
                           </input> */}
-                          <br />
-                          <div className='form-group form-check'>
-                            <input
-                              className='form-check-input'
-                              required
-                              type='checkbox'
-                              id='Checkbox'
-                            />
-                            <label className='form-check-label'>
-                              Are you sure you want to add the reportee
+                                <br />
+                                <div className='form-group form-check'>
+                                  <input
+                                    className='form-check-input'
+                                    required
+                                    type='checkbox'
+                                    id='Checkbox'
+                                  />
+                                  <label className='form-check-label'>
+                                    Are you sure you want to add the reportee
                             </label>
-                          </div>
-                        </div>
-                        <button
-                          className='btn'
-                          style={{
-                            width: '190px',
-                            margin: '10px 13% ',
-                            background: '#3f47cc',
-                            color: 'white',
-                          }}
-                          type='submit'
-                        >
-                          Continue
+                                </div>
+                              </div>
+                              <button
+                                className='btn'
+                                style={{
+                                  width: '190px',
+                                  margin: '10px 13% ',
+                                  background: '#3f47cc',
+                                  color: 'white',
+                                }}
+                                type='submit'
+                              >
+                                Continue
                         </button>
-                      </form>
-                    </FormMain>
-                  </>
-                )}
-              </BodySection>
-            </NameSection>
-          </RightCol>
-        </ProfContainer>
-      )}
+                            </form>
+                          </FormMain>
+                        </>
+                      )}
+                </BodySection>
+              </NameSection>
+            </RightCol>
+          </ProfContainer>
+        )}
     </React.Fragment>
   );
 };

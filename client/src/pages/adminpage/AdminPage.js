@@ -43,13 +43,13 @@ const AdminPage = () => {
         phoneNumber: !employee.phoneNumber ? '--' : employee.phoneNumber,
         status:
           employee.active === 0
-            ? 'Relieved ' +
-              ' ' +
-              moment(employee.lastLogin).format('DD/MMM/YYYY')
+            ? 'Relieved    ' +
+            ' From - ' +
+            moment(employee.lastLogin).format('DD/MMM/YYYY')
             : employee.active === 1
-            ? 'Active'
-            : 'Inactive' +
-              ' from:' +
+              ? 'Active'
+              : 'Inactive' +
+              ' From - ' +
               moment(employee.lastLogin).format('DD/MMM/YYYY'),
         empNo: !employee.empNo ? 'FW-----' : employee.empNo,
         joinDate: moment(employee.createdAt).format('DD/MMM/YYYY'),
@@ -182,6 +182,7 @@ const AdminPage = () => {
       >
         Add an Employee
       </div>
+
       <div className='Logout' onClick={logoutHandler}>
         <span>LOGOUT</span>
       </div>
@@ -243,27 +244,27 @@ const AdminPage = () => {
           setState={setConfirm}
         />
       ) : (
-        <></>
-      )}
+          <></>
+        )}
       <MainWrapper>
         {SidebarChild}
         <AdminMain>
           {ViewPanel === 'Profile' ? (
             <ProfilePage userId={selectUser} retrievedId={Id} />
           ) : (
-            <></>
-          )}
+              <></>
+            )}
           {ViewPanel === 'Table' ? (
             <div className='Admin'>Admin Panel</div>
           ) : (
-            <></>
-          )}
+              <></>
+            )}
 
           {ViewPanel === 'Table' ? (
             <div className='EmpInfo'>Employee Information</div>
           ) : (
-            <></>
-          )}
+              <></>
+            )}
 
           {ViewPanel === 'Form' ? AddEmployeeChild : <></>}
 

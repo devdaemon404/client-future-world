@@ -167,7 +167,7 @@ const BasicInformation2 = ({ history }) => {
 
               <div className='form-group row p-2'>
                 <label className='col-sm-3 col-form-label'>
-                  <span style={{ color: 'red' }}>*</span> DOB (as in pan)
+                  <span style={{ color: 'red' }}>*</span> DOB (As In Pan)
                 </label>
                 <div className='col-sm-9'>
                   <input
@@ -261,7 +261,7 @@ const BasicInformation2 = ({ history }) => {
               <fieldset className='form-group p-2'>
                 <div className='row'>
                   <legend className='col-form-label col-sm-3 pt-0'>
-                    <span style={{ color: 'red' }}>*</span> Marital status
+                    <span style={{ color: 'red' }}>*</span> Marital Status
                   </legend>
                   <div className='col-sm-9 text-left'>
                     <div className='form-check form-check-inline'>

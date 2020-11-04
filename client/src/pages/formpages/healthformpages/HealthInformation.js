@@ -189,7 +189,7 @@ const HealthInformation = ({ history }) => {
 
               <div className='form-group row p-2'>
                 <label className='col-sm-3 col-form-label'>
-                  <span style={{ color: 'red' }}>*</span> Power of Glass
+                  <span style={{ color: 'red' }}>*</span> Power Of Glass
                 </label>
                 <div className='col-sm-4'>
                   <input
@@ -219,7 +219,7 @@ const HealthInformation = ({ history }) => {
 
               <div className='form-group row p-2'>
                 <label className='col-sm-3 col-form-label'>
-                  <span style={{ color: 'red' }}>*</span> Identification marks
+                  <span style={{ color: 'red' }}>*</span> Identification Marks
                 </label>
                 <div className='col-sm-4'>
                   <input
@@ -249,8 +249,8 @@ const HealthInformation = ({ history }) => {
 
               <div className='form-group row p-2'>
                 <label className='col-sm-3 col-form-label'>
-                  <span style={{ color: 'red' }}>*</span> Any major surgery /
-                  illness in the past / Allergies
+                  <span style={{ color: 'red' }}>*</span> Any Major Surgery /
+                  Illness In The Past / Allergies
                 </label>
                 <div className='col-sm-9'>
                   <input

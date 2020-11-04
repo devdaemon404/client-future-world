@@ -35,6 +35,7 @@ const CustomModal = () => {
         config
       );
       if (result.data.data.isFormComplete) setIsFormDisabled(true);
+      console.log('Is form compelte', result.data.data.isFormComplete)
     };
     fetchValidity();
   }, []);
