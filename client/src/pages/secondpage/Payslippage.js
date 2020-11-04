@@ -13,7 +13,6 @@ import { config } from '../../util/RequestUtil';
 import { toast } from '../../util/ToastUtil.js';
 import { OPLoader } from '../../util/LoaderUtil.js';
 import { UploadContainer } from './paySlipPage.styles';
-import { uploadFinancialDocument } from '../../util/UploadFile';
 
 const PaySlipPage = () => {
   const [isLoading] = useState(false);
@@ -296,8 +295,7 @@ const PaySlipPage = () => {
                     payMonth === undefined ||
                     payMonth === null
                   }
-                  onClick={updateChange}
-                >
+                  onClick={updateChange}>
                   <i className='fas fa-download'></i> Get Pay Slip
                 </button>
                 <div className='text-muted mt-1'>
@@ -349,8 +347,7 @@ const PaySlipPage = () => {
                     timeMonth === undefined ||
                     timeMonth === null
                   }
-                  onClick={updateChange}
-                >
+                  onClick={updateChange}>
                   <i className='fas fa-eye'></i> View Time Sheet
                 </button>
                 <div className='text-muted mt-1'>
@@ -397,8 +394,7 @@ const PaySlipPage = () => {
                   }
                   onClick={(e) => {
                     document.getElementById('FileUpload1').click();
-                  }}
-                >
+                  }}>
                   <i class='fas fa-cloud-upload-alt'></i>{' '}
                   {'Click To Upload Bill'}
                 </button>
@@ -428,8 +424,7 @@ const PaySlipPage = () => {
         visible={visible}
         onOk={handleOk}
         onCancel={handleCancel}
-        width={1500}
-      >
+        width={1500}>
         <div className='container text-center' id='viewTimeSheet'></div>
       </Modal>
     </Container>
