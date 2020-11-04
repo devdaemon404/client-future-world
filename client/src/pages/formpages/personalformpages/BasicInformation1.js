@@ -251,7 +251,7 @@ const BasicInformation1 = ({ history }) => {
 
               <div className='form-group row p-2'>
                 <label className='col-sm-3 form-label'>
-                  <span style={{ color: 'red' }}>*</span> Name in full
+                  <span style={{ color: 'red' }}>*</span> Name In Full
                 </label>
                 <div className='col-sm-3'>
                   <input
@@ -292,7 +292,7 @@ const BasicInformation1 = ({ history }) => {
 
               <div className='form-group row p-2'>
                 <label className='col-sm-3 form-label'>
-                  <span style={{ color: 'red' }}>*</span> Name (as in pan)
+                  <span style={{ color: 'red' }}>*</span> Name (As In PAN)
                 </label>
                 <div className='col-sm-3'>
                   <input
@@ -374,7 +374,7 @@ const BasicInformation1 = ({ history }) => {
               <div className='form-group row p-2'>
                 <label className='col-sm-3 col-form-label'>
                   <span style={{ color: 'red' }}>*</span> Passport Sized Photo
-                  (Max file size 50KB)
+                  (Max File Size 50KB)
                 </label>
                 <div className='col-sm-9'>
                   <ImageUploading
@@ -405,8 +405,8 @@ const BasicInformation1 = ({ history }) => {
                             Click or Drop here
                           </div>
                         ) : (
-                          <div />
-                        )}
+                            <div />
+                          )}
                         &nbsp;
                         {imageList.map((image, index) => (
                           <div key={index} className='row ml-5'>

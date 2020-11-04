@@ -5,6 +5,7 @@ import 'react-data-grid/dist/react-data-grid.css';
 import { OPLoader } from '../../util/LoaderUtil';
 import { toast } from '../../util/ToastUtil';
 import { uploadDocument } from '../../util/UploadFile';
+import { Button } from 'antd';
 
 /**
  *
@@ -15,8 +16,9 @@ import { uploadDocument } from '../../util/UploadFile';
 function ComplexComponent({
   defaultData = [],
   columnNames = [],
-  onSubmit = (_) => {},
+  onSubmit = (_) => { },
   buttonName = 'Invalid Button Name',
+  rowLimit = -1
 }) {
   // Set the table grid values
   const [data, setData] = useState(defaultData);
@@ -129,7 +131,7 @@ function ComplexComponent({
                   textDecoration: 'underline',
                 }}>
                 {typeof data[formatter.rowIdx][col.key] === 'string' &&
-                data[formatter.rowIdx][col.key].split('/').length > 2
+                  data[formatter.rowIdx][col.key].split('/').length > 2
                   ? data[formatter.rowIdx][col.key].split('/')[2]
                   : 'Upload File'}
                 <input
@@ -147,7 +149,7 @@ function ComplexComponent({
             );
           },
         });
-      } 
+      }
     });
     columnNames.forEach((col) => {
       if (col.type === 'date') {
@@ -201,20 +203,22 @@ function ComplexComponent({
       <OPLoader isLoading={isUploading} />
       {/* "Add New" button */}
       <div className='float-right'>
-        <div
-          className='btn btn-default'
+        <Button type='link'
           onClick={() => {
+            if (rowLimit !== -1 && data.length >= rowLimit) {
+              toast('Row limit reached')
+              return;
+            }
             const placeholderData = {};
             for (const obj of columnNames) {
               placeholderData[obj.key] = `-`;
             }
             const tempData = [...data, { ...placeholderData, deletable: true }];
             saveData(tempData);
+
           }}>
-          <span style={{ textDecoration: 'underline' }}>
-            + &nbsp;{buttonName}
-          </span>
-        </div>
+          + &nbsp;{buttonName}
+        </Button>
       </div>
       <br />
       <br />

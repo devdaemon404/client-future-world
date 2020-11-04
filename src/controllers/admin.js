@@ -85,7 +85,7 @@ exports.changeUserActiveStatus = asyncHandler(async (req, res, next) => {
 
   await User.findByIdAndUpdate(
     userId,
-    { active },
+    { active, updatedAt: Date.now() },
     {
       new: true,
       runValidators: true,
@@ -209,7 +209,7 @@ exports.toggleFormComplete = asyncHandler(async (req, res, next) => {
 
   res.status(200).json({
     success: true,
-    message: `Employee form filling ${isFormComplete ? 'Locked' : 'UnLocked'}`,
+    message: `Employee form filling ${isFormComplete ? 'Locked' : 'Un-locked'}`,
   });
 });
 
@@ -229,5 +229,44 @@ exports.getFinancialDocs = asyncHandler(async (req, res, next) => {
     success: true,
     message: `Got all documents of type ${documentType} for particular employee`,
     data: findoc,
+  });
+});
+
+const AWS = require('aws-sdk');
+const { awsS3AccessKeyId, awsS3SecretAccessKey } = require('../../config/keys');
+//Initialize S3 config
+const s3 = new AWS.S3({
+  accessKeyId: awsS3AccessKeyId,
+  secretAccessKey: awsS3SecretAccessKey,
+  signatureVersion: 'v4',
+  region: 'ap-south-1',
+});
+
+/**
+ * @desc    Get a single financial document for a employee
+ * @route   POST /api/admin/single-fin-doc
+ * @access  Private
+ */
+exports.getSingleFinancialDoc = asyncHandler(async (req, res, next) => {
+  const { userId, documentType, documentedDate } = req.body;
+
+  const findoc = await FinancialDocument.findOne({
+    $and: [{ user: userId }, { documentType }, { documentedDate }],
+  });
+  let url;
+  if (findoc) {
+    let fileKey = findoc.fileKey;
+    const params = {
+      Bucket: 'random-bucket-1234',
+      Expires: 60 * 60,
+      Key: `${fileKey}`,
+    };
+
+    url = await s3.getSignedUrl('getObject', params);
+  }
+
+  res.status(200).json({
+    success: true,
+    data: { url },
   });
 });

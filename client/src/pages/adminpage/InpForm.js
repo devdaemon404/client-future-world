@@ -61,8 +61,7 @@ export const InpForm = ({ getUsers }) => {
   const addUser = async () => {
     setIsLoading(true);
     try {
-      // eslint-disable-next-line
-      let res = await axios.post('/api/auth/register', {
+      await axios.post('/api/auth/register', {
         email,
         name,
         role: selectedOption,
@@ -127,7 +126,6 @@ export const InpForm = ({ getUsers }) => {
               type={type}
               key={i}
               pattern={type === 'tel' ? '[0-9]*' : undefined}
-              // eslint-disable-next-line
               className='formsInp'
               name={name}
               placeholder={defaultValue}
@@ -145,10 +143,10 @@ export const InpForm = ({ getUsers }) => {
   const set2 = fields2.map((field, i) => {
     return (
       <Form.Group key={i} as={Row}>
-        <Form.Label className='form-label text-right' column sm='4'>
+        <Form.Label className='form-label text-right' column >
           {field.fName}
         </Form.Label>
-        <Col sm='6'>
+        <Col >
           <Form.Control
             className='form-control'
             type={field.type}

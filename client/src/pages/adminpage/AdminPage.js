@@ -7,6 +7,7 @@ import {
   MainWrapper,
   NotPhone,
   FormWrapper,
+  AdminHeader,
 } from './AdminPage.styles';
 import ProfilePage from './../profilepage/Profilepage';
 import LOGO from '../../assets/img/logo.png';
@@ -17,6 +18,7 @@ import Gears from './../../assets/img/gears.gif';
 import InpForm from './InpForm';
 
 import { toast } from '../../util/ToastUtil';
+import { OPLoader } from '../../util/LoaderUtil';
 import { PopUp } from '../../util/DeleteConfirmUtil';
 // const selectUserContext = React.createContext({});
 const AdminPage = () => {
@@ -26,6 +28,7 @@ const AdminPage = () => {
   let formattedData = [];
   const [data, setData] = useState([]);
   const [selectedEmp, setselectedEmp] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [ViewPanel, setViewPanel] = useState('Table');
   const [selectUser, setSelectUser] = useState('');
   const history = useHistory();
@@ -43,14 +46,14 @@ const AdminPage = () => {
         phoneNumber: !employee.phoneNumber ? '--' : employee.phoneNumber,
         status:
           employee.active === 0
-            ? 'Relieved ' +
-              ' ' +
-              moment(employee.lastLogin).format('DD/MMM/YYYY')
+            ? 'Relieved    ' +
+              ' From - ' +
+              moment(employee.updatedAt).format('DD/MMM/YYYY')
             : employee.active === 1
             ? 'Active'
             : 'Inactive' +
-              ' from:' +
-              moment(employee.lastLogin).format('DD/MMM/YYYY'),
+              ' From - ' +
+              moment(employee.updatedAt).format('DD/MMM/YYYY'),
         empNo: !employee.empNo ? 'FW-----' : employee.empNo,
         joinDate: moment(employee.createdAt).format('DD/MMM/YYYY'),
         id: employee._id,
@@ -110,78 +113,98 @@ const AdminPage = () => {
     history.push('/login');
   };
 
-  const DeleteUserFunction = async () => {
+  const deleteUser = async () => {
     try {
+      setIsLoading(true);
       await axios.delete(`/api/admin/employee/${Id}`);
       getUsers();
       toast('Employee Deleted');
     } catch (err) {
       if (err.response.status === 403) {
-        toast('NOT AUTHORIZED:  Deleting employee is an admin only function');
+        return toast(
+          'NOT AUTHORIZED:  Deleting employee is an admin only function'
+        );
       }
+      toast(err.response.data.error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
-  const onClickHandler = async (e) => {
-    retrievedId = e.target.children[6].innerHTML.toString().trim();
+  const onClickHandler = async (optionIndex, userId) => {
+    retrievedId = userId;
 
     retrievedEmployee = data.find((o) => o.id === retrievedId);
     setSelectUser(retrievedId);
     setId(retrievedId);
-    if (e.target.value === '0') {
-      // window.open(`/api/ejs/pdf-gen?employeeId=${retrievedId}`);
-      // setSelectUser(retrievedId);
-      // setId(retrievedId);
-
+    if (optionIndex === '0') {
       setViewPanel('Profile');
     }
 
-    if (e.target.value === '1') {
-      await axios.post('/api/admin/change-activity', {
-        userId: retrievedId,
-        active: 0,
-      });
+    const changeEmployeeStatus = async (status) => {
+      try {
+        setIsLoading(true);
+        const url = '/api/admin/change-activity';
+        await axios.post(url, {
+          userId: retrievedId,
+          active: status,
+        });
+        await getUsers();
+      } catch (e) {
+        toast('Error changing status. Try again');
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    if (optionIndex === '1') {
+      await changeEmployeeStatus(0);
 
       setselectedEmp(!selectedEmp);
-    } else if (e.target.value === '2') {
-      await axios.post('/api/admin/change-activity', {
-        userId: retrievedId,
-        active: 1,
-      });
-    } else if (e.target.value === '4') {
+    } else if (optionIndex === '2') {
+      await changeEmployeeStatus(1);
+    } else if (optionIndex === '3') {
+      await changeEmployeeStatus(2);
+    } else if (optionIndex === '4') {
       setConfirm(true);
-    } else if (e.target.value === '3') {
-      await axios.post('/api/admin/change-activity', {
-        userId: retrievedId,
-        active: 2,
-      });
+      setselectedEmp(!selectedEmp);
     }
-    setselectedEmp(!selectedEmp);
   };
 
   // ``` Child components starts here ```;
   var SidebarChild = (
     <SideBar>
-      <div className='logoContainer'>
+      <div
+        className='logoContainer'
+        onClick={() => {
+          setViewPanel('Table');
+        }}>
         <img alt='logo' src={LOGO}></img>
       </div>
-      <div className='SideBarCompMain'>Dashboard</div>
+      <div className='SideBarCompMain'>Admin</div>
       <div
         className='SideBarCompItem'
-        style={ViewPanel === 'Table' ? { color: 'yellow' } : {}}
+        style={
+          ViewPanel === 'Table'
+            ? { backgroundColor: '#3F46CC', width: '100%' }
+            : {}
+        }
         onClick={(e) => setViewPanel('Table')}
-        id='Table'
-      >
+        id='Table'>
         Employees
       </div>
       <div
         className='SideBarCompItem'
         id='Form'
-        style={ViewPanel === 'Form' ? { color: 'yellow' } : {}}
-        onClick={(e) => setViewPanel('Form')}
-      >
+        style={
+          ViewPanel === 'Form'
+            ? { backgroundColor: '#3F46CC', width: '100%' }
+            : {}
+        }
+        onClick={(e) => setViewPanel('Form')}>
         Add an Employee
       </div>
+
       <div className='Logout' onClick={logoutHandler}>
         <span>LOGOUT</span>
       </div>
@@ -201,12 +224,8 @@ const AdminPage = () => {
   var AddEmployeeChild = (
     <div>
       <br />
-      <br />
-      <br />
-      <br />
-      <br />
       <div>
-        <span className='Admin'>Create a new employee</span>
+        <span className='EmpInfo'>New Employee Creation</span>
       </div>
       <br />
       <React.Fragment>
@@ -237,24 +256,23 @@ const AdminPage = () => {
   return (
     <React.Fragment>
       {confirm ? (
-        <PopUp
-          Funct={(e) => DeleteUserFunction()}
-          state={confirm}
-          setState={setConfirm}
-        />
+        <PopUp onDelete={deleteUser} state={confirm} setState={setConfirm} />
       ) : (
         <></>
       )}
       <MainWrapper>
         {SidebarChild}
+        <OPLoader isLoading={isLoading} />
+        <AdminHeader>
+          <h2>
+            Future World Consultancy
+            <br />
+            <span>Admin Dashboard</span>
+          </h2>
+        </AdminHeader>
         <AdminMain>
           {ViewPanel === 'Profile' ? (
             <ProfilePage userId={selectUser} retrievedId={Id} />
-          ) : (
-            <></>
-          )}
-          {ViewPanel === 'Table' ? (
-            <div className='Admin'>Admin Panel</div>
           ) : (
             <></>
           )}
@@ -270,8 +288,7 @@ const AdminPage = () => {
           <TableContainer
             style={{
               scrollDirection: 'horizontal',
-            }}
-          >
+            }}>
             {ViewPanel === 'Table' ? OpTableChild : <></>}
           </TableContainer>
         </AdminMain>

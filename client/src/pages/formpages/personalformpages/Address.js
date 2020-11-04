@@ -220,8 +220,8 @@ const Address = ({ history }) => {
 
               <div className='form-group row p-2'>
                 <label className='col-sm-3 col-form-label'>
-                  <span style={{ color: 'red' }}>*</span> Contact Person in case
-                  of emergency
+                  <span style={{ color: 'red' }}>*</span> Contact Person (In Case
+                  Of Emergency)
                 </label>
                 <div className='col-sm-3'>
                   <textarea
