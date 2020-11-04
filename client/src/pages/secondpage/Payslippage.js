@@ -13,7 +13,6 @@ import { config } from '../../util/RequestUtil';
 import { toast } from '../../util/ToastUtil.js';
 import { OPLoader } from '../../util/LoaderUtil.js';
 import { UploadContainer } from './paySlipPage.styles';
-import { uploadFinancialDocument } from '../../util/UploadFile';
 
 const PaySlipPage = () => {
   const [isLoading, setIsLoading] = useState(false);
