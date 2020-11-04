@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { Button } from 'react-bootstrap';
 import axios from 'axios';
 
-export const PopUp = ({ Funct, state, setState }) => {
+export const PopUp = ({ onDelete, state, setState }) => {
   const [role, setRole] = useState('');
 
   const findRole = async () => {
@@ -65,7 +65,8 @@ export const PopUp = ({ Funct, state, setState }) => {
                   <>
                     <Button
                       onClick={(e) => {
-                        Funct();
+                        if (onDelete)
+                          onDelete();
                         setState(false);
                       }}
                     >
@@ -80,8 +81,8 @@ export const PopUp = ({ Funct, state, setState }) => {
                     </Button>
                   </>
                 ) : (
-                  <p>Sorry delete privilages are not granted to you</p>
-                )}
+                    <p>Sorry delete privilages are not granted to you</p>
+                  )}
               </div>{' '}
             </span>
           </div>

@@ -111,7 +111,7 @@ const AdminPage = () => {
     history.push('/login');
   };
 
-  const DeleteUserFunction = async () => {
+  const deleteUser = async () => {
     try {
       await axios.delete(`/api/admin/employee/${Id}`);
       getUsers();
@@ -163,7 +163,9 @@ const AdminPage = () => {
   // ``` Child components starts here ```;
   var SidebarChild = (
     <SideBar>
-      <div className='logoContainer'>
+      <div className='logoContainer' onClick={() => {
+        setViewPanel('Table')
+      }}>
         <img alt='logo' src={LOGO}></img>
       </div>
       <div className='SideBarCompMain'>Dashboard</div>
@@ -236,7 +238,7 @@ const AdminPage = () => {
     <React.Fragment>
       {confirm ? (
         <PopUp
-          Funct={(e) => DeleteUserFunction()}
+          onDelete={deleteUser}
           state={confirm}
           setState={setConfirm}
         />
