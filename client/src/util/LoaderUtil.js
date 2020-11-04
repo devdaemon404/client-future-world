@@ -21,7 +21,7 @@ export const OPLoader = ({ isLoading }) => {
           style={{
             display: 'block',
             position: 'absolute',
-            zIndex: 1031,
+            zIndex: 1051,
             top: '50%',
             left: '50%',
           }}

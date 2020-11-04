@@ -153,7 +153,7 @@ const HealthInformation = ({ history }) => {
 
               <div className='form-group row p-2'>
                 <label className='col-sm-3 col-form-label'>
-                  <span style={{ color: 'red' }}>*</span> Height(in cms)
+                  <span style={{ color: 'red' }}>*</span> Height (in cms)
                 </label>
                 <div className='col-sm-9'>
                   <input

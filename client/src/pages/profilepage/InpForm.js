@@ -200,7 +200,6 @@ export const InpForm = (props) => {
             type={field.type}
             as={field.as}
             name={field.name}
-            // eslint-disable-next-line
             className='formsInp'
             defaultValue={field.defaultValue}
             onChange={onChangeHandler}
@@ -222,7 +221,6 @@ export const InpForm = (props) => {
             as={field.as}
             name={field.name}
             key={field.name + 'rr'}
-            // eslint-disable-next-line
             className='formsInp'
             defaultValue={field.defaultValue}
             onChange={onChangeHandler}
@@ -284,8 +282,7 @@ export const InpForm = (props) => {
                 background: '#3f46cc',
                 color: 'white',
               }}
-              type='submit'
-            >
+              type='submit'>
               UPDATE DATA
             </button>
           </Form>

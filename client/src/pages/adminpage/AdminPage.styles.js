@@ -149,7 +149,6 @@ export const AdminMain = styled.div`
   .Admin {
     padding-top: 70px;
     padding-left: 125px;
-    width: 464px;
     height: 49px;
     text-align: left;
     font: normal normal medium 48px/58px Montserrat;

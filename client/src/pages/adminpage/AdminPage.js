@@ -47,13 +47,13 @@ const AdminPage = () => {
         status:
           employee.active === 0
             ? 'Relieved    ' +
-            ' From - ' +
-            moment(employee.lastLogin).format('DD/MMM/YYYY')
-            : employee.active === 1
-              ? 'Active'
-              : 'Inactive' +
               ' From - ' +
-              moment(employee.lastLogin).format('DD/MMM/YYYY'),
+              moment(employee.updatedAt).format('DD/MMM/YYYY')
+            : employee.active === 1
+            ? 'Active'
+            : 'Inactive' +
+              ' From - ' +
+              moment(employee.updatedAt).format('DD/MMM/YYYY'),
         empNo: !employee.empNo ? 'FW-----' : employee.empNo,
         joinDate: moment(employee.createdAt).format('DD/MMM/YYYY'),
         id: employee._id,
@@ -115,18 +115,19 @@ const AdminPage = () => {
 
   const deleteUser = async () => {
     try {
-      setIsLoading(true)
+      setIsLoading(true);
       await axios.delete(`/api/admin/employee/${Id}`);
       getUsers();
       toast('Employee Deleted');
     } catch (err) {
       if (err.response.status === 403) {
-        return toast('NOT AUTHORIZED:  Deleting employee is an admin only function');
+        return toast(
+          'NOT AUTHORIZED:  Deleting employee is an admin only function'
+        );
       }
-      toast(err.response.data.error)
-    }
-    finally {
-      setIsLoading(false)
+      toast(err.response.data.error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -142,23 +143,22 @@ const AdminPage = () => {
 
     const changeEmployeeStatus = async (status) => {
       try {
-        setIsLoading(true)
+        setIsLoading(true);
         const url = '/api/admin/change-activity';
         await axios.post(url, {
           userId: retrievedId,
-          active: status
-        })
+          active: status,
+        });
         await getUsers();
       } catch (e) {
-        toast('Error changing status. Try again')
+        toast('Error changing status. Try again');
+      } finally {
+        setIsLoading(false);
       }
-      finally {
-        setIsLoading(false)
-      }
-    }
+    };
 
     if (optionIndex === '1') {
-      await changeEmployeeStatus(0)
+      await changeEmployeeStatus(0);
 
       setselectedEmp(!selectedEmp);
     } else if (optionIndex === '2') {
@@ -168,32 +168,40 @@ const AdminPage = () => {
     } else if (optionIndex === '4') {
       setConfirm(true);
       setselectedEmp(!selectedEmp);
-    };
-  }
+    }
+  };
 
   // ``` Child components starts here ```;
   var SidebarChild = (
     <SideBar>
-      <div className='logoContainer' onClick={() => {
-        setViewPanel('Table')
-      }}>
+      <div
+        className='logoContainer'
+        onClick={() => {
+          setViewPanel('Table');
+        }}>
         <img alt='logo' src={LOGO}></img>
       </div>
       <div className='SideBarCompMain'>Admin</div>
       <div
         className='SideBarCompItem'
-        style={ViewPanel === 'Table' ? { backgroundColor: '#3F46CC', width: '100%' } : {}}
+        style={
+          ViewPanel === 'Table'
+            ? { backgroundColor: '#3F46CC', width: '100%' }
+            : {}
+        }
         onClick={(e) => setViewPanel('Table')}
-        id='Table'
-      >
+        id='Table'>
         Employees
       </div>
       <div
         className='SideBarCompItem'
         id='Form'
-        style={ViewPanel === 'Form' ? { backgroundColor: '#3F46CC', width: '100%' } : {}}
-        onClick={(e) => setViewPanel('Form')}
-      >
+        style={
+          ViewPanel === 'Form'
+            ? { backgroundColor: '#3F46CC', width: '100%' }
+            : {}
+        }
+        onClick={(e) => setViewPanel('Form')}>
         Add an Employee
       </div>
 
@@ -248,42 +256,39 @@ const AdminPage = () => {
   return (
     <React.Fragment>
       {confirm ? (
-        <PopUp
-          onDelete={deleteUser}
-          state={confirm}
-          setState={setConfirm}
-        />
+        <PopUp onDelete={deleteUser} state={confirm} setState={setConfirm} />
       ) : (
-          <></>
-        )}
+        <></>
+      )}
       <MainWrapper>
         {SidebarChild}
         <OPLoader isLoading={isLoading} />
         <AdminHeader>
           <h2>
-            Future World Consultancy<br /><span>Admin Dashboard</span>
+            Future World Consultancy
+            <br />
+            <span>Admin Dashboard</span>
           </h2>
         </AdminHeader>
         <AdminMain>
           {ViewPanel === 'Profile' ? (
             <ProfilePage userId={selectUser} retrievedId={Id} />
           ) : (
-              <></>
-            )}
+            <></>
+          )}
 
           {ViewPanel === 'Table' ? (
             <div className='EmpInfo'>Employee Information</div>
           ) : (
-              <></>
-            )}
+            <></>
+          )}
 
           {ViewPanel === 'Form' ? AddEmployeeChild : <></>}
 
           <TableContainer
             style={{
               scrollDirection: 'horizontal',
-            }}
-          >
+            }}>
             {ViewPanel === 'Table' ? OpTableChild : <></>}
           </TableContainer>
         </AdminMain>

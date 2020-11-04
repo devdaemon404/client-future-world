@@ -1,6 +1,5 @@
 import styled from 'styled-components';
 
-
 export const ProfContainer = styled.div`
   display: flex;
   width: 70vw;
@@ -89,7 +88,7 @@ export const NavSection = styled.div`
       padding: 10px 20px;
     }
   }
-  @media only screen and (max-width: 1300px) {
+  @media only screen and (max-width: 1500px) {
     span {
       font-size: 16px;
       margin-left: 10px;
@@ -101,7 +100,6 @@ export const BodySection = styled.div`
   width: 100%;
 `;
 export const FormMain = styled.div`
-  width: 700px;
   span {
     font-size: 18px;
   }
@@ -115,8 +113,8 @@ export const FormMain = styled.div`
   }
   .info-type {
     font-size: 20px;
-    border-bottom: 1px solid #11154C;
-    color: #11154C;
+    border-bottom: 1px solid #11154c;
+    color: #11154c;
     font-family: montserrat;
     text-transform: uppercase;
     width: 57%;
@@ -129,7 +127,7 @@ export const FormMain = styled.div`
     width: 280px;
   }
 
-  @media only screen and (max-width: 1300px) {
+  @media only screen and (max-width: 1500px) {
     width: 500px;
     .formsInp {
       width: 300px;
@@ -141,19 +139,18 @@ export const FormMain = styled.div`
 `;
 export const DocumentUpload = styled.div`
   overflow: hidden;
-  width: 300px;
   border: 1px solid rgba(0, 0, 0, 0.4);
 `;
 export const UploadContainer = styled.div`
-  color: #11154C;
+  color: #11154c;
   .info-type {
     font-size: 20px;
-    border-bottom: 1px solid #11154C;
-    color: #11154C;
+    border-bottom: 1px solid #11154c;
+    color: #11154c;
     font-family: montserrat;
     font-weight: 500;
     text-transform: uppercase;
-    width: 57%;
+    width: 50%;
     margin: 40px 0px;
   }
   .heading {

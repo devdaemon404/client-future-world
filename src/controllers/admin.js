@@ -85,7 +85,7 @@ exports.changeUserActiveStatus = asyncHandler(async (req, res, next) => {
 
   await User.findByIdAndUpdate(
     userId,
-    { active },
+    { active, updatedAt: Date.now() },
     {
       new: true,
       runValidators: true,
