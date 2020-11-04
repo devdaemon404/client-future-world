@@ -65,7 +65,7 @@ function OPTable({ data, columns, getCellProps, onClickHandler, adminId }) {
     <div
       style={{
         overflow: 'auto',
-        maxHeight: '59vh',
+        maxHeight: '74vh',
       }}
       className='mx-auto mt-3 text-center'
     >
@@ -161,9 +161,9 @@ function OPTable({ data, columns, getCellProps, onClickHandler, adminId }) {
                         {...cell.getCellProps([{ ...getCellProps(cell) }])}
                         style={
                           cell.render('Cell').props.cell.value[0] === 'I'
-                            ? { color: 'red', fontWeight: 700 }
+                            ? { color: '#c62828', fontWeight: 700 }
                             : cell.render('Cell').props.cell.value[0] === 'A'
-                              ? { color: 'green', fontWeight: 700 }
+                              ? { color: '#558B2F', fontWeight: 700 }
                               : cell.render('Cell').props.cell.value[0] === 'R'
                                 ? { fontWeight: 700 }
                                 : {}

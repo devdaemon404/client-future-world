@@ -7,6 +7,7 @@ import {
   MainWrapper,
   NotPhone,
   FormWrapper,
+  AdminHeader,
 } from './AdminPage.styles';
 import ProfilePage from './../profilepage/Profilepage';
 import LOGO from '../../assets/img/logo.png';
@@ -168,7 +169,7 @@ const AdminPage = () => {
       <div className='SideBarCompMain'>Dashboard</div>
       <div
         className='SideBarCompItem'
-        style={ViewPanel === 'Table' ? { color: 'yellow' } : {}}
+        style={ViewPanel === 'Table' ? { backgroundColor: '#3F46CC', width: '100%' } : {}}
         onClick={(e) => setViewPanel('Table')}
         id='Table'
       >
@@ -177,7 +178,7 @@ const AdminPage = () => {
       <div
         className='SideBarCompItem'
         id='Form'
-        style={ViewPanel === 'Form' ? { color: 'yellow' } : {}}
+        style={ViewPanel === 'Form' ? { backgroundColor: '#3F46CC', width: '100%' } : {}}
         onClick={(e) => setViewPanel('Form')}
       >
         Add an Employee
@@ -202,12 +203,8 @@ const AdminPage = () => {
   var AddEmployeeChild = (
     <div>
       <br />
-      <br />
-      <br />
-      <br />
-      <br />
       <div>
-        <span className='Admin'>Create a new employee</span>
+        <span className='EmpInfo'>New Employee Creation</span>
       </div>
       <br />
       <React.Fragment>
@@ -248,14 +245,14 @@ const AdminPage = () => {
         )}
       <MainWrapper>
         {SidebarChild}
+        <AdminHeader>
+          <h2>
+            Future World Consultancy<br /><span>Admin Panel</span>
+          </h2>
+        </AdminHeader>
         <AdminMain>
           {ViewPanel === 'Profile' ? (
             <ProfilePage userId={selectUser} retrievedId={Id} />
-          ) : (
-              <></>
-            )}
-          {ViewPanel === 'Table' ? (
-            <div className='Admin'>Admin Panel</div>
           ) : (
               <></>
             )}

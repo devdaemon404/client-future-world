@@ -379,7 +379,7 @@ const PaySlipPage = () => {
                       onChange={reimburseMonthUpdater}
                       value={
                         reimbursmentDate === '' ||
-                        reimbursmentDate.trim() === ''
+                          reimbursmentDate.trim() === ''
                           ? undefined
                           : moment(reimbursmentDate, 'YYYY-MM')
                       }
@@ -400,7 +400,7 @@ const PaySlipPage = () => {
                   }}
                 >
                   <i class='fas fa-cloud-upload-alt'></i>{' '}
-                  {'Click To Upload Bill'}
+                  {' UPLOAD Bill'}
                 </button>
                 <input
                   type='file'

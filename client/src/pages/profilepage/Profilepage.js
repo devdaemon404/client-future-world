@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import moment from 'moment';
-import { DatePicker, Space } from 'antd';
+import { DatePicker, Space, Button, Tabs } from 'antd';
 import { config } from '../../util/RequestUtil';
 import axios from 'axios';
 
@@ -19,19 +19,19 @@ import {
 } from './ProfilePage.styles';
 import IMGDEFAULT from '../../assets/img/imgplaceholder.png';
 
-import GPS from '../../assets/img/placeholder.png';
 import PHONE from '../../assets/img/phone.png';
 import { uploadFinancialDocument } from '../../util/UploadFile';
 import { toast } from '../../util/ToastUtil';
 import { OPLoader } from '../../util/LoaderUtil';
-import { PopUp } from '../../util/DeleteConfirmUtil';
+
+const { TabPane } = Tabs;
 
 const Profilepage = ({ retrievedId }) => {
   const [subAdminId, setSubAdminId] = useState();
   const [userData, setUserData] = useState({});
   const [pSlipDate, setPSlipDate] = useState('end');
   const [tSheetDate, setTSheetDate] = useState('end');
-  const [reimburseDate, setReimburseDate] = useState('end');
+
   const [toggle, setToggle] = useState(true);
   const [loading, setLoading] = useState(1);
   const [view, setview] = useState('data');
@@ -39,6 +39,7 @@ const Profilepage = ({ retrievedId }) => {
   const [subAdmins, setSubAdminList] = useState([]);
   const [isFormComplete, setIsFormComplete] = useState(false);
   const [enabledDates, setEnabledDates] = useState([]);
+  const [reimburseURL, setReimburseURL] = useState('');
   const checkLogin = async () => {
     try {
       const res = await axios.get('/api/auth/validate-token').then();
@@ -60,7 +61,6 @@ const Profilepage = ({ retrievedId }) => {
     }
   };
 
-  let temp;
 
   const paySlipMonthUpdater = (date, dateString) => {
     setPSlipDate(dateString);
@@ -118,13 +118,26 @@ const Profilepage = ({ retrievedId }) => {
   };
 
   const getUserData = async () => {
-    temp = await axios.get(
-      `/api/admin/employee-info/${retrievedId}?select=FName,increments,photo,isFormComplete,empNo,LName,email,joiningDate,designation,phoneNumber,Address,FWEmail,Manager,custLoc,custName,BillingPH,annualCTC,increment,lwd,comments`
-    );
-    temp = temp.data.data;
-    if (!temp) temp = {};
-    setUserData({ ...temp });
-    setLoading(0);
+    try {
+      setLoading(1);
+      const res = await axios.get(
+        `/api/admin/employee-info/${retrievedId}?select=FName,increments,photo,isFormComplete,empNo,LName,email,joiningDate,designation,phoneNumber,Address,FWEmail,Manager,custLoc,custName,BillingPH,annualCTC,increment,lwd,comments`
+      );
+      let { data } = res.data;
+      if (!data) data = {};
+      setUserData({ ...data });
+      const tempIsFormComplete = data.isFormComplete;
+      if (tempIsFormComplete) {
+        setIsFormComplete(true)
+      }
+    }
+    catch (e) {
+      toast("Error fetching employee data")
+    }
+    finally {
+      setLoading(0);
+    }
+
   };
 
   const downloadFile = () => {
@@ -135,6 +148,19 @@ const Profilepage = ({ retrievedId }) => {
     getUserData();
     //eslint-disable-next-line
   }, [toggle]);
+  const getFileDownloaded = async (_, datestring) => {
+    let a = datestring.split('-');
+    let res = await axios.post('/api/admin/single-fin-doc', {
+      userId: retrievedId,
+      documentType: 'reimburse',
+      documentedDate: {
+        month: a[1],
+        year: a[0],
+      },
+    });
+    res = res.data.data.url;
+    setReimburseURL(res);
+  };
 
   const onUploadHandler1 = async (e) => {
     let file = e.target.files[0];
@@ -180,6 +206,7 @@ const Profilepage = ({ retrievedId }) => {
 
   const toggleFormComplete = async () => {
     try {
+      setLoading(1);
       await axios.post('/api/admin/toggle-form-completion', {
         userId: retrievedId,
         isFormComplete: !isFormComplete,
@@ -190,11 +217,16 @@ const Profilepage = ({ retrievedId }) => {
       } else {
         toast('Form Locked');
       }
-      getUserData();
+      await getUserData();
     } catch (error) {
       toast('Server Error Try Again');
     }
+    finally {
+      setLoading(0)
+    }
   };
+
+  const selectedMenuStyle = { backgroundColor: 'rgba(17, 21, 76, 0.8)', color: 'white', borderRadius: 10, paddingTop: 7, paddingBottom: 7 };
 
   return (
     <React.Fragment>
@@ -215,20 +247,20 @@ const Profilepage = ({ retrievedId }) => {
                 <div className='join-and-end'>
                   <p>
                     <img alt='altey' src={PHONE} />
-                    <span className='sidebar-item'> {userData.phoneNumber}</span>
+                    <b className='sidebar-item'> {userData.phoneNumber}</b>
                   </p>
                   <p>
                     <span>
-                      Date Of Joining ::{' '}
+                      <b>Date Of Joining: {' '}</b>
                       {moment(userData.joiningDate).format('DD/MM/YYYY')}{' '}
                     </span>
                   </p>
                   <p>
                     {' '}
-                    <span>FW-ID:: {userData.empNo} </span>
+                    <span><b>FW-ID: </b>{userData.empNo} </span>
                   </p>
                   <p>
-                    <span> Full Time</span>
+                    <span><b>Designation:</b> {userData.designation}</span>
                   </p>
                 </div>
               </SidebarDetails>
@@ -245,97 +277,38 @@ const Profilepage = ({ retrievedId }) => {
                   >
                     {' '}
                     <h2>{userData.FName + ' ' + userData.LName}</h2>{' '}
-                    <button
-                      onClick={downloadFile}
-                      style={{
-                        outline: 'none',
-                        background: 'inherit',
-                        border: 'none',
-                        fontWeight: 700,
-                        fontSize: 18,
-                        color: '#707070',
-                      }}
-                    >
-                      ⤓ Download Profile
-                  </button>{' '}
-                    <button
-                      onClick={toggleFormComplete}
-                      style={{
-                        outline: 'none',
-                        background: 'inherit',
-                        border: 'none',
-                        fontWeight: 700,
-                        marginLeft: 20,
-                        fontSize: 22,
-                        color: '#707070',
-                      }}
-                    >
-                      {userData.isFormComplete ? 'Lock Form' : 'UnLock Form'}
-                    </button>
-                  </div>
-                  <h3>{userData.designation}</h3>
-                  <h3>
-                    <div id='Address'>
-                      <img alt='altey' src={GPS} />
-                      {userData.Address}
+                    <div>
+                      <Button
+                        type="secondary" shape="round"
+                        onClick={downloadFile}
+                      >
+                        ⤓ Download Profile
+                  </Button>{' '}
+                      <Button
+                        type="secondary" shape="round"
+                        onClick={toggleFormComplete}
+                      >
+                        {userData.isFormComplete ? 'Lock Onboarding Application' : 'Unlock Onboarding Application'}
+                      </Button>
                     </div>
-                  </h3>
+                  </div>
                 </div>
 
-                <NavSection>
-                  <span
-                    style={
-                      view === 'data'
-                        ? { textDecoration: 'underline solid blue' }
-                        : {}
-                    }
-                    onClick={(e) => setview('data')}
-                  >
-                    About
-                </span>{' '}
-                  <span
-                    style={
-                      view === 'upload'
-                        ? { textDecoration: 'underline solid blue' }
-                        : {}
-                    }
-                    onClick={(e) => setview('upload')}
-                  >
-                    Documents
-                </span>
-                  {role === 'admin' ? (
-                    <span
-                      style={
-                        view === 'Add Reportee'
-                          ? { textDecoration: 'underline solid blue' }
-                          : {}
-                      }
-                      onClick={(e) => {
-                        setview('Add Reportee');
-                      }}
-                    >
-                      Add Reportee
-                    </span>
-                  ) : (
-                      <></>
-                    )}
-                </NavSection>
-                <BodySection>
-                  {view === 'data' ? (
+                <Tabs defaultActiveKey="1" onChange={console.log} color='red'>
+                  <TabPane tab="Employee Information" key="data">
                     <InpForm
                       userData={userData}
                       retrievedId={retrievedId}
                       toggle={toggle}
                       setToggle={setToggle}
                     />
-                  ) : view === 'upload' ? (
+                  </TabPane>
+                  <TabPane tab="Employee Documents" key="upload">
                     <React.Fragment>
                       <UploadContainer>
-                        <div className='heading'>
-                          <h4>Upload Payslip</h4>
-                        </div>
+                        <div className='info-type'>Upload Payslip</div>
                         <div className='select'>
-                          <p>Select Month </p>{' '}
+                          <p className="text-right">Select Month </p>{' '}
                           <Space direction='vertical'>
                             <DatePicker
                               onChange={paySlipMonthUpdater}
@@ -353,7 +326,7 @@ const Profilepage = ({ retrievedId }) => {
                               document.getElementById('FileUpload1').click();
                             }}
                           >
-                            {'Click To Upload'}
+                            {' UPLOAD'}
                           </div>
                           <input
                             type='file'
@@ -369,9 +342,7 @@ const Profilepage = ({ retrievedId }) => {
                         </div>
                       </UploadContainer>
                       <UploadContainer>
-                        <div className='heading'>
-                          <h4>Upload Time Sheet</h4>
-                        </div>
+                        <span className='info-type'>Upload Time Sheet</span>
                         <div className='select'>
                           <p>Select Month </p>{' '}
                           <Space direction='vertical'>
@@ -391,7 +362,7 @@ const Profilepage = ({ retrievedId }) => {
                               document.getElementById('FileUpload2').click();
                             }}
                           >
-                            {'Click To Upload'}
+                            {' UPLOAD'}
                           </div>
                           <input
                             type='file'
@@ -406,10 +377,9 @@ const Profilepage = ({ retrievedId }) => {
                           />
                         </div>
                       </UploadContainer>
+                      <br />
                       <UploadContainer>
-                        <div className='heading'>
-                          <h4>Download Reimbursment</h4>
-                        </div>
+                        <span className='info-type'>Download Reimbursement Documents</span>
                         <div className='select'>
                           <p>Select Month </p>{' '}
                           <Space direction='vertical'>
@@ -430,7 +400,7 @@ const Profilepage = ({ retrievedId }) => {
                               document.getElementById('FileUpload3').click();
                             }}
                           >
-                            {'Click To Download'}
+                            {' DOWNLOAD'}
                           </div>
                           <input
                             type='submit'
@@ -444,30 +414,31 @@ const Profilepage = ({ retrievedId }) => {
                         </div>
                       </UploadContainer>
                     </React.Fragment>
-                  ) : (
-                        <>
-                          <FormMain>
-                            <form onSubmit={addRepor}>
-                              <h4>
-                                {' '}
-                                <div className='info-type'>Assign to Sub Admin</div>
-                              </h4>
-                              <div className='form-group' style={{ paddingLeft: 70 }}>
-                                <select
-                                  className='form-control'
-                                  onChange={(e) => setSubAdminId(e.target.value)}
-                                  defaultValue={''}
-                                >
-                                  <option value='' disabled>
-                                    Select sub-admin ...
+                  </TabPane>
+                  <TabPane tab="Add Reportee" key="Add Reportee">
+                    <>
+                      <FormMain>
+                        <form onSubmit={addRepor}>
+                          <h4>
+                            {' '}
+                            <div className='info-type'>Assign to Sub Admin</div>
+                          </h4>
+                          <div className='form-group' style={{ paddingLeft: 70 }}>
+                            <select
+                              className='form-control'
+                              onChange={(e) => setSubAdminId(e.target.value)}
+                              defaultValue={''}
+                            >
+                              <option value='' disabled>
+                                Select sub-admin ...
                             </option>
-                                  {subAdmins.map((subAdmin, key) => (
-                                    <option key={key} value={subAdmin._id}>
-                                      {subAdmin.name}
-                                    </option>
-                                  ))}
-                                </select>
-                                {/* <input
+                              {subAdmins.map((subAdmin, key) => (
+                                <option key={key} value={subAdmin._id}>
+                                  {subAdmin.name}
+                                </option>
+                              ))}
+                            </select>
+                            {/* <input
                             as='select'
                             required
                             size='md'
@@ -475,36 +446,37 @@ const Profilepage = ({ retrievedId }) => {
                             onChange={(e) => setSubAdminId(e.target.value)}>
                             {adminList}
                           </input> */}
-                                <br />
-                                <div className='form-group form-check'>
-                                  <input
-                                    className='form-check-input'
-                                    required
-                                    type='checkbox'
-                                    id='Checkbox'
-                                  />
-                                  <label className='form-check-label'>
-                                    Are you sure you want to add the reportee
+                            <br />
+                            <div className='form-group form-check'>
+                              <input
+                                className='form-check-input'
+                                required
+                                type='checkbox'
+                                id='Checkbox'
+                              />
+                              <label className='form-check-label'>
+                                Are you sure you want to add the reportee
                             </label>
-                                </div>
-                              </div>
-                              <button
-                                className='btn'
-                                style={{
-                                  width: '190px',
-                                  margin: '10px 13% ',
-                                  background: '#3f47cc',
-                                  color: 'white',
-                                }}
-                                type='submit'
-                              >
-                                Continue
+                            </div>
+                          </div>
+                          <button
+                            className='btn'
+                            style={{
+                              width: '190px',
+                              margin: '10px 13% ',
+                              background: '#3f47cc',
+                              color: 'white',
+                              fontWeight: 600
+                            }}
+                            type='submit'
+                          >
+                            CONTINUE
                         </button>
-                            </form>
-                          </FormMain>
-                        </>
-                      )}
-                </BodySection>
+                        </form>
+                      </FormMain>
+                    </>
+                  </TabPane>
+                </Tabs>
               </NameSection>
             </RightCol>
           </ProfContainer>
@@ -513,3 +485,5 @@ const Profilepage = ({ retrievedId }) => {
   );
 };
 export default Profilepage;
+
+/*https://random-bucket-1234.s3.ap-south-1.amazonaws.com/5f94ed69f3db28001749190d/doc/reimburse01-2020.pdf?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIA5VFN6YBMBX5CMK6T%2F20201103%2Fap-south-1%2Fs3%2Faws4_request&X-Amz-Date=20201103T123431Z&X-Amz-Expires=3600&X-Amz-Signature=4784ae76a4d2bb3b51c946dfeab3c84b7350a9a238f64453633add6d1a3c94a0&X-Amz-SignedHeaders=host */

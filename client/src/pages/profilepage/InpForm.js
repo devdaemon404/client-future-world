@@ -60,6 +60,7 @@ export const InpForm = (props) => {
       defaultValue: props.userData.email,
       name: 'email',
       required: 'required',
+      disabled: 'disabled',
     },
   ];
 
@@ -195,6 +196,7 @@ export const InpForm = (props) => {
           {/* eslint-disable-next-line */}
           <Form.Control
             className='form-control'
+            disabled={field.disabled}
             type={field.type}
             as={field.as}
             name={field.name}
@@ -277,13 +279,14 @@ export const InpForm = (props) => {
               className='btn'
               style={{
                 width: '190px',
+                fontWeight: 600,
                 margin: '10px 13% ',
-                background: '#3f47cc',
+                background: '#3f46cc',
                 color: 'white',
               }}
               type='submit'
             >
-              Update Data
+              UPDATE DATA
             </button>
           </Form>
           <br />
