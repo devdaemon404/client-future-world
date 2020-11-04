@@ -31,15 +31,15 @@ const Profilepage = ({ retrievedId }) => {
   const [userData, setUserData] = useState({});
   const [pSlipDate, setPSlipDate] = useState('end');
   const [tSheetDate, setTSheetDate] = useState('end');
+  const [rImburseDate, setRImburseDate] = useState('end');
 
   const [toggle, setToggle] = useState(true);
   const [loading, setLoading] = useState(1);
-  const [view, setview] = useState('data');
   const [role, setRole] = useState('sub-admin');
   const [subAdmins, setSubAdminList] = useState([]);
   const [isFormComplete, setIsFormComplete] = useState(false);
   const [enabledDates, setEnabledDates] = useState([]);
-  const [reimburseURL, setReimburseURL] = useState('');
+
   const checkLogin = async () => {
     try {
       const res = await axios.get('/api/auth/validate-token').then();
@@ -148,19 +148,36 @@ const Profilepage = ({ retrievedId }) => {
     getUserData();
     //eslint-disable-next-line
   }, [toggle]);
-  const getFileDownloaded = async (_, datestring) => {
-    let a = datestring.split('-');
-    let res = await axios.post('/api/admin/single-fin-doc', {
-      userId: retrievedId,
-      documentType: 'reimburse',
-      documentedDate: {
-        month: a[1],
-        year: a[0],
-      },
-    });
-    res = res.data.data.url;
-    setReimburseURL(res);
+
+  const rImburseDateOnChange = async (_, dateString) => {
+    setRImburseDate(dateString)
   };
+
+  const downloadRImburseDocument = async () => {
+    const tempDateArr = rImburseDate.split('-');
+    if (rImburseDate === 'end') {
+      return toast('Please select a date first');
+    }
+    try {
+      const res = await axios.post('/api/admin/single-fin-doc', {
+        userId: retrievedId,
+        documentType: 'reimburse',
+        documentedDate: {
+          month: tempDateArr[1],
+          year: tempDateArr[0],
+        },
+      });
+      const { url } = res.data.data;
+      setRImburseDate('end');
+      window.open(url);
+    }
+    catch (e) {
+      toast('Error fetching document');
+    }
+    finally {
+      setLoading(0);
+    }
+  }
 
   const onUploadHandler1 = async (e) => {
     let file = e.target.files[0];
@@ -211,13 +228,8 @@ const Profilepage = ({ retrievedId }) => {
         userId: retrievedId,
         isFormComplete: !isFormComplete,
       }, config);
-      setIsFormComplete(!isFormComplete);
-      if (!isFormComplete) {
-        toast('Form Unlocked');
-      } else {
-        toast('Form Locked');
-      }
       await getUserData();
+      toast('Form state changed')
     } catch (error) {
       toast('Server Error Try Again');
     }
@@ -225,8 +237,6 @@ const Profilepage = ({ retrievedId }) => {
       setLoading(0)
     }
   };
-
-  const selectedMenuStyle = { backgroundColor: 'rgba(17, 21, 76, 0.8)', color: 'white', borderRadius: 10, paddingTop: 7, paddingBottom: 7 };
 
   return (
     <React.Fragment>
@@ -288,7 +298,7 @@ const Profilepage = ({ retrievedId }) => {
                         type="secondary" shape="round"
                         onClick={toggleFormComplete}
                       >
-                        {userData.isFormComplete ? 'Lock Onboarding Application' : 'Unlock Onboarding Application'}
+                        {!userData.isFormComplete ? 'Lock Onboarding Application' : 'Unlock Onboarding Application'}
                       </Button>
                     </div>
                   </div>
@@ -384,14 +394,14 @@ const Profilepage = ({ retrievedId }) => {
                           <p>Select Month </p>{' '}
                           <Space direction='vertical'>
                             <DatePicker
-                              onChange={timeSheetMonthUpdater}
+                              onChange={rImburseDateOnChange}
                               disabledDate={(current) => disabledDate(current)}
-                              picker='month'
                               value={
-                                tSheetDate === 'end' || tSheetDate.trim() === ''
+                                rImburseDate === 'end' || rImburseDate.trim() === ''
                                   ? undefined
-                                  : moment(tSheetDate, 'YYYY-MM')
+                                  : moment(rImburseDate, 'YYYY-MM')
                               }
+                              picker='month'
                             />
                           </Space>
                           <div
@@ -405,11 +415,11 @@ const Profilepage = ({ retrievedId }) => {
                           <input
                             type='submit'
                             id='FileUpload3'
-                            // disabled={
-                            //   tSheetDate === 'end' || pSlipDate.trim() === ''
-                            // }
+                            disabled={
+                              rImburseDate === 'end' || rImburseDate.trim() === ''
+                            }
                             style={{ opacity: 0, width: 0, height: 0 }}
-                          // onClick={reimburseHandler}
+                            onClick={downloadRImburseDocument}
                           />
                         </div>
                       </UploadContainer>
@@ -438,14 +448,6 @@ const Profilepage = ({ retrievedId }) => {
                                 </option>
                               ))}
                             </select>
-                            {/* <input
-                            as='select'
-                            required
-                            size='md'
-                            className='form-control'
-                            onChange={(e) => setSubAdminId(e.target.value)}>
-                            {adminList}
-                          </input> */}
                             <br />
                             <div className='form-group form-check'>
                               <input
@@ -486,4 +488,3 @@ const Profilepage = ({ retrievedId }) => {
 };
 export default Profilepage;
 
-/*https://random-bucket-1234.s3.ap-south-1.amazonaws.com/5f94ed69f3db28001749190d/doc/reimburse01-2020.pdf?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Credential=AKIA5VFN6YBMBX5CMK6T%2F20201103%2Fap-south-1%2Fs3%2Faws4_request&X-Amz-Date=20201103T123431Z&X-Amz-Expires=3600&X-Amz-Signature=4784ae76a4d2bb3b51c946dfeab3c84b7350a9a238f64453633add6d1a3c94a0&X-Amz-SignedHeaders=host */

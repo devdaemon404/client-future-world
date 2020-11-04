@@ -38,7 +38,7 @@ export const OPLoader = ({ isLoading }) => {
                 color: '#f8f8f8',
               }}
             >
-              Saving...
+              Loading ...
             </span>
           </div>
         </div>

@@ -8,7 +8,10 @@ import {
   useFilters,
 } from 'react-table';
 import { Table } from 'react-bootstrap';
+import { Select, Input } from 'antd';
 import { useMemo } from 'react';
+
+const { Option } = Select;
 
 // Define a default UI for filtering
 function DefaultColumnFilter({
@@ -16,7 +19,7 @@ function DefaultColumnFilter({
 }) {
   if (Header === '#') return <div />;
   return (
-    <input
+    <Input
       style={{
         width: '90%',
         fontSize: '15px',
@@ -54,7 +57,7 @@ function OPTable({ data, columns, getCellProps, onClickHandler, adminId }) {
     {
       columns,
       data,
-      defaultColumn, // Be sure to pass the defaultColumn option
+      defaultColumn, // Be sure to pass the defaultColumn Option
       filterTypes,
     },
     useFilters,
@@ -85,13 +88,13 @@ function OPTable({ data, columns, getCellProps, onClickHandler, adminId }) {
             <tr {...headerGroup.getHeaderGroupProps()}>
               {headerGroup.headers.map((column, i) => (
                 <th key={i}>
-                  <h5 {...column.getHeaderProps(column.getSortByToggleProps())}>
+                  <p {...column.getHeaderProps(column.getSortByToggleProps())} style={{ fontSize: 17, fontWeight: 700 }} >
                     {column.render('Header')}
                     {/* Add a sort direction indicator */}
                     <span>
                       {column.isSorted ? (column.isSortedDesc ? '↓' : '↑') : ''}
                     </span>
-                  </h5>
+                  </p>
                   <br />
                   <DefaultColumnFilter column={column} />
                 </th>
@@ -117,31 +120,30 @@ function OPTable({ data, columns, getCellProps, onClickHandler, adminId }) {
                             <b>ADMIN PROFILE</b>
                           ) : (
                             <>
-                              <select
+                              <Select
                                 style={{ width: '100%' }}
-                                onChange={onClickHandler}
+                                // onChange={onClickHandler}
+                                value={'Choose'}
+                                onChange={
+                                  (index) => {
+                                    onClickHandler(index.toString(), cell.value)
+                                  }
+                                }
                                 defaultValue='Choose an action'
                                 {...cell.getCellProps([
                                   { ...getCellProps(cell) },
                                 ])}
                               >
-                                <option disabled style={{ width: 'inherit' }}>
+                                <Option disabled style={{ width: 'inherit' }}>
                                   {' '}
                                 Choose an action
-                              </option>
-                                <option value='0'>View Profile </option>
-                                <option value='1'>Relieve Employee</option>
-                                <option value='2'>Change to Active</option>
-                                <option value='3'>Change to Inactive</option>
-                                <option value='4'>Delete Employee</option>
-
-                                <option
-                                  disabled
-                                  style={{ color: 'rgba(0,0,0,0)' }}
-                                >
-                                  {cell.render('Cell').props.cell.value}
-                                </option>
-                              </select>
+                              </Option>
+                                <Option value='0'>View Profile </Option>
+                                <Option value='1'>Relieve Employee</Option>
+                                <Option value='2'>Change to Active</Option>
+                                <Option value='3'>Change to Inactive</Option>
+                                <Option value='4'>Delete Employee</Option>
+                              </Select>
                             </>
                           )}
                       </td>

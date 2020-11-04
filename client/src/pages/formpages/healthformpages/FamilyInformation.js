@@ -68,6 +68,7 @@ const FamilyInformation = ({ history }) => {
                 /// Make your API call here
                 setFormData([...data]);
               }}
+              rowLimit={4}
               columnNames={[
                 {
                   label: 'Family Member Name',

@@ -61,9 +61,14 @@ function Hero(...props) {
                   } else {
                     return (
                       <div>
-                        Please fill in your on-boarding application form.
+                        Fill in your on-boarding application form and please submit it.
+                        <br />
+                        using the "Submit Application" button
+                        <br />
                         <br />
                         We are delighted to have you here
+                        <br />
+                        <br />
                       </div>
                     );
                   }
@@ -72,8 +77,8 @@ function Hero(...props) {
               <div className='col-12'>
                 <Card3
                   className='mt-5'
-                  title='Payslips and Time Sheet'
-                  subTitle='Click view to download Payslip or view Timesheet'
+                  title='Pay Slips, Time Sheets and Reimbursements'
+                  subTitle='Click view to download Pay Slips and Time Sheets. Upload Reimbursements'
                 />
               </div>
             </div>

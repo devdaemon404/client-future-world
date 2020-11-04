@@ -18,13 +18,14 @@ export const AdminHeader = styled.div`
   box-shadow: 0 10px 20px rgba(0,0,0,0.13), 0 6px 6px rgba(0,0,0,0.13);
   padding-top: 15px;
   padding-bottom: 10px;
+
   h2 {
     margin-left: 350px;
     font-weight: 600;
     color: #11154C;
     span {
-      font-size: 17px;
-      font-weight: 300;
+      font-size: 20px;
+      font-weight: 600;
     }
   }
 `;
@@ -102,8 +103,9 @@ export const SideBar = styled.div`
     height: 88px;
     color: white;
     text-align: center;
-    font-size: 26px;
-    font-weight: Bold;
+    font-size: 28px;
+    font-family: Montserrat;
+    font-weight: 700;
     border-bottom: 2px solid white;
   }
   .SideBarCompItem {

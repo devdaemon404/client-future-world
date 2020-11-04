@@ -16,7 +16,7 @@ import { UploadContainer } from './paySlipPage.styles';
 import { uploadFinancialDocument } from '../../util/UploadFile';
 
 const PaySlipPage = () => {
-  const [isLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const [payMonth, setPayMonth] = useState('');
   const [payYear, setPayYear] = useState('');
   const [timeMonth, setTimeMonth] = useState('');
@@ -45,21 +45,31 @@ const PaySlipPage = () => {
     };
 
     const apiCall = async (fileType, resArr) => {
-      const res = await axios.get(
-        `/api/employee/financial-docs?documentType=${fileType}`,
-        config
-      );
-      const tempArr = res.data.data;
-      // console.log(tempArr);
-      tempArr.forEach((o) => {
-        resArr.push(`${o.documentedDate.year}-${o.documentedDate.month}`);
-      });
+      try {
+        setIsLoading(true)
+        const res = await axios.get(
+          `/api/employee/financial-docs?documentType=${fileType}`,
+          config
+        );
+        const tempArr = res.data.data;
+        // console.log(tempArr);
+        tempArr.forEach((o) => {
+          resArr.push(`${o.documentedDate.year}-${o.documentedDate.month}`);
+        });
+
+      } catch (error) {
+        toast("Error fetching upload-dates")
+      }
+      finally {
+        setIsLoading(false)
+      }
     };
     fetchDates();
   }, []);
 
   const reimburseAPIcall = async (fileKey, reimburseDate, documentType) => {
     try {
+      setIsLoading(true)
       const body = JSON.stringify({
         documentType,
         fileKey,
@@ -68,10 +78,14 @@ const PaySlipPage = () => {
           year: reimburseDate[0],
         },
       });
+
       await axios.put('/api/employee/financial-docs', body, config);
       toast(`File Uploaded for Reimbursment, admin will get back to you`);
     } catch (error) {
       console.log(error);
+    }
+    finally {
+      setIsLoading(false)
     }
   };
 
@@ -298,7 +312,7 @@ const PaySlipPage = () => {
                   }
                   onClick={updateChange}
                 >
-                  <i className='fas fa-download'></i> Get Pay Slip
+                  <i className='fas fa-download'></i> Download
                 </button>
                 <div className='text-muted mt-1'>
                   (Select the month and year and your Pay Slip will be
@@ -351,7 +365,7 @@ const PaySlipPage = () => {
                   }
                   onClick={updateChange}
                 >
-                  <i className='fas fa-eye'></i> View Time Sheet
+                  <i className='fas fa-eye'></i> View
                 </button>
                 <div className='text-muted mt-1'>
                   (Select the month and year and your Time Sheet will Pop-up)
@@ -400,7 +414,7 @@ const PaySlipPage = () => {
                   }}
                 >
                   <i class='fas fa-cloud-upload-alt'></i>{' '}
-                  {' UPLOAD Bill'}
+                  {'Upload'}
                 </button>
                 <input
                   type='file'

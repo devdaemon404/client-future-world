@@ -17,8 +17,7 @@ function Header({ pathname }) {
               src={logo}
               alt=''
               className='img-fluid'
-              height='40px'
-              width='90px'
+              width='120px'
             />
           </Link>
           <button

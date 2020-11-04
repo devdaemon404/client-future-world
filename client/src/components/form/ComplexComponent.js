@@ -18,6 +18,7 @@ function ComplexComponent({
   columnNames = [],
   onSubmit = (_) => { },
   buttonName = 'Invalid Button Name',
+  rowLimit = -1
 }) {
   // Set the table grid values
   const [data, setData] = useState(defaultData);
@@ -204,12 +205,17 @@ function ComplexComponent({
       <div className='float-right'>
         <Button type='link'
           onClick={() => {
+            if (rowLimit !== -1 && data.length >= rowLimit) {
+              toast('Row limit reached')
+              return;
+            }
             const placeholderData = {};
             for (const obj of columnNames) {
               placeholderData[obj.key] = `-`;
             }
             const tempData = [...data, { ...placeholderData, deletable: true }];
             saveData(tempData);
+
           }}>
           + &nbsp;{buttonName}
         </Button>
