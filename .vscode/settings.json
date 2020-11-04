@@ -1,6 +1,5 @@
 {
   "window.zoomLevel": 0,
-  "editor.fontSize": 22,
   "files.autoSave": "afterDelay",
   "prettier.jsxSingleQuote": true,
   "prettier.singleQuote": true,

@@ -1,20 +1,20 @@
 export const fields1 = [
   {
-    fName: 'First Name',
+    fName: 'First Name *',
     type: 'text',
     defaultValue: 'First Name',
     name: 'FName',
     required: 'required',
   },
   {
-    fName: 'Last Name',
+    fName: 'Last Name *',
     type: 'text',
     defaultValue: 'Last Name',
     name: 'LName',
     required: 'required',
   },
   {
-    fName: 'Phone Number',
+    fName: 'Phone Number *',
     type: 'tel',
     min: 10,
     max: 10,
@@ -25,7 +25,7 @@ export const fields1 = [
 ];
 export const fields2 = [
   {
-    fName: 'Address',
+    fName: 'Address *',
     as: 'textarea',
     defaultValue: 'Address',
     name: 'Address',
@@ -33,7 +33,7 @@ export const fields2 = [
   },
 
   {
-    fName: 'Email Id',
+    fName: 'Email Id *',
     type: 'email',
     defaultValue: 'email@company.com',
     name: 'email',

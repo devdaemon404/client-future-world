@@ -126,6 +126,7 @@ export const InpForm = ({ getUsers }) => {
               type={type}
               key={i}
               pattern={type === 'tel' ? '[0-9]*' : undefined}
+              // eslint-disable-next-line
               className='formsInp'
               name={name}
               placeholder={defaultValue}
@@ -143,10 +144,10 @@ export const InpForm = ({ getUsers }) => {
   const set2 = fields2.map((field, i) => {
     return (
       <Form.Group key={i} as={Row}>
-        <Form.Label className='form-label text-right' column >
+        <Form.Label className='form-label text-right' column sm='4'>
           {field.fName}
         </Form.Label>
-        <Col >
+        <Col sm='6'>
           <Form.Control
             className='form-control'
             type={field.type}
@@ -240,8 +241,7 @@ export const InpForm = ({ getUsers }) => {
                   color: 'white',
                 }}
                 type='submit'
-                disabled={selectedOption === '' ? 'disabled' : ''}
-              >
+                disabled={selectedOption === '' ? 'disabled' : ''}>
                 Add Employee
               </button>
             </div>

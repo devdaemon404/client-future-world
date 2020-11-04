@@ -329,9 +329,17 @@ const Profilepage = ({ retrievedId }) => {
                     type='secondary'
                     shape='round'
                     onClick={toggleFormComplete}>
-                    {!userData.isFormComplete
-                      ? 'Lock Onboarding Application'
-                      : 'Unlock Onboarding Application'}
+                    {!userData.isFormComplete ? (
+                      <span>
+                        <i class='fa fa-lock' aria-hidden='true' /> &nbsp;
+                        Onboarding application
+                      </span>
+                    ) : (
+                      <span>
+                        <i class='fa fa-unlock' aria-hidden='true' />
+                        &nbsp; Onboarding application{' '}
+                      </span>
+                    )}
                   </Button>
                 </div>
               </div>
@@ -412,7 +420,7 @@ const Profilepage = ({ retrievedId }) => {
                     </div>
                   </UploadContainer>
                   <UploadContainer>
-                    <span className='info-type'>Upload Time Sheet</span>
+                    <div className='info-type'>Upload Time Sheet</div>
                     <div className='select'>
                       <p>Select Month </p>{' '}
                       <Space direction='vertical'>

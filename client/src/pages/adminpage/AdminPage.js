@@ -223,11 +223,6 @@ const AdminPage = () => {
 
   var AddEmployeeChild = (
     <div>
-      <br />
-      <div>
-        <span className='EmpInfo'>New Employee Creation</span>
-      </div>
-      <br />
       <React.Fragment>
         <FormWrapper>
           <InpForm getUsers={getUsers} />
@@ -267,18 +262,14 @@ const AdminPage = () => {
           <h2>
             Future World Consultancy
             <br />
-            <span>Admin Dashboard</span>
+            {ViewPanel === 'Table' && <span>Employee Information</span>}
+            {ViewPanel === 'Form' && <span>New Employee Creation</span>}
+            {ViewPanel === 'Profile' && <span>Employee Profile</span>}
           </h2>
         </AdminHeader>
         <AdminMain>
           {ViewPanel === 'Profile' ? (
             <ProfilePage userId={selectUser} retrievedId={Id} />
-          ) : (
-            <></>
-          )}
-
-          {ViewPanel === 'Table' ? (
-            <div className='EmpInfo'>Employee Information</div>
           ) : (
             <></>
           )}

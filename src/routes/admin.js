@@ -31,7 +31,7 @@ router
 router.route('/add-reportee').post(protect, authorize('admin'), addReportee);
 router
   .route('/financial-documents')
-  .post(protect, authorize('admin'), getFinancialDocs);
+  .post(protect, authorize('admin', 'sub-admin'), getFinancialDocs);
 router
   .route('/single-fin-doc')
   .post(protect, authorize('admin'), getSingleFinancialDoc);
