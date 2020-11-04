@@ -13,10 +13,9 @@ export const OPLoader = ({ isLoading }) => {
             left: 0,
             zIndex: 100,
             backgroundColor: 'rgba(0,0,0,0.5)',
-            width: '100%',
-            height: '100%',
-          }}
-        ></div>
+            width: '100vw',
+            height: '100vh',
+          }}></div>
         <div
           style={{
             display: 'block',
@@ -24,8 +23,7 @@ export const OPLoader = ({ isLoading }) => {
             zIndex: 1051,
             top: '50%',
             left: '50%',
-          }}
-        >
+          }}>
           <div className='col'>
             <div>
               <img alt='Page Loading' src={LoadingGIF}></img>
@@ -36,8 +34,7 @@ export const OPLoader = ({ isLoading }) => {
                 marginLeft: '5px',
                 fontSize: '24px',
                 color: '#f8f8f8',
-              }}
-            >
+              }}>
               Loading ...
             </span>
           </div>

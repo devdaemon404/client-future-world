@@ -34,9 +34,9 @@ router
   .post(protect, authorize('admin', 'sub-admin'), getFinancialDocs);
 router
   .route('/single-fin-doc')
-  .post(protect, authorize('admin'), getSingleFinancialDoc);
+  .post(protect, authorize('admin', 'sub-admin'), getSingleFinancialDoc);
 router
   .route('/toggle-form-completion')
-  .post(protect, authorize('admin'), toggleFormComplete);
+  .post(protect, authorize('admin', 'sub-admin'), toggleFormComplete);
 
 module.exports = router;
