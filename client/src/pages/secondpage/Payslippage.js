@@ -186,7 +186,7 @@ const PaySlipPage = () => {
         document.getElementById('viewTimeSheet').appendChild(canvas);
 
         const page = await pdf.getPage(i);
-        const scale = 1.5;
+        const scale = 1.25;
         const viewport = page.getViewport(scale);
 
         // Apply page dimensions to the <canvas> element.
@@ -473,7 +473,7 @@ const PaySlipPage = () => {
         visible={visible}
         onOk={handleOk}
         onCancel={handleCancel}
-        width={10000}>
+        width={1500}>
         <div className='container text-center' id='viewTimeSheet'></div>
       </Modal>
     </Container>
