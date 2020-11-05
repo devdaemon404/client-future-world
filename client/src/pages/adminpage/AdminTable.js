@@ -68,10 +68,9 @@ function OPTable({ data, columns, getCellProps, onClickHandler, adminId }) {
     <div
       style={{
         overflow: 'auto',
-        maxHeight: '74vh',
+        maxHeight: '85vh',
       }}
-      className='mx-auto mt-3 text-center'
-    >
+      className='mx-auto mt-3 text-center'>
       <Table
         {...getTableProps()}
         striped
@@ -81,14 +80,15 @@ function OPTable({ data, columns, getCellProps, onClickHandler, adminId }) {
           {
             // tableLayout: 'fixed',
           }
-        }
-      >
+        }>
         <thead style={{ height: 100 }}>
           {headerGroups.map((headerGroup) => (
             <tr {...headerGroup.getHeaderGroupProps()}>
               {headerGroup.headers.map((column, i) => (
                 <th key={i}>
-                  <p {...column.getHeaderProps(column.getSortByToggleProps())} style={{ fontSize: 17, fontWeight: 700 }} >
+                  <p
+                    {...column.getHeaderProps(column.getSortByToggleProps())}
+                    style={{ fontSize: 17, fontWeight: 700 }}>
                     {column.render('Header')}
                     {/* Add a sort direction indicator */}
                     <span>
@@ -117,43 +117,39 @@ function OPTable({ data, columns, getCellProps, onClickHandler, adminId }) {
                         {adminIdNum.includes(
                           cell.render('Cell').props.cell.value
                         ) ? (
-                            <b>ADMIN PROFILE</b>
-                          ) : (
-                            <>
-                              <Select
-                                style={{ width: '100%' }}
-                                // onChange={onClickHandler}
-                                value={'Choose'}
-                                onChange={
-                                  (index) => {
-                                    onClickHandler(index.toString(), cell.value)
-                                  }
-                                }
-                                defaultValue='Choose an action'
-                                {...cell.getCellProps([
-                                  { ...getCellProps(cell) },
-                                ])}
-                              >
-                                <Option disabled style={{ width: 'inherit' }}>
-                                  {' '}
+                          <b>ADMIN PROFILE</b>
+                        ) : (
+                          <>
+                            <Select
+                              style={{ width: '100%' }}
+                              // onChange={onClickHandler}
+                              value={'Choose'}
+                              onChange={(index) => {
+                                onClickHandler(index.toString(), cell.value);
+                              }}
+                              defaultValue='Choose an action'
+                              {...cell.getCellProps([
+                                { ...getCellProps(cell) },
+                              ])}>
+                              <Option disabled style={{ width: 'inherit' }}>
+                                {' '}
                                 Choose an action
                               </Option>
-                                <Option value='0'>View Profile </Option>
-                                <Option value='1'>Relieve Employee</Option>
-                                <Option value='2'>Change to Active</Option>
-                                <Option value='3'>Change to Inactive</Option>
-                                <Option value='4'>Delete Employee</Option>
-                              </Select>
-                            </>
-                          )}
+                              <Option value='0'>View Profile </Option>
+                              <Option value='1'>Relieve Employee</Option>
+                              <Option value='2'>Change to Active</Option>
+                              <Option value='3'>Change to Inactive</Option>
+                              <Option value='4'>Delete Employee</Option>
+                            </Select>
+                          </>
+                        )}
                       </td>
                     );
                   } else if (cell.column.Header === 'Name') {
                     return (
                       <td
                         {...cell.getCellProps([{ ...getCellProps(cell) }])}
-                        style={{ color: '#0D054B', fontWeight: 700 }}
-                      >
+                        style={{ color: '#0D054B', fontWeight: 700 }}>
                         {cell.render('Cell')}
                       </td>
                     );
@@ -165,13 +161,14 @@ function OPTable({ data, columns, getCellProps, onClickHandler, adminId }) {
                           cell.render('Cell').props.cell.value[0] === 'I'
                             ? { color: '#c62828', fontWeight: 700 }
                             : cell.render('Cell').props.cell.value[0] === 'A'
-                              ? { color: '#558B2F', fontWeight: 700 }
-                              : cell.render('Cell').props.cell.value[0] === 'R'
-                                ? { fontWeight: 700 }
-                                : {}
-                        }
-                      >
-                        {cell.render('Cell').props.cell.value.split('-')[0]}<br />{cell.render('Cell').props.cell.value.split('-')[1]}
+                            ? { color: '#558B2F', fontWeight: 700 }
+                            : cell.render('Cell').props.cell.value[0] === 'R'
+                            ? { fontWeight: 700 }
+                            : {}
+                        }>
+                        {cell.render('Cell').props.cell.value.split('-')[0]}
+                        <br />
+                        {cell.render('Cell').props.cell.value.split('-')[1]}
                       </td>
                     );
                   }

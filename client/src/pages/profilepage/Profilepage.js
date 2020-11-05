@@ -329,9 +329,17 @@ const Profilepage = ({ retrievedId }) => {
                     type='secondary'
                     shape='round'
                     onClick={toggleFormComplete}>
-                    {!userData.isFormComplete
-                      ? 'Lock Onboarding Application'
-                      : 'Unlock Onboarding Application'}
+                    {!userData.isFormComplete ? (
+                      <span>
+                        <i class='fa fa-lock' aria-hidden='true' /> &nbsp;
+                        Onboarding application
+                      </span>
+                    ) : (
+                      <span>
+                        <i class='fa fa-unlock' aria-hidden='true' />
+                        &nbsp; Onboarding application{' '}
+                      </span>
+                    )}
                   </Button>
                 </div>
               </div>

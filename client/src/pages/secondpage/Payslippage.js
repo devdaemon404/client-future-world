@@ -186,7 +186,11 @@ const PaySlipPage = () => {
         document.getElementById('viewTimeSheet').appendChild(canvas);
 
         const page = await pdf.getPage(i);
+<<<<<<< HEAD
         const scale = 1.25;
+=======
+        const scale = 1.2;
+>>>>>>> 53aacb9a56514c2220244ef9be12db49706b812e
         const viewport = page.getViewport(scale);
 
         // Apply page dimensions to the <canvas> element.
