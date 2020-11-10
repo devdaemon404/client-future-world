@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { FormMain } from './AdminPage.styles';
 import { Form, Row, Col } from 'react-bootstrap';
 import axios from 'axios';
@@ -6,9 +6,15 @@ import moment from 'moment';
 import { toast } from '../../util/ToastUtil';
 import { OPLoader } from '../../util/LoaderUtil';
 import { fields1, fields2, fields3 } from './admin.data';
+import UserContext from '../../context/userContext';
+
 export const InpForm = ({ getUsers }) => {
   const [isLoading, setIsLoading] = useState(false);
+  const { checkLogin } = useContext(UserContext);
   const [selectedOption, setSelectedOption] = useState('');
+  useEffect(() => {
+    checkLogin();
+  }, []);
   const [input, setInput] = useState({
     FName: '',
     LName: '',

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import moment from 'moment';
 import { DatePicker, Space, Button, Tabs } from 'antd';
 import { config } from '../../util/RequestUtil';
@@ -16,6 +16,7 @@ import {
   FormMain,
 } from './ProfilePage.styles';
 import IMGDEFAULT from '../../assets/img/imgplaceholder.png';
+import UserContext from '../../context/userContext';
 
 import PHONE from '../../assets/img/phone.png';
 import { uploadFinancialDocument } from '../../util/UploadFile';
@@ -41,6 +42,7 @@ const Profilepage = ({ retrievedId }) => {
   const [enabledReimbursementDates, setEnabledReimbursementDates] = useState(
     []
   );
+  const { _, __, logout } = useContext(UserContext);
 
   const checkLogin = async () => {
     try {
@@ -59,6 +61,7 @@ const Profilepage = ({ retrievedId }) => {
       });
       toast(reqqres.data.message);
     } catch (error) {
+      if (error.response.status === 401) logout();
       toast(error);
     }
   };
@@ -72,6 +75,7 @@ const Profilepage = ({ retrievedId }) => {
       let res = await axios.get('/api/admin/users?role=sub-admin');
       setSubAdminList(res.data.data);
     } catch (error) {
+      if (error.response.status === 401) logout();
       console.error(error);
     }
   };
@@ -91,6 +95,7 @@ const Profilepage = ({ retrievedId }) => {
     } catch (e) {
       console.log(e);
       toast('Error fetching document count');
+      if (e.response.status === 401) logout();
     } finally {
       setLoading(false);
     }
@@ -145,6 +150,7 @@ const Profilepage = ({ retrievedId }) => {
         setIsFormComplete(true);
       }
     } catch (e) {
+      if (e.response.status === 401) logout();
       toast('Error fetching employee data');
     } finally {
       setLoading(false);

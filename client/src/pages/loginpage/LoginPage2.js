@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 
 import axios from 'axios';
 
@@ -11,9 +11,11 @@ import {
 } from './LoginPage2.styles';
 import LOGO from '../../assets/img/logo.png';
 import { toast } from '../../util/ToastUtil';
+import UserContext from '../../context/userContext';
 
 export const LoginPage2 = () => {
   const history = useHistory();
+  const { setLoginState } = useContext(UserContext);
   const [email, setemail] = useState('');
   const [password, setpassword] = useState('');
   // const [success, setSuccess] = useState(true);
@@ -33,6 +35,7 @@ export const LoginPage2 = () => {
       if (loginResult.data.success) {
         setIsLoading(false);
         setError(false);
+        setLoginState(true);
         if (
           loginResult.data.role === 'admin' ||
           loginResult.data.role === 'sub-admin'
@@ -44,6 +47,7 @@ export const LoginPage2 = () => {
       }
     } catch (err) {
       setIsLoading(false);
+      setLoginState(false);
       setError(true);
       toast('Error While Logging');
     }
