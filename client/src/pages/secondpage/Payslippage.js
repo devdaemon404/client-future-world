@@ -186,11 +186,7 @@ const PaySlipPage = () => {
         document.getElementById('viewTimeSheet').appendChild(canvas);
 
         const page = await pdf.getPage(i);
-<<<<<<< HEAD
-        const scale = 1.25;
-=======
         const scale = 1.2;
->>>>>>> 53aacb9a56514c2220244ef9be12db49706b812e
         const viewport = page.getViewport(scale);
 
         // Apply page dimensions to the <canvas> element.
@@ -277,8 +273,9 @@ const PaySlipPage = () => {
         <div className='container'>
           <p className='lead'>
             Select a month and year to generate a pay slip. In order to view a
-            time sheet select a month and year and click view time sheet. <br />
-            <br /> The pay slip will be downloaded in a pdf format.<br></br>
+            time sheet select a month and year and click view time sheet.
+            <br /> The pay slip will be downloaded in a pdf format.
+            <br />
             <span className='float-right'>
               <span className='text-danger'>*</span>Indicates required field
             </span>

@@ -68,7 +68,7 @@ export const LoginPage2 = () => {
                     className='lg'
                     id='exampleInputEmail1'
                     aria-describedby='emailHelp'
-                    placeholder='Enter your email'
+                    placeholder='Enter Your Email'
                     onChange={(e) => {
                       setemail(e.target.value);
                     }}
@@ -90,7 +90,7 @@ export const LoginPage2 = () => {
                     }}
                     className=' lg'
                     id='exampleInputPassword1'
-                    placeholder='Enter your password'
+                    placeholder='Enter Your Password'
                     style={{
                       background: 'none',
 
@@ -109,8 +109,7 @@ export const LoginPage2 = () => {
                       margin: '10px 13% ',
                       background: '#3f47cc',
                       color: 'white',
-                    }}
-                  >
+                    }}>
                     {isLoading ? 'Logging you in ... ' : 'Sign In'}
                   </button>
                   <br />
@@ -137,26 +136,31 @@ export const LoginPage2 = () => {
               }}
             />
           </div>
-          <h2 className='Head'> Helping businesses around the world succeed</h2>
+          {/* <h2 className='Head'> Helping businesses around the world succeed</h2> */}
         </MainSlide>
         <Footer>
           <div className='footer-up'></div>
           <div className='footer-down'>
-            <Link className='Link' to='#!'>
+            <a
+              className='Link'
+              href='http://www.futureworldconsultancy.com/contact.html'
+              target='_blank'>
               Contact Us
-            </Link>
+            </a>
             {'   '}|
-            <Link className='Link' to='#!'>
-              Locate Us
-            </Link>
-            {'   '}|
-            <Link className='Link' to='#!'>
+            <a
+              className='Link'
+              href='http://www.futureworldconsultancy.com/'
+              target='_blank'>
               Terms of service
-            </Link>
+            </a>
             {'   '}|
-            <Link className='Link' to='#!'>
+            <a
+              className='Link'
+              href='http://www.futureworldconsultancy.com/'
+              target='_blank'>
               Privacy policy
-            </Link>
+            </a>
           </div>
         </Footer>
       </MainContainer>

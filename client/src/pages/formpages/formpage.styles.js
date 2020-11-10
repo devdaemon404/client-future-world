@@ -28,18 +28,17 @@ export const HeroContainer = styled.div`
     -khtml-opacity: 0.6;
   }
 
-  .card-footer{
+  .card-footer {
     padding: 0px;
     border: none;
-    z-index:1px;
-    background-color:#f8f8ff;
+    z-index: 1px;
+    background-color: #f8f8ff;
   }
 
-  .form-link{
+  .form-link {
     padding: 10px;
-    background-color:#f8f8ff;
+    background-color: #f8f8ff;
   }
-  
 `;
 
 export const MainHeader = styled.h1`
@@ -47,15 +46,14 @@ export const MainHeader = styled.h1`
   // background-color: #2d3436;
   // background-image: linear-gradient(315deg, #2d3436 0%, #000000 74%);
   font-family: 'Helvetica Neue', sans-serif;
-  border-radius:5px;
-  font-size: 48px;
-  padding:5px;
+  border-radius: 5px;
+  font-size: 40px;
+  padding: 3px;
   font-weight: bold;
   letter-spacing: -1px;
   line-height: 1;
   text-align: center;
 `;
-
 
 export const MainPara = styled.p`
   color: #111;
@@ -68,16 +66,15 @@ export const MainPara = styled.p`
   padding: 20px;
 `;
 
-
 export const CardHeader = styled.h1`
   color: #f8f8f8;
-  border:none;
+  border: none;
   background-color: #2d3436;
   background-image: linear-gradient(315deg, #2d3436 0%, #000000 74%);
   font-family: 'Helvetica Neue', sans-serif;
-  border-radius:5px;
+  border-radius: 5px;
   font-size: 25px;
-  padding:10px;
+  padding: 10px;
   font-weight: bold;
   letter-spacing: -1px;
   line-height: 1;
@@ -90,5 +87,5 @@ export const CardPara = styled.p`
   font-size: 25px;
   letter-spacing: -1px;
   line-height: 1;
-  text-align: center;  
+  text-align: center;
 `;
