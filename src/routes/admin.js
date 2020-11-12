@@ -11,6 +11,7 @@ const {
   getFinancialDocs,
   toggleFormComplete,
   getSingleFinancialDoc,
+  updateUserPassword,
 } = require('../controllers/admin');
 
 const { protect, authorize } = require('../middleware/auth');
@@ -38,5 +39,9 @@ router
 router
   .route('/toggle-form-completion')
   .post(protect, authorize('admin'), toggleFormComplete);
+
+router
+  .route('/update-password')
+  .post(protect, authorize('admin'), updateUserPassword);
 
 module.exports = router;
