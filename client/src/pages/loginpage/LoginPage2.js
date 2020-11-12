@@ -133,15 +133,7 @@ export const LoginPage2 = () => {
                 </Modal>
 
                 <div className='form-group'>
-                  <button
-                    type='submit'
-                    className='btn'
-                    style={{
-                      width: '190px',
-                      margin: '5px 13% ',
-                      background: '#3f47cc',
-                      color: 'white',
-                    }}>
+                  <button type='submit' className='btn btn-md'>
                     {isLoading ? 'Logging you in ... ' : 'Sign In'}
                   </button>
                   <br />
@@ -158,44 +150,37 @@ export const LoginPage2 = () => {
         <MainSlide>
           <div className='image'>
             {' '}
-            <img
-              src='/smart-min.png'
-              alt={'bgsy'}
-              style={{
-                width: 800,
-
-                objectFit: 'fill',
-              }}
-            />
+            <img className='imageMain' src='/smart-min.png' alt={'bgsy'} />
           </div>
           {/* <h2 className='Head'> Helping businesses around the world succeed</h2> */}
         </MainSlide>
-        <Footer>
-          <div className='footer-up'></div>
-          <div className='footer-down'>
-            <a
-              className='Link'
-              href='http://www.futureworldconsultancy.com/contact.html'
-              target='_blank'>
-              Contact Us
-            </a>
-            {'   '}|
-            <a
-              className='Link'
-              href='http://www.futureworldconsultancy.com/'
-              target='_blank'>
-              Terms of service
-            </a>
-            {'   '}|
-            <a
-              className='Link'
-              href='http://www.futureworldconsultancy.com/'
-              target='_blank'>
-              Privacy policy
-            </a>
-          </div>
-        </Footer>
       </MainContainer>
+      <div style={{ height: '1vh' }} />
+      <Footer>
+        <div className='footer-up'></div>
+        <div className='footer-down'>
+          <a
+            className='Link'
+            href='http://www.futureworldconsultancy.com/contact.html'
+            target='_blank'>
+            Contact Us
+          </a>
+          {'   '}|
+          <a
+            className='Link'
+            href='http://www.futureworldconsultancy.com/'
+            target='_blank'>
+            Terms of service
+          </a>
+          {'   '}|
+          <a
+            className='Link'
+            href='http://www.futureworldconsultancy.com/'
+            target='_blank'>
+            Privacy policy
+          </a>
+        </div>
+      </Footer>
     </React.Fragment>
   );
 };

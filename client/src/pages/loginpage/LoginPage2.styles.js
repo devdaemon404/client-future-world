@@ -2,7 +2,7 @@ import styled from 'styled-components';
 export const MainLogin = styled.div`
   width: 480px;
   z-index: 80;
-  height: 100vh;
+  height: 95vh;
   .loginform {
     display: flex;
     flex-flow: column;
@@ -35,7 +35,42 @@ export const MainLogin = styled.div`
     outline: none;
     border: none;
   }
-  @media only screen and (max-width: 780px) {
+
+  .btn {
+    width: 190px;
+    margin: 5px 13%;
+    background: #3f47cc;
+    color: white;
+  }
+
+  @media only screen and (max-width: 1500px) {
+    .form-group {
+      margin: 12px 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    h6 {
+      font-size: 12px;
+    }
+    .btn {
+      width: 150px;
+      height: 20px;
+      padding: 0px;
+      font-size: 14px;
+      margin: 0;
+      background: #3f47cc;
+      color: white;
+    }
+    input {
+      padding: 8px;
+      height: 18px;
+      outline: none;
+      font-size: 13px;
+      margin: 0 0;
+    }
+  }
+  @media only screen and (max-width: 800px) {
     width: 100vw;
   }
 `;
@@ -56,6 +91,11 @@ export const MainSlide = styled.div`
     opacity: 0.8;
     text-align: center;
   }
+  .imageMain{
+    width: 800px;
+    objectFit: 'fill';
+  }
+
   .Head {
     position: absolute;
     bottom: 80px;
@@ -68,6 +108,13 @@ export const MainSlide = styled.div`
     .Head {
       font-size: 21px;
     }
+
+  }
+ @media only screen and (max-width: 1500px) {
+  .imageMain{
+    width: 400px;
+    objectFit: 'fill';
+  }
   }
 
 
@@ -120,12 +167,10 @@ export const SubHeading = styled.p`
   font-weight: 400;
 `;
 export const Footer = styled.div`
-  position: absolute;
-  bottom: 10px;
   z-index: 120;
   width: 100%;
   background: white;
-  height: 20px;
+  height: 3vh;
   .footer-up {
     height: 10px;
     width: inherit;
