@@ -34,7 +34,7 @@ import ResetPasswordPage from '../pages/loginpage/reset-password-page/ResetPassw
 const Routes = () => {
   let history = useHistory();
   const [isLoading, setIsLoading] = useState(false);
-  const { isAuthenticated, checkLogin } = useContext(UserContext);
+  const { checkLogin } = useContext(UserContext);
   useEffect(() => {
     const _checkLogin = async () => {
       try {

@@ -21,7 +21,7 @@ export const OPLoader = ({ isLoading }) => {
             display: 'block',
             position: 'absolute',
             zIndex: 1051,
-            top: '50%',
+            // top: '50%',
             left: '50%',
           }}>
           <div className='col'>

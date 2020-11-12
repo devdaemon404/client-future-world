@@ -18,8 +18,6 @@ import {
 import IMGDEFAULT from '../../assets/img/imgplaceholder.png';
 import UserContext from '../../context/userContext';
 
-import { Link } from 'react-router-dom';
-
 import PHONE from '../../assets/img/phone.png';
 import { uploadFinancialDocument } from '../../util/UploadFile';
 import { toast } from '../../util/ToastUtil';
@@ -36,6 +34,7 @@ const Profilepage = ({ retrievedId }) => {
 
   const [toggle, setToggle] = useState(true);
   const [loading, setLoading] = useState(false);
+
   const [role, setRole] = useState('sub-admin');
   const [subAdmins, setSubAdminList] = useState([]);
   const [isFormComplete, setIsFormComplete] = useState(false);
@@ -142,7 +141,7 @@ const Profilepage = ({ retrievedId }) => {
     try {
       setLoading(true);
       const res = await axios.get(
-        `/api/admin/employee-info/${retrievedId}?select=FName,increments,photo,isFormComplete,empNo,LName,email,joiningDate,designation,phoneNumber,Address,FWEmail,Manager,custLoc,custName,BillingPH,annualCTC,increment,lwd,comments`
+        `/api/admin/employee-info/${retrievedId}?select=FName,increments,photo,isFormComplete,empNo,LName,email,joiningDate,designation,phoneNumber,Address,FWEmail,Manager,custLoc,custName,BillingPH,annualCTC,increment,lwd,comments,user`
       );
       let { data } = res.data;
       if (!data) data = {};
@@ -281,6 +280,7 @@ const Profilepage = ({ retrievedId }) => {
 
   return (
     <React.Fragment>
+      <OPLoader isLoading={loading} />
       <ProfContainer>
         <LeftCol>
           <DisplayPic>
@@ -317,7 +317,7 @@ const Profilepage = ({ retrievedId }) => {
             </div>
           </SidebarDetails>
         </LeftCol>
-        <OPLoader isLoading={loading} />
+
         <RightCol>
           <NameSection>
             <div className='Head'>
@@ -329,9 +329,34 @@ const Profilepage = ({ retrievedId }) => {
                 }}>
                 {' '}
                 <h2>{userData.FName + ' ' + userData.LName}</h2>{' '}
-                <div>
-                  <Button type='secondary' shape='round'>
-                    <Link to='/reset-password'>Reset Password</Link>
+                <div
+                  style={{
+                    display: 'contents',
+                  }}>
+                  <Button
+                    type='secondary'
+                    shape='round'
+                    onClick={async () => {
+                      try {
+                        let body = {
+                          userId: userData.user,
+                        };
+                        setLoading(true);
+                        await axios.post(
+                          '/api/admin/update-password',
+                          JSON.stringify(body),
+                          config
+                        );
+
+                        toast('Password Reset Completed');
+                      } catch (error) {
+                        console.log(error);
+                        toast('Error in Resetting the Password');
+                      } finally {
+                        setLoading(false);
+                      }
+                    }}>
+                    Reset Password
                   </Button>{' '}
                   <Button type='secondary' shape='round' onClick={downloadFile}>
                     ⤓ Download Profile

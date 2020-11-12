@@ -13,12 +13,7 @@ function Header({ pathname }) {
       <div>
         <nav className='navbar navbar-expand-lg'>
           <Link className='navbar-brand ml-5' to='/'>
-            <img
-              src={logo}
-              alt=''
-              className='img-fluid'
-              width='120px'
-            />
+            <img src={logo} alt='' className='img-fluid' width='100px' />
           </Link>
           <button
             className='navbar-toggler'
@@ -27,20 +22,23 @@ function Header({ pathname }) {
             data-target='#navbarNav'
             aria-controls='navbarNav'
             aria-expanded='false'
-            aria-label='Toggle navigation'
-          >
+            aria-label='Toggle navigation'>
             <span className='navbar-toggler-icon'>
               <i className='fas fa-bars'></i>
             </span>
           </button>
           <div
             className='flex justify-content-xl-end justify-content-lg-end justify-content-md-center   mr-5 collapse navbar-collapse'
-            id='navbarNav'
-          >
+            id='navbarNav'>
             <ul className='navbar-nav'>
               <li className='nav-item active mr-3'>
                 <Link className='nav-link' to={pathname}>
                   My Application <span className='sr-only'>(current)</span>
+                </Link>
+              </li>
+              <li className='nav-item active mr-3'>
+                <Link className='nav-link' to='/reset-password'>
+                  Reset Password
                 </Link>
               </li>
               <li className='nav-item mr-3'>
