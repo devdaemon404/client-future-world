@@ -1,6 +1,7 @@
 import React, { useState, useContext } from 'react';
 
 import axios from 'axios';
+import { Modal } from 'antd';
 
 import { Link, useHistory } from 'react-router-dom';
 import {
@@ -21,6 +22,20 @@ export const LoginPage2 = () => {
   // const [success, setSuccess] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(false);
+
+  const [visible, setVisible] = useState(false);
+
+  const showModal = () => {
+    setVisible(true);
+  };
+
+  const handleOk = (e) => {
+    setVisible(false);
+  };
+
+  const handleCancel = (e) => {
+    setVisible(false);
+  };
 
   const onFormSubmit = async (e) => {
     setIsLoading(true);
@@ -104,13 +119,26 @@ export const LoginPage2 = () => {
                     }}
                   />
                 </div>
-                <div className='form-grou'>
+
+                <Link class='form-text form-group' onClick={showModal}>
+                  Forgot Password?
+                </Link>
+                <Modal
+                  title='Forgot password?'
+                  visible={visible}
+                  onOk={handleOk}
+                  onCancel={handleCancel}>
+                  Please contact your admin to reset your password. <br />
+                  You will receive an E-mail with with a temporary password.
+                </Modal>
+
+                <div className='form-group'>
                   <button
                     type='submit'
                     className='btn'
                     style={{
                       width: '190px',
-                      margin: '10px 13% ',
+                      margin: '5px 13% ',
                       background: '#3f47cc',
                       color: 'white',
                     }}>

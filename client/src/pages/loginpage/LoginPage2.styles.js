@@ -16,7 +16,7 @@ export const MainLogin = styled.div`
     padding: 10px 0 -20px 0;
   }
   .form-group {
-    margin: 30px 0;
+    margin: 20px 0;
     display: flex;
     justify-content: center;
     align-items: center;

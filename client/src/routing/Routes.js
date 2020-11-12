@@ -29,6 +29,7 @@ import Payslippage from '../pages/secondpage/Payslippage';
 import LoadingGIF from '../assets/img/loading.gif';
 import PrivateRoute from './PrivateRoute';
 import UserContext from '../context/userContext';
+import ResetPasswordPage from '../pages/loginpage/reset-password-page/ResetPasswordPage';
 
 const Routes = () => {
   let history = useHistory();
@@ -103,6 +104,12 @@ const Routes = () => {
       className='switch-wrapper'>
       <PrivateRoute exact path='/' component={homepage} />
       <Route exact path='/login' component={LoginPage2} />
+      <PrivateRoute
+        exact
+        path='/reset-password'
+        component={ResetPasswordPage}
+      />
+
       <PrivateRoute exact path='/profile' component={ProfilePage} />
 
       <PrivateRoute exact path='/payslip' component={Payslippage} />

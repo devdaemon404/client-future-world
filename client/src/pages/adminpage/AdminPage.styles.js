@@ -15,14 +15,14 @@ export const MainWrapper = styled.div`
 export const AdminHeader = styled.div`
   width: 100%;
   color: white;
-  box-shadow: 0 10px 20px rgba(0,0,0,0.13), 0 6px 6px rgba(0,0,0,0.13);
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.13), 0 6px 6px rgba(0, 0, 0, 0.13);
   padding-top: 15px;
   padding-bottom: 10px;
 
   h2 {
     margin-left: 350px;
     font-weight: 600;
-    color: #11154C;
+    color: #11154c;
     span {
       font-size: 20px;
       font-weight: 600;
@@ -78,7 +78,7 @@ export const SideBar = styled.div`
   z-index: 1000;
   position: fixed;
   left: 320px;
-  width: 320px;
+  width: 220px;
   height: 100%;
   margin-left: -320px;
   overflow-y: auto;
@@ -88,7 +88,7 @@ export const SideBar = styled.div`
 
   .logoContainer {
     padding: 20px;
-    width: 320px;
+    width: 220px;
     height: 118px;
     display: flex;
     justify-content: center;
@@ -99,7 +99,7 @@ export const SideBar = styled.div`
   }
   .SideBarCompMain {
     padding: 30px;
-    width: 320px;
+    width: 220px;
     height: 88px;
     color: white;
     text-align: center;
@@ -128,7 +128,7 @@ export const SideBar = styled.div`
 
   .Logout {
     position: absolute;
-    width: 320px;
+    width: 220px;
     text-align: center;
     color: white;
     bottom: 0%;
@@ -224,8 +224,8 @@ export const FormMain = styled.div`
 
   .info-type {
     font-size: 20px;
-    border-bottom: 1px solid #11154C;
-    color: #11154C;
+    border-bottom: 1px solid #11154c;
+    color: #11154c;
     text-transform: uppercase;
     width: 100%;
     margin: 40px 0px;

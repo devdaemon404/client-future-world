@@ -18,6 +18,8 @@ import {
 import IMGDEFAULT from '../../assets/img/imgplaceholder.png';
 import UserContext from '../../context/userContext';
 
+import { Link } from 'react-router-dom';
+
 import PHONE from '../../assets/img/phone.png';
 import { uploadFinancialDocument } from '../../util/UploadFile';
 import { toast } from '../../util/ToastUtil';
@@ -328,6 +330,9 @@ const Profilepage = ({ retrievedId }) => {
                 {' '}
                 <h2>{userData.FName + ' ' + userData.LName}</h2>{' '}
                 <div>
+                  <Button type='secondary' shape='round'>
+                    <Link to='/reset-password'>Reset Password</Link>
+                  </Button>{' '}
                   <Button type='secondary' shape='round' onClick={downloadFile}>
                     ⤓ Download Profile
                   </Button>{' '}
