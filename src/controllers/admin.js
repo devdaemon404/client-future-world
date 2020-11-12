@@ -1,5 +1,9 @@
+const crypto = require('crypto');
+const bcrypt = require('bcryptjs');
+
 const asyncHandler = require('../middleware/async');
 const ErrorResponse = require('../utils/errorResponse');
+const sendEmail = require('../utils/sendMail');
 
 const User = require('../models/User');
 const Employee = require('../models/Employee');
@@ -268,5 +272,49 @@ exports.getSingleFinancialDoc = asyncHandler(async (req, res, next) => {
   res.status(200).json({
     success: true,
     data: { url },
+  });
+});
+
+/**
+ * @desc    Update User password
+ * @route   POST /api/admin/update-password
+ * @access  Private
+ */
+
+exports.updateUserPassword = asyncHandler(async (req, res, next) => {
+  const { userId } = req.body;
+
+  let user = await User.findById(userId);
+
+  if (!user) {
+    return next(new ErrorResponse('User not found', 400));
+  }
+  let password = crypto.randomBytes(8).toString('hex');
+
+  const salt = await bcrypt.genSalt(10);
+  let hashedPassword = await bcrypt.hash(password, salt);
+
+  user = await User.findByIdAndUpdate(
+    user._id,
+    {
+      password: hashedPassword,
+    },
+    {
+      new: true,
+      runValidators: true,
+    }
+  );
+
+  const message = `You are receiving this email because your password has been changed by admin : email: ${user.email}, password: ${password}`;
+
+  await sendEmail({
+    email: user.email,
+    subject: 'Password Reset',
+    message,
+  });
+
+  res.status(200).json({
+    success: true,
+    message: `Password Reset mail sent to ${user.email}`,
   });
 });
