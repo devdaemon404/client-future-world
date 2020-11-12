@@ -42,7 +42,7 @@ export const LoginPage2 = () => {
     e.preventDefault();
     setError(false);
     try {
-      var loginResult = await axios.post('/api/auth/login', {
+      let loginResult = await axios.post('/api/auth/login', {
         password,
         email,
       });

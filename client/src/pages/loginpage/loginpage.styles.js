@@ -56,7 +56,7 @@ export const Center = styled.div`
   button {
     width: 400px;
     height: 56px;
-    background: var(--unnamed-color-3f47cc) 0% 0% no-repeat padding-box;
+    background: let(--unnamed-color-3f47cc) 0% 0% no-repeat padding-box;
     background: #3f47cc 0% 0% no-repeat padding-box;
     border-radius: 8px;
     color: white;

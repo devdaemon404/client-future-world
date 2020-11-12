@@ -8,7 +8,7 @@ import { OPLoader } from '../../util/LoaderUtil';
 import { fields1, fields2, fields3 } from './admin.data';
 import UserContext from '../../context/userContext';
 
-export const InpForm = ({ getUsers }) => {
+export const InpForm = ({ getUsers, setViewPanel }) => {
   const [isLoading, setIsLoading] = useState(false);
   const { checkLogin } = useContext(UserContext);
   const [selectedOption, setSelectedOption] = useState('');
@@ -97,7 +97,9 @@ export const InpForm = ({ getUsers }) => {
       setIsLoading(false);
 
       toast('Added a new User');
+
       getUsers();
+      setViewPanel();
     } catch (error) {
       setIsLoading(false);
       const err = error.response.data.error;

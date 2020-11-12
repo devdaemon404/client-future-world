@@ -10,16 +10,18 @@ const Card = ({ title, iconClass, sectionNames = [] }) => {
   const [completedSectionsCount, setCompletedSectionsCount] = useState(0);
   useEffect(() => {
     const getState = async () => {
-      const result = await axios.get(
-        '/api/employee?select=' + sectionNames.join(','),
-        config
-      );
-      const { data } = result.data;
-      let count = 0;
-      for (const sectionName of sectionNames) {
-        if (data[sectionName]) count++;
-      }
-      setCompletedSectionsCount(count);
+      try {
+        const result = await axios.get(
+          '/api/employee?select=' + sectionNames.join(','),
+          config
+        );
+        const { data } = result.data;
+        let count = 0;
+        for (const sectionName of sectionNames) {
+          if (data[sectionName]) count++;
+        }
+        setCompletedSectionsCount(count);
+      } catch (e) {}
     };
     getState();
   });

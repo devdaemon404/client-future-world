@@ -30,12 +30,14 @@ const CustomModal = () => {
 
   useEffect(() => {
     const fetchValidity = async () => {
-      const result = await axios.get(
-        '/api/employee?select=isFormComplete',
-        config
-      );
-      if (result.data.data.isFormComplete) setIsFormDisabled(true);
-      console.log('Is form compelte', result.data.data.isFormComplete)
+      try {
+        const result = await axios.get(
+          '/api/employee?select=isFormComplete',
+          config
+        );
+        if (result.data.data.isFormComplete) setIsFormDisabled(true);
+        console.log('Is form compelte', result.data.data.isFormComplete);
+      } catch (e) {}
     };
     fetchValidity();
   }, []);
@@ -47,8 +49,7 @@ const CustomModal = () => {
         style={{
           width: 610,
           display: isFormDisabled ? 'none' : undefined,
-        }}
-      >
+        }}>
         <Button
           variant='primary'
           onClick={async () => {
@@ -70,8 +71,7 @@ const CustomModal = () => {
             }
           }}
           className='submit-button w-100 font-weight-bold'
-          style={{ backgroundColor: '#296284', border: 'none' }}
-        >
+          style={{ backgroundColor: '#296284', border: 'none' }}>
           Submit Application
         </Button>
       </div>
@@ -99,8 +99,7 @@ const CustomModal = () => {
               handleClose();
             }}
             className='font-weight-bold'
-            style={{ backgroundColor: '#296284', border: 'none' }}
-          >
+            style={{ backgroundColor: '#296284', border: 'none' }}>
             Yes
           </Button>
         </Modal.Footer>

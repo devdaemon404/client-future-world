@@ -34,7 +34,7 @@ import ResetPasswordPage from '../pages/loginpage/reset-password-page/ResetPassw
 const Routes = () => {
   let history = useHistory();
   const [isLoading, setIsLoading] = useState(false);
-  const { checkLogin } = useContext(UserContext);
+  const { checkLogin, setLoginState } = useContext(UserContext);
   useEffect(() => {
     const _checkLogin = async () => {
       try {
@@ -43,6 +43,7 @@ const Routes = () => {
         const res = await axios.get('/api/auth/validate-token').then();
         // console.log(res.data.role);
 
+        setLoginState(true);
         if (res.data.role === 'admin') {
           history.push('/admin');
         } else if (res.data.role === 'sub-admin') {
@@ -52,6 +53,7 @@ const Routes = () => {
         }
       } catch (error) {
         history.push('/login');
+        setLoginState(false);
       } finally {
         setIsLoading(false);
       }

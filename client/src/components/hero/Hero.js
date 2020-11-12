@@ -10,8 +10,10 @@ function Hero(...props) {
   const [userData, setUserData] = useState({ name: 'User', photo: '' });
   useEffect(() => {
     const fetchUserData = async () => {
-      const result = await axios.get('/api/employee');
-      setUserData({ ...result.data.data });
+      try {
+        const result = await axios.get('/api/employee');
+        setUserData({ ...result.data.data });
+      } catch (e) {}
     };
     fetchUserData();
   }, []);
@@ -61,7 +63,8 @@ function Hero(...props) {
                   } else {
                     return (
                       <div>
-                        Fill in your on-boarding application form and please submit it.
+                        Fill in your on-boarding application form and please
+                        submit it.
                         <br />
                         using the "Submit Application" button
                         <br />

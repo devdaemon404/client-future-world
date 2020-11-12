@@ -20,7 +20,7 @@ import InpForm from './InpForm';
 import { toast } from '../../util/ToastUtil';
 import { OPLoader } from '../../util/LoaderUtil';
 import { PopUp } from '../../util/DeleteConfirmUtil';
-// const selectUserContext = React.createContext({});
+
 const AdminPage = () => {
   let retrievedId = '';
   // eslint-disable-next-line
@@ -172,7 +172,7 @@ const AdminPage = () => {
   };
 
   // ``` Child components starts here ```;
-  var SidebarChild = (
+  let SidebarChild = (
     <SideBar>
       <div
         className='logoContainer'
@@ -211,7 +211,7 @@ const AdminPage = () => {
     </SideBar>
   );
 
-  var OpTableChild = (
+  let OpTableChild = (
     <OPTable
       data={data}
       columns={columns}
@@ -221,17 +221,22 @@ const AdminPage = () => {
     />
   );
 
-  var AddEmployeeChild = (
+  let AddEmployeeChild = (
     <div>
       <React.Fragment>
         <FormWrapper>
-          <InpForm getUsers={getUsers} />
+          <InpForm
+            getUsers={getUsers}
+            setViewPanel={() => {
+              setViewPanel('Table');
+            }}
+          />
         </FormWrapper>
       </React.Fragment>
     </div>
   );
 
-  var NoPhoneChild = (
+  let NoPhoneChild = (
     <NotPhone>
       <div className='NotPhone-Main'>
         <div className='ErrorContainer'>
@@ -268,19 +273,17 @@ const AdminPage = () => {
           </h2>
         </AdminHeader>
         <AdminMain>
-          {ViewPanel === 'Profile' ? (
+          {ViewPanel === 'Profile' && (
             <ProfilePage userId={selectUser} retrievedId={Id} />
-          ) : (
-            <></>
           )}
 
-          {ViewPanel === 'Form' ? AddEmployeeChild : <></>}
+          {ViewPanel === 'Form' && AddEmployeeChild}
 
           <TableContainer
             style={{
               scrollDirection: 'horizontal',
             }}>
-            {ViewPanel === 'Table' ? OpTableChild : <></>}
+            {ViewPanel === 'Table' && OpTableChild}
           </TableContainer>
         </AdminMain>
       </MainWrapper>

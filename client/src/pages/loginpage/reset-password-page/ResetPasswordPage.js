@@ -49,7 +49,7 @@ const ResetPasswordPage = () => {
         setIsLoading(false);
       }
     } else {
-      toast('new password and confirm new password do not match');
+      toast('New passwords do not match');
     }
   };
 
