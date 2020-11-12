@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 
 import axios from 'axios';
 
@@ -11,9 +11,11 @@ import {
 } from './LoginPage2.styles';
 import LOGO from '../../assets/img/logo.png';
 import { toast } from '../../util/ToastUtil';
+import UserContext from '../../context/userContext';
 
 export const LoginPage2 = () => {
   const history = useHistory();
+  const { setLoginState } = useContext(UserContext);
   const [email, setemail] = useState('');
   const [password, setpassword] = useState('');
   // const [success, setSuccess] = useState(true);
@@ -33,6 +35,7 @@ export const LoginPage2 = () => {
       if (loginResult.data.success) {
         setIsLoading(false);
         setError(false);
+        setLoginState(true);
         if (
           loginResult.data.role === 'admin' ||
           loginResult.data.role === 'sub-admin'
@@ -44,6 +47,7 @@ export const LoginPage2 = () => {
       }
     } catch (err) {
       setIsLoading(false);
+      setLoginState(false);
       setError(true);
       toast('Error While Logging');
     }
@@ -68,7 +72,7 @@ export const LoginPage2 = () => {
                     className='lg'
                     id='exampleInputEmail1'
                     aria-describedby='emailHelp'
-                    placeholder='Enter your email'
+                    placeholder='Enter Your Email'
                     onChange={(e) => {
                       setemail(e.target.value);
                     }}
@@ -90,7 +94,7 @@ export const LoginPage2 = () => {
                     }}
                     className=' lg'
                     id='exampleInputPassword1'
-                    placeholder='Enter your password'
+                    placeholder='Enter Your Password'
                     style={{
                       background: 'none',
 
@@ -109,8 +113,7 @@ export const LoginPage2 = () => {
                       margin: '10px 13% ',
                       background: '#3f47cc',
                       color: 'white',
-                    }}
-                  >
+                    }}>
                     {isLoading ? 'Logging you in ... ' : 'Sign In'}
                   </button>
                   <br />
@@ -137,26 +140,31 @@ export const LoginPage2 = () => {
               }}
             />
           </div>
-          <h2 className='Head'> Helping businesses around the world succeed</h2>
+          {/* <h2 className='Head'> Helping businesses around the world succeed</h2> */}
         </MainSlide>
         <Footer>
           <div className='footer-up'></div>
           <div className='footer-down'>
-            <Link className='Link' to='#!'>
+            <a
+              className='Link'
+              href='http://www.futureworldconsultancy.com/contact.html'
+              target='_blank'>
               Contact Us
-            </Link>
+            </a>
             {'   '}|
-            <Link className='Link' to='#!'>
-              Locate Us
-            </Link>
-            {'   '}|
-            <Link className='Link' to='#!'>
+            <a
+              className='Link'
+              href='http://www.futureworldconsultancy.com/'
+              target='_blank'>
               Terms of service
-            </Link>
+            </a>
             {'   '}|
-            <Link className='Link' to='#!'>
+            <a
+              className='Link'
+              href='http://www.futureworldconsultancy.com/'
+              target='_blank'>
               Privacy policy
-            </Link>
+            </a>
           </div>
         </Footer>
       </MainContainer>

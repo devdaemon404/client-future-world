@@ -166,7 +166,7 @@ const DocumentalInformation = ({ history }) => {
 
               <div className='form-group row p-2'>
                 <label className='col-sm-3 col-form-label'>
-                  <span style={{ color: 'red' }}>*</span> Issue date and place
+                  <span style={{ color: 'red' }}>*</span> Issue Date And Place
                 </label>
 
                 <div className='col-sm-4'>

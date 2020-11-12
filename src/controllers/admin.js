@@ -89,7 +89,7 @@ exports.changeUserActiveStatus = asyncHandler(async (req, res, next) => {
 
   await User.findByIdAndUpdate(
     userId,
-    { active },
+    { active, updatedAt: Date.now() },
     {
       new: true,
       runValidators: true,
@@ -213,7 +213,7 @@ exports.toggleFormComplete = asyncHandler(async (req, res, next) => {
 
   res.status(200).json({
     success: true,
-    message: `Employee form filling ${isFormComplete ? 'Locked' : 'UnLocked'}`,
+    message: `Employee form filling ${isFormComplete ? 'Locked' : 'Un-locked'}`,
   });
 });
 

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { Route, useHistory } from 'react-router-dom';
 import { AnimatedSwitch } from 'react-router-transition';
 import homepage from '../pages/homepage/homepage';
@@ -26,14 +26,22 @@ import AcademicInformation from '../pages/formpages/workformpages/AcademicInform
 import WorkInformation from '../pages/formpages/workformpages/WorkInformation';
 import axios from 'axios';
 import Payslippage from '../pages/secondpage/Payslippage';
+import LoadingGIF from '../assets/img/loading.gif';
+import PrivateRoute from './PrivateRoute';
+import UserContext from '../context/userContext';
 
 const Routes = () => {
   let history = useHistory();
+  const [isLoading, setIsLoading] = useState(false);
+  const { isAuthenticated, checkLogin } = useContext(UserContext);
   useEffect(() => {
-    const checkLogin = async () => {
+    const _checkLogin = async () => {
       try {
+        setIsLoading(true);
+        checkLogin();
         const res = await axios.get('/api/auth/validate-token').then();
         // console.log(res.data.role);
+
         if (res.data.role === 'admin') {
           history.push('/admin');
         } else if (res.data.role === 'sub-admin') {
@@ -43,85 +51,122 @@ const Routes = () => {
         }
       } catch (error) {
         history.push('/login');
+      } finally {
+        setIsLoading(false);
       }
     };
 
-    checkLogin();
+    _checkLogin();
     // eslint-disable-next-line
   }, []);
-  return (
+  return isLoading ? (
+    <div>
+      <div
+        style={{
+          position: 'fixed',
+          top: 0,
+          left: 0,
+          zIndex: 100,
+          backgroundColor: 'rgba(0,0,0,0.9)',
+          width: '100vw',
+          height: '100vh',
+        }}></div>
+      <div
+        style={{
+          display: 'block',
+          position: 'absolute',
+          zIndex: 1051,
+          top: '50%',
+          left: '50%',
+        }}>
+        <div className='col'>
+          <div>
+            <img alt='Page Loading' src={LoadingGIF}></img>
+          </div>
+          <span
+            className='row text-center'
+            style={{
+              marginLeft: '5px',
+              fontSize: '24px',
+              color: '#f8f8f8',
+            }}>
+            Loading ...
+          </span>
+        </div>
+      </div>
+    </div>
+  ) : (
     <AnimatedSwitch
       atEnter={{ opacity: 0 }}
       atLeave={{ opacity: 0 }}
       atActive={{ opacity: 1 }}
-      className='switch-wrapper'
-    >
-      <Route exact path='/' component={homepage} />
+      className='switch-wrapper'>
+      <PrivateRoute exact path='/' component={homepage} />
       <Route exact path='/login' component={LoginPage2} />
-      <Route exact path='/profile' component={ProfilePage} />
+      <PrivateRoute exact path='/profile' component={ProfilePage} />
 
-      <Route exact path='/payslip' component={Payslippage} />
-      <Route exact path='/personal' component={PersonalPage} />
-      <Route exact path='/information/address' component={Address} />
-      <Route
+      <PrivateRoute exact path='/payslip' component={Payslippage} />
+      <PrivateRoute exact path='/personal' component={PersonalPage} />
+      <PrivateRoute exact path='/information/address' component={Address} />
+      <PrivateRoute
         exact
         path='/information/basicInformation-1'
         component={BasicInformation1}
       />
-      <Route
+      <PrivateRoute
         exact
         path='/information/basicInformation-2'
         component={BasicInformation2}
       />
-      <Route
+      <PrivateRoute
         exact
         path='/information/designationInformation'
         component={DesignationInformation}
       />
-      <Route
+      <PrivateRoute
         exact
         path='/information/documentalInformation'
         component={DocumentalInformation}
       />
-      <Route
+      <PrivateRoute
         exact
         path='/information/languageInformation'
         component={LanguageInformation}
       />
 
-      <Route exact path='/work' component={SchoolAndWorkPage} />
-      <Route
+      <PrivateRoute exact path='/work' component={SchoolAndWorkPage} />
+      <PrivateRoute
         exact
         path='/information/academicInformation'
         component={AcademicInformation}
       />
-      <Route
+      <PrivateRoute
         exact
         path='/information/workInformation'
         component={WorkInformation}
       />
 
-      <Route exact path='/health' component={HealthPage} />
-      <Route
+      <PrivateRoute exact path='/health' component={HealthPage} />
+      <PrivateRoute
         exact
         path='/information/healthInformation'
         component={HealthInformation}
       />
-      <Route
+      <PrivateRoute
         exact
         path='/information/familyInformation'
         component={FamilyInformation}
       />
 
-      <Route exact path='/other' component={OtherPage} />
-      <Route
+      <PrivateRoute exact path='/other' component={OtherPage} />
+      <PrivateRoute
         exact
         path='/information/otherInformation'
         component={OtherInformation}
       />
-      <Route exact path='/information/uploads' component={Uploads} />
+      <PrivateRoute exact path='/information/uploads' component={Uploads} />
 
-      <Route exact path='/admin' component={AdminPage} />
+      <PrivateRoute exact path='/admin' component={AdminPage} />
     </AnimatedSwitch>
   );
 };

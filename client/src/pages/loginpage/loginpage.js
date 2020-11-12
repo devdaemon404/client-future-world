@@ -1,8 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState, useContext } from 'react';
 
 import axios from 'axios';
 import { Form } from 'react-bootstrap';
 import { Link, useHistory } from 'react-router-dom';
+import UserContext from '../../context/userContext';
 
 import {
   Center,
@@ -16,6 +17,7 @@ import LOGO from '../../assets/img/logo.png';
 
 const LoginPage = () => {
   const history = useHistory();
+  const { setLoginState } = useContext(UserContext);
   const [email, setemail] = useState('');
   const [password, setpassword] = useState('');
   // const [success, setSuccess] = useState(true);
@@ -36,6 +38,7 @@ const LoginPage = () => {
         console.log('done');
         setIsLoading(false);
         setError(false);
+        setLoginState(true);
         if (loginResult.data.role === 'admin') {
           history.push('/admin');
         } else {
@@ -44,6 +47,7 @@ const LoginPage = () => {
       }
     } catch (err) {
       setIsLoading(false);
+      setLoginState(false);
       setError(true);
     }
   };
@@ -81,8 +85,7 @@ const LoginPage = () => {
               <button
                 type='submit'
                 className='submit-button'
-                onClick={onFormSubmit}
-              >
+                onClick={onFormSubmit}>
                 {isLoading ? 'Logging you in ... ' : 'sign in'}
               </button>
             </div>
@@ -93,8 +96,7 @@ const LoginPage = () => {
                 width: 400,
                 textAlign: 'Center',
                 fontWeight: 500,
-              }}
-            >
+              }}>
               {error ? 'Invalid Credentials' : ''}
             </p>
           </form>

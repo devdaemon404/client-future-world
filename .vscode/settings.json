@@ -1,0 +1,13 @@
+{
+  "window.zoomLevel": 0,
+  "files.autoSave": "afterDelay",
+  "prettier.jsxSingleQuote": true,
+  "prettier.singleQuote": true,
+  "javascript.updateImportsOnFileMove.enabled": "always",
+  "diffEditor.ignoreTrimWhitespace": false,
+  "editor.tabSize": 2,
+  "terminal.integrated.rendererType": "dom",
+  "editor.formatOnSave": true,
+  "prettier.jsxBracketSameLine": true,
+  "editor.defaultFormatter": "esbenp.prettier-vscode"
+}

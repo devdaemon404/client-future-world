@@ -4,7 +4,7 @@ export const MainWrapper = styled.div`
   margin: 0px;
   boxsizing: 'border-box';
   padding: 0px;
-  backgroundcolor: '#f4f4f4';
+  background-color: '#f4f4f4';
 
   display: block;
   @media only screen and (max-width: 720px) {
@@ -12,11 +12,29 @@ export const MainWrapper = styled.div`
   }
 `;
 
+export const AdminHeader = styled.div`
+  width: 100%;
+  color: white;
+  box-shadow: 0 10px 20px rgba(0,0,0,0.13), 0 6px 6px rgba(0,0,0,0.13);
+  padding-top: 15px;
+  padding-bottom: 10px;
+
+  h2 {
+    margin-left: 350px;
+    font-weight: 600;
+    color: #11154C;
+    span {
+      font-size: 20px;
+      font-weight: 600;
+    }
+  }
+`;
+
 export const NotPhone = styled.div`
   margin: 0px;
   boxsizing: 'border-box';
   padding: 0px;
-  backgroundcolor: '#f4f4f4';
+  background-color: '#f4f4f4';
   height: 100vh;
   display: none;
   .NotPhone-Main {
@@ -61,10 +79,12 @@ export const SideBar = styled.div`
   position: fixed;
   left: 320px;
   width: 320px;
-  height: 100vh;
+  height: 100%;
   margin-left: -320px;
   overflow-y: auto;
   background: #11154c;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+
 
   .logoContainer {
     padding: 20px;
@@ -72,8 +92,8 @@ export const SideBar = styled.div`
     height: 118px;
     display: flex;
     justify-content: center;
-
-    background: white;
+    cursor: pointer;
+    background-color: white;
   }
   .SideBarCompMain span {
   }
@@ -83,8 +103,9 @@ export const SideBar = styled.div`
     height: 88px;
     color: white;
     text-align: center;
-    font-size: 26px;
-    font-weight: Bold;
+    font-size: 28px;
+    font-family: Montserrat;
+    font-weight: 700;
     border-bottom: 2px solid white;
   }
   .SideBarCompItem {
@@ -101,7 +122,8 @@ export const SideBar = styled.div`
   }
 
   .SideBarCompItem: hover{
-   background:#3F46CC
+   background: rgba(63,70,204, 0.5);
+   width: 100%
   } 
 
   .Logout {
@@ -127,7 +149,6 @@ export const AdminMain = styled.div`
   .Admin {
     padding-top: 70px;
     padding-left: 125px;
-    width: 464px;
     height: 49px;
     text-align: left;
     font: normal normal medium 48px/58px Montserrat;
@@ -136,15 +157,13 @@ export const AdminMain = styled.div`
     font-size: 48px;
   }
   .EmpInfo {
-    padding-top: 70px;
+    padding-top: 20px;
     padding-left: 125px;
-    width: 400px;
-    height: 58px;
     text-align: left;
-    font: normal normal medium 48px/58px Montserrat;
     letter-spacing: 0px;
-    color: #0d054b;
+    font-weight: 500;
     font-size: 28px;
+    color: #404040;
   }
 `;
 export const TableContainer = styled.div`
@@ -204,9 +223,9 @@ export const FormMain = styled.div`
   }
 
   .info-type {
-    border-bottom: 2px solid #3f46cc;
-    color: #3f46cc;
-    font-family: montserrat;
+    font-size: 20px;
+    border-bottom: 1px solid #11154C;
+    color: #11154C;
     text-transform: uppercase;
     width: 100%;
     margin: 40px 0px;
