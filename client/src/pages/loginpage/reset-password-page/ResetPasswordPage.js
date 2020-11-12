@@ -42,15 +42,15 @@ const ResetPasswordPage = () => {
         setIsLoading(true);
         await axios.post('/api/auth/update-password', body, config);
         toast('New Password Set, login again with new password');
-      } catch (error) {
-        toast(`ERROR ${error}`);
-      } finally {
         logout();
+      } catch (error) {
+        toast('Invalid Old Password');
+      } finally {
+        setIsLoading(false);
       }
     } else {
       toast('new password and confirm new password do not match');
     }
-    setIsLoading(false);
   };
 
   const handleSubmit = async (e) => {

@@ -64,7 +64,7 @@ export const LoginPage2 = () => {
       setIsLoading(false);
       setLoginState(false);
       setError(true);
-      toast('Error While Logging');
+      toast('Invalid Credentials');
     }
   };
 
@@ -146,11 +146,11 @@ export const LoginPage2 = () => {
                   </button>
                   <br />
                 </div>
-                <div className='form-group'>
+                {/* <div className='form-group'>
                   <p style={{ color: 'red', fontWeight: 700 }}>
                     {error ? 'Invalid Credentials' : ''}
                   </p>
-                </div>
+                </div> */}
               </form>
             </div>
           </MainLogin>

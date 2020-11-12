@@ -32,6 +32,9 @@ const PaySlipPage = () => {
   };
 
   useEffect(() => {
+    const body = document.documentElement;
+
+    body.scrollTop -= 10000;
     const fetchDates = async () => {
       const paySlipEnabledDates = [],
         timeSheetEnabledDates = [],
