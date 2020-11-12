@@ -43,10 +43,10 @@ function Hero(...props) {
                     return (
                       <div className='col'>
                         {Object.entries({
-                          Department: userData.department,
-                          Designation: userData.designation,
-                          'Joining Date': userData.joiningDate,
-                          FWID: userData.empNo,
+                          Department: userData?.department ?? 'N/A',
+                          Designation: userData?.designation ?? 'N/A',
+                          'Joining Date': userData?.joiningDate ?? 'N/A',
+                          FWID: userData?.empNo ?? 'N/A',
                         }).map(([key, value], index) => (
                           <div key={index}>
                             {' '}
