@@ -20,7 +20,7 @@ export const AdminHeader = styled.div`
   padding-bottom: 10px;
 
   h2 {
-    margin-left: 350px;
+    margin-left: 250px;
     font-weight: 600;
     color: #11154c;
     span {
@@ -144,7 +144,7 @@ export const SideBar = styled.div`
 export const AdminMain = styled.div`
   height: 100%;
   width: inherit;
-  margin-left: 320px;
+  margin-left: 200px;
 
   .Admin {
     padding-top: 70px;
