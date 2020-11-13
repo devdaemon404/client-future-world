@@ -1,5 +1,6 @@
 const crypto = require('crypto');
 const bcrypt = require('bcryptjs');
+const ejs = require('ejs')
 
 const ErrorResponse = require('../utils/errorResponse');
 const asyncHandler = require('../middleware/async');
@@ -7,6 +8,8 @@ const sendEmail = require('../utils/sendMail');
 
 const User = require('../models/User');
 const Employee = require('../models/Employee');
+
+const { renderCredentialsTemplate } = require('../views/templates')
 
 // @desc      Register user
 // @route     POST /api/auth/register
@@ -37,12 +40,12 @@ exports.register = asyncHandler(async (req, res, next) => {
     role,
   });
 
-  const message = `Check the credentials : email: ${email}, password: ${password}`;
-
+  // const message = `Greeting from FWC\nPlease find your credentials to login to your new Employee Dashboard: email: ${email}, password: ${password}`;
+  console.log("DOMAIN", process.env.DOMAIN)
   await sendEmail({
     email: user.email,
     subject: 'Credentials',
-    message,
+    html: renderCredentialsTemplate({ email, password, domain: process.env.DOMAIN }),
   });
   user = user.toObject();
 

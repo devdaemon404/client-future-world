@@ -238,6 +238,7 @@ exports.getFinancialDocs = asyncHandler(async (req, res, next) => {
 
 const AWS = require('aws-sdk');
 const { awsS3AccessKeyId, awsS3SecretAccessKey } = require('../../config/keys');
+const { renderResetPasswordTemplate } = require('../views/templates');
 //Initialize S3 config
 const s3 = new AWS.S3({
   accessKeyId: awsS3AccessKeyId,
@@ -310,7 +311,7 @@ exports.updateUserPassword = asyncHandler(async (req, res, next) => {
   await sendEmail({
     email: user.email,
     subject: 'Password Reset',
-    message,
+    html: renderResetPasswordTemplate({ email: user.email, password, domain: process.env.DOMAIN }),
   });
 
   res.status(200).json({
