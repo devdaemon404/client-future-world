@@ -34,6 +34,7 @@ const employee = require('./routes/employee');
 const fileUpload = require('./routes/fileUpload');
 const admin = require('./routes/admin');
 const ejs = require('./routes/ejs');
+const jobPosting = require('./routes/jobPosting');
 
 //Initializing express app object
 const app = express();
@@ -70,34 +71,6 @@ app.use(xss());
 //Trust reverse proxy for heroku, nginx
 app.set('trust proxy', 1);
 
-/**
- * Rate limit is commented because of aws ebs
- */
-// if (
-//   (process.env.NODE_ENV === 'production' ||
-//     process.env.NODE_ENV === 'production_aws_ebs') &&
-//   process.env.RATE_LIMIT === 'true'
-// ) {
-//   // Rate limiting
-//   const apiLimiter = rateLimit({
-//     windowMs: 15 * 60 * 1000, // 15 minutes
-//     max: 100,
-//     message: 'Too many api request, please try after 15 minutes',
-//   });
-
-//   const createOTPLimiter = rateLimit({
-//     windowMs: 60 * 60 * 1000, // 1 hour window
-//     max: 10, // start blocking after 10 requests
-//     message: 'Too many auth request, please try after an hour',
-//   });
-
-//   // only apply to requests that begin with /api/
-//   app.use('/api/', apiLimiter);
-
-//   // only apply to otp route
-//   app.use('/api/auth/verify-phone', createOTPLimiter);
-// }
-
 // Prevent http param pollution
 app.use(hpp());
 
@@ -113,6 +86,7 @@ app.use('/api/employee', employee);
 app.use('/api/file', fileUpload);
 app.use('/api/admin', admin);
 app.use('/api/ejs', ejs);
+app.use('/api/job-posting', jobPosting);
 
 //Serve react client app to production
 if (
