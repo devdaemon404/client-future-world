@@ -20,6 +20,9 @@ import InpForm from './InpForm';
 import { toast } from '../../util/ToastUtil';
 import { OPLoader } from '../../util/LoaderUtil';
 import { PopUp } from '../../util/DeleteConfirmUtil';
+import { TabContainer } from 'react-bootstrap';
+import BulkUpload from './BulkUpload';
+import AddListing from './AddListing';
 
 const AdminPage = () => {
   let retrievedId = '';
@@ -204,8 +207,29 @@ const AdminPage = () => {
         }
         onClick={(e) => setViewPanel('Form')}>
         Add an Employee
+      </div>{' '}
+      <div
+        className='SideBarCompItem'
+        id='AddListing'
+        style={
+          ViewPanel === 'AddListing'
+            ? { backgroundColor: '#3F46CC', width: '100%' }
+            : {}
+        }
+        onClick={(e) => setViewPanel('AddListing')}>
+        Add/View a Listing
       </div>
-
+      <div
+        className='SideBarCompItem'
+        id='Bulk Upload'
+        style={
+          ViewPanel === 'BulkUpload'
+            ? { backgroundColor: '#3F46CC', width: '100%' }
+            : {}
+        }
+        onClick={(e) => setViewPanel('BulkUpload')}>
+        Bulk Upload
+      </div>
       <div className='Logout' onClick={logoutHandler}>
         <span>LOGOUT</span>
       </div>
@@ -271,6 +295,8 @@ const AdminPage = () => {
             {ViewPanel === 'Table' && <span>Employee Information</span>}
             {ViewPanel === 'Form' && <span>New Employee Creation</span>}
             {ViewPanel === 'Profile' && <span>Employee Profile</span>}
+            {ViewPanel === 'AddListing' && <span>Add a Job Listing</span>}
+            {ViewPanel === 'BulkUpload' && <span> Bulk Upload</span>}
           </h3>
         </AdminHeader>
         <AdminMain>
@@ -286,6 +312,18 @@ const AdminPage = () => {
             }}>
             {ViewPanel === 'Table' && OpTableChild}
           </TableContainer>
+
+          {ViewPanel === 'BulkUpload' && (
+            <TableContainer>
+              <BulkUpload />
+            </TableContainer>
+          )}
+
+          {ViewPanel === 'AddListing' && (
+            <TableContainer>
+              <AddListing />
+            </TableContainer>
+          )}
         </AdminMain>
       </MainWrapper>
       {NoPhoneChild}
