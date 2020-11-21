@@ -43,6 +43,10 @@ const AdminPage = () => {
     const users = await axios.get('/api/admin/users');
     setIsLoading(false);
     users.data.data.forEach((employee, i) => {
+      console.log(
+        employee.updatedAt,
+        moment(employee.updatedAt).format('DD/MMM/YYYY')
+      );
       formattedData.push({
         role: employee.role,
         name: employee.name,
@@ -208,7 +212,7 @@ const AdminPage = () => {
         onClick={(e) => setViewPanel('Form')}>
         Add an Employee
       </div>{' '}
-      <div
+      {/* <div
         className='SideBarCompItem'
         id='AddListing'
         style={
@@ -232,7 +236,7 @@ const AdminPage = () => {
       </div>
       <div className='Logout' onClick={logoutHandler}>
         <span>LOGOUT</span>
-      </div>
+      </div> */}
     </SideBar>
   );
 
