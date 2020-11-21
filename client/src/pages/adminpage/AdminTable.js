@@ -68,10 +68,11 @@ function OPTable({ data, columns, getCellProps, onClickHandler, adminId }) {
     <div
       style={{
         overflow: 'auto',
-        maxHeight: '85vh',
+        maxHeight: '80vh',
       }}
       className='mx-auto mt-3 text-center'>
       <Table
+        className='table'
         {...getTableProps()}
         striped
         bordered
@@ -81,7 +82,7 @@ function OPTable({ data, columns, getCellProps, onClickHandler, adminId }) {
             // tableLayout: 'fixed',
           }
         }>
-        <thead style={{ height: 100 }}>
+        <thead className='tableHead'>
           {headerGroups.map((headerGroup) => (
             <tr {...headerGroup.getHeaderGroupProps()}>
               {headerGroup.headers.map((column, i) => (
@@ -135,11 +136,11 @@ function OPTable({ data, columns, getCellProps, onClickHandler, adminId }) {
                                 {' '}
                                 Choose an action
                               </Option>
-                              <Option value='0'>View Profile </Option>
-                              <Option value='1'>Relieve Employee</Option>
-                              <Option value='2'>Change to Active</Option>
-                              <Option value='3'>Change to Inactive</Option>
-                              <Option value='4'>Delete Employee</Option>
+                              <Option value='0'>View </Option>
+                              <Option value='1'>Relieve </Option>
+                              <Option value='2'> Active</Option>
+                              <Option value='3'> Inactive</Option>
+                              <Option value='4'>Delete </Option>
                             </Select>
                           </>
                         )}

@@ -1,7 +1,7 @@
 const crypto = require('crypto');
 const bcrypt = require('bcryptjs');
-const ejs = require('ejs')
-
+const ejs = require('ejs');
+const jwt = require('jsonwebtoken');
 const ErrorResponse = require('../utils/errorResponse');
 const asyncHandler = require('../middleware/async');
 const sendEmail = require('../utils/sendMail');
@@ -9,7 +9,7 @@ const sendEmail = require('../utils/sendMail');
 const User = require('../models/User');
 const Employee = require('../models/Employee');
 
-const { renderCredentialsTemplate } = require('../views/templates')
+const { renderCredentialsTemplate } = require('../views/templates');
 
 // @desc      Register user
 // @route     POST /api/auth/register
@@ -41,11 +41,15 @@ exports.register = asyncHandler(async (req, res, next) => {
   });
 
   // const message = `Greeting from FWC\nPlease find your credentials to login to your new Employee Dashboard: email: ${email}, password: ${password}`;
-  console.log("DOMAIN", process.env.DOMAIN)
+  console.log('DOMAIN', process.env.DOMAIN);
   await sendEmail({
     email: user.email,
     subject: 'Credentials',
-    html: renderCredentialsTemplate({ email, password, domain: process.env.DOMAIN }),
+    html: renderCredentialsTemplate({
+      email,
+      password,
+      domain: process.env.DOMAIN,
+    }),
   });
   user = user.toObject();
 
@@ -69,7 +73,12 @@ exports.register = asyncHandler(async (req, res, next) => {
 // @route     POST /api/auth/login
 // @access    Public
 exports.login = asyncHandler(async (req, res, next) => {
-  const { email, password } = req.body;
+  const email = req.body.email;
+  const encryptedPassword = req.body.password;
+  const password = jwt.verify(
+    encryptedPassword,
+    process.env.REACT_APP_PASSWORD_SECRET
+  );
 
   // Validate emil & password
   if (!email || !password) {

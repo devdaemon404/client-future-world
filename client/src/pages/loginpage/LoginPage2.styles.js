@@ -1,8 +1,13 @@
 import styled from 'styled-components';
+
+export const HOLDER = styled.div`
+  overflow-y: hidden;
+  height: 100vh;
+`;
 export const MainLogin = styled.div`
   width: 480px;
   z-index: 80;
-  height: 95vh;
+  height: 94vh;
   .loginform {
     display: flex;
     flex-flow: column;
@@ -38,7 +43,7 @@ export const MainLogin = styled.div`
 
   .btn {
     width: 190px;
-    margin: 5px 13%;
+    margin: auto;
     background: #3f47cc;
     color: white;
   }
@@ -55,10 +60,9 @@ export const MainLogin = styled.div`
     }
     .btn {
       width: 150px;
-      height: 20px;
-      padding: 0px;
+      padding: auto;
       font-size: 14px;
-      margin: 0;
+      margin: auto;
       background: #3f47cc;
       color: white;
     }
@@ -167,16 +171,18 @@ export const SubHeading = styled.p`
   font-weight: 400;
 `;
 export const Footer = styled.div`
-  z-index: 120;
+  z-index: 12;
+  font-size: 20px;
+
   width: 100%;
   background: white;
-  height: 3vh;
+  height: 7vh;
   .footer-up {
-    height: 10px;
+    height: 1vh;
     width: inherit;
   }
   .footer-down {
-    height: inherit;
+    height: 4vh;
     background: #3f47cc;
     color: white;
     display: flex;
@@ -185,9 +191,12 @@ export const Footer = styled.div`
     color: white;
     text-decoration: none;
     margin: 0 10px;
-    font-size: 14px;
   }
   .Link:hover {
     color: white;
+  }
+
+  @media only screen and (max-width: 1600px) {
+    font-size: 14px;
   }
 `;

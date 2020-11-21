@@ -28,7 +28,7 @@ const AdminPage = () => {
   let formattedData = [];
   const [data, setData] = useState([]);
   const [selectedEmp, setselectedEmp] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
   const [ViewPanel, setViewPanel] = useState('Table');
   const [selectUser, setSelectUser] = useState('');
   const history = useHistory();
@@ -36,8 +36,9 @@ const AdminPage = () => {
   const [adminId, setAdminId] = useState([123456]);
   const [confirm, setConfirm] = useState(false);
   const getUsers = async () => {
+    setIsLoading(true);
     const users = await axios.get('/api/admin/users');
-
+    setIsLoading(false);
     users.data.data.forEach((employee, i) => {
       formattedData.push({
         role: employee.role,
@@ -179,7 +180,7 @@ const AdminPage = () => {
         onClick={() => {
           setViewPanel('Table');
         }}>
-        <img alt='logo' src={LOGO}></img>
+        <img alt='logo' className='logoimg' src={LOGO}></img>
       </div>
       <div className='SideBarCompMain'>Admin</div>
       <div
@@ -264,13 +265,13 @@ const AdminPage = () => {
         {SidebarChild}
         <OPLoader isLoading={isLoading} />
         <AdminHeader>
-          <h2>
+          <h3>
             Future World Consultancy
             <br />
             {ViewPanel === 'Table' && <span>Employee Information</span>}
             {ViewPanel === 'Form' && <span>New Employee Creation</span>}
             {ViewPanel === 'Profile' && <span>Employee Profile</span>}
-          </h2>
+          </h3>
         </AdminHeader>
         <AdminMain>
           {ViewPanel === 'Profile' && (

@@ -34,7 +34,7 @@ export const SidebarDetails = styled.div`
     padding: 0px 20px;
   }
   img {
-    font-size: 24px;
+    font-size: 20px;
   }
   .sidebar-item {
     padding: 0px 10px;
@@ -45,15 +45,15 @@ export const NameSection = styled.div`
   margin-top: 0px;
   h2 {
     font-weight: 600;
-    font-size: 33px;
+    font-size: 29px;
   }
   h3 {
-    font-size: 16px;
+    font-size: 12px;
     font-weight: 500;
   }
   #Address {
     width: 40%;
-    font-size:22px
+    font-size:18px
     word-wrap: break-word;
     // background: blue;
   }
@@ -63,10 +63,10 @@ export const NameSection = styled.div`
   }
   @media only screen and (max-width: 1500px) {
     h2 {
-      font-size: 36px;
+      font-size: 32px;
     }
     h3 {
-      font-size: 22px;
+      font-size: 18px;
     }
     .Head {
     }
@@ -77,20 +77,20 @@ export const NavSection = styled.div`
   span {
     padding: 0px 30px;
     margin-left: 30px;
-    font-size: 20px;
+    font-size: 16px;
     font-weight: 500;
     cursor: pointer;
   }
   @media only screen and (max-width: 1500px) {
     span {
-      font-size: 20px;
+      font-size: 16px;
       margin-left: 20px;
       padding: 10px 20px;
     }
   }
   @media only screen and (max-width: 1500px) {
     span {
-      font-size: 16px;
+      font-size: 12px;
       margin-left: 10px;
       padding: 10px 10px;
     }
@@ -101,18 +101,18 @@ export const BodySection = styled.div`
 `;
 export const FormMain = styled.div`
   span {
-    font-size: 18px;
+    font-size: 14px;
   }
   .formsInp {
     width: 400px;
   }
   .form-label {
-    font-size: 15px;
+    font-size: 11px;
 
     padding-left: 20px;
   }
   .info-type {
-    font-size: 20px;
+    font-size: 16px;
     border-bottom: 1px solid #11154c;
     color: #11154c;
     font-family: montserrat;
@@ -133,7 +133,7 @@ export const FormMain = styled.div`
       width: 300px;
     }
     .info-type {
-      font-size: 24px;
+      font-size: 22px;
     }
   }
 `;
@@ -144,7 +144,7 @@ export const DocumentUpload = styled.div`
 export const UploadContainer = styled.div`
   color: #11154c;
   .info-type {
-    font-size: 20px;
+    font-size: 16px;
     border-bottom: 1px solid #11154c;
     color: #11154c;
     font-family: montserrat;
@@ -173,11 +173,11 @@ export const UploadContainer = styled.div`
   }
   .select input {
     width: 250px;
-    font-size: 20px;
+    font-size: 16px;
     height: 26px;
   }
   .select p {
-    font-size: 20px;
+    font-size: 16px;
   }
   #btn1,
   #btn2 {

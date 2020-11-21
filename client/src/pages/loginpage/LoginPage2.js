@@ -1,10 +1,11 @@
-import React, { useState, useContext } from 'react';
-
+import React, { useState, useContext, useEffect } from 'react';
+import jwt from 'jsonwebtoken';
 import axios from 'axios';
 import { Modal } from 'antd';
-
+import bcrypt from 'bcryptjs';
 import { Link, useHistory } from 'react-router-dom';
 import {
+  HOLDER,
   MainLogin,
   MainSlide,
   MainContainer,
@@ -41,9 +42,12 @@ export const LoginPage2 = () => {
     setIsLoading(true);
     e.preventDefault();
     setError(false);
+
     try {
+      let pass = jwt.sign(password, process.env.REACT_APP_PASSWORD_SECRET);
+
       let loginResult = await axios.post('/api/auth/login', {
-        password,
+        password: pass,
         email,
       });
 
@@ -69,12 +73,17 @@ export const LoginPage2 = () => {
   };
 
   return (
-    <React.Fragment>
+    <HOLDER>
       <MainContainer>
         <div>
           <MainLogin>
             <div className='Logo'>
-              <img src={LOGO} alt='iem2' style={{ margin: '20px 40px' }} />
+              <img
+                src={LOGO}
+                alt='iem2'
+                height='75vh'
+                style={{ margin: '20px 40px' }}
+              />
             </div>
             <div className='loginForm'>
               <div style={{ height: 150 }}></div>
@@ -120,7 +129,7 @@ export const LoginPage2 = () => {
                   />
                 </div>
 
-                <Link class='form-text form-group' onClick={showModal}>
+                <Link to='#!' class='form-text form-group' onClick={showModal}>
                   Forgot Password?
                 </Link>
                 <Modal
@@ -181,7 +190,7 @@ export const LoginPage2 = () => {
           </a>
         </div>
       </Footer>
-    </React.Fragment>
+    </HOLDER>
   );
 };
 export default LoginPage2;

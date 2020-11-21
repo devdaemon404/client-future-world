@@ -13,13 +13,16 @@ export const MainWrapper = styled.div`
 `;
 
 export const AdminHeader = styled.div`
+  position: fixed;
   width: 100%;
-  color: white;
+  z-index: 900;
+  height: 90px;
+  background-color: white;
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.13), 0 6px 6px rgba(0, 0, 0, 0.13);
   padding-top: 15px;
   padding-bottom: 10px;
 
-  h2 {
+  h3 {
     margin-left: 250px;
     font-weight: 600;
     color: #11154c;
@@ -27,6 +30,33 @@ export const AdminHeader = styled.div`
       font-size: 20px;
       font-weight: 600;
     }
+  }
+`;
+
+export const AdminMain = styled.div`
+  height: 100vh;
+  padding-top: 8%;
+  width: inherit;
+  margin-left: 200px;
+
+  .Admin {
+    padding-top: 70px;
+    padding-left: 125px;
+    height: 49px;
+    text-align: left;
+    font: normal normal medium 48px/58px Montserrat;
+    letter-spacing: 0px;
+    color: #0d054b;
+    font-size: 48px;
+  }
+  .EmpInfo {
+    padding-top: 20px;
+    padding-left: 125px;
+    text-align: left;
+    letter-spacing: 0px;
+    font-weight: 500;
+    font-size: 28px;
+    color: #404040;
   }
 `;
 
@@ -89,11 +119,14 @@ export const SideBar = styled.div`
   .logoContainer {
     padding: 20px;
     width: 220px;
-    height: 118px;
+    height: 90px;
     display: flex;
     justify-content: center;
     cursor: pointer;
     background-color: white;
+  }
+   img {
+      height:60px;
   }
   .SideBarCompMain span {
   }
@@ -141,33 +174,9 @@ export const SideBar = styled.div`
     font-weight:700;
   }
 `;
-export const AdminMain = styled.div`
-  height: 100%;
-  width: inherit;
-  margin-left: 200px;
 
-  .Admin {
-    padding-top: 70px;
-    padding-left: 125px;
-    height: 49px;
-    text-align: left;
-    font: normal normal medium 48px/58px Montserrat;
-    letter-spacing: 0px;
-    color: #0d054b;
-    font-size: 48px;
-  }
-  .EmpInfo {
-    padding-top: 20px;
-    padding-left: 125px;
-    text-align: left;
-    letter-spacing: 0px;
-    font-weight: 500;
-    font-size: 28px;
-    color: #404040;
-  }
-`;
 export const TableContainer = styled.div`
-  margin-top: 50px;
+  margin-top: 0px;
   margin-left: 20px;
 
   text-align: center;
