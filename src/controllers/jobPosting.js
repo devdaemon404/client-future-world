@@ -166,7 +166,7 @@ exports.createJobRespond = asyncHandler(async (req, res, next) => {
   }
 
   let user = await User.findById(jobPosting.user);
-  let html = `You are receiving this email because the employee ${req.user.name} has uploading his resume`;
+  let html = `<bold>You are receiving this email because the employee ${req.user.name} has uploading his resume</bold>`;
 
   await sendEmail({
     email: user.email,
