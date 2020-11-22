@@ -184,6 +184,15 @@ export const SideBar = styled.div`
     padding: 20px;
     cursor: pointer;
   }
+  .logout-btn{
+    background: #3f46cc;
+color:white;
+border:none;
+width:100%;
+border-radius:8px;
+
+
+  }
   span {
     padding 10px 15px;
     border: 1px solid white;

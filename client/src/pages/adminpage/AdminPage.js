@@ -20,7 +20,7 @@ import InpForm from './InpForm';
 import { toast } from '../../util/ToastUtil';
 import { OPLoader } from '../../util/LoaderUtil';
 import { PopUp } from '../../util/DeleteConfirmUtil';
-import { TabContainer } from 'react-bootstrap';
+import { Button, TabContainer } from 'react-bootstrap';
 import BulkUpload from './BulkUpload';
 import AddListing from './AddListing';
 
@@ -239,8 +239,13 @@ const AdminPage = () => {
         onClick={(e) => setViewPanel('BulkUpload')}>
         Bulk Upload
       </div> */}
-      <div className='Logout' onClick={logoutHandler}>
+      {/* <div className='Logout' onClick={logoutHandler}>
         <span>LOGOUT</span>
+      </div> */}
+      <div className='Logout'>
+        <Button size='sm' className='logout-btn' onClick={logoutHandler}>
+          Logout
+        </Button>
       </div>
     </SideBar>
   );
