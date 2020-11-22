@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useContext } from 'react';
-import { Route, useHistory } from 'react-router-dom';
+import { Route, useHistory, useLocation } from 'react-router-dom';
 import { AnimatedSwitch } from 'react-router-transition';
 import homepage from '../pages/homepage/homepage';
 import LoginPage2 from '../pages/loginpage/LoginPage2';
@@ -30,9 +30,13 @@ import LoadingGIF from '../assets/img/loading.gif';
 import PrivateRoute from './PrivateRoute';
 import UserContext from '../context/userContext';
 import ResetPasswordPage from '../pages/loginpage/reset-password-page/ResetPasswordPage';
+import { OPLoader } from '../util/LoaderUtil';
+
+const adminRoutes = ['/admin', '/profile'];
 
 const Routes = () => {
-  let history = useHistory();
+  const history = useHistory();
+  const location = useLocation();
   const [isLoading, setIsLoading] = useState(false);
   const { checkLogin, setLoginState } = useContext(UserContext);
   useEffect(() => {
@@ -44,12 +48,21 @@ const Routes = () => {
         // console.log(res.data.role);
 
         setLoginState(true);
+        console.log(location.pathname);
         if (res.data.role === 'admin') {
-          history.push('/admin');
+          if (location.pathname === '/') history.push('/admin');
+          if (adminRoutes.includes(location.pathname))
+            history.push(location.pathname);
+          else history.push('/404');
         } else if (res.data.role === 'sub-admin') {
-          history.push('/admin');
+          if (location.pathname === '/') history.push('/admin');
+          if (adminRoutes.includes(location.pathname))
+            history.push(location.pathname);
+          else history.push('/404');
         } else {
-          history.push('/');
+          if (!adminRoutes.includes(location.pathname))
+            history.push(location.pathname);
+          else history.push('/404');
         }
       } catch (error) {
         history.push('/login');
@@ -176,7 +189,75 @@ const Routes = () => {
       <PrivateRoute exact path='/information/uploads' component={Uploads} />
 
       <PrivateRoute exact path='/admin' component={AdminPage} />
+      <Route path='' component={NotFound} />
     </AnimatedSwitch>
+  );
+};
+const NotFound = ({ history }) => {
+  const [isLoading, setIsLoading] = useState(false);
+  const [shouldLogin, setShouldLogin] = useState(false);
+  const [isAdmin, setIsAdmin] = useState(false);
+  useEffect(() => {
+    const _checkLogin = async () => {
+      try {
+        setIsLoading(true);
+        const res = await axios.get('/api/auth/validate-token').then();
+        // console.log(res.data.role);
+
+        if (res.data.role === 'admin') {
+          setIsAdmin(true);
+        } else if (res.data.role === 'sub-admin') {
+          setIsAdmin(true);
+        } else {
+          setIsAdmin(false);
+        }
+      } catch (error) {
+        setShouldLogin(true);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    _checkLogin();
+    // eslint-disable-next-line
+  }, []);
+  return (
+    <div>
+      <OPLoader isLoading={isLoading} />
+      <section class='page_404'>
+        <div class='container'>
+          <div class='row'>
+            <div class='col-sm-12 '>
+              <div class='col-sm-10 col-sm-offset-1  text-center'>
+                <div class='four_zero_four_bg'>
+                  <h1 class='text-center '>404</h1>
+                </div>
+
+                <div class='contant_box_404'>
+                  <h3 class='h2'>Look like you're lost</h3>
+
+                  <p>The page you are looking for not avaible!</p>
+
+                  <div
+                    style={{
+                      cursor: 'pointer',
+                    }}
+                    href='/'
+                    class='link_404'
+                    onClick={() => {
+                      if (shouldLogin) history.push('/login');
+                      if (isAdmin) history.push('/admin');
+                      else history.push('/');
+                    }}>
+                    Go to Home
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
   );
 };
 
