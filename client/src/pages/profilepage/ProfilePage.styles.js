@@ -68,7 +68,7 @@ export const NameSection = styled.div`
   @media only screen and (max-width: 1500px) {
     .Head {
     h2 {
-      font-size: 14px;
+      font-size: 18px;
     }
     h3 {
       font-size: 18px;
@@ -135,6 +135,7 @@ export const FormMain = styled.div`
     width: 500px;
     .formsInp {
       width: 300px;
+      font-size: 15px;
     }
     .info-type {
       font-size: 22px;

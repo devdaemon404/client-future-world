@@ -200,7 +200,7 @@ export const InpForm = (props) => {
             type={field.type}
             as={field.as}
             name={field.name}
-            size={window.innerWidth < 1500 ? 'lg' : 'sm'}
+            size={'sm'}
             className='formsInp'
             defaultValue={field.defaultValue}
             onChange={onChangeHandler}

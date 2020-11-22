@@ -20,7 +20,7 @@ import InpForm from './InpForm';
 import { toast } from '../../util/ToastUtil';
 import { OPLoader } from '../../util/LoaderUtil';
 import { PopUp } from '../../util/DeleteConfirmUtil';
-import { Button, TabContainer } from 'react-bootstrap';
+import { Button, TabContainer, Pagination } from 'react-bootstrap';
 import BulkUpload from './BulkUpload';
 import AddListing from './AddListing';
 
@@ -30,6 +30,10 @@ const AdminPage = () => {
   let retrievedEmployee;
   let formattedData = [];
   const [data, setData] = useState([]);
+  const [paginated, setPaginated] = useState([[]]);
+  const [totalData, setTotalData] = useState([[]]);
+  const [selectedPage, setSelectedPage] = useState(0);
+
   const [selectedEmp, setselectedEmp] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [ViewPanel, setViewPanel] = useState('Table');
@@ -45,10 +49,6 @@ const AdminPage = () => {
     const users = await axios.get('/api/admin/users');
     setIsLoading(false);
     users.data.data.forEach((employee, i) => {
-      console.log(
-        employee.updatedAt,
-        moment(employee.updatedAt).format('DD/MMM/YYYY')
-      );
       formattedData.push({
         role: employee.role,
         name: employee.name,
@@ -70,6 +70,7 @@ const AdminPage = () => {
       });
     });
     setData(formattedData);
+    setTotalData(formattedData);
     let a = [];
     for (let i = 0; i < formattedData.length; i++) {
       if (formattedData[i].role === 'admin') {
@@ -77,7 +78,54 @@ const AdminPage = () => {
       }
       setAdminId([...a] || []);
     }
+
+    let pagedData = [];
+    let temp = [];
+    let iter = 0;
+    let divideValue = formattedData.length;
+    let rowPerPage = 10;
+    if (formattedData.length > 20) rowPerPage = 8;
+    if (formattedData.length > 50) rowPerPage = 10;
+    if (formattedData.length > 100) rowPerPage = 20;
+    if (formattedData.length > 200) rowPerPage = 40;
+    if (formattedData.length > 1000) rowPerPage = 100;
+    if (formattedData.length > 2000) rowPerPage = 150;
+    if (formattedData.length > 2500) rowPerPage = 250;
+
+    for (let i = 0; i <= divideValue; i++) {
+      temp.push(formattedData[i]);
+      if (i !== 0 && i % rowPerPage === 0) {
+        pagedData[iter] = temp;
+        iter = iter + 1;
+        temp = [];
+      }
+    }
+    let c = pagedData.length * rowPerPage;
+    for (let i = c; i < divideValue; i++) {
+      if (formattedData[i] === {}) {
+        temp.push(formattedData[i]);
+      }
+
+      if (i === divideValue - 1) {
+        pagedData[iter] = temp;
+        temp = [];
+      }
+    }
+
+    pagedData[pagedData.length - 1].pop();
+    if (divideValue % rowPerPage === 1) {
+      pagedData.pop();
+    }
+    console.log(divideValue % rowPerPage);
+    console.log(pagedData);
+
+    setPaginated(pagedData);
   };
+
+  useEffect(() => {
+    console.log(totalData.length);
+    setData(paginated[selectedPage]);
+  }, [paginated, selectedPage]);
 
   useEffect(() => {
     getUsers();
@@ -141,6 +189,20 @@ const AdminPage = () => {
     }
   };
 
+  // paginated page selector
+
+  let PageSelector = paginated.map((o, i) => (
+    <div key={i}>
+      <Pagination.Item
+        size='sm'
+        onClick={(e) => {
+          setSelectedPage(i);
+        }}>
+        {i + 1}
+      </Pagination.Item>
+    </div>
+  ));
+
   const onClickHandler = async (optionIndex, userId) => {
     retrievedId = userId;
 
@@ -188,8 +250,7 @@ const AdminPage = () => {
         className='logoContainer'
         onClick={() => {
           setViewPanel('Table');
-        }}
-      >
+        }}>
         <img alt='logo' className='logoimg' src={LOGO}></img>
       </div>
       <div className='SideBarCompMain'>Admin</div>
@@ -201,8 +262,7 @@ const AdminPage = () => {
             : {}
         }
         onClick={(e) => setViewPanel('Table')}
-        id='Table'
-      >
+        id='Table'>
         Employees
       </div>
       <div
@@ -213,8 +273,7 @@ const AdminPage = () => {
             ? { backgroundColor: '#3F46CC', width: '100%' }
             : {}
         }
-        onClick={(e) => setViewPanel('Form')}
-      >
+        onClick={(e) => setViewPanel('Form')}>
         Add an Employee
       </div>{' '}
       {/* <div
@@ -251,13 +310,15 @@ const AdminPage = () => {
   );
 
   let OpTableChild = (
-    <OPTable
-      data={data}
-      columns={columns}
-      onClickHandler={onClickHandler}
-      getCellProps={() => ({})}
-      adminId={adminId}
-    />
+    <>
+      <OPTable
+        data={data}
+        columns={columns}
+        onClickHandler={onClickHandler}
+        getCellProps={() => ({})}
+        adminId={adminId}
+      />
+    </>
   );
 
   let AddEmployeeChild = (
@@ -319,12 +380,18 @@ const AdminPage = () => {
           )}
 
           {ViewPanel === 'Form' && AddEmployeeChild}
-
+          {ViewPanel === 'Table' && (
+            <TableContainer
+              style={{ padding: 0, marginTop: 0, marginBottom: 0 }}>
+              <div style={{ width: '100%' }}>
+                <Pagination> {PageSelector}</Pagination>
+              </div>
+            </TableContainer>
+          )}
           <TableContainer
             style={{
               scrollDirection: 'horizontal',
-            }}
-          >
+            }}>
             {ViewPanel === 'Table' && OpTableChild}
           </TableContainer>
 

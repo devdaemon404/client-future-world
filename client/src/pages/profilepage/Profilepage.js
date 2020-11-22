@@ -98,7 +98,7 @@ const Profilepage = ({ retrievedId }) => {
     } catch (e) {
       console.log(e);
       toast('Error fetching document count');
-      if (e.response.status === 401) logout();
+      if (e.response?.status === 401) logout();
     } finally {
       setLoading(false);
     }
@@ -338,7 +338,7 @@ const Profilepage = ({ retrievedId }) => {
                   <ButtonGroup aria-label='Basic example'>
                     <Button
                       className='head-button'
-                      variant='secondary'
+                      variant='primary'
                       size='small'
                       shape='round'
                       onClick={async () => {
@@ -366,14 +366,14 @@ const Profilepage = ({ retrievedId }) => {
                     <Button
                       className='head-button'
                       size='small'
-                      variant='secondary'
+                      variant='primary'
                       shape='round'
                       onClick={downloadFile}>
                       ⤓ Download Profile
                     </Button>{' '}
                     <Button
                       className='head-button'
-                      variant='secondary'
+                      variant='primary'
                       size='small'
                       shape='round'
                       onClick={toggleFormComplete}>
