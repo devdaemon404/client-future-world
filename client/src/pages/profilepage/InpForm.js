@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { FormMain } from './ProfilePage.styles';
-import { Form, Row, Col } from 'react-bootstrap';
+import { Form, Row, Col, Button } from 'react-bootstrap';
 import axios from 'axios';
 import { toast } from '../../util/ToastUtil';
 import ComplexComponent from '../../components/form/ComplexComponent';
@@ -200,6 +200,7 @@ export const InpForm = (props) => {
             type={field.type}
             as={field.as}
             name={field.name}
+            size={window.innerWidth < 1500 ? 'lg' : 'sm'}
             className='formsInp'
             defaultValue={field.defaultValue}
             onChange={onChangeHandler}
@@ -273,18 +274,9 @@ export const InpForm = (props) => {
             {set3}
             <br />
 
-            <button
-              className='btn'
-              style={{
-                width: '190px',
-                fontWeight: 600,
-                margin: '10px 13% ',
-                background: '#3f46cc',
-                color: 'white',
-              }}
-              type='submit'>
+            <Button className='submit' type='submit'>
               UPDATE DATA
-            </button>
+            </Button>
           </Form>
           <br />
         </FormMain>
