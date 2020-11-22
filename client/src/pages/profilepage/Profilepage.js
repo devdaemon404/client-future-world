@@ -331,71 +331,77 @@ const Profilepage = ({ retrievedId }) => {
                   display: 'flex',
                   width: '100%',
                   justifyContent: 'space-between',
-                }}
-              >
+                }}>
                 {' '}
                 <h2>{userData.FName + ' ' + userData.LName}</h2>{' '}
                 <div
                   style={{
                     display: 'contents',
-                  }}
-                >
-                  <Button
-                    className='head-button'
-                    type='secondary'
-                    size='small'
-                    shape='round'
-                    onClick={async () => {
-                      try {
-                        let body = {
-                          userId: userData.user,
-                        };
-                        setLoading(true);
-                        await axios.post(
-                          '/api/admin/update-password',
-                          JSON.stringify(body),
-                          config
-                        );
+                  }}>
+                  <div class='btn-group btn-group-toggle' data-toggle='buttons'>
+                    <label class='btn btn-secondary active'>
+                      <input
+                        type='radio'
+                        name='options'
+                        id='option1'
+                        autocomplete='off'
+                        onClick={async () => {
+                          try {
+                            let body = {
+                              userId: userData.user,
+                            };
+                            setLoading(true);
+                            await axios.post(
+                              '/api/admin/update-password',
+                              JSON.stringify(body),
+                              config
+                            );
 
-                        toast('Password Reset Completed');
-                      } catch (error) {
-                        console.log(error);
-                        toast('Error in Resetting the Password');
-                      } finally {
-                        setLoading(false);
-                      }
-                    }}
-                  >
-                    Reset Password
-                  </Button>{' '}
-                  <Button
-                    className='head-button'
-                    size='small'
-                    type='secondary'
-                    shape='round'
-                    onClick={downloadFile}
-                  >
-                    ⤓ Download Profile
-                  </Button>{' '}
-                  <Button
-                    className='head-button'
-                    type='secondary'
-                    size='small'
-                    shape='round'
-                    onClick={toggleFormComplete}
-                  >
-                    {!userData.isFormComplete ? (
-                      <span>
-                        <i class='fa fa-lock' aria-hidden='true' /> &nbsp;
-                        Onboarding application
-                      </span>
-                    ) : (
-                      <span>
-                        <i class='fa fa-unlock' aria-hidden='true' />
-                        &nbsp; Onboarding application{' '}
-                      </span>
-                    )}
-                  </Button>
+                            toast('Password Reset Completed');
+                          } catch (error) {
+                            console.log(error);
+                            toast('Error in Resetting the Password');
+                          } finally {
+                            setLoading(false);
+                          }
+                        }}
+                        checked>
+                        {' '}
+                        Reset Password{' '}
+                      </input>
+                    </label>
+                    <label class='btn btn-secondary'>
+                      <input
+                        type='radio'
+                        onClick={downloadFile}
+                        name='options'
+                        id='option2'
+                        autocomplete='off'>
+                        {' '}
+                        View/Download{' '}
+                      </input>
+                    </label>
+                    <label class='btn btn-secondary'>
+                      <input
+                        type='radio'
+                        name='options'
+                        id='option3'
+                        onClick={toggleFormComplete}
+                        autocomplete='off'>
+                        {!userData.isFormComplete ? (
+                          <span>
+                            <i class='fa fa-lock' aria-hidden='true' /> &nbsp;
+                            Onboarding application
+                          </span>
+                        ) : (
+                          <span>
+                            <i class='fa fa-unlock' aria-hidden='true' />
+                            &nbsp; Onboarding application{' '}
+                          </span>
+                        )}
+                      </input>
+                    </label>
+                  </div>
                 </div>
               </div>
             </div>
@@ -409,8 +415,7 @@ const Profilepage = ({ retrievedId }) => {
               tabBarStyle={{
                 fontWeight: 600,
                 fontSize: 16,
-              }}
-            >
+              }}>
               <TabPane tab='Employee Information ' key='data'>
                 <InpForm
                   userData={userData}
@@ -445,8 +450,7 @@ const Profilepage = ({ retrievedId }) => {
                                 style={{
                                   padding: 10,
                                   ...style,
-                                }}
-                              >
+                                }}>
                                 {month}
                               </span>
                             );
@@ -462,8 +466,7 @@ const Profilepage = ({ retrievedId }) => {
                         className='submit'
                         onClick={(e) => {
                           document.getElementById('FileUpload1').click();
-                        }}
-                      >
+                        }}>
                         {' UPLOAD'}
                       </Button>
                       <input
@@ -502,8 +505,7 @@ const Profilepage = ({ retrievedId }) => {
                                 style={{
                                   padding: 10,
                                   ...style,
-                                }}
-                              >
+                                }}>
                                 {month}
                               </span>
                             );
@@ -520,8 +522,7 @@ const Profilepage = ({ retrievedId }) => {
                         className='submit'
                         onClick={(e) => {
                           document.getElementById('FileUpload2').click();
-                        }}
-                      >
+                        }}>
                         {' UPLOAD'}
                       </Button>
                       <input
@@ -560,8 +561,7 @@ const Profilepage = ({ retrievedId }) => {
                         className='submit'
                         onClick={(e) => {
                           document.getElementById('FileUpload3').click();
-                        }}
-                      >
+                        }}>
                         {' DOWNLOAD'}
                       </Button>
                       <input
@@ -589,8 +589,7 @@ const Profilepage = ({ retrievedId }) => {
                         <select
                           className='form-control'
                           onChange={(e) => setSubAdminId(e.target.value)}
-                          defaultValue={''}
-                        >
+                          defaultValue={''}>
                           <option value='' disabled>
                             Select sub-admin ...
                           </option>
@@ -622,8 +621,7 @@ const Profilepage = ({ retrievedId }) => {
                           color: 'white',
                           fontWeight: 600,
                         }}
-                        type='submit'
-                      >
+                        type='submit'>
                         CONTINUE
                       </Button>
                     </form>

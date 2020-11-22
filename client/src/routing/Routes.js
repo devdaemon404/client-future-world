@@ -51,12 +51,12 @@ const Routes = () => {
         console.log(location.pathname);
         if (res.data.role === 'admin') {
           if (location.pathname === '/') history.push('/admin');
-          if (adminRoutes.includes(location.pathname))
+          else if (adminRoutes.includes(location.pathname))
             history.push(location.pathname);
           else history.push('/404');
         } else if (res.data.role === 'sub-admin') {
           if (location.pathname === '/') history.push('/admin');
-          if (adminRoutes.includes(location.pathname))
+          else if (adminRoutes.includes(location.pathname))
             history.push(location.pathname);
           else history.push('/404');
         } else {
