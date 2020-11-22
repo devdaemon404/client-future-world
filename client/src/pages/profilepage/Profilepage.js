@@ -331,7 +331,8 @@ const Profilepage = ({ retrievedId }) => {
                   display: 'flex',
                   width: '100%',
                   justifyContent: 'space-between',
-                }}>
+                }}
+              >
                 {' '}
                 <h2>{userData.FName + ' ' + userData.LName}</h2>{' '}
                 <div>
@@ -360,7 +361,8 @@ const Profilepage = ({ retrievedId }) => {
                         } finally {
                           setLoading(false);
                         }
-                      }}>
+                      }}
+                    >
                       Reset Password
                     </Button>{' '}
                     <Button
@@ -368,15 +370,17 @@ const Profilepage = ({ retrievedId }) => {
                       size='small'
                       variant='primary'
                       shape='round'
-                      onClick={downloadFile}>
-                      ⤓ Download Profile
+                      onClick={downloadFile}
+                    >
+                      <i class='fa fa-eye' aria-hidden='true'></i> View Profile
                     </Button>{' '}
                     <Button
                       className='head-button'
                       variant='primary'
                       size='small'
                       shape='round'
-                      onClick={toggleFormComplete}>
+                      onClick={toggleFormComplete}
+                    >
                       {!userData.isFormComplete ? (
                         <span>
                           <i class='fa fa-lock' aria-hidden='true' /> &nbsp;
@@ -403,7 +407,8 @@ const Profilepage = ({ retrievedId }) => {
               tabBarStyle={{
                 fontWeight: 600,
                 fontSize: 16,
-              }}>
+              }}
+            >
               <TabPane tab='Employee Information ' key='data'>
                 <InpForm
                   userData={userData}
@@ -438,7 +443,8 @@ const Profilepage = ({ retrievedId }) => {
                                 style={{
                                   padding: 10,
                                   ...style,
-                                }}>
+                                }}
+                              >
                                 {month}
                               </span>
                             );
@@ -454,7 +460,8 @@ const Profilepage = ({ retrievedId }) => {
                         className='submit'
                         onClick={(e) => {
                           document.getElementById('FileUpload1').click();
-                        }}>
+                        }}
+                      >
                         {' UPLOAD'}
                       </Button>
                       <input
@@ -493,7 +500,8 @@ const Profilepage = ({ retrievedId }) => {
                                 style={{
                                   padding: 10,
                                   ...style,
-                                }}>
+                                }}
+                              >
                                 {month}
                               </span>
                             );
@@ -510,7 +518,8 @@ const Profilepage = ({ retrievedId }) => {
                         className='submit'
                         onClick={(e) => {
                           document.getElementById('FileUpload2').click();
-                        }}>
+                        }}
+                      >
                         {' UPLOAD'}
                       </Button>
                       <input
@@ -549,7 +558,8 @@ const Profilepage = ({ retrievedId }) => {
                         className='submit'
                         onClick={(e) => {
                           document.getElementById('FileUpload3').click();
-                        }}>
+                        }}
+                      >
                         {' DOWNLOAD'}
                       </Button>
                       <input
@@ -577,7 +587,8 @@ const Profilepage = ({ retrievedId }) => {
                         <select
                           className='form-control'
                           onChange={(e) => setSubAdminId(e.target.value)}
-                          defaultValue={''}>
+                          defaultValue={''}
+                        >
                           <option value='' disabled>
                             Select sub-admin ...
                           </option>
@@ -609,7 +620,8 @@ const Profilepage = ({ retrievedId }) => {
                           color: 'white',
                           fontWeight: 600,
                         }}
-                        type='submit'>
+                        type='submit'
+                      >
                         CONTINUE
                       </Button>
                     </form>
