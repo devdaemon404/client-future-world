@@ -40,6 +40,8 @@ const Profilepage = ({ retrievedId }) => {
   const [isFormComplete, setIsFormComplete] = useState(false);
   const [enabledPaySlipDates, setEnabledPaySlipDates] = useState([]);
   const [enabledTimeSheetDates, setEnabledTimeSheetDates] = useState([]);
+  const [screenWidth, setscreenWidth] = useState();
+
   const [enabledReimbursementDates, setEnabledReimbursementDates] = useState(
     []
   );
@@ -133,6 +135,9 @@ const Profilepage = ({ retrievedId }) => {
     fetchEnabledDates();
   }, []);
 
+  useEffect(() => {
+    setscreenWidth(window.innerWidth);
+  }, [window.innerWidth]);
   const timeSheetMonthUpdater = (_, dateString) => {
     setTSheetDate(dateString);
   };
@@ -326,14 +331,17 @@ const Profilepage = ({ retrievedId }) => {
                   display: 'flex',
                   width: '100%',
                   justifyContent: 'space-between',
-                }}>
+                }}
+              >
                 {' '}
                 <h2>{userData.FName + ' ' + userData.LName}</h2>{' '}
                 <div
                   style={{
                     display: 'contents',
-                  }}>
+                  }}
+                >
                   <Button
+                    className='head-button'
                     type='secondary'
                     size='small'
                     shape='round'
@@ -356,21 +364,26 @@ const Profilepage = ({ retrievedId }) => {
                       } finally {
                         setLoading(false);
                       }
-                    }}>
+                    }}
+                  >
                     Reset Password
                   </Button>{' '}
                   <Button
+                    className='head-button'
                     size='small'
                     type='secondary'
                     shape='round'
-                    onClick={downloadFile}>
+                    onClick={downloadFile}
+                  >
                     ⤓ Download Profile
                   </Button>{' '}
                   <Button
+                    className='head-button'
                     type='secondary'
                     size='small'
                     shape='round'
-                    onClick={toggleFormComplete}>
+                    onClick={toggleFormComplete}
+                  >
                     {!userData.isFormComplete ? (
                       <span>
                         <i class='fa fa-lock' aria-hidden='true' /> &nbsp;
@@ -386,16 +399,19 @@ const Profilepage = ({ retrievedId }) => {
                 </div>
               </div>
             </div>
-
+            <br />
+            <br />
             <Tabs
               type='card'
               defaultActiveKey='1'
               onChange={console.log}
-              size='large'
+              size='small'
               tabBarStyle={{
                 fontWeight: 600,
-              }}>
-              <TabPane tab='Employee Information' key='data'>
+                fontSize: 16,
+              }}
+            >
+              <TabPane tab='Employee Information ' key='data'>
                 <InpForm
                   userData={userData}
                   retrievedId={retrievedId}
@@ -429,7 +445,8 @@ const Profilepage = ({ retrievedId }) => {
                                 style={{
                                   padding: 10,
                                   ...style,
-                                }}>
+                                }}
+                              >
                                 {month}
                               </span>
                             );
@@ -441,13 +458,14 @@ const Profilepage = ({ retrievedId }) => {
                           }
                         />
                       </Space>
-                      <div
-                        id='btn1'
+                      <Button
+                        className='submit'
                         onClick={(e) => {
                           document.getElementById('FileUpload1').click();
-                        }}>
+                        }}
+                      >
                         {' UPLOAD'}
-                      </div>
+                      </Button>
                       <input
                         type='file'
                         className='realupload'
@@ -484,7 +502,8 @@ const Profilepage = ({ retrievedId }) => {
                                 style={{
                                   padding: 10,
                                   ...style,
-                                }}>
+                                }}
+                              >
                                 {month}
                               </span>
                             );
@@ -497,13 +516,14 @@ const Profilepage = ({ retrievedId }) => {
                           }
                         />
                       </Space>
-                      <div
-                        id='btn2'
+                      <Button
+                        className='submit'
                         onClick={(e) => {
                           document.getElementById('FileUpload2').click();
-                        }}>
+                        }}
+                      >
                         {' UPLOAD'}
-                      </div>
+                      </Button>
                       <input
                         type='file'
                         className='realupload'
@@ -536,13 +556,14 @@ const Profilepage = ({ retrievedId }) => {
                           picker='month'
                         />
                       </Space>
-                      <div
-                        id='btn2'
+                      <Button
+                        className='submit'
                         onClick={(e) => {
                           document.getElementById('FileUpload3').click();
-                        }}>
+                        }}
+                      >
                         {' DOWNLOAD'}
-                      </div>
+                      </Button>
                       <input
                         type='submit'
                         id='FileUpload3'
@@ -568,7 +589,8 @@ const Profilepage = ({ retrievedId }) => {
                         <select
                           className='form-control'
                           onChange={(e) => setSubAdminId(e.target.value)}
-                          defaultValue={''}>
+                          defaultValue={''}
+                        >
                           <option value='' disabled>
                             Select sub-admin ...
                           </option>
@@ -581,7 +603,7 @@ const Profilepage = ({ retrievedId }) => {
                         <br />
                         <div className='form-group form-check'>
                           <input
-                            className='form-check-input'
+                            className='form-check-input  addreport'
                             required
                             type='checkbox'
                             id='Checkbox'
@@ -591,8 +613,8 @@ const Profilepage = ({ retrievedId }) => {
                           </label>
                         </div>
                       </div>
-                      <button
-                        className='btn'
+                      <Button
+                        className='submit'
                         style={{
                           width: '190px',
                           margin: '10px 13% ',
@@ -600,9 +622,10 @@ const Profilepage = ({ retrievedId }) => {
                           color: 'white',
                           fontWeight: 600,
                         }}
-                        type='submit'>
+                        type='submit'
+                      >
                         CONTINUE
-                      </button>
+                      </Button>
                     </form>
                   </FormMain>
                 </>

@@ -6,12 +6,19 @@ export const ProfContainer = styled.div`
 `;
 export const LeftCol = styled.div`
   width: 23%;
+  @media only screen and (max-width: 1500px) {
+    width: 35%;
+  }
 `;
 export const RightCol = styled.div`
-  width: 70%;
+  width: 77%;
   // height: 100vh;
   // background: #3f46cc17;
   padding: 20px;
+  @media only screen and (max-width: 1500px) {
+    width: 65%;
+    padding: 5px;
+  }
 `;
 export const DisplayPic = styled.div`
   width: 80%;
@@ -39,6 +46,9 @@ export const SidebarDetails = styled.div`
   .sidebar-item {
     padding: 0px 10px;
   }
+  @media only screen and (max-width: 1500px) {
+    font-size: 12px;
+  }
 `;
 export const NameSection = styled.div`
   padding: 10px;
@@ -46,6 +56,10 @@ export const NameSection = styled.div`
   h2 {
     font-weight: 600;
     font-size: 12px;
+  }
+  .head-button{
+    font-size: 12px;
+    
   }
   h3 {
     font-size: 12px;
@@ -64,10 +78,15 @@ export const NameSection = styled.div`
   @media only screen and (max-width: 1500px) {
     .Head {
     h2 {
-      font-size: 12px;
+      font-size: 18px;
+      margin-right:50px;
     }
     h3 {
-      font-size: 18px;
+      font-size: 17px;
+    }
+    .head-button{
+      font-size: 8px;
+      
     }
     }
   }
@@ -83,16 +102,9 @@ export const NavSection = styled.div`
   }
   @media only screen and (max-width: 1500px) {
     span {
-      font-size: 16px;
+      font-size: 12px;
       margin-left: 20px;
       padding: 10px 20px;
-    }
-  }
-  @media only screen and (max-width: 1500px) {
-    span {
-      font-size: 12px;
-      margin-left: 10px;
-      padding: 10px 10px;
     }
   }
 `;
@@ -100,14 +112,17 @@ export const BodySection = styled.div`
   width: 100%;
 `;
 export const FormMain = styled.div`
+  .addreport {
+    font-size: 12px;
+  }
   span {
-    font-size: 14px;
+    font-size: 16px;
   }
   .formsInp {
     width: 400px;
   }
   .form-label {
-    font-size: 11px;
+    font-size: 14px;
 
     padding-left: 20px;
   }
@@ -126,14 +141,31 @@ export const FormMain = styled.div`
   .selectBox {
     width: 280px;
   }
-
+  .submit {
+    font-weight: 600;
+    font-size: 16px;
+    margin: 10px 9%;
+    background: #3f46cc;
+    color: white;
+  }
   @media only screen and (max-width: 1500px) {
-    width: 500px;
+    .submit {
+      font-weight: 600;
+      font-size: 9px;
+      margin: 10px 9%;
+      background: #3f46cc;
+      color: white;
+    }
     .formsInp {
       width: 300px;
+      font-size: 9px;
+      padding: 2px;
     }
     .info-type {
-      font-size: 22px;
+      font-size: 17px;
+    }
+    span {
+      font-size: 10px;
     }
   }
 `;
@@ -187,7 +219,7 @@ export const UploadContainer = styled.div`
     border-radius: 5px;
     margin-top: 40px;
     text-align: center;
-    padding: 10px 13%;
+    padding: 2% 13%;
     cursor: pointer;
     font-weight: 700;
   }
@@ -205,10 +237,19 @@ export const UploadContainer = styled.div`
     text-transform: uppercase;
   }
 
+  .submit {
+    width:200px;
+    margin-top:10px;
+    background: #3f46cc;
+    color: white;
+  }
   @media only screen and (max-width: 1500px) {
-    #btn1,
-    #btn2 {
-      width: 300px;
-    }
+    .submit {
+      width:150px;
+
+      font-size: 9px;
+
+
+    }}
   }
 `;

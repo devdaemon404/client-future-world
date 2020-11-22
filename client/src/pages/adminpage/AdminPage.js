@@ -33,6 +33,8 @@ const AdminPage = () => {
   const [selectedEmp, setselectedEmp] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const [ViewPanel, setViewPanel] = useState('Table');
+  // const [ViewPanel, setViewPanel] = useState('Profile');
+
   const [selectUser, setSelectUser] = useState('');
   const history = useHistory();
   const [Id, setId] = useState('');
@@ -186,7 +188,8 @@ const AdminPage = () => {
         className='logoContainer'
         onClick={() => {
           setViewPanel('Table');
-        }}>
+        }}
+      >
         <img alt='logo' className='logoimg' src={LOGO}></img>
       </div>
       <div className='SideBarCompMain'>Admin</div>
@@ -198,7 +201,8 @@ const AdminPage = () => {
             : {}
         }
         onClick={(e) => setViewPanel('Table')}
-        id='Table'>
+        id='Table'
+      >
         Employees
       </div>
       <div
@@ -209,7 +213,8 @@ const AdminPage = () => {
             ? { backgroundColor: '#3F46CC', width: '100%' }
             : {}
         }
-        onClick={(e) => setViewPanel('Form')}>
+        onClick={(e) => setViewPanel('Form')}
+      >
         Add an Employee
       </div>{' '}
       {/* <div
@@ -313,7 +318,8 @@ const AdminPage = () => {
           <TableContainer
             style={{
               scrollDirection: 'horizontal',
-            }}>
+            }}
+          >
             {ViewPanel === 'Table' && OpTableChild}
           </TableContainer>
 
