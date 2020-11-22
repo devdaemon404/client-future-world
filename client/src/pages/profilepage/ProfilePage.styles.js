@@ -45,7 +45,7 @@ export const NameSection = styled.div`
   margin-top: 0px;
   h2 {
     font-weight: 600;
-    font-size: 29px;
+    font-size: 12px;
   }
   h3 {
     font-size: 12px;
@@ -62,13 +62,13 @@ export const NameSection = styled.div`
     width: 100%;
   }
   @media only screen and (max-width: 1500px) {
+    .Head {
     h2 {
-      font-size: 32px;
+      font-size: 12px;
     }
     h3 {
       font-size: 18px;
     }
-    .Head {
     }
   }
 `;

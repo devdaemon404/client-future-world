@@ -16,12 +16,12 @@ export const AdminHeader = styled.div`
   position: fixed;
   width: 100%;
   z-index: 900;
+
   height: 90px;
   background-color: white;
   box-shadow: 0 10px 20px rgba(0, 0, 0, 0.13), 0 6px 6px rgba(0, 0, 0, 0.13);
   padding-top: 15px;
   padding-bottom: 10px;
-
   h3 {
     margin-left: 250px;
     font-weight: 600;
@@ -29,6 +29,18 @@ export const AdminHeader = styled.div`
     span {
       font-size: 20px;
       font-weight: 600;
+    }
+  }
+  @media only screen and (max-width: 1500px) {
+    height: 65px;
+    padding-top: 10px;
+    h3 {
+      font-size: 18px;
+      margin-left: 170px;
+      span {
+        font-size: 14px;
+        font-weight: 600;
+      }
     }
   }
 `;
@@ -57,6 +69,9 @@ export const AdminMain = styled.div`
     font-weight: 500;
     font-size: 28px;
     color: #404040;
+  }
+  @media only screen and (max-width: 1500px) {
+    margin-left: 150px;
   }
 `;
 
@@ -124,6 +139,7 @@ export const SideBar = styled.div`
     justify-content: center;
     cursor: pointer;
     background-color: white;
+
   }
    img {
       height:60px;
@@ -173,6 +189,28 @@ export const SideBar = styled.div`
     border: 1px solid white;
     font-weight:700;
   }
+
+  @media only screen and (max-width: 1500px) {
+    width: 150px;
+    .Logout {
+      width: 150px;
+    }
+    .SideBarCompItem {
+      width: 120px;
+      font-size: 10px;
+      padding: 12px 10px;
+    }
+    .SideBarCompMain {
+      width: 150px;
+      font-size: 15px;
+      height: 44px;
+    }
+    .logoContainer {
+      height: 65px;
+      width: 150px;
+      padding-top: 5px;
+    }
+}
 `;
 
 export const TableContainer = styled.div`

@@ -233,10 +233,10 @@ const AdminPage = () => {
         }
         onClick={(e) => setViewPanel('BulkUpload')}>
         Bulk Upload
-      </div>
+      </div> */}
       <div className='Logout' onClick={logoutHandler}>
         <span>LOGOUT</span>
-      </div> */}
+      </div>
     </SideBar>
   );
 

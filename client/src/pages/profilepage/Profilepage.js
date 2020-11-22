@@ -335,6 +335,7 @@ const Profilepage = ({ retrievedId }) => {
                   }}>
                   <Button
                     type='secondary'
+                    size='small'
                     shape='round'
                     onClick={async () => {
                       try {
@@ -358,11 +359,16 @@ const Profilepage = ({ retrievedId }) => {
                     }}>
                     Reset Password
                   </Button>{' '}
-                  <Button type='secondary' shape='round' onClick={downloadFile}>
+                  <Button
+                    size='small'
+                    type='secondary'
+                    shape='round'
+                    onClick={downloadFile}>
                     ⤓ Download Profile
                   </Button>{' '}
                   <Button
                     type='secondary'
+                    size='small'
                     shape='round'
                     onClick={toggleFormComplete}>
                     {!userData.isFormComplete ? (

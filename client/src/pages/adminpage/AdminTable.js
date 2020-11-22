@@ -21,8 +21,7 @@ function DefaultColumnFilter({
   return (
     <Input
       style={{
-        width: '90%',
-        fontSize: '15px',
+        fontSize: '12px',
         height: '20px',
       }}
       value={filterValue || ''}
@@ -89,7 +88,7 @@ function OPTable({ data, columns, getCellProps, onClickHandler, adminId }) {
                 <th key={i}>
                   <p
                     {...column.getHeaderProps(column.getSortByToggleProps())}
-                    style={{ fontSize: 17, fontWeight: 700 }}>
+                    style={{ fontWeight: 700 }}>
                     {column.render('Header')}
                     {/* Add a sort direction indicator */}
                     <span>
