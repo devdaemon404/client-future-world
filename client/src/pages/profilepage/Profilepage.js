@@ -1,9 +1,9 @@
 import React, { useEffect, useState, useContext } from 'react';
 import moment from 'moment';
-import { DatePicker, Space, Button, Tabs } from 'antd';
+import { DatePicker, Space, Tabs } from 'antd';
 import { config } from '../../util/RequestUtil';
 import axios from 'axios';
-
+import { ButtonGroup, Button } from 'react-bootstrap';
 import InpForm from './InpForm';
 import {
   LeftCol,
@@ -335,67 +335,65 @@ const Profilepage = ({ retrievedId }) => {
               >
                 {' '}
                 <h2>{userData.FName + ' ' + userData.LName}</h2>{' '}
-                <div
-                  style={{
-                    display: 'contents',
-                  }}
-                >
-                  <Button
-                    className='head-button'
-                    type='secondary'
-                    size='small'
-                    shape='round'
-                    onClick={async () => {
-                      try {
-                        let body = {
-                          userId: userData.user,
-                        };
-                        setLoading(true);
-                        await axios.post(
-                          '/api/admin/update-password',
-                          JSON.stringify(body),
-                          config
-                        );
+                <div>
+                  <ButtonGroup aria-label='Basic example'>
+                    <Button
+                      className='head-button'
+                      variant='secondary'
+                      size='small'
+                      shape='round'
+                      onClick={async () => {
+                        try {
+                          let body = {
+                            userId: userData.user,
+                          };
+                          setLoading(true);
+                          await axios.post(
+                            '/api/admin/update-password',
+                            JSON.stringify(body),
+                            config
+                          );
 
-                        toast('Password Reset Completed');
-                      } catch (error) {
-                        console.log(error);
-                        toast('Error in Resetting the Password');
-                      } finally {
-                        setLoading(false);
-                      }
-                    }}
-                  >
-                    Reset Password
-                  </Button>{' '}
-                  <Button
-                    className='head-button'
-                    size='small'
-                    type='secondary'
-                    shape='round'
-                    onClick={downloadFile}
-                  >
-                    ⤓ Download Profile
-                  </Button>{' '}
-                  <Button
-                    className='head-button'
-                    type='secondary'
-                    size='small'
-                    shape='round'
-                    onClick={toggleFormComplete}
-                  >
-                    {!userData.isFormComplete ? (
-                      <span>
-                        <i class='fa fa-lock' aria-hidden='true' /> &nbsp;
-                        Onboarding application
-                      </span>
-                    ) : (
-                      <span>
-                        <i class='fa fa-unlock' aria-hidden='true' />
-                        &nbsp; Onboarding application{' '}
-                      </span>
-                    )}
-                  </Button>
+                          toast('Password Reset Completed');
+                        } catch (error) {
+                          console.log(error);
+                          toast('Error in Resetting the Password');
+                        } finally {
+                          setLoading(false);
+                        }
+                      }}
+                    >
+                      Reset Password
+                    </Button>{' '}
+                    <Button
+                      className='head-button'
+                      size='small'
+                      variant='secondary'
+                      shape='round'
+                      onClick={downloadFile}
+                    >
+                      ⤓ Download Profile
+                    </Button>{' '}
+                    <Button
+                      className='head-button'
+                      variant='secondary'
+                      size='small'
+                      shape='round'
+                      onClick={toggleFormComplete}
+                    >
+                      {!userData.isFormComplete ? (
+                        <span>
+                          <i class='fa fa-lock' aria-hidden='true' /> &nbsp;
+                          Onboarding application
+                        </span>
+                      ) : (
+                        <span>
+                          <i class='fa fa-unlock' aria-hidden='true' />
+                          &nbsp; Onboarding application{' '}
+                        </span>
+                      )}
+                    </Button>
+                  </ButtonGroup>
                 </div>
               </div>
             </div>

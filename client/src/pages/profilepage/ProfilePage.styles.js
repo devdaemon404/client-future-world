@@ -55,7 +55,7 @@ export const NameSection = styled.div`
   margin-top: 0px;
   h2 {
     font-weight: 600;
-    font-size: 12px;
+
   }
   .head-button{
     font-size: 12px;
