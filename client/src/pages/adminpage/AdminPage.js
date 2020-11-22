@@ -32,8 +32,8 @@ const AdminPage = () => {
   const [data, setData] = useState([]);
   const [selectedEmp, setselectedEmp] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
-  // const [ViewPanel, setViewPanel] = useState('Table');
-  const [ViewPanel, setViewPanel] = useState('Profile');
+  const [ViewPanel, setViewPanel] = useState('Table');
+  // const [ViewPanel, setViewPanel] = useState('Profile');
 
   const [selectUser, setSelectUser] = useState('');
   const history = useHistory();
