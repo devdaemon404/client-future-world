@@ -91,7 +91,7 @@ export const InpForm = ({ getUsers, setViewPanel }) => {
           empNo: FWiD,
           comments,
           joiningDate,
-          isFormComplete: true,
+          isFormComplete: false,
         },
       });
       setIsLoading(false);
