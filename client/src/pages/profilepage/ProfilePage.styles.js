@@ -174,7 +174,7 @@ export const UploadContainer = styled.div`
     display: flex;
     flex-wrap: wrap;
     justify-content: space-between;
-    width: 500px;
+    width: 540px;
   }
   .select input {
     width: 250px;

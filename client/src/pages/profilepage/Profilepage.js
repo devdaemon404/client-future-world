@@ -457,7 +457,7 @@ const Profilepage = ({ retrievedId }) => {
                         onClick={(e) => {
                           document.getElementById('FileUpload1').click();
                         }}>
-                        {' UPLOAD'}
+                        {'UPLOAD'}
                       </Button>
                       <input
                         type='file'

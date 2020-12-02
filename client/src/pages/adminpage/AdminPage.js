@@ -36,8 +36,8 @@ const AdminPage = () => {
 
   const [selectedEmp, setselectedEmp] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
-  // const [ViewPanel, setViewPanel] = useState('Table');
-  const [ViewPanel, setViewPanel] = useState('AddListing');
+  const [ViewPanel, setViewPanel] = useState('Table');
+  // const [ViewPanel, setViewPanel] = useState('AddListing');
 
   const [selectUser, setSelectUser] = useState('');
   const history = useHistory();
