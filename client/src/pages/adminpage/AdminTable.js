@@ -2,22 +2,22 @@ import React, { useState, useEffect } from 'react';
 
 import {
   useTable,
+  usePagination,
   useSortBy,
   useGlobalFilter,
   filterTypes,
   useFilters,
 } from 'react-table';
-import { Table } from 'react-bootstrap';
-import { Select, Input } from 'antd';
+import { Button, Table } from 'react-bootstrap';
 import { useMemo } from 'react';
-
+import { Select, Input } from 'antd';
 const { Option } = Select;
 
 // Define a default UI for filtering
 function DefaultColumnFilter({
   column: { filterValue, preFilteredRows, setFilter, Header },
 }) {
-  if (Header === '#') return <div />;
+  if (Header === '#' || Header === 'Action') return <div />;
   return (
     <Input
       style={{
@@ -33,7 +33,14 @@ function DefaultColumnFilter({
   );
 }
 
-function OPTable({ data, columns, getCellProps, onClickHandler, adminId }) {
+function OPTable({
+  data,
+  columns,
+  getCellProps,
+  onClickHandler,
+  onClickHandler2,
+  adminId,
+}) {
   const [adminIdNum, setadminIdNum] = useState([]);
   const defaultColumn = useMemo(
     () => ({
@@ -50,7 +57,18 @@ function OPTable({ data, columns, getCellProps, onClickHandler, adminId }) {
     getTableProps,
     getTableBodyProps,
     headerGroups,
-    rows,
+    page,
+
+    canPreviousPage,
+    canNextPage,
+    pageOptions,
+    pageCount,
+    gotoPage,
+    nextPage,
+    previousPage,
+    setPageSize,
+    state: { pageIndex, pageSize },
+
     prepareRow,
   } = useTable(
     {
@@ -58,10 +76,12 @@ function OPTable({ data, columns, getCellProps, onClickHandler, adminId }) {
       data,
       defaultColumn, // Be sure to pass the defaultColumn Option
       filterTypes,
+      initialState: { pageIndex: 0 },
     },
     useFilters,
     useGlobalFilter,
-    useSortBy
+    useSortBy,
+    usePagination
   );
   return (
     <div
@@ -70,6 +90,61 @@ function OPTable({ data, columns, getCellProps, onClickHandler, adminId }) {
         maxHeight: '80vh',
       }}
       className='mx-auto mt-3 text-center'>
+      <div className='pagination' style={{ width: '100%' }}>
+        <button
+          className='pagination-button'
+          onClick={() => gotoPage(0)}
+          disabled={!canPreviousPage}>
+          {'<<'}
+        </button>{' '}
+        <button
+          className='pagination-button'
+          onClick={() => previousPage()}
+          disabled={!canPreviousPage}>
+          {'<'}
+        </button>{' '}
+        <button
+          className='pagination-button'
+          onClick={() => nextPage()}
+          disabled={!canNextPage}>
+          {'>'}
+        </button>{' '}
+        <button
+          className='pagination-button'
+          onClick={() => gotoPage(pageCount - 1)}
+          disabled={!canNextPage}>
+          {'>>'}
+        </button>{' '}
+        <span>
+          Page{' '}
+          <span>
+            {pageIndex + 1} of {pageOptions.length}
+          </span>{' '}
+          | Go to page:
+          <input
+            type='number'
+            defaultValue={pageIndex + 1}
+            onChange={(e) => {
+              const page = e.target.value ? Number(e.target.value) - 1 : 0;
+              gotoPage(page);
+            }}
+            style={{ width: '100px' }}
+          />
+          <label>Rows per Page</label>
+          <select
+            value={pageSize}
+            onChange={(e) => {
+              setPageSize(Number(e.target.value));
+            }}>
+            {[10, 20, 30, 40, 50].map((pageSize) => (
+              <option key={pageSize} value={pageSize}>
+                {pageSize}
+              </option>
+            ))}
+          </select>
+        </span>{' '}
+      </div>
+
       <Table
         className='table'
         {...getTableProps()}
@@ -104,14 +179,25 @@ function OPTable({ data, columns, getCellProps, onClickHandler, adminId }) {
         </thead>
 
         <tbody {...getTableBodyProps()}>
-          {rows.map((row, i) => {
+          {page.map((row, i) => {
             prepareRow(row);
             return (
               <tr {...row.getRowProps()}>
                 {row.cells.map((cell) => {
                   if (cell.column.Header === '#')
                     return <td key='random-key'>{i + 1}</td>;
-                  else if (cell.column.Header === 'Action') {
+                  else if (cell.column.Header === 'View') {
+                    return (
+                      <Button
+                        key='random-key3'
+                        variant='link'
+                        onClick={(e) => {
+                          onClickHandler2(cell.render('Cell').props.cell.value);
+                        }}>
+                        View Job
+                      </Button>
+                    );
+                  } else if (cell.column.Header === 'Action') {
                     return (
                       <td key='random-key2'>
                         {adminIdNum.includes(
@@ -138,7 +224,7 @@ function OPTable({ data, columns, getCellProps, onClickHandler, adminId }) {
                               <Option value='0'>View </Option>
                               <Option value='1'>Relieve </Option>
                               <Option value='2'> Active</Option>
-                              <Option value='3'> Inactive</Option>
+                              <Option value='3'> Disable</Option>
                               <Option value='4'>Delete </Option>
                             </Select>
                           </>
@@ -158,7 +244,7 @@ function OPTable({ data, columns, getCellProps, onClickHandler, adminId }) {
                       <td
                         {...cell.getCellProps([{ ...getCellProps(cell) }])}
                         style={
-                          cell.render('Cell').props.cell.value[0] === 'I'
+                          cell.render('Cell').props.cell.value[0] === 'D'
                             ? { color: '#c62828', fontWeight: 700 }
                             : cell.render('Cell').props.cell.value[0] === 'A'
                             ? { color: '#558B2F', fontWeight: 700 }

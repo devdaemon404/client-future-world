@@ -36,8 +36,8 @@ const AdminPage = () => {
 
   const [selectedEmp, setselectedEmp] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
-  const [ViewPanel, setViewPanel] = useState('Table');
-  // const [ViewPanel, setViewPanel] = useState('Profile');
+  // const [ViewPanel, setViewPanel] = useState('Table');
+  const [ViewPanel, setViewPanel] = useState('AddListing');
 
   const [selectUser, setSelectUser] = useState('');
   const history = useHistory();
@@ -61,7 +61,7 @@ const AdminPage = () => {
               moment(employee.updatedAt).format('DD/MMM/YYYY')
             : employee.active === 1
             ? 'Active'
-            : 'Inactive' +
+            : 'Disabled' +
               ' From - ' +
               moment(employee.updatedAt).format('DD/MMM/YYYY'),
         empNo: !employee.empNo ? 'FW-----' : employee.empNo,
@@ -78,53 +78,11 @@ const AdminPage = () => {
       }
       setAdminId([...a] || []);
     }
-
-    let pagedData = [];
-    let temp = [];
-    let iter = 0;
-    let divideValue = formattedData.length;
-    let rowPerPage = 10;
-    if (formattedData.length > 20) rowPerPage = 8;
-    if (formattedData.length > 50) rowPerPage = 10;
-    if (formattedData.length > 100) rowPerPage = 20;
-    if (formattedData.length > 200) rowPerPage = 40;
-    if (formattedData.length > 1000) rowPerPage = 100;
-    if (formattedData.length > 2000) rowPerPage = 150;
-    if (formattedData.length > 2500) rowPerPage = 250;
-
-    for (let i = 0; i <= divideValue; i++) {
-      temp.push(formattedData[i]);
-      if (i !== 0 && i % rowPerPage === 0) {
-        pagedData[iter] = temp;
-        iter = iter + 1;
-        temp = [];
-      }
-    }
-    let c = pagedData.length * rowPerPage;
-    for (let i = c; i < divideValue; i++) {
-      if (formattedData[i] === {}) {
-        temp.push(formattedData[i]);
-      }
-
-      if (i === divideValue - 1) {
-        pagedData[iter] = temp;
-        temp = [];
-      }
-    }
-
-    pagedData[pagedData.length - 1].pop();
-    if (divideValue % rowPerPage === 1) {
-      pagedData.pop();
-    }
-    console.log(divideValue % rowPerPage);
-    console.log(pagedData);
-
-    setPaginated(pagedData);
   };
 
   useEffect(() => {
     console.log(totalData.length);
-    setData(paginated[selectedPage]);
+    // setData(paginated[selectedPage]);
   }, [paginated, selectedPage]);
 
   useEffect(() => {
@@ -276,7 +234,7 @@ const AdminPage = () => {
         onClick={(e) => setViewPanel('Form')}>
         Add an Employee
       </div>{' '}
-      {/* <div
+      <div
         className='SideBarCompItem'
         id='AddListing'
         style={
@@ -287,7 +245,7 @@ const AdminPage = () => {
         onClick={(e) => setViewPanel('AddListing')}>
         Add/View a Listing
       </div>
-      <div
+      {/* <div
         className='SideBarCompItem'
         id='Bulk Upload'
         style={
@@ -383,9 +341,7 @@ const AdminPage = () => {
           {ViewPanel === 'Table' && (
             <TableContainer
               style={{ padding: 0, marginTop: 0, marginBottom: 0 }}>
-              <div style={{ width: '100%' }}>
-                <Pagination> {PageSelector}</Pagination>
-              </div>
+              <div style={{ width: '100%' }}></div>
             </TableContainer>
           )}
           <TableContainer

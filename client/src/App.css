@@ -94,3 +94,26 @@ thead {
 .contant_box_404 {
   margin-top: -50px;
 }
+
+.pagination-button {
+  border: none;
+  background-color: rgb(52, 52, 184);
+  color: white;
+  padding: 0 10px;
+  margin: 0 5px;
+  border-radius: 5px;
+  height: 22px;
+  margin-top: 8px;
+}
+.pagination span {
+  margin: 0 5px;
+  font-size: large;
+}
+.pagination input {
+  border-radius: 8px;
+  margin: 0 100px 0 0px;
+  font-size: 15px;
+}
+.pagination span > span {
+  font-weight: 700;
+}

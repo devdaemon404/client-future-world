@@ -210,7 +210,7 @@ export const InpForm = ({ getUsers, setViewPanel }) => {
             <div className='info-type'>Work Information</div>
             {set3}
             <div className='radio'>
-              <p style={{ marginLeft: 38 }}>User Type</p>{' '}
+              <p style={{ marginLeft: 38 }}>User Type *</p>{' '}
               <div>
                 <input
                   type='radio'
