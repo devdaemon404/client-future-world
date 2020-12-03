@@ -49,11 +49,24 @@ exports.getJobPosting = asyncHandler(async (req, res, next) => {
  * @access  Private
  */
 exports.createJobPosting = asyncHandler(async (req, res, next) => {
-  const { name, description } = req.body;
+  const {
+    name,
+    shortDescription,
+    longDescription,
+    type,
+    shiftType,
+    location,
+    imageUrl,
+    deadline,
+    salary,
+    skills,
+    experience,
+  } = req.body;
 
   let jobPosting = new JobPosting({
     name,
-    description,
+    shortDescription,
+
     user: req.user.id,
   });
 
