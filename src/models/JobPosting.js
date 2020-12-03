@@ -1,14 +1,35 @@
 const mongoose = require('mongoose');
 
 const JobPostingSchema = new mongoose.Schema({
-  name: {
+  title: {
     type: String,
   },
   type: {
     type: String,
   },
-  description: {
+  shortDescription: {
     type: String,
+  },
+  longDescription: {
+    type: String,
+  },
+  shiftType: {
+    type: String,
+  },
+  location: {
+    type: String,
+  },
+  imageUrl: {
+    type: String,
+  },
+  deadline: {
+    type: String,
+  },
+  salary: {
+    type: String,
+  },
+  experience: {
+    type: string,
   },
   user: {
     type: mongoose.Schema.ObjectId,
