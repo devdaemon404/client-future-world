@@ -27,11 +27,15 @@
 .App-link {
   color: #61dafb;
 }
+.tableHead {
+  border: 1px solid black;
+}
 .tableHead th,
 tr,
 thead {
   position: sticky;
   z-index: 10;
+
   top: 0;
   background-color: white;
 }

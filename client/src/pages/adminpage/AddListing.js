@@ -9,36 +9,61 @@ import {
   AdminHeader,
 } from './AdminPage.styles';
 import OPTable from './AdminTable';
-import { Modal, Button, Form } from 'react-bootstrap';
+import { Modal, Button, Form, Toast } from 'react-bootstrap';
 import axios from 'axios';
 import { OPLoader } from '../../util/LoaderUtil';
-
+import moment from 'moment';
 const AddListing = () => {
   let formattedData = [];
   const [Selected, setSelected] = useState({});
   const [Jobs, setJobs] = useState([]);
+  const [selectedJob, setSelectedJob] = useState({
+    experience: '',
+
+    salary: '',
+    deadline: '',
+    imageUrl: '',
+    createdAt: '',
+    createdBy: '',
+    location: '',
+    shiftType: '',
+    type: '',
+    longDescription: '',
+    shortDescription: '',
+    title: '',
+  });
+
   const [rawData, setRawData] = useState({});
   const [action, setAction] = useState(); // add , update
 
   const [isLoading, setIsLoading] = useState(false);
   const onClickHandler2 = (e) => {
     setSelected(e);
+    console.log(Selected);
     handleShow();
     setAction('update');
   };
+
+  useEffect(() => {
+    (async () => {
+      let selectedJobData = await axios.get(`/api/job-posting/${Selected}`);
+      selectedJobData = selectedJobData.data.data;
+      setSelectedJob(selectedJobData);
+    })();
+  }, [Selected]);
+
   useEffect(() => {
     let jobs;
     setIsLoading(true);
     (async () => {
       try {
-        jobs = await axios.get('/api/job-posting');
+        jobs = await axios.get('/api/job-posting', selectedJob);
 
         jobs = jobs.data;
 
         jobs.data.forEach((job, i) => {
           formattedData.push({
             experience: job.experience || '-',
-            skills: job.skills || '-',
             salary: job.salary || '-',
             deadline: job.deadline || '-',
             imageUrl: job.imageUrl || '-',
@@ -106,6 +131,26 @@ const AddListing = () => {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
+  const onJobSubmit = (e) => {
+    e.preventDefault();
+
+    console.log(selectedJob);
+
+    if (action === 'add') {
+      addJob();
+    } else {
+      // call update api
+    }
+  };
+
+  // add job Api
+
+  const addJob = async () => {
+    try {
+      let jobToBePosted = await axios.post('/api/job-posting', selectedJob);
+    } catch (error) {}
+  };
+
   let modalJsx = (
     <>
       <Modal show={show} onHide={handleClose}>
@@ -114,46 +159,164 @@ const AddListing = () => {
             {action === 'add' ? 'Add New Job' : 'Edit Job'}
           </Modal.Title>
         </Modal.Header>
-        <Modal.Body>
-          <Form>
+        <Form onSubmit={onJobSubmit}>
+          <Modal.Body>
             <Form.Group controlId='exampleForm.ControlInput1'>
-              <Form.Label>Email address</Form.Label>
-              <Form.Control type='email' placeholder='name@example.com' />
+              <Form.Label>Title</Form.Label>
+              <Form.Control
+                type='text'
+                placeholder={'JAVA Developer W/ 5 years of experience '}
+                value={selectedJob.title}
+                onChange={(e) => {
+                  setSelectedJob({ ...selectedJob, title: e.target.value });
+                }}
+              />
+            </Form.Group>
+            <Form.Group controlId='exampleForm.ControlInput1'>
+              <Form.Label>Job Type</Form.Label>
+              <Form.Control
+                type='text'
+                placeholder={'JAVA Developer / Node Developer '}
+                value={selectedJob.type}
+                onChange={(e) => {
+                  setSelectedJob({ ...selectedJob, type: e.target.value });
+                }}
+              />
+            </Form.Group>
+            <Form.Group controlId='exampleForm.ControlInput1'>
+              <Form.Label>Shift Type</Form.Label>
+              <Form.Control
+                placeholder={'Full-Time / Part-Time'}
+                type='text'
+                value={selectedJob.shiftType}
+                onChange={(e) => {
+                  setSelectedJob({ ...selectedJob, shiftType: e.target.value });
+                }}
+              />
+            </Form.Group>
+            <Form.Group controlId='exampleForm.ControlInput1'>
+              <Form.Label>Job Location</Form.Label>
+              <Form.Control
+                placeholder={'City / WFH'}
+                value={selectedJob.location}
+                type='text'
+                onChange={(e) => {
+                  setSelectedJob({ ...selectedJob, location: e.target.value });
+                }}
+              />
+            </Form.Group>
+            <Form.Group controlId='exampleForm.ControlInput1'>
+              <Form.Label>Created At</Form.Label>
+              <Form.Control
+                value={moment(selectedJob.createdAt).format('DD/MMM/YYYY')}
+                type='text'
+                disabled
+                defaultValue={moment().format('DD/MM/YYYY')}
+                onChange={(e) => {
+                  setSelectedJob({ ...selectedJob, createdAt: e.target.value });
+                }}
+              />
+            </Form.Group>
+            <Form.Group controlId='exampleForm.ControlInput1'>
+              {action === 'add' ? (
+                <></>
+              ) : (
+                <>
+                  <Form.Label>Created By</Form.Label>
+                  <Form.Control
+                    type='text'
+                    value={selectedJob.createdBy}
+                    onChange={(e) => {
+                      setSelectedJob({
+                        ...selectedJob,
+                        createdBy: e.target.value,
+                      });
+                    }}
+                  />
+                </>
+              )}
+            </Form.Group>
+            <Form.Group controlId='exampleForm.ControlInput1'>
+              <Form.Label>Company Image URL</Form.Label>
+              <Form.Control
+                type='text'
+                placeholder={'https://www.company.com/logo.jpg'}
+                value={selectedJob.imageUrl}
+                onChange={(e) => {
+                  setSelectedJob({ ...selectedJob, imageUrl: e.target.value });
+                }}
+              />
+            </Form.Group>{' '}
+            <Form.Group controlId='exampleForm.ControlInput1'>
+              <Form.Label>CTC Offered</Form.Label>
+              <Form.Control
+                type='text'
+                placeholder={'Rs. 3,00,000'}
+                value={selectedJob.salary}
+                onChange={(e) => {
+                  setSelectedJob({ ...selectedJob, salary: e.target.value });
+                }}
+              />
+            </Form.Group>
+            <Form.Group controlId='exampleForm.ControlInput1'></Form.Group>
+            <Form.Group controlId='exampleForm.ControlInput1'>
+              <Form.Label>Relevent Experience (Years)</Form.Label>
+              <Form.Control
+                placeholder={'2 Years'}
+                type='text'
+                value={selectedJob.experience}
+                onChange={(e) => {
+                  setSelectedJob({
+                    ...selectedJob,
+                    experience: e.target.value,
+                  });
+                }}
+              />
             </Form.Group>
             <Form.Group controlId='exampleForm.ControlSelect1'>
-              <Form.Label>Example select</Form.Label>
-              <Form.Control as='select'>
-                <option>1</option>
-                <option>2</option>
-                <option>3</option>
-                <option>4</option>
-                <option>5</option>
-              </Form.Control>
+              <Form.Group controlId='exampleForm.ControlTextarea1'>
+                <Form.Label>Short Description</Form.Label>
+                <Form.Control
+                  as='textarea'
+                  value={selectedJob.shortDescription}
+                  rows={2}
+                  placeholder={'A brief about the job'}
+                  onChange={(e) => {
+                    setSelectedJob({
+                      ...selectedJob,
+                      shortDescription: e.target.value,
+                    });
+                  }}
+                />
+              </Form.Group>
+              <Form.Group controlId='exampleForm.ControlTextarea1'>
+                <Form.Label>Long Description</Form.Label>
+                <Form.Control
+                  as='textarea'
+                  rows={5}
+                  placeholder={
+                    'Enter \n1. Primary Skills \n2. Secondary Skills \n3. Additional Skills \n4. Additional Job Information '
+                  }
+                  value={selectedJob.longDescription}
+                  onChange={(e) => {
+                    setSelectedJob({
+                      ...selectedJob,
+                      longDescription: e.target.value,
+                    });
+                  }}
+                />
+              </Form.Group>
             </Form.Group>
-            <Form.Group controlId='exampleForm.ControlSelect2'>
-              <Form.Label>Example multiple select</Form.Label>
-              <Form.Control as='select' multiple>
-                <option>1</option>
-                <option>2</option>
-                <option>3</option>
-                <option>4</option>
-                <option>5</option>
-              </Form.Control>
-            </Form.Group>
-            <Form.Group controlId='exampleForm.ControlTextarea1'>
-              <Form.Label>Example textarea</Form.Label>
-              <Form.Control as='textarea' rows={3} />
-            </Form.Group>
-          </Form>
-        </Modal.Body>
-        <Modal.Footer>
-          <Button variant='secondary' onClick={handleClose}>
-            Close
-          </Button>
-          <Button variant='primary' onClick={handleClose}>
-            {action === 'add' ? 'Save Job' : 'Save Changes'}
-          </Button>
-        </Modal.Footer>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button variant='danger' onClick={handleClose}>
+              Close
+            </Button>
+            <Button variant='primary' type='submit' onClick={handleClose}>
+              {action === 'add' ? 'Save Job' : 'Save Changes'}
+            </Button>
+          </Modal.Footer>{' '}
+        </Form>
       </Modal>
     </>
   );
@@ -179,6 +342,7 @@ const AddListing = () => {
           <Button
             onClick={(e) => {
               handleShow();
+              setSelectedJob({});
               setAction('add');
             }}>
             {' '}
