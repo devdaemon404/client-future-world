@@ -66,7 +66,15 @@ exports.createJobPosting = asyncHandler(async (req, res, next) => {
   let jobPosting = new JobPosting({
     name,
     shortDescription,
-
+    longDescription,
+    type,
+    shiftType,
+    location,
+    imageUrl,
+    deadline,
+    salary,
+    skills,
+    experience,
     user: req.user.id,
   });
 
