@@ -66,7 +66,7 @@ const AddListing = () => {
           formattedData.push({
             experience: job.experience || '-',
             salary: job.salary || '-',
-            deadline: job.deadline || '-',
+            deadline: moment(job.deadline).format('DD/MM/YYYY') || '-',
             imageUrl: job.imageUrl || '-',
             createdBy: job.createdBy || '-',
             createdAt: job.createdAt || '-',
@@ -149,7 +149,7 @@ const AddListing = () => {
 
   const onJobSubmit = (e) => {
     e.preventDefault();
-
+    handleClose();
     console.log(selectedJob);
 
     if (action === 'add') {
@@ -164,8 +164,10 @@ const AddListing = () => {
 
   const addJob = async () => {
     try {
+      setIsLoading(true);
       let jobToBePosted = await axios.post('/api/job-posting', selectedJob);
       setA(...(a + 1));
+      setIsLoading(false);
     } catch (error) {}
   };
   // update job Api
@@ -195,6 +197,7 @@ const AddListing = () => {
                 type='text'
                 placeholder={'JAVA Developer W/ 5 years of experience '}
                 value={selectedJob.title}
+                required
                 onChange={(e) => {
                   setSelectedJob({ ...selectedJob, title: e.target.value });
                 }}
@@ -206,6 +209,7 @@ const AddListing = () => {
                 type='text'
                 placeholder={'JAVA Developer / Node Developer '}
                 value={selectedJob.type}
+                required
                 onChange={(e) => {
                   setSelectedJob({ ...selectedJob, type: e.target.value });
                 }}
@@ -217,6 +221,7 @@ const AddListing = () => {
                 placeholder={'Full-Time / Part-Time'}
                 type='text'
                 value={selectedJob.shiftType}
+                required
                 onChange={(e) => {
                   setSelectedJob({ ...selectedJob, shiftType: e.target.value });
                 }}
@@ -228,6 +233,7 @@ const AddListing = () => {
                 placeholder={'City / WFH'}
                 value={selectedJob.location}
                 type='text'
+                required
                 onChange={(e) => {
                   setSelectedJob({ ...selectedJob, location: e.target.value });
                 }}
@@ -240,29 +246,11 @@ const AddListing = () => {
                 type='text'
                 disabled
                 defaultValue={moment().format('DD/MM/YYYY')}
+                required
                 onChange={(e) => {
                   setSelectedJob({ ...selectedJob, createdAt: e.target.value });
                 }}
               />
-            </Form.Group>
-            <Form.Group controlId='exampleForm.ControlInput1'>
-              {action === 'add' ? (
-                <></>
-              ) : (
-                <>
-                  <Form.Label>Created By</Form.Label>
-                  <Form.Control
-                    type='text'
-                    value={selectedJob.createdBy || selectedJob.user}
-                    onChange={(e) => {
-                      setSelectedJob({
-                        ...selectedJob,
-                        createdBy: e.target.value,
-                      });
-                    }}
-                  />
-                </>
-              )}
             </Form.Group>
             <Form.Group controlId='exampleForm.ControlInput1'>
               <Form.Label>Company Image URL</Form.Label>
@@ -270,6 +258,7 @@ const AddListing = () => {
                 type='text'
                 placeholder={'https://www.company.com/logo.jpg'}
                 value={selectedJob.imageUrl}
+                required
                 onChange={(e) => {
                   setSelectedJob({ ...selectedJob, imageUrl: e.target.value });
                 }}
@@ -281,6 +270,7 @@ const AddListing = () => {
                 type='text'
                 placeholder={'Rs. 3,00,000'}
                 value={selectedJob.salary}
+                required
                 onChange={(e) => {
                   setSelectedJob({ ...selectedJob, salary: e.target.value });
                 }}
@@ -289,9 +279,10 @@ const AddListing = () => {
             <Form.Group controlId='exampleForm.ControlInput1'>
               <Form.Label>Deadline</Form.Label>
               <Form.Control
-                type='text'
+                type='date'
                 placeholder={'DD/MM/YYYY'}
                 value={selectedJob.deadline}
+                required
                 onChange={(e) => {
                   setSelectedJob({ ...selectedJob, deadline: e.target.value });
                 }}
@@ -304,6 +295,7 @@ const AddListing = () => {
                 placeholder={'2 Years'}
                 type='text'
                 value={selectedJob.experience}
+                required
                 onChange={(e) => {
                   setSelectedJob({
                     ...selectedJob,
@@ -320,6 +312,7 @@ const AddListing = () => {
                   value={selectedJob.shortDescription}
                   rows={2}
                   placeholder={'A brief about the job'}
+                  required
                   onChange={(e) => {
                     setSelectedJob({
                       ...selectedJob,
@@ -337,6 +330,7 @@ const AddListing = () => {
                     'Enter \n1. Primary Skills \n2. Secondary Skills \n3. Additional Skills \n4. Additional Job Information '
                   }
                   value={selectedJob.longDescription}
+                  required
                   onChange={(e) => {
                     setSelectedJob({
                       ...selectedJob,
@@ -357,7 +351,7 @@ const AddListing = () => {
                 Delete Job
               </Button>
             )}
-            <Button variant='primary' type='submit' onClick={handleClose}>
+            <Button variant='primary' type='submit'>
               {action === 'add' ? 'Save Job' : 'Save Changes'}
             </Button>
           </Modal.Footer>{' '}
@@ -374,6 +368,24 @@ const AddListing = () => {
 
       <br />
       <div>
+        {' '}
+        <div>
+          <div style={{ float: 'left', left: 220 }}>
+            <Button
+              size='sm'
+              style={{ background: '#3f46cc' }}
+              onClick={(e) => {
+                handleShow();
+                setSelectedJob({});
+                setAction('add');
+              }}>
+              {' '}
+              Add Job
+            </Button>
+          </div>
+          <br />
+          <br />
+        </div>
         <TableContainer>
           <OPTable
             data={Jobs}
@@ -383,17 +395,6 @@ const AddListing = () => {
             adminId={''}
           />
         </TableContainer>{' '}
-        <div>
-          <Button
-            onClick={(e) => {
-              handleShow();
-              setSelectedJob({});
-              setAction('add');
-            }}>
-            {' '}
-            Add a new Job
-          </Button>
-        </div>
       </div>
 
       {modalJsx}

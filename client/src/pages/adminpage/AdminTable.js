@@ -17,7 +17,8 @@ const { Option } = Select;
 function DefaultColumnFilter({
   column: { filterValue, preFilteredRows, setFilter, Header },
 }) {
-  if (Header === '#' || Header === 'Action') return <div />;
+  if (Header === '#' || Header === 'Action' || Header === 'View')
+    return <div />;
   return (
     <Input
       style={{
@@ -189,6 +190,7 @@ function OPTable({
                   else if (cell.column.Header === 'View') {
                     return (
                       <Button
+                        style={{ width: 100 }}
                         key='random-key3'
                         variant='link'
                         onClick={(e) => {
