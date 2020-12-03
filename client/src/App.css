@@ -27,9 +27,7 @@
 .App-link {
   color: #61dafb;
 }
-.tableHead {
-  border: 1px solid black;
-}
+
 .tableHead th,
 tr,
 thead {
