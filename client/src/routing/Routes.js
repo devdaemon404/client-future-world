@@ -31,6 +31,7 @@ import PrivateRoute from './PrivateRoute';
 import UserContext from '../context/userContext';
 import ResetPasswordPage from '../pages/loginpage/reset-password-page/ResetPasswordPage';
 import { OPLoader } from '../util/LoaderUtil';
+import OnboardingPage from '../pages/secondpage/OnboardingPage';
 
 const adminRoutes = ['/admin', '/profile'];
 
@@ -48,7 +49,7 @@ const Routes = () => {
         // console.log(res.data.role);
 
         setLoginState(true);
-        console.log(location.pathname);
+        // console.log(location.pathname);
         if (res.data.role === 'admin') {
           if (location.pathname === '/') history.push('/admin');
           else if (adminRoutes.includes(location.pathname))
@@ -126,6 +127,7 @@ const Routes = () => {
       />
 
       <PrivateRoute exact path='/profile' component={ProfilePage} />
+      <PrivateRoute exact path='/onboarding' component={OnboardingPage} />
 
       <PrivateRoute exact path='/payslip' component={Payslippage} />
       <PrivateRoute exact path='/personal' component={PersonalPage} />

@@ -29,7 +29,7 @@ const JobPostingSchema = new mongoose.Schema({
     type: String,
   },
   experience: {
-    type: string,
+    type: String,
   },
   user: {
     type: mongoose.Schema.ObjectId,

@@ -13,7 +13,7 @@ import {
   // FormBottom,
   BottomLinks,
 } from './loginpage.styles';
-import LOGO from '../../assets/img/logo.png';
+import LOGO from '../../assets/img/FWC - High Res - Square - Transparent.png';
 
 const LoginPage = () => {
   const history = useHistory();

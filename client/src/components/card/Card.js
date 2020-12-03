@@ -26,7 +26,10 @@ const Card = ({ title, iconClass, sectionNames = [] }) => {
     getState();
   });
   return (
-    <CardContainer className='card w-500 h-100'>
+    <CardContainer
+      className='card 
+    w-500 
+    h-100'>
       <div className=''>
         <CardHeader>{title}</CardHeader>
         <div className='d-flex justify-content-center'>

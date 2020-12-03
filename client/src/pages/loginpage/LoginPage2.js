@@ -11,7 +11,7 @@ import {
   MainContainer,
   Footer,
 } from './LoginPage2.styles';
-import LOGO from '../../assets/img/logo.png';
+import LOGO from '../../assets/img/FWC - High Res - Wide - Transparent.png';
 import { toast } from '../../util/ToastUtil';
 import UserContext from '../../context/userContext';
 

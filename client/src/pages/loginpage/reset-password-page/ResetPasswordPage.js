@@ -1,5 +1,5 @@
 import React, { Fragment, useState, useContext } from 'react';
-import logo from '../../../assets/img/logo.png';
+import logo from '../../../assets/img/FWC - Low Res - Wide - Transparent.png';
 import { OPLoader } from '../../../util/LoaderUtil';
 import { toast } from '../../../util/ToastUtil';
 import axios from 'axios';

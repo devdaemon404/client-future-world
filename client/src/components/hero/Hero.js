@@ -5,9 +5,11 @@ import { Link } from 'react-router-dom';
 import axios from 'axios';
 import Card3 from '../card/Card3';
 import CustomModal from '../modal/CustomModal';
+import Job from '../featured-jobs/Job';
 
 function Hero(...props) {
   const [userData, setUserData] = useState({ name: 'User', photo: '' });
+  const [featuredJobs, setFeaturedJobs] = useState();
   useEffect(() => {
     const fetchUserData = async () => {
       try {
@@ -15,8 +17,20 @@ function Hero(...props) {
         setUserData({ ...result.data.data });
       } catch (e) {}
     };
+    const fetchJobsData = async () => {
+      try {
+        const res = await axios.get('/api/job-posting');
+        setFeaturedJobs(res.data.data);
+      } catch (e) {
+        console.log(e);
+      }
+    };
     fetchUserData();
+    fetchJobsData();
   }, []);
+
+  // console.log(featuredJobs);
+
   return (
     <HeroContainer className='box flex align-items-center'>
       <div className=''>
@@ -88,14 +102,9 @@ function Hero(...props) {
           </div>
           <br />
           <br />
-          <div className='col-lg-6 order-1 order-lg-2'>
+          {/* <div className='col-lg-6 order-1 order-lg-2'>
             <div className='mt-2 mb-3'>
-              {/* <button
-                type='submit'
-                className='btn selected-crumb submit-button crumb-item w-100 font-weight-bold'
-              >
-                <i className='far fa-check-circle'></i> Submmit Application
-              </button> */}
+              
               <CustomModal />
             </div>
             <div
@@ -145,6 +154,19 @@ function Hero(...props) {
                   </Link>
                 </div>
               </div>
+            </div>
+          </div> */}
+          <div className='col-lg-6 order-1 order-lg-2'>
+            <div
+              class='card'
+              style={{ padding: '20px', background: '#FEFEFE' }}>
+              <h3 className='font-weight-bold mb-3'>Featured Jobs</h3>
+
+              {featuredJobs?.map((data) => (
+                <div class='card mb-3' style={{ border: 'none' }}>
+                  <Job {...data} />
+                </div>
+              ))}
             </div>
           </div>
         </div>
