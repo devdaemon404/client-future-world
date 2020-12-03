@@ -35,7 +35,7 @@ const AddListing = () => {
 
   const [rawData, setRawData] = useState({});
   const [action, setAction] = useState(); // add , update
-
+  const [a, setA] = useState(0);
   const [isLoading, setIsLoading] = useState(false);
   const onClickHandler2 = (e) => {
     setSelected(e);
@@ -60,6 +60,7 @@ const AddListing = () => {
         jobs = await axios.get('/api/job-posting', selectedJob);
 
         jobs = jobs.data;
+        setRawData(jobs.data);
 
         jobs.data.forEach((job, i) => {
           formattedData.push({
@@ -87,7 +88,7 @@ const AddListing = () => {
         setIsLoading(false);
       }
     })();
-  }, []);
+  }, [a]);
 
   const columns = [
     {
@@ -126,10 +127,25 @@ const AddListing = () => {
 
   // Modal Start
 
+  const handleDelete = async () => {
+    await axios.delete(`/api/job-posting/${Selected}`);
+    setIsLoading(true);
+    handleClose();
+  };
   const [show, setShow] = useState(false);
 
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
+  const handleClose = () => {
+    setShow(false);
+
+    setTimeout(function () {
+      setA(a + 4);
+      setIsLoading(false);
+    }, 2000);
+  };
+  const handleShow = () => {
+    setShow(true);
+    console.log(rawData);
+  };
 
   const onJobSubmit = (e) => {
     e.preventDefault();
@@ -140,6 +156,7 @@ const AddListing = () => {
       addJob();
     } else {
       // call update api
+      updateJob();
     }
   };
 
@@ -148,6 +165,17 @@ const AddListing = () => {
   const addJob = async () => {
     try {
       let jobToBePosted = await axios.post('/api/job-posting', selectedJob);
+      setA(...(a + 1));
+    } catch (error) {}
+  };
+  // update job Api
+  const updateJob = async () => {
+    try {
+      let newJobUpdated = await axios.put(
+        `/api/job-posting/${Selected}`,
+        selectedJob
+      );
+      setIsLoading(true);
     } catch (error) {}
   };
 
@@ -225,7 +253,7 @@ const AddListing = () => {
                   <Form.Label>Created By</Form.Label>
                   <Form.Control
                     type='text'
-                    value={selectedJob.createdBy}
+                    value={selectedJob.createdBy || selectedJob.user}
                     onChange={(e) => {
                       setSelectedJob({
                         ...selectedJob,
@@ -255,6 +283,17 @@ const AddListing = () => {
                 value={selectedJob.salary}
                 onChange={(e) => {
                   setSelectedJob({ ...selectedJob, salary: e.target.value });
+                }}
+              />
+            </Form.Group>
+            <Form.Group controlId='exampleForm.ControlInput1'>
+              <Form.Label>Deadline</Form.Label>
+              <Form.Control
+                type='text'
+                placeholder={'DD/MM/YYYY'}
+                value={selectedJob.deadline}
+                onChange={(e) => {
+                  setSelectedJob({ ...selectedJob, deadline: e.target.value });
                 }}
               />
             </Form.Group>
@@ -309,9 +348,15 @@ const AddListing = () => {
             </Form.Group>
           </Modal.Body>
           <Modal.Footer>
-            <Button variant='danger' onClick={handleClose}>
-              Close
-            </Button>
+            {action === 'add' ? (
+              <Button variant='danger' onClick={handleClose}>
+                Close
+              </Button>
+            ) : (
+              <Button variant='danger' onClick={handleDelete}>
+                Delete Job
+              </Button>
+            )}
             <Button variant='primary' type='submit' onClick={handleClose}>
               {action === 'add' ? 'Save Job' : 'Save Changes'}
             </Button>

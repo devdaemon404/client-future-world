@@ -51,6 +51,7 @@ exports.getJobPosting = asyncHandler(async (req, res, next) => {
 exports.createJobPosting = asyncHandler(async (req, res, next) => {
   const {
     name,
+    title,
     shortDescription,
     longDescription,
     type,
@@ -74,6 +75,7 @@ exports.createJobPosting = asyncHandler(async (req, res, next) => {
     deadline,
     salary,
     skills,
+    title,
     experience,
     user: req.user.id,
   });
