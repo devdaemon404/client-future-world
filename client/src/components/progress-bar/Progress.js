@@ -4,14 +4,13 @@ import 'react-circular-progressbar/dist/styles.css';
 
 const Progress = ({ iconClass, percentage }) => {
   return (
-    <div className='container p-5 '>
+    <div className='container'>
       <CircularProgressbar
         value={percentage}
-        strokeWidth={12}
-        text={`${percentage}%`}
-      >
+        strokeWidth={10}
+        text={`${percentage}%`}>
         <img
-          style={{ width: 40, marginTop: -5 }}
+          style={{ width: 20, marginTop: -5 }}
           src='https://i.imgur.com/b9NyUGm.png'
           alt='doge'
         />

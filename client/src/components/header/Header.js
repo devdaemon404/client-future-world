@@ -2,7 +2,7 @@ import React from 'react';
 import { HeaderContainer } from './header.styles';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
-import logo from '../../assets/img/logo.png';
+import logo from '../../assets/img/FWC - High Res - Wide - Transparent.png';
 
 function Header({ pathname }) {
   const logOut = async () => {
@@ -13,7 +13,7 @@ function Header({ pathname }) {
       <div>
         <nav className='navbar navbar-expand-lg'>
           <Link className='navbar-brand ml-5' to='/'>
-            <img src={logo} alt='' className='img-fluid' width='100px' />
+            <img src={logo} alt='' className='img-fluid' width='80px' />
           </Link>
           <button
             className='navbar-toggler'
@@ -33,7 +33,12 @@ function Header({ pathname }) {
             <ul className='navbar-nav'>
               <li className='nav-item active mr-3'>
                 <Link className='nav-link' to={pathname}>
-                  My Application <span className='sr-only'>(current)</span>
+                  Home <span className='sr-only'>(current)</span>
+                </Link>
+              </li>
+              <li className='nav-item mr-3'>
+                <Link className='nav-link' to='/onboarding'>
+                  Onboarding
                 </Link>
               </li>
               <li className='nav-item active mr-3'>

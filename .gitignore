@@ -36,3 +36,6 @@ onpar_api.postman_collection.json
 
 # backup data
 _data
+
+# ignore log
+debug.log

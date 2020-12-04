@@ -23,7 +23,6 @@ const UserState = (props) => {
   };
 
   const setLoginState = (bool) => {
-    // console.log('what shit');
     setIsAuthenticated(bool);
   };
 

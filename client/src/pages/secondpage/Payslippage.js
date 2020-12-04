@@ -21,14 +21,21 @@ const PaySlipPage = () => {
   const [timeMonth, setTimeMonth] = useState('');
   const [timeYear, setTimeYear] = useState('');
   const [reimbursmentDate, setReimbursmentDate] = useState('');
+  const [timeSheetDate, setTimeSheetDate] = useState('');
+
   const [enabledDates, setEnabledDates] = useState({
     paySlip: [],
     timeSheet: [],
     reimbursement: [],
+    timeSheetUpload: [],
   });
 
   const reimburseMonthUpdater = (date, dateString) => {
     setReimbursmentDate(dateString);
+  };
+
+  const timeSheetMonthUpdater = (date, dateString) => {
+    setTimeSheetDate(dateString);
   };
 
   useEffect(() => {
@@ -38,15 +45,19 @@ const PaySlipPage = () => {
     const fetchDates = async () => {
       const paySlipEnabledDates = [],
         timeSheetEnabledDates = [],
-        reimbursementEnabledDates = [];
+        reimbursementEnabledDates = [],
+        employeeTimeSheetEnabledDates = [];
 
       await apiCall('paySlip', paySlipEnabledDates);
       await apiCall('timeSheet', timeSheetEnabledDates);
       await apiCall('reimburse', reimbursementEnabledDates);
+      await apiCall('employeeTimeSheet', employeeTimeSheetEnabledDates);
+
       setEnabledDates({
         paySlip: [...paySlipEnabledDates],
         timeSheet: [...timeSheetEnabledDates],
         reimbursement: [...reimbursementEnabledDates],
+        timeSheetUpload: [...employeeTimeSheetEnabledDates],
       });
     };
 
@@ -71,21 +82,22 @@ const PaySlipPage = () => {
     fetchDates();
   }, []);
 
-  const reimburseAPIcall = async (fileKey, reimburseDate, documentType) => {
+  const uploadAPIcall = async (fileKey, date, documentType) => {
     try {
       setIsLoading(true);
       const body = JSON.stringify({
         documentType,
         fileKey,
         documentedDate: {
-          month: reimburseDate[1],
-          year: reimburseDate[0],
+          month: date[1],
+          year: date[0],
         },
       });
 
       await axios.put('/api/employee/financial-docs', body, config);
-      toast(`File Uploaded for Reimbursment, admin will get back to you`);
+      toast(`File Uploaded, admin will get back to you`);
     } catch (error) {
+      console.log('upload catch error');
       console.log(error);
     } finally {
       setIsLoading(false);
@@ -116,13 +128,48 @@ const PaySlipPage = () => {
       if (res2.status === 200) {
         const documentType = 'reimburse';
         const reimburseDate = reimbursmentDate.split('-');
-        await reimburseAPIcall(fileKey, reimburseDate, documentType);
+        await uploadAPIcall(fileKey, reimburseDate, documentType);
         setReimbursmentDate('');
       } else {
         toast('Error uploading your file. Try again');
       }
     } catch (e) {
       toast('Error uploading your file. Try again');
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const onUploadHandler2 = async (e) => {
+    if (timeSheetDate === '') {
+      toast('Select the month for Time Sheet (upload)');
+      return;
+    }
+    try {
+      setIsLoading(true);
+      const file = e.target.files[0];
+      const formData = new FormData();
+      formData.append('file', file);
+      const res = await axios.post(
+        '/api/file/upload-url',
+        JSON.stringify({
+          fileName: file.name,
+          fileType: 'doc',
+          fileExtension: 'pdf',
+        }),
+        config
+      );
+      const { fileKey, url } = res.data;
+      const res2 = await axios.put(url, formData);
+      if (res2.status === 200) {
+        const documentType = 'employeeTimeSheet';
+        const timeDate = timeSheetDate.split('-');
+        await uploadAPIcall(fileKey, timeDate, documentType);
+        setTimeSheetDate('');
+      }
+    } catch (e) {
+      toast('Error uploading your file. Try again');
+      console.log(e);
     } finally {
       setIsLoading(false);
     }
@@ -288,7 +335,7 @@ const PaySlipPage = () => {
       <OPLoader isLoading={isLoading} />
       <div className='container'>
         <div className='row'>
-          <div className='col-lg-4 col-md-12 '>
+          <div className='col-lg-6 col-md-12 '>
             <div className='row'>
               <div className='col-12 text-left mb-3'>
                 <h2>Generate Pay Slip</h2>
@@ -338,7 +385,7 @@ const PaySlipPage = () => {
               </div>
             </div>
           </div>
-          <div className='col-lg-4 col-md-12'>
+          <div className='col-lg-6 col-md-12'>
             <div className='row'>
               <div className='col-12 text-left mb-3'>
                 <h2>Time Sheet</h2>
@@ -390,7 +437,7 @@ const PaySlipPage = () => {
             </div>
             {/* </div> */}
           </div>
-          <div className='col-lg-4 col-md-12'>
+          <div className='col-lg-6 col-md-12'>
             <UploadContainer>
               <div
               // className='heading'
@@ -465,6 +512,83 @@ const PaySlipPage = () => {
                 <div className='text-muted col-sm-9 mt-1'>
                   (Select the month and year for which you want to be
                   reimbursed)
+                </div>
+              </div>
+            </UploadContainer>
+          </div>
+          <div className='col-lg-6 col-md-12'>
+            <UploadContainer>
+              <div
+              // className='heading'
+              >
+                <h2>Time Sheet (upload)</h2>
+              </div>
+
+              <div className='form-group row p-2'>
+                <div className='col-sm-3'>
+                  <span className='text-danger'>*</span>
+                  Select Month and Year
+                </div>
+                <div className='col-sm-9'>
+                  <Space direction='vertical'>
+                    <DatePicker
+                      onChange={timeSheetMonthUpdater}
+                      monthCellRender={(dateMoment) => {
+                        const date = moment(dateMoment, 'YYYY-MM');
+                        const month = date.format('MMM');
+                        const formattedDate = date.format('YYYY-MM');
+                        let style = {
+                          backgroundColor: 'rgba(138,189,224,0.25)',
+                          borderRadius: 5,
+                        };
+                        if (
+                          !enabledDates.timeSheetUpload.includes(formattedDate)
+                        )
+                          style = {};
+
+                        return (
+                          <span
+                            style={{
+                              padding: 10,
+                              ...style,
+                            }}>
+                            {month}
+                          </span>
+                        );
+                      }}
+                      value={
+                        timeSheetDate === '' || timeSheetDate.trim() === ''
+                          ? undefined
+                          : moment(timeSheetDate, 'YYYY-MM')
+                      }
+                      picker='month'
+                      placeholder='2020-01'
+                    />
+                  </Space>
+                </div>
+                <button
+                  className='col-sm-8 p-2 mt-5 btn selected-crumb submit-button crumb-item w-100 font-weight-bold'
+                  disabled={
+                    timeSheetDate === '' ||
+                    timeSheetDate === undefined ||
+                    timeSheetDate === null
+                  }
+                  onClick={(e) => {
+                    document.getElementById('FileUpload2').click();
+                  }}>
+                  <i class='fas fa-cloud-upload-alt'></i> {'Upload'}
+                </button>
+                <input
+                  type='file'
+                  className='realupload'
+                  accept='application/pdf'
+                  id='FileUpload2'
+                  style={{ opacity: 0 }}
+                  disabled={timeSheetDate === '' || timeSheetDate.trim() === ''}
+                  onChange={onUploadHandler2}
+                />
+                <div className='text-muted col-sm-9 mt-1'>
+                  (Select the month and year of the time sheet you uploading)
                 </div>
               </div>
             </UploadContainer>
