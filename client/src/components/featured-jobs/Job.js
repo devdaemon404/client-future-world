@@ -14,7 +14,7 @@ const Job = ({ ...data }) => {
 
     const months = moment([currentDate]).diff(
       moment([createdDate]),
-      'months',
+      'days',
       true
     );
 
@@ -38,6 +38,11 @@ const Job = ({ ...data }) => {
     experience,
   } = data;
 
+  const formatSalary = (s) => {
+    if (s.toString().toLowerCase().trim().startsWith('rs')) return s;
+    else return `Rs. ${s}`;
+  };
+
   function MyVerticallyCenteredModal(props) {
     return (
       <Modal
@@ -60,27 +65,38 @@ const Job = ({ ...data }) => {
           <div class={styles.employerItem1}>
             <ul>
               <li>
-                <i class='fas fa-map-marker-alt'></i>
+                <i class='fas fa-map-marker-alt'></i>&nbsp;
                 {location}
               </li>
-              <li>{monthDiff(createdAt)} months ago</li>
+              <li> | </li>
+              <li>Posted On: {moment(createdAt).format('MM/DD/yyyy')}</li>
             </ul>
-            <p>{longDescription}</p>
-            <span class={styles.tag1}>Salary: {salary}</span>
+            <h5>Detailed Job Description</h5>
+            <pre>{longDescription}</pre>
             <span class={styles.tag1}>
-              Experience Required: {experience} years
+              Salary: <b>{formatSalary(salary)}</b>
             </span>
-            <span class={styles.tag1}>{shiftType}</span>
-            <span class={styles.tag1}>Apply before: {deadline}</span>
+            <span class={styles.tag1}>
+              Experience Required:&nbsp;
+              <b>{experience}</b>&nbsp; years
+            </span>
+            <span class={styles.tag1}>
+              Shift: &nbsp;
+              <b>{shiftType}</b>
+            </span>
+            <span class={styles.tag1}>
+              Apply before: <b>{moment(deadline).format('DD/MM/yyyy')}</b>
+            </span>
 
             {/* <span class={styles.spanTwo}>{shiftType}</span> */}
           </div>
         </Modal.Body>
         <Modal.Footer
           style={{ borderTop: 'none', display: 'block', paddingLeft: '30px' }}>
-          <Button onClick={props.onHide} className={styles.button1}>
-            Upload Resume
-          </Button>
+          <input type='file' id='upload' hidden />
+          <label className={styles.button1} for='upload'>
+            Choose file
+          </label>
           {/* <Button onClick={props.onHide} className={styles.button2}>
             Save
           </Button> */}
@@ -92,21 +108,16 @@ const Job = ({ ...data }) => {
   return (
     <Fragment>
       <div class={styles.employerItem} onClick={() => setModalShow(true)}>
-        <img
-          src={imageUrl}
-          className='img-fluid'
-          height='50px'
-          width='70px'
-          alt='Employer'
-        />
+        <img src={imageUrl} className='img-fluid' width='70px' alt='Employer' />
         <h3>{title}</h3>
 
         <ul>
           <li>
-            <i class='fas fa-map-marker-alt'></i>
+            <i class='fas fa-map-marker-alt'></i>&nbsp;
             {location}
           </li>
-          <li>{monthDiff(createdAt)} months ago</li>
+          <li> | </li>
+          <li>Posted On: {moment(createdAt).format('MM/DD/yyyy')}</li>
         </ul>
         <p>{shortDescription}</p>
         <span class={styles.spanOne}>{type}</span>

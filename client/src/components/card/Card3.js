@@ -5,6 +5,7 @@ import { Link } from 'react-router-dom';
 const Card3 = ({ title, subTitle }) => {
   return (
     <PayslipCard className='sub-card h-100 w-100'>
+      <hr />
       <div className='row'>
         <div className='col-md-12 col-lg-12'>
           <Title>{title}</Title>

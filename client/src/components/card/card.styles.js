@@ -61,8 +61,7 @@ export const Card2Header = styled.h1`
 
 export const PayslipCard = styled.div`
   border-radius: 0px;
-  background: #f7f7f7 0% 0% no-repeat padding-box;
-  opacity: 0.9;
+  margin-top: 20px;
 
   .sub-card-container {
     height: 50px;
@@ -96,6 +95,11 @@ export const Title = styled.div`
   color: #000;
   opacity: 1;
   padding-top: 35px;
+  @media only screen and (max-width: 1500px) {
+    font-size: 16px;
+    letter-spacing: 0px;
+    font-weight: 800;
+  }
 `;
 
 export const Subtitle = styled.div`
@@ -104,4 +108,7 @@ export const Subtitle = styled.div`
   opacity: 1;
   font-size: 20px;
   padding-bottom: 35px;
+  @media only screen and (max-width: 1500px) {
+    font-size: 14px;
+  }
 `;

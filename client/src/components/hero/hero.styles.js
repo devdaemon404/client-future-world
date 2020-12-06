@@ -69,21 +69,23 @@ export const HeroContainer = styled.div`
 `;
 
 export const MainHeader = styled.h1`
-  color: #f8f8f8;
+  color: #0e0e0e;
   border-radius: 5px;
   font-family: Montserrat;
-  font-size: 35;
+  font-size: 18px;
   font-weight: 700;
-  span {
-    font-size: 35px;
+  b {
+    font-size: 20px;
     font-weight: 400;
   }
 `;
 
 export const MainPara = styled.div`
-  margin-top: 25px;
-  color: #eee;
+  color: #0e0e0e;
   font-size: 18px;
+  @media only screen and (max-width: 1500px) {
+    font-size: 14px;
+  }
 `;
 
 export const MainHeader2 = styled.h1`
