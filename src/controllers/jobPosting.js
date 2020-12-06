@@ -1,6 +1,10 @@
+const AWS = require('aws-sdk');
+
 const ErrorResponse = require('../utils/errorResponse');
 const asyncHandler = require('../middleware/async');
 const sendEmail = require('../utils/sendMail');
+
+const { awsS3AccessKeyId, awsS3SecretAccessKey } = require('../../config/keys');
 
 const JobPosting = require('../models/JobPosting');
 const JobResponds = require('../models/JobResponds');
@@ -136,11 +140,20 @@ exports.deleteJobPosting = asyncHandler(async (req, res, next) => {
   });
 });
 
+//Initialize S3 config
+const s3 = new AWS.S3({
+  accessKeyId: awsS3AccessKeyId,
+  secretAccessKey: awsS3SecretAccessKey,
+  signatureVersion: 'v4',
+  region: 'ap-south-1',
+});
+
 /**
  * @desc    Create a respond by an employee
  * @route   POST /api/job-posting/respond
  * @access  Private
  */
+
 exports.createJobRespond = asyncHandler(async (req, res, next) => {
   let { jobId, fileKey } = req.body;
   let jobPosting = await JobPosting.findById(jobId);
@@ -188,6 +201,15 @@ exports.createJobRespond = asyncHandler(async (req, res, next) => {
     );
   }
 
+  // Get uploaded resume from S3
+  const params = {
+    Bucket: 'random-bucket-1234',
+    Expires: 60 * 60,
+    Key: `${fileKey}`,
+  };
+
+  const s3GetUrl = await s3.getSignedUrl('getObject', params);
+
   let user = await User.findById(jobPosting.user);
   let html = `<bold>You are receiving this email because the employee ${req.user.name} has uploading his resume</bold>`;
 
@@ -195,6 +217,13 @@ exports.createJobRespond = asyncHandler(async (req, res, next) => {
     email: user.email,
     subject: 'Job Posting',
     html,
+    attachments: [
+      {
+        // use URL as an attachment
+        filename: 'resume.pdf',
+        path: s3GetUrl,
+      },
+    ],
   });
 
   res.status(202).json({
