@@ -31,6 +31,7 @@ const Profilepage = ({ retrievedId }) => {
   const [pSlipDate, setPSlipDate] = useState('end');
   const [tSheetDate, setTSheetDate] = useState('end');
   const [rImburseDate, setRImburseDate] = useState('end');
+  const [timeSheetDate, setTimeSheetDate] = useState('end');
 
   const [toggle, setToggle] = useState(true);
   const [loading, setLoading] = useState(false);
@@ -45,6 +46,7 @@ const Profilepage = ({ retrievedId }) => {
   const [enabledReimbursementDates, setEnabledReimbursementDates] = useState(
     []
   );
+  const [enabledTime_Sheet, setEnabledTime_Sheet] = useState([]);
   const { _, __, logout } = useContext(UserContext);
 
   const checkLogin = async () => {
@@ -110,6 +112,13 @@ const Profilepage = ({ retrievedId }) => {
 
     return !enabledReimbursementDates.includes(formatted);
   }
+  function disabledDate1(current) {
+    // Can not select days before today and today
+    const formatted = current.format('YYYY-MM');
+
+    return !enabledTime_Sheet.includes(formatted);
+  }
+
   const fetchEnabledDates = async () => {
     const tempArr = [];
     await getEnabledDates('reimburse', tempArr);
@@ -121,6 +130,12 @@ const Profilepage = ({ retrievedId }) => {
     await getEnabledDates('timeSheet', tempArr);
     console.log('TIMESHEET', tempArr);
     setEnabledTimeSheetDates([...tempArr]);
+
+    //  Edit
+
+    await getEnabledDates('time-sheet', tempArr);
+    console.log('Timesheet DOwnload', tempArr);
+    setEnabledTime_Sheet([...tempArr]);
   };
 
   useEffect(() => {
@@ -176,6 +191,10 @@ const Profilepage = ({ retrievedId }) => {
     setRImburseDate(dateString);
   };
 
+  const timeSheetDateOnChange = async (_, dateString) => {
+    setTimeSheetDate(dateString);
+  };
+
   const downloadRImburseDocument = async () => {
     const tempDateArr = rImburseDate.split('-');
     if (rImburseDate === 'end') {
@@ -200,6 +219,33 @@ const Profilepage = ({ retrievedId }) => {
     }
   };
 
+  //
+
+  const downloadTimeSheetDocument = async () => {
+    const tempDateArr = timeSheetDate.split('-');
+    if (timeSheetDate === 'end') {
+      return toast('Please select a date first');
+    }
+    try {
+      const res = await axios.post('/api/admin/single-fin-doc', {
+        userId: retrievedId,
+        documentType: 'time-sheet',
+        documentedDate: {
+          month: tempDateArr[1],
+          year: tempDateArr[0],
+        },
+      });
+      const { url } = res.data.data;
+      setTimeSheetDate('end');
+      window.open(url);
+    } catch (e) {
+      toast('Error fetching document');
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  //
   const onUploadHandler1 = async (e) => {
     let file = e.target.files[0];
     let time1 = pSlipDate.split('-');
@@ -565,6 +611,44 @@ const Profilepage = ({ retrievedId }) => {
                       />
                     </div>
                   </UploadContainer>
+
+                  {/*  */}
+                  <UploadContainer>
+                    <span className='info-type'>Download Time Sheet</span>
+                    <div className='select'>
+                      <p>Select Month </p>{' '}
+                      <Space direction='vertical'>
+                        <DatePicker
+                          onChange={timeSheetDateOnChange}
+                          disabledDate={disabledDate1}
+                          value={
+                            timeSheetDate === 'end' ||
+                            timeSheetDate.trim() === ''
+                              ? undefined
+                              : moment(timeSheetDate, 'YYYY-MM')
+                          }
+                          picker='month'
+                        />
+                      </Space>
+                      <Button
+                        className='submit'
+                        onClick={(e) => {
+                          document.getElementById('FileUpload4').click();
+                        }}>
+                        {' DOWNLOAD'}
+                      </Button>
+                      <input
+                        type='submit'
+                        id='FileUpload4'
+                        disabled={
+                          timeSheetDate === 'end' || timeSheetDate.trim() === ''
+                        }
+                        style={{ opacity: 0, width: 0, height: 0 }}
+                        onClick={downloadTimeSheetDocument}
+                      />
+                    </div>
+                  </UploadContainer>
+                  {/*  */}
                 </React.Fragment>
               </TabPane>
               <TabPane tab='Add Reportee' key='Add Reportee'>
