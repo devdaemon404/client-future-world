@@ -2,9 +2,14 @@ import React, { Fragment } from 'react';
 import styles from './jobstyle.module.css';
 import { Modal, Button } from 'react-bootstrap';
 import moment from 'moment';
+import { uploadDocument } from '../../util/UploadFile';
+import { OPLoader } from '../../util/LoaderUtil';
+import { toast } from '../../util/ToastUtil';
+import Axios from 'axios';
 
 const Job = ({ ...data }) => {
   const [modalShow, setModalShow] = React.useState(false);
+  const [isLoading, setIsLoading] = React.useState(false);
 
   // month diff function
 
@@ -24,6 +29,7 @@ const Job = ({ ...data }) => {
   };
 
   const {
+    _id,
     title,
     shortDescription,
     longDescription,
@@ -41,6 +47,29 @@ const Job = ({ ...data }) => {
   const formatSalary = (s) => {
     if (s.toString().toLowerCase().trim().startsWith('rs')) return s;
     else return `Rs. ${s}`;
+  };
+
+  const handleFileUpload = async (e) => {
+    setIsLoading(true);
+    const file = e.target.files[0];
+    const fileKey = await uploadDocument(file, { confirmationUrl: null });
+    if (!fileKey) {
+      toast('Error uploading file. Try again');
+      setIsLoading(false);
+      return;
+    }
+    setModalShow(false);
+    try {
+      await Axios.post('/api/job-posting/respond', {
+        jobId: _id,
+        fileKey,
+      });
+      toast('Recommendation sent successfully');
+    } catch (e) {
+      toast('Error notifying admin. Try again');
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   function MyVerticallyCenteredModal(props) {
@@ -93,9 +122,9 @@ const Job = ({ ...data }) => {
         </Modal.Body>
         <Modal.Footer
           style={{ borderTop: 'none', display: 'block', paddingLeft: '30px' }}>
-          <input type='file' id='upload' hidden />
+          <input type='file' id='upload' hidden onChange={handleFileUpload} />
           <label className={styles.button1} for='upload'>
-            Choose file
+            Upload Resume
           </label>
           {/* <Button onClick={props.onHide} className={styles.button2}>
             Save
@@ -108,6 +137,7 @@ const Job = ({ ...data }) => {
   return (
     <Fragment>
       <div class={styles.employerItem} onClick={() => setModalShow(true)}>
+        <OPLoader isLoading={isLoading} />
         <img src={imageUrl} className='img-fluid' width='70px' alt='Employer' />
         <h3>{title}</h3>
 
