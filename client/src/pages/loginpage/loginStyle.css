@@ -17,12 +17,7 @@
   /* filter: blur(4px); */
 }
 
-html {
-  font-size: 20px;
-  font-family: 'Roboto', sans-serif, 'Courier New', Courier, monospace;
-}
-
-nav {
+.navBAAR {
   height: 3.5rem;
   background-color: var(--primary-color);
   display: flex;
@@ -34,7 +29,7 @@ nav .heading {
   color: white;
 }
 
-main {
+.main-Login {
   display: flex;
   align-items: center;
   justify-content: center;

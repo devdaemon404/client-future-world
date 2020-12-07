@@ -3,15 +3,9 @@ import jwt from 'jsonwebtoken';
 import axios from 'axios';
 import { Modal } from 'antd';
 import bcrypt from 'bcryptjs';
-import { Link, useHistory } from 'react-router-dom';
-import './loginStyle.css';
-import {
-  HOLDER,
-  MainLogin,
-  MainSlide,
-  MainContainer,
-  Footer,
-} from './LoginPage2.styles';
+import { a, useHistory } from 'react-router-dom';
+// import './loginStyle.css';
+import { HOLDER } from './LoginPage2.styles';
 import LOGO from '../../assets/img/FWC - High Res - Wide - Transparent.png';
 import { toast } from '../../util/ToastUtil';
 import UserContext from '../../context/userContext';
@@ -75,125 +69,13 @@ export const LoginPage2 = () => {
 
   return (
     <HOLDER>
-      {/* <MainContainer>
-        <div>
-          <MainLogin>
-            <div className='Logo'>
-              <img
-                src={LOGO}
-                alt='iem2'
-                height='75vh'
-                style={{ margin: '20px 40px' }}
-              />
-            </div>
-            <div className='loginForm'>
-              <div style={{ height: 150 }}></div>
-              <form onSubmit={onFormSubmit}>
-                <h6>Login ID</h6>
-
-                <div className='form-group'>
-                  <input
-                    type='email'
-                    className='lg'
-                    id='exampleInputEmail1'
-                    aria-describedby='emailHelp'
-                    placeholder='Enter Your Email'
-                    onChange={(e) => {
-                      setemail(e.target.value);
-                    }}
-                    style={{
-                      background: 'none',
-                      borderRadius: 0,
-                      borderBottom: '1px solid rgba(0,0,0,.3)',
-                      width: '350px',
-                    }}
-                  />
-                </div>
-                <h6>Password</h6>
-
-                <div className='form-group'>
-                  <input
-                    type='password'
-                    onChange={(e) => {
-                      setpassword(e.target.value);
-                    }}
-                    className=' lg'
-                    id='exampleInputPassword1'
-                    placeholder='Enter Your Password'
-                    style={{
-                      background: 'none',
-
-                      borderRadius: 0,
-                      borderBottom: '1px solid rgba(0,0,0,.3)',
-                      width: '350px',
-                    }}
-                  />
-                </div>
-
-                <Link to='#!' class='form-text form-group' onClick={showModal}>
-                  Forgot Password?
-                </Link>
-                <Modal
-                  title='Forgot password?'
-                  visible={visible}
-                  onOk={handleOk}
-                  onCancel={handleCancel}>
-                  Please contact your admin to reset your password. <br />
-                  You will receive an E-mail with with a temporary password.
-                </Modal>
-
-                <div className='form-group'>
-                  <button type='submit' className='btn btn-md'>
-                    {isLoading ? 'Logging you in ... ' : 'Sign In'}
-                  </button>
-                  <br />
-                </div>
-
-              </form>
-            </div>
-          </MainLogin>
-        </div>
-        <MainSlide>
-          <div className='image'>
-            {' '}
-            <img className='imageMain' src='/smart-min.png' alt={'bgsy'} />
-          </div>
-        </MainSlide>
-      </MainContainer>
-      <div style={{ height: '1vh' }} />
-      <Footer>
-        <div className='footer-up'></div>
-        <div className='footer-down'>
-          <a
-            className='Link'
-            href='http://www.futureworldconsultancy.com/contact.html'
-            target='_blank'>
-            Contact Us
-          </a>
-          {'   '}|
-          <a
-            className='Link'
-            href='http://www.futureworldconsultancy.com/'
-            target='_blank'>
-            Terms of service
-          </a>
-          {'   '}|
-          <a
-            className='Link'
-            href='http://www.futureworldconsultancy.com/'
-            target='_blank'>
-            Privacy policy
-          </a>
-        </div>
-      </Footer> */}
-
       <body className='background-here-login'>
-        <nav>
+        <nav className='.navBAAR'>
           <div className='heading'>
             <h4>CloudsBuzz</h4>
           </div>
         </nav>
-        <main>
+        <main className='main-Login'>
           <div className='card'>
             <div className='card-left'>
               <h3>Welcome to</h3>
@@ -205,9 +87,23 @@ export const LoginPage2 = () => {
               </p>
               <div className='icon-text'>
                 <i className='material-icons'>library_books</i>
-                <span className='small-text'>Resources</span>
+                <span className='small-text'>
+                  {' '}
+                  <a
+                    href='http://www.futureworldconsultancy.com/'
+                    className='unchange'>
+                    Resources
+                  </a>
+                </span>
                 <i className='material-icons'>support</i>
-                <span className='small-text'>Support</span>
+                <span className='small-text'>
+                  {' '}
+                  <a
+                    href='http://www.futureworldconsultancy.com/'
+                    className='unchange'>
+                    Support{' '}
+                  </a>
+                </span>{' '}
               </div>
             </div>
             <div className='card-right'>
@@ -245,12 +141,26 @@ export const LoginPage2 = () => {
                 <input
                   className='btn-primary gutterBottom'
                   type='submit'
-                  value='SIGN IN'
+                  value={isLoading ? 'Logging you in ... ' : 'Sign In'}
                 />
-                <a className='link gutterBottom'>Need assistance with Login?</a>
-                <a className='link'>Contact Us</a>
+                <a className='link gutterBottom' onClick={showModal}>
+                  Forgot your Password?
+                </a>
+                <a
+                  className='link'
+                  href='http://www.futureworldconsultancy.com/contact.html'>
+                  Contact Us
+                </a>
               </form>
             </div>
+            <Modal
+              title='Forgot password?'
+              visible={visible}
+              onOk={handleOk}
+              onCancel={handleCancel}>
+              Please contact your admin to reset your password. <br />
+              You will receive an E-mail with with a temporary password.
+            </Modal>
           </div>
         </main>
       </body>
