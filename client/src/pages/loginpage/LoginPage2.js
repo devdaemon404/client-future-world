@@ -81,7 +81,7 @@ export const LoginPage2 = () => {
           <div className='card'>
             <div className='card-left'>
               <h3>Welcome to</h3>
-              <h2 className='cb gutterBottom'>fwc</h2>
+              <h2 className='cb gutterBottom'>FWC</h2>
               <p className='small-text'>
                 fwc is an established IT consultancy services company which is
                 powered by a team of seasoned professionals and driven by its
