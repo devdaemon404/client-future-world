@@ -4,6 +4,7 @@ import axios from 'axios';
 import { Modal } from 'antd';
 import bcrypt from 'bcryptjs';
 import { Link, useHistory } from 'react-router-dom';
+import './loginStyle.css';
 import {
   HOLDER,
   MainLogin,
@@ -74,7 +75,7 @@ export const LoginPage2 = () => {
 
   return (
     <HOLDER>
-      <MainContainer>
+      {/* <MainContainer>
         <div>
           <MainLogin>
             <div className='Logo'>
@@ -147,11 +148,7 @@ export const LoginPage2 = () => {
                   </button>
                   <br />
                 </div>
-                {/* <div className='form-group'>
-                  <p style={{ color: 'red', fontWeight: 700 }}>
-                    {error ? 'Invalid Credentials' : ''}
-                  </p>
-                </div> */}
+
               </form>
             </div>
           </MainLogin>
@@ -161,7 +158,6 @@ export const LoginPage2 = () => {
             {' '}
             <img className='imageMain' src='/smart-min.png' alt={'bgsy'} />
           </div>
-          {/* <h2 className='Head'> Helping businesses around the world succeed</h2> */}
         </MainSlide>
       </MainContainer>
       <div style={{ height: '1vh' }} />
@@ -189,7 +185,75 @@ export const LoginPage2 = () => {
             Privacy policy
           </a>
         </div>
-      </Footer>
+      </Footer> */}
+
+      <body className='background-here-login'>
+        <nav>
+          <div className='heading'>
+            <h4>CloudsBuzz</h4>
+          </div>
+        </nav>
+        <main>
+          <div className='card'>
+            <div className='card-left'>
+              <h3>Welcome to</h3>
+              <h2 className='cb gutterBottom'>CloudsBuzz</h2>
+              <p className='small-text'>
+                A technology company (tech company) is a type of business entity
+                that focuses mainly on the development and manufacturing of
+                technology products or providing technology as a service
+              </p>
+              <div className='icon-text'>
+                <i className='material-icons'>library_books</i>
+                <span className='small-text'>Resources</span>
+                <i className='material-icons'>support</i>
+                <span className='small-text'>Support</span>
+              </div>
+            </div>
+            <div className='card-right'>
+              <form action='' className='form' onSubmit={onFormSubmit}>
+                <div className='input-icons'>
+                  <label className='input-label' for='username'>
+                    Username
+                  </label>
+                  <br />
+                  <i className='material-icons icon'>person</i>
+                  <input
+                    onChange={(e) => {
+                      setemail(e.target.value);
+                    }}
+                    className='input-field'
+                    type='text'
+                    placeholder='Enter Your Email'
+                  />
+                </div>
+                <div className='input-icons'>
+                  <label className='input-label' for='password'>
+                    Password
+                  </label>
+                  <br />
+                  <i className='material-icons icon'>lock</i>
+                  <input
+                    className='input-field'
+                    placeholder='Enter Your Password'
+                    type='password'
+                    onChange={(e) => {
+                      setpassword(e.target.value);
+                    }}
+                  />
+                </div>
+                <input
+                  className='btn-primary gutterBottom'
+                  type='submit'
+                  value='SIGN IN'
+                />
+                <a className='link gutterBottom'>Need assistance with Login?</a>
+                <a className='link'>Contact Us</a>
+              </form>
+            </div>
+          </div>
+        </main>
+      </body>
     </HOLDER>
   );
 };
