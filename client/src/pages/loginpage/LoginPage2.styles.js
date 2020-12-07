@@ -22,7 +22,7 @@ export const HOLDER = styled.div`
 
   nav {
     height: 3.5rem;
-    background-color: #0d3c61;
+    background-color: white;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -48,7 +48,7 @@ export const HOLDER = styled.div`
     flex-direction: row;
     justify-content: center;
     align-items: center;
-    background: rgba(255, 255, 255, 0.9);
+    background: rgba(255, 255, 255, 0.95);
   }
 
   .card-left {

@@ -72,18 +72,24 @@ export const LoginPage2 = () => {
       <body className='background-here-login'>
         <nav className='.navBAAR'>
           <div className='heading'>
-            <h4>CloudsBuzz</h4>
+            <h4>
+              <img src={LOGO} height='50px' />
+            </h4>
           </div>
         </nav>
         <main className='main-Login'>
           <div className='card'>
             <div className='card-left'>
               <h3>Welcome to</h3>
-              <h2 className='cb gutterBottom'>CloudsBuzz</h2>
+              <h2 className='cb gutterBottom'>FutureWorld</h2>
               <p className='small-text'>
-                A technology company (tech company) is a type of business entity
-                that focuses mainly on the development and manufacturing of
-                technology products or providing technology as a service
+                Future World is an established IT consultancy services company
+                which is powered by a team of seasoned professionals and driven
+                by its proven track record in providing consultants with
+                experience in some of the most advanced technologies. Our
+                talisman is our pool of IT consultants backed by a portfolio
+                which includes assignments with Fortune 500 companies and other
+                blue chip corporations.
               </p>
               <div className='icon-text'>
                 <i className='material-icons'>library_books</i>
