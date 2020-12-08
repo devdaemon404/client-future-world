@@ -1,17 +1,8 @@
-const AWS = require('aws-sdk');
-
 const asyncHandler = require('../middleware/async');
 
-const { awsS3AccessKeyId, awsS3SecretAccessKey } = require('../../config/keys');
-const ErrorResponse = require('../utils/errorResponse');
+const AwsS3 = require('../utils/awsS3');
 
-//Initialize S3 config
-const s3 = new AWS.S3({
-  accessKeyId: awsS3AccessKeyId,
-  secretAccessKey: awsS3SecretAccessKey,
-  signatureVersion: 'v4',
-  region: 'ap-south-1',
-});
+const ErrorResponse = require('../utils/errorResponse');
 
 /**
  * @desc    Upload file to aws s3
@@ -35,7 +26,7 @@ exports.uploadFile = asyncHandler(async (req, res, next) => {
     Key: fileKey,
   };
 
-  const url = await s3.getSignedUrl('putObject', params);
+  let url = await new AwsS3().getSignedUrl('putObject', params);
 
   res.status(200).json({
     success: true,
@@ -58,7 +49,7 @@ exports.getFile = asyncHandler(async (req, res, next) => {
     Key: `${fileKey}`,
   };
 
-  const url = await s3.getSignedUrl('getObject', params);
+  let url = await new AwsS3().getSignedUrl('getObject', params);
 
   // res.redirect(url)
   res.status(200).json({ url });
@@ -90,7 +81,8 @@ exports.uploadFinancialDocument = asyncHandler(async (req, res, next) => {
     Key: fileKey,
   };
 
-  const url = await s3.getSignedUrl('putObject', params);
+  let s3GetSignedUrl = util.promisify(s3.getSignedUrl);
+  let url = await s3GetSignedUrl('putObject', params);
 
   res.status(200).json({
     success: true,

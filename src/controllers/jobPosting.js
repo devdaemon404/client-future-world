@@ -1,10 +1,7 @@
-const AWS = require('aws-sdk');
-
 const ErrorResponse = require('../utils/errorResponse');
 const asyncHandler = require('../middleware/async');
 const sendEmail = require('../utils/sendMail');
-
-const { awsS3AccessKeyId, awsS3SecretAccessKey } = require('../../config/keys');
+const AwsS3 = require('../utils/awsS3');
 
 const JobPosting = require('../models/JobPosting');
 const JobResponds = require('../models/JobResponds');
@@ -140,14 +137,6 @@ exports.deleteJobPosting = asyncHandler(async (req, res, next) => {
   });
 });
 
-//Initialize S3 config
-const s3 = new AWS.S3({
-  accessKeyId: awsS3AccessKeyId,
-  secretAccessKey: awsS3SecretAccessKey,
-  signatureVersion: 'v4',
-  region: 'ap-south-1',
-});
-
 /**
  * @desc    Create a respond by an employee
  * @route   POST /api/job-posting/respond
@@ -208,10 +197,10 @@ exports.createJobRespond = asyncHandler(async (req, res, next) => {
     Key: `${fileKey}`,
   };
 
-  const s3GetUrl = await s3.getSignedUrl('getObject', params);
+  const s3GetUrl = await new AwsS3().getSignedUrl('getObject', params);
 
   let user = await User.findById(jobPosting.user);
-  let html = `<bold>You are receiving this email because the employee ${req.user.name} has uploading his resume</bold>`;
+  let html = `<bold>You are receiving this email because the employee ${req.user.name} has uploaded his resume</bold>`;
 
   await sendEmail({
     email: user.email,

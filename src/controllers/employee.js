@@ -1,20 +1,9 @@
-const AWS = require('aws-sdk');
-
 const asyncHandler = require('../middleware/async');
+const AwsS3 = require('../utils/awsS3');
 
 const Employee = require('../models/Employee');
 const User = require('../models/User');
 const FinancialDocument = require('../models/FinancialDocument');
-
-const { awsS3AccessKeyId, awsS3SecretAccessKey } = require('../../config/keys');
-
-//Initialize S3 config
-const s3 = new AWS.S3({
-  accessKeyId: awsS3AccessKeyId,
-  secretAccessKey: awsS3SecretAccessKey,
-  signatureVersion: 'v4',
-  region: 'ap-south-1',
-});
 
 /**
  * @desc    Create employee info
@@ -119,11 +108,9 @@ exports.getFinancialDocsUrl = asyncHandler(async (req, res, next) => {
       ResponseContentType: 'application/pdf',
       Key: `${fileKey}`,
     };
-
-    let url = await s3.getSignedUrl('getObject', params);
+    let url = await new AwsS3().getSignedUrl('getObject', params);
     financialDocument.url = url;
   }
-
   res.status(200).json({
     success: true,
     message: 'Fetched financial docs',
