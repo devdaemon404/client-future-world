@@ -51,7 +51,7 @@ const PaySlipPage = () => {
       await apiCall('paySlip', paySlipEnabledDates);
       await apiCall('timeSheet', timeSheetEnabledDates);
       await apiCall('reimburse', reimbursementEnabledDates);
-      await apiCall('employeeTimeSheet', employeeTimeSheetEnabledDates);
+      await apiCall('time-sheet', employeeTimeSheetEnabledDates);
 
       setEnabledDates({
         paySlip: [...paySlipEnabledDates],
@@ -162,7 +162,7 @@ const PaySlipPage = () => {
       const { fileKey, url } = res.data;
       const res2 = await axios.put(url, formData);
       if (res2.status === 200) {
-        const documentType = 'employeeTimeSheet';
+        const documentType = 'time-sheet';
         const timeDate = timeSheetDate.split('-');
         await uploadAPIcall(fileKey, timeDate, documentType);
         setTimeSheetDate('');
