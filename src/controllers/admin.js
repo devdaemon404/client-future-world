@@ -2,8 +2,10 @@ const crypto = require('crypto');
 const bcrypt = require('bcryptjs');
 
 const asyncHandler = require('../middleware/async');
+const AwsS3 = require('../utils/awsS3');
 const ErrorResponse = require('../utils/errorResponse');
 const sendEmail = require('../utils/sendMail');
+const { renderResetPasswordTemplate } = require('../views/templates');
 
 const User = require('../models/User');
 const Employee = require('../models/Employee');
@@ -236,17 +238,6 @@ exports.getFinancialDocs = asyncHandler(async (req, res, next) => {
   });
 });
 
-const AWS = require('aws-sdk');
-const { awsS3AccessKeyId, awsS3SecretAccessKey } = require('../../config/keys');
-const { renderResetPasswordTemplate } = require('../views/templates');
-//Initialize S3 config
-const s3 = new AWS.S3({
-  accessKeyId: awsS3AccessKeyId,
-  secretAccessKey: awsS3SecretAccessKey,
-  signatureVersion: 'v4',
-  region: 'ap-south-1',
-});
-
 /**
  * @desc    Get a single financial document for a employee
  * @route   POST /api/admin/single-fin-doc
@@ -267,12 +258,83 @@ exports.getSingleFinancialDoc = asyncHandler(async (req, res, next) => {
       Key: `${fileKey}`,
     };
 
-    url = await s3.getSignedUrl('getObject', params);
+    url = await new AwsS3().getSignedUrl('getObject', params);
   }
 
   res.status(200).json({
     success: true,
     data: { url },
+  });
+});
+
+/**
+ * @desc    Get a all financial document for a employee
+ * @route   POST /api/admin/all-fin-docs
+ * @access  Private
+ */
+exports.getAllFinancialDocs = asyncHandler(async (req, res, next) => {
+  const {
+    userId,
+    documentType,
+    documentedYear,
+    documentedMonth,
+    current,
+  } = req.body;
+
+  let filter = {};
+
+  if (current === 'employee') {
+    filter = {
+      $and: [
+        { user: userId },
+        { documentType },
+        {
+          'documentedDate.year': documentedYear,
+        },
+      ],
+    };
+  } else if (current === 'month') {
+    filter = {
+      $and: [
+        { documentType },
+        {
+          documentedDate: {
+            month: documentedMonth,
+            year: documentedYear,
+          },
+        },
+      ],
+    };
+  }
+
+  const finDocs = await FinancialDocument.find(filter).populate('user');
+  let downloadUrls = new Array();
+
+  if (finDocs !== null && finDocs.length > 0) {
+    for (let finDoc of finDocs) {
+      let fileKey = finDoc.fileKey;
+      const params = {
+        Bucket: 'random-bucket-1234',
+        Expires: 60 * 60,
+        Key: `${fileKey}`,
+      };
+      let s3GetUrl = await new AwsS3().getSignedUrl('getObject', params);
+      downloadUrls.push({
+        documentedDate: finDoc.documentedDate,
+        documentType: finDoc.documentType,
+        user: {
+          id: finDoc.user._id,
+          name: finDoc.user.name,
+        },
+        downloadUrl: s3GetUrl,
+      });
+    }
+  }
+  res.status(200).json({
+    success: true,
+    data: {
+      downloadUrls,
+    },
   });
 });
 
@@ -306,12 +368,16 @@ exports.updateUserPassword = asyncHandler(async (req, res, next) => {
     }
   );
 
-  const message = `You are receiving this email because your password has been changed by admin : email: ${user.email}, password: ${password}`;
+  // const message = `You are receiving this email because your password has been changed by admin : email: ${user.email}, password: ${password}`;
 
   await sendEmail({
     email: user.email,
     subject: 'Password Reset',
-    html: renderResetPasswordTemplate({ email: user.email, password, domain: process.env.DOMAIN }),
+    html: renderResetPasswordTemplate({
+      email: user.email,
+      password,
+      domain: process.env.DOMAIN,
+    }),
   });
 
   res.status(200).json({

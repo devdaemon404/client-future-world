@@ -23,6 +23,8 @@ import { PopUp } from '../../util/DeleteConfirmUtil';
 import { Button, TabContainer, Pagination } from 'react-bootstrap';
 import BulkUpload from './BulkUpload';
 import AddListing from './AddListing';
+import DownloadReport from './DownloadReport';
+
 
 const AdminPage = () => {
   let retrievedId = '';
@@ -245,6 +247,17 @@ const AdminPage = () => {
         onClick={(e) => setViewPanel('AddListing')}>
         Add/View a Listing
       </div>
+      <div
+        className='SideBarCompItem'
+        id='DownloadReport'
+        style={
+          ViewPanel === 'DownloadReport'
+            ? { backgroundColor: '#3F46CC', width: '100%' }
+            : {}
+        }
+        onClick={(e) => setViewPanel('DownloadReport')}>
+        Download Report
+      </div>
       {/* <div
         className='SideBarCompItem'
         id='Bulk Upload'
@@ -330,6 +343,7 @@ const AdminPage = () => {
             {ViewPanel === 'Profile' && <span>Employee Profile</span>}
             {ViewPanel === 'AddListing' && <span>Add a Job Listing</span>}
             {ViewPanel === 'BulkUpload' && <span> Bulk Upload</span>}
+            {ViewPanel === 'DownloadReport' && <span>Download Report </span>}
           </h3>
         </AdminHeader>
         <AdminMain>
@@ -360,6 +374,11 @@ const AdminPage = () => {
           {ViewPanel === 'AddListing' && (
             <TableContainer>
               <AddListing />
+            </TableContainer>
+          )}
+          {ViewPanel === 'DownloadReport' && (
+            <TableContainer>
+              <DownloadReport />
             </TableContainer>
           )}
         </AdminMain>

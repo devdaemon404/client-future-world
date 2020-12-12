@@ -23,6 +23,8 @@ import { uploadFinancialDocument } from '../../util/UploadFile';
 import { toast } from '../../util/ToastUtil';
 import { OPLoader } from '../../util/LoaderUtil';
 
+import { downloadAndZip } from '../../util/DownloadUtil';
+
 const { TabPane } = Tabs;
 
 const Profilepage = ({ retrievedId }) => {
@@ -32,6 +34,9 @@ const Profilepage = ({ retrievedId }) => {
   const [tSheetDate, setTSheetDate] = useState('end');
   const [rImburseDate, setRImburseDate] = useState('end');
   const [timeSheetDate, setTimeSheetDate] = useState('end');
+
+  const [reimburseYear, setReimburseYear] = useState('');
+  const [timeSheetYear, setTimeSheetYear] = useState('');
 
   const [toggle, setToggle] = useState(true);
   const [loading, setLoading] = useState(false);
@@ -611,7 +616,6 @@ const Profilepage = ({ retrievedId }) => {
                       />
                     </div>
                   </UploadContainer>
-
                   {/*  */}
                   <UploadContainer>
                     <span className='info-type'>Download Time Sheet</span>
@@ -646,6 +650,94 @@ const Profilepage = ({ retrievedId }) => {
                         style={{ opacity: 0, width: 0, height: 0 }}
                         onClick={downloadTimeSheetDocument}
                       />
+                    </div>
+                  </UploadContainer>
+                  {/*  */}
+                  <UploadContainer>
+                    <span className='info-type'>
+                      Download All Reimbursement Documents
+                    </span>
+                    <div className='select'>
+                      <p>Select Year </p>{' '}
+                      <Space direction='vertical'>
+                        <DatePicker
+                          onChange={(dateString) =>
+                            setReimburseYear(dateString)
+                          }
+                          value={reimburseYear}
+                          picker='year'
+                        />
+                      </Space>
+                      <Button
+                        onClick={async (e) => {
+                          try {
+                            const res = await axios.post(
+                              '/api/admin/all-fin-docs',
+                              {
+                                userId: retrievedId,
+                                documentType: 'reimburse',
+                                current: 'employee',
+                                documentedYear: reimburseYear,
+                              },
+                              {
+                                headers: {
+                                  'Content-Type': 'application/json',
+                                },
+                                withCredentials: true,
+                              }
+                            );
+                            const { downloadUrls } = res.data.data;
+                            downloadAndZip(downloadUrls);
+                          } catch (error) {
+                            console.log(error);
+                          }
+                        }}>
+                        Download
+                      </Button>
+                    </div>
+                  </UploadContainer>
+                  {/*  */}
+                  <UploadContainer>
+                    <span className='info-type'>
+                      Download All Timesheet Documents
+                    </span>
+                    <div className='select'>
+                      <p>Select Year </p>{' '}
+                      <Space direction='vertical'>
+                        <DatePicker
+                          onChange={(dateString) =>
+                            setTimeSheetYear(dateString)
+                          }
+                          value={timeSheetYear}
+                          picker='year'
+                        />
+                      </Space>
+                      <Button
+                        onClick={async (e) => {
+                          try {
+                            const res = await axios.post(
+                              '/api/admin/all-fin-docs',
+                              {
+                                userId: retrievedId,
+                                documentType: 'timeSheet',
+                                current: 'employee',
+                                documentedYear: timeSheetYear,
+                              },
+                              {
+                                headers: {
+                                  'Content-Type': 'application/json',
+                                },
+                                withCredentials: true,
+                              }
+                            );
+                            const { downloadUrls } = res.data.data;
+                            downloadAndZip(downloadUrls);
+                          } catch (error) {
+                            console.log(error);
+                          }
+                        }}>
+                        Download
+                      </Button>
                     </div>
                   </UploadContainer>
                   {/*  */}

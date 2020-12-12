@@ -46,9 +46,13 @@ const AddListing = () => {
 
   useEffect(() => {
     (async () => {
-      let selectedJobData = await axios.get(`/api/job-posting/${Selected}`);
-      selectedJobData = selectedJobData.data.data;
-      setSelectedJob(selectedJobData);
+      try {
+        let selectedJobData = await axios.get(`/api/job-posting/${Selected}`);
+        selectedJobData = selectedJobData.data.data;
+        setSelectedJob(selectedJobData);
+      } catch (error) {
+        console.log(error.message);
+      }
     })();
   }, [Selected]);
 

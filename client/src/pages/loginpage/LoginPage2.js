@@ -115,7 +115,7 @@ export const LoginPage2 = () => {
             <div className='card-right'>
               <form action='' className='form' onSubmit={onFormSubmit}>
                 <div className='input-icons'>
-                  <label className='input-label' for='username'>
+                  <label className='input-label' htmlFor='username'>
                     Username
                   </label>
                   <br />
@@ -130,7 +130,7 @@ export const LoginPage2 = () => {
                   />
                 </div>
                 <div className='input-icons'>
-                  <label className='input-label' for='password'>
+                  <label className='input-label' htmlFor='password'>
                     Password
                   </label>
                   <br />
