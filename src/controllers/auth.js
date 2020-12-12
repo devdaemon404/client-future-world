@@ -74,12 +74,12 @@ exports.register = asyncHandler(async (req, res, next) => {
 // @access    Public
 exports.login = asyncHandler(async (req, res, next) => {
   const email = req.body.email;
-  const password = req.body.password;
-  // const encryptedPassword = req.body.password;
-  // const password = jwt.verify(
-  //   encryptedPassword,
-  //   process.env.REACT_APP_PASSWORD_SECRET
-  // );
+  // const password = req.body.password;
+  const encryptedPassword = req.body.password;
+  const password = jwt.verify(
+    encryptedPassword,
+    process.env.REACT_APP_PASSWORD_SECRET
+  );
 
   // Validate emil & password
   if (!email || !password) {
