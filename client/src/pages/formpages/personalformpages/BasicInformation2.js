@@ -6,6 +6,7 @@ import axios from 'axios';
 import FormPageComponent from '../../../components/form/FormPageComponent.js';
 import { OPLoader } from '../../../util/LoaderUtil.js';
 import { config } from '../../../util/RequestUtil';
+import FwcHeader from '../../../components/header/FwcHeader.js';
 
 const BasicInformation2 = ({ history }) => {
   const [isLoading, setIsLoading] = useState(false);
@@ -103,7 +104,8 @@ const BasicInformation2 = ({ history }) => {
 
   return (
     <Container>
-      <Header pathname='/personal' />
+            <FwcHeader pathname='/personal' />
+
       <HeroContainer className='box d-flex align-items-center justify-content-center'>
         <MainHeader className='text-center'>Personal Information</MainHeader>
       </HeroContainer>

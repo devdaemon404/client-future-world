@@ -12,6 +12,7 @@ import OPBreadCrumb from '../../../components/form/OPBreadCrumb.js';
 import axios from 'axios';
 import { OPLoader } from '../../../util/LoaderUtil.js';
 import { config } from '../../../util/RequestUtil';
+import FwcHeader from '../../../components/header/FwcHeader.js';
 // import { Link } from 'react-router-dom';
 
 const HealthInformation = ({ history }) => {
@@ -106,7 +107,8 @@ const HealthInformation = ({ history }) => {
 
   return (
     <Container>
-      <Header pathname='/health' />
+      <FwcHeader pathname='/health' />
+
       <HeroContainer className='box d-flex align-items-center justify-content-center'>
         <MainHeader className='text-center'>
           Employee Health and Family Information

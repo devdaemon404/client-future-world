@@ -88,7 +88,9 @@ const Job = ({ ...data }) => {
             width='80px'
             alt='Employer'
           />
-          <h3 className='text-center'>{title}</h3>
+          <h3 className='text-center' style={{ marginTop: '20px' }}>
+            {title}
+          </h3>
         </Modal.Header>
         <Modal.Body closeButton style={{ paddingTop: '0px' }}>
           <div class={styles.employerItem1}>
@@ -100,8 +102,15 @@ const Job = ({ ...data }) => {
               <li> | </li>
               <li>Posted On: {moment(createdAt).format('MM/DD/yyyy')}</li>
             </ul>
-            <h5>Detailed Job Description</h5>
-            <pre>{longDescription}</pre>
+            <h5 style={{ marginTop: '20px' }}>Detailed Job Description</h5>
+            <pre
+              style={{
+                paddingLeft: '5px',
+                fontFamily: 'roboto',
+                fontWeight: '500',
+              }}>
+              {longDescription}
+            </pre>
             <span class={styles.tag1}>
               Salary: <b>{formatSalary(salary)}</b>
             </span>
@@ -138,7 +147,13 @@ const Job = ({ ...data }) => {
     <Fragment>
       <div class={styles.employerItem} onClick={() => setModalShow(true)}>
         <OPLoader isLoading={isLoading} />
-        <img src={imageUrl} className='img-fluid' width='70px' alt='Employer' />
+        <img
+          src={imageUrl}
+          className='img-fluid rounded mx-auto d-block'
+          width='64px'
+          alt='Employer'
+        />
+
         <h3>{title}</h3>
 
         <ul>
@@ -149,7 +164,8 @@ const Job = ({ ...data }) => {
           <li> | </li>
           <li>Posted On: {moment(createdAt).format('MM/DD/yyyy')}</li>
         </ul>
-        <p>{shortDescription}</p>
+        {/* <br /> */}
+        <p style={{ marginTop: '5px' }}>{shortDescription}</p>
         <span class={styles.spanOne}>{type}</span>
         <span class={styles.spanTwo}>{shiftType}</span>
       </div>

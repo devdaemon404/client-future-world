@@ -12,6 +12,7 @@ import OPBreadCrumb from '../../../components/form/OPBreadCrumb.js';
 import axios from 'axios';
 import { OPLoader } from '../../../util/LoaderUtil.js';
 import { config } from '../../../util/RequestUtil';
+import FwcHeader from '../../../components/header/FwcHeader.js';
 
 const OtherInformation = ({ history }) => {
   const [isLoading, setIsLoading] = useState(false);
@@ -109,7 +110,8 @@ const OtherInformation = ({ history }) => {
 
   return (
     <Container>
-      <Header pathname='/other' />
+      <FwcHeader pathname='/other' />
+
       <HeroContainer className='box d-flex align-items-center justify-content-center'>
         <MainHeader className='text-center'>
           Uploads and Other Information
@@ -373,8 +375,7 @@ const OtherInformation = ({ history }) => {
                 <div className='col-sm-12'>
                   <button
                     type='submit'
-                    className='btn selected-crumb submit-button crumb-item w-100 font-weight-bold'
-                  >
+                    className='btn selected-crumb submit-button crumb-item w-100 font-weight-bold'>
                     <i className='far fa-check-circle'></i> Save and Continue
                   </button>
                 </div>

@@ -13,6 +13,7 @@ import { config } from '../../util/RequestUtil';
 import { toast } from '../../util/ToastUtil.js';
 import { OPLoader } from '../../util/LoaderUtil.js';
 import { UploadContainer } from './paySlipPage.styles';
+import FwcHeader from '../../components/header/FwcHeader.js';
 
 const PaySlipPage = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -313,7 +314,9 @@ const PaySlipPage = () => {
 
   return (
     <Container>
-      <Header pathname='/' />
+      {/* <Header pathname='/' /> */}
+      <FwcHeader   pathname='/' />
+
       <HeroContainer className='box d-flex align-items-center justify-content-center'>
         <MainHeader className='text-center'>
           Pay Slip, Time Sheet and Reimbursement

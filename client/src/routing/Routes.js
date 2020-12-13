@@ -32,6 +32,7 @@ import UserContext from '../context/userContext';
 import ResetPasswordPage from '../pages/loginpage/reset-password-page/ResetPasswordPage';
 import { OPLoader } from '../util/LoaderUtil';
 import OnboardingPage from '../pages/secondpage/OnboardingPage';
+import FwcHomePage from '../pages/homepage/FwcHomePage';
 
 const adminRoutes = ['/admin', '/profile'];
 
@@ -118,7 +119,7 @@ const Routes = () => {
       atLeave={{ opacity: 0 }}
       atActive={{ opacity: 1 }}
       className='switch-wrapper'>
-      <PrivateRoute exact path='/' component={homepage} />
+      <PrivateRoute exact path='/' component={FwcHomePage} />
       <Route exact path='/login' component={LoginPage2} />
       <PrivateRoute
         exact

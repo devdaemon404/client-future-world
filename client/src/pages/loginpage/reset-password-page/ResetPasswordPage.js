@@ -62,7 +62,7 @@ const ResetPasswordPage = () => {
     <Fragment>
       <OPLoader isLoading={isLoading} />
       <div
-        style={{ paddingTop: '100px', background: '#296284', height: '100vh' }}>
+        style={{ paddingTop: '100px', background: '#0d3c61', height: '100vh' }}>
         <div className='container text-center'>
           <div className='row'>
             <div className='col-md-4 col-md-offset-4'></div>
@@ -133,7 +133,7 @@ const ResetPasswordPage = () => {
                             value='Reset Password'
                             type='submit'
                             style={{
-                              background: '#296284',
+                              background: '#0d3c61',
                             }}
                           />
                         </div>

@@ -13,6 +13,7 @@ import ComplexComponent from '../../../components/form/ComplexComponent';
 import OPBreadCrumb from '../../../components/form/OPBreadCrumb.js';
 import { config } from '../../../util/RequestUtil.js';
 import { toast } from '../../../util/ToastUtil.js';
+import FwcHeader from '../../../components/header/FwcHeader.js';
 
 const AcademicInformation = ({ history }) => {
   // eslint-disable-next-line
@@ -85,7 +86,7 @@ const AcademicInformation = ({ history }) => {
 
   return (
     <Container>
-      <Header pathname='/work' />
+      <FwcHeader pathname='/work' />
       <HeroContainer className='box d-flex align-items-center justify-content-center'>
         <MainHeader className='text-center'>
           Academic Information and Work Experience

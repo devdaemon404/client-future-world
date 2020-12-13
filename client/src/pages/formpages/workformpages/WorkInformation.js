@@ -15,6 +15,7 @@ import FormPageComponent from '../../../components/form/FormPageComponent.js';
 import { OPLoader } from '../../../util/LoaderUtil.js';
 import { config } from '../../../util/RequestUtil.js';
 import { toast } from '../../../util/ToastUtil.js';
+import FwcHeader from '../../../components/header/FwcHeader.js';
 
 const WorkInformation = ({ history }) => {
   // eslint-disable-next-line
@@ -40,7 +41,7 @@ const WorkInformation = ({ history }) => {
 
   return (
     <Container>
-      <Header pathname='/work' />
+      <FwcHeader pathname='/work' />
       <HeroContainer className='box d-flex align-items-center justify-content-center'>
         <MainHeader className='text-center'>
           Academic Information and Work Experience
@@ -145,8 +146,7 @@ const WorkInformation = ({ history }) => {
                     setIsLoading(false);
                   }
                 }}
-                className='btn selected-crumb submit-button crumb-item w-100 font-weight-bold'
-              >
+                className='btn selected-crumb submit-button crumb-item w-100 font-weight-bold'>
                 <i className='far fa-check-circle'></i> Save and Continue
               </button>
             </div>
