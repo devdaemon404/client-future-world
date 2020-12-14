@@ -6,6 +6,7 @@ import Job from '../featured-jobs/Job';
 import OnboardingItem from '../form-list/OnboardingItem';
 import { Link } from 'react-router-dom';
 import HomeContext from '../../context/home-page/homeContext';
+import CustomModal from '../modal/CustomModal';
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -18,7 +19,7 @@ function TabPanel(props) {
       aria-labelledby={`simple-tab-${index}`}
       {...other}>
       {value === index && (
-        <Box p={3}>
+        <Box>
           <Typography>{children}</Typography>
         </Box>
       )}
@@ -99,9 +100,9 @@ export default function FwcTabs() {
       <TabPanel
         value={value}
         index={0}
-        style={{ maxHeight: 345, overflow: 'auto' }}>
+        style={{ maxHeight: 350, overflow: 'auto' }}>
         {featuredJobs?.map((data) => (
-          <div className='mb-3' style={{ border: 'none' }}>
+          <div className='mb-1 p-2' key={data._id} style={{ border: 'none' }}>
             <Job {...data} />
           </div>
         ))}
@@ -109,9 +110,15 @@ export default function FwcTabs() {
       <TabPanel
         value={value}
         index={1}
-        style={{ maxHeight: 345, overflow: 'auto' }}>
+        style={{ maxHeight: 350, overflow: 'auto' }}>
+        <Box m={1} p={1}>
+          <CustomModal />
+        </Box>
         {onboardingItems.map((data) => (
-          <Link className='link' to={{ pathname: data.pathname }}>
+          <Link
+            className='link'
+            key={data.title}
+            to={{ pathname: data.pathname }}>
             <OnboardingItem
               title={data.title}
               sectionNames={data.sectionNames}

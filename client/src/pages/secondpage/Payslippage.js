@@ -8,7 +8,6 @@ import {
 } from '../formpages/formpage.styles.js';
 import axios from 'axios';
 import { DatePicker, Space, Modal } from 'antd';
-import Header from '../../components/header/Header';
 import { config } from '../../util/RequestUtil';
 import { toast } from '../../util/ToastUtil.js';
 import { OPLoader } from '../../util/LoaderUtil.js';
@@ -314,7 +313,6 @@ const PaySlipPage = () => {
 
   return (
     <Container>
-      {/* <Header pathname='/' /> */}
       <FwcHeader pathname='/' />
 
       <HeroContainer className='box d-flex align-items-center justify-content-center'>

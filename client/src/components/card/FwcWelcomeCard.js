@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect, useState, useContext } from 'react';
+import React, { Fragment, useContext } from 'react';
 import { createStyles, makeStyles } from '@material-ui/core/styles';
 
 import {
@@ -12,7 +12,6 @@ import {
 } from '@material-ui/core';
 import InfoIcon from '@material-ui/icons/Info';
 import { Link } from 'react-router-dom';
-import axios from 'axios';
 import FwcTabs from '../tabs/FwcTabs';
 import HomeContext from '../../context/home-page/homeContext';
 
@@ -24,8 +23,12 @@ const useStyles = makeStyles((theme) =>
     },
 
     onboardingMessage: {
+      fontSize: 13,
+      fontWeight: 'bolder',
+    },
+    submissionMessage: {
       fontSize: 15,
-      fontWeight: 400,
+      // fontWeight: 'bolder',
     },
     paySlipMessage: {
       fontSize: 13,
@@ -59,16 +62,19 @@ const FwcWelcomeCard = () => {
     {
       message: 'Pay Slips, Time Sheets and Reimbursements',
       class: false,
+      mb: 1,
     },
     {
       message:
         'Click view to download Pay Slips, Time Sheets and Upload Reimbursement.',
+      class: true,
+      mb: 3,
     },
   ];
 
   return (
     // <Container maxWidth='lg'>
-    <Box component='div' mt={14} ml={8} mr={8}>
+    <Box component='div' mt={12} ml={8} mr={8}>
       <Grid
         container
         spacing={2}
@@ -80,7 +86,7 @@ const FwcWelcomeCard = () => {
             <Grid container wrap='nowrap' spacing={2}>
               <Grid item>
                 <Avatar className={classes.large} src={userData.photo}>
-                  AP
+                  {userData.name.toString().split('')[0]}
                 </Avatar>
               </Grid>
               <Grid item xs>
@@ -93,56 +99,60 @@ const FwcWelcomeCard = () => {
                 {(() => {
                   if (userData.isFormComplete) {
                     return (
-                      <div className='col'>
-                        {Object.entries({
-                          Department: userData?.department ?? 'N/A',
-                          Designation: userData?.designation ?? 'N/A',
-                          'Joining Date': userData?.joiningDate ?? 'N/A',
-                          FWID: userData?.empNo ?? 'N/A',
-                        }).map(([key, value], index) => (
-                          <div key={index}>
-                            {' '}
-                            <b>{key.toString()}:&nbsp;&nbsp;</b>
-                            {value.toString()}
-                          </div>
-                        ))}
-                      </div>
+                      <Box mt={1}>
+                        <div>
+                          {Object.entries({
+                            Department: userData?.department ?? 'N/A',
+                            Designation: userData?.designation ?? 'N/A',
+                            'Joining Date': userData?.joiningDate ?? 'N/A',
+                            FWID: userData?.empNo ?? 'N/A',
+                          }).map(([key, value], index) => (
+                            <Box component='div'>
+                              <Grid item sm={12}>
+                                <Typography
+                                  variant='h5'
+                                  color='primary'
+                                  className={classes.submissionMessage}>
+                                  <b>{key}</b>: {value}
+                                </Typography>
+                              </Grid>
+                            </Box>
+                          ))}
+                        </div>
+                      </Box>
                     );
                   } else {
-                    return (
-                      <Fragment>
-                        <Box component='div' mt={1} p={1}>
-                          <Grid container direction='row' justify='center'>
-                            <Grid item sm={1}>
-                              <InfoIcon fontSize='medium' color='primary' />
-                            </Grid>
-                            <Grid item sm={7}>
-                              <Typography
-                                variant='h5'
-                                className={classes.onboardingMessage}>
-                                Fill in your on-boarding application form and
-                                submit it using the submit application button.
-                              </Typography>
-                            </Grid>
-                            <Grid item sm={4}></Grid>
-                          </Grid>
-                        </Box>
-                        <Box component='div' color='primary' mt={1} pl={5}>
-                          {' '}
-                          <Typography
-                            variant='h5'
-                            className={classes.onboardingMessage}
-                            color='primary'>
-                            We are delighted to have you!
-                          </Typography>
-                        </Box>
-                      </Fragment>
-                    );
+                    return <Fragment></Fragment>;
                   }
                 })()}
               </Grid>
             </Grid>
-            <Box mt={2} mb={4}>
+            {userData.isFormComplete ? (
+              ''
+            ) : (
+              <Box m={2}>
+                <Grid
+                  container
+                  direction='row'
+                  justify='flex-start'
+                  alignItems='flex-start'>
+                  <Grid item sm={1}>
+                    <InfoIcon fontSize='small' color='primary' />
+                  </Grid>
+                  <Grid item sm={11}>
+                    <Typography
+                      variant='h5'
+                      color='primary'
+                      className={classes.onboardingMessage}>
+                      Fill in your on-boarding application form and submit it
+                      using the submit application button.
+                    </Typography>
+                  </Grid>
+                </Grid>
+              </Box>
+            )}
+
+            <Box mt={2} mb={2}>
               <Divider />
             </Box>
 
@@ -153,11 +163,11 @@ const FwcWelcomeCard = () => {
                 justify='center'
                 alignItems='center'>
                 {playSlipData.map((data) => (
-                  <Box component='div' mb={2}>
+                  <Box component='div' key={data.message} mb={data.mb}>
                     <Grid item>
                       <Typography
                         variant='h5'
-                        className={data.class ?? classes.paySlipMessage}>
+                        className={data.class ? classes.paySlipMessage : ''}>
                         {data.message}
                       </Typography>
                     </Grid>

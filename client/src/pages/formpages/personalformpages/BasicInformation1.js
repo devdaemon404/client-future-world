@@ -6,7 +6,6 @@ import {
   //  MainPara, CardHeader, CardPara
 } from '../formpage.styles.js';
 import ImageUploading from 'react-images-uploading';
-import Header from '../../../components/header/Header';
 import FormPageComponent from '../../../components/form/FormPageComponent';
 import axios from 'axios';
 import OPBreadCrumb from '../../../components/form/OPBreadCrumb.js';

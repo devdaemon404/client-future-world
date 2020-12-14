@@ -35,7 +35,7 @@ const FwcHeader = ({ pathname }) => {
         </Typography>
         <Box>
           {headerData.map((data) => (
-            <Link to={data.toPath} style={{ color: '#fff' }}>
+            <Link to={data.toPath} key={data.label} style={{ color: '#fff' }}>
               <Button color='inherit'>{data.label}</Button>
             </Link>
           ))}
