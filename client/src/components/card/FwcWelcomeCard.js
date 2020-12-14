@@ -9,7 +9,6 @@ import {
   Paper,
   Avatar,
   Divider,
-  Container,
 } from '@material-ui/core';
 import InfoIcon from '@material-ui/icons/Info';
 import { Link } from 'react-router-dom';
@@ -74,16 +73,16 @@ const FwcWelcomeCard = () => {
     },
     {
       message:
-        'Click view to download pay slips and time sheets, Upload Reimbursement.',
+        'Click view to download Pay Slips, Time Sheets and Upload Reimbursement.',
     },
   ];
 
   return (
     // <Container maxWidth='lg'>
-    <Box component='div' m={8}>
+    <Box component='div' mt={15} ml={8} mr={8}>
       <Grid
         container
-        spacing={1}
+        spacing={2}
         direction='row'
         justify='center'
         alignItems='center'>

@@ -315,7 +315,7 @@ const PaySlipPage = () => {
   return (
     <Container>
       {/* <Header pathname='/' /> */}
-      <FwcHeader   pathname='/' />
+      <FwcHeader pathname='/' />
 
       <HeroContainer className='box d-flex align-items-center justify-content-center'>
         <MainHeader className='text-center'>
@@ -336,7 +336,7 @@ const PaySlipPage = () => {
         </div>
       </div>
       <OPLoader isLoading={isLoading} />
-      <div className='container'>
+      <div className='container' style={{ paddingLeft: '165px' }}>
         <div className='row'>
           <div className='col-lg-6 col-md-12 '>
             <div className='row'>

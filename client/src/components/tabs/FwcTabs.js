@@ -88,7 +88,7 @@ export default function FwcTabs() {
       <TabPanel
         value={value}
         index={0}
-        style={{ maxHeight: 450, overflow: 'auto' }}>
+        style={{ maxHeight: 345, overflow: 'auto' }}>
         {featuredJobs?.map((data) => (
           <div className='mb-3' style={{ border: 'none' }}>
             <Job {...data} />
@@ -98,7 +98,7 @@ export default function FwcTabs() {
       <TabPanel
         value={value}
         index={1}
-        style={{ maxHeight: 450, overflow: 'auto' }}>
+        style={{ maxHeight: 345, overflow: 'auto' }}>
         <Link className='link' to={{ pathname: '/personal' }}>
           <OnboardingItem
             title='Personal Information'
