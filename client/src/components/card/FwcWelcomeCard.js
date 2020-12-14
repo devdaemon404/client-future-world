@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect, useState } from 'react';
+import React, { Fragment, useEffect, useState, useContext } from 'react';
 import { createStyles, makeStyles } from '@material-ui/core/styles';
 
 import {
@@ -14,6 +14,7 @@ import InfoIcon from '@material-ui/icons/Info';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 import FwcTabs from '../tabs/FwcTabs';
+import HomeContext from '../../context/home-page/homeContext';
 
 const useStyles = makeStyles((theme) =>
   createStyles({
@@ -52,19 +53,7 @@ const useStyles = makeStyles((theme) =>
 
 const FwcWelcomeCard = () => {
   const classes = useStyles();
-
-  const [userData, setUserData] = useState({ name: 'User', photo: '' });
-
-  useEffect(() => {
-    const fetchUserData = async () => {
-      try {
-        const result = await axios.get('/api/employee');
-        setUserData({ ...result.data.data });
-      } catch (e) {}
-    };
-
-    fetchUserData();
-  }, []);
+  const { userData } = useContext(HomeContext);
 
   const playSlipData = [
     {
@@ -79,7 +68,7 @@ const FwcWelcomeCard = () => {
 
   return (
     // <Container maxWidth='lg'>
-    <Box component='div' mt={15} ml={8} mr={8}>
+    <Box component='div' mt={14} ml={8} mr={8}>
       <Grid
         container
         spacing={2}

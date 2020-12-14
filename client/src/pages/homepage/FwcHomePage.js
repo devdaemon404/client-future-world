@@ -2,6 +2,7 @@ import React from 'react';
 import { createStyles, makeStyles } from '@material-ui/core/styles';
 import FwcHeader from '../../components/header/FwcHeader';
 import FwcWelcomeCard from '../../components/card/FwcWelcomeCard';
+import HomeState from '../../context/home-page/homeState';
 
 const useStyles = makeStyles((theme) =>
   createStyles({
@@ -19,11 +20,15 @@ const useStyles = makeStyles((theme) =>
 
 const FwcHomePage = () => {
   const classes = useStyles();
+  
+
   return (
+    <HomeState>
     <div className={classes.root}>
       <FwcHeader />
       <FwcWelcomeCard />
     </div>
+    </HomeState>
   );
 };
 

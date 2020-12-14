@@ -1,17 +1,11 @@
-import React, { useEffect, useState } from 'react';
-import axios from 'axios';
-
+import React, { useContext } from 'react';
 import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
-import AppBar from '@material-ui/core/AppBar';
-import Tabs from '@material-ui/core/Tabs';
-import Tab from '@material-ui/core/Tab';
-import Typography from '@material-ui/core/Typography';
-import Box from '@material-ui/core/Box';
+import { AppBar, Tabs, Tab, Typography, Box } from '@material-ui/core';
 import Job from '../featured-jobs/Job';
-import OnboardingFormsList from '../form-list/OnboardingItem';
 import OnboardingItem from '../form-list/OnboardingItem';
 import { Link } from 'react-router-dom';
+import HomeContext from '../../context/home-page/homeContext';
 
 function TabPanel(props) {
   const { children, value, index, ...other } = props;
@@ -55,24 +49,41 @@ const useStyles = makeStyles((theme) => ({
 export default function FwcTabs() {
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
+  const { featuredJobs } = useContext(HomeContext);
+
+  const onboardingItems = [
+    {
+      pathname: '/personal',
+      title: 'Personal Information',
+      sectionNames: [
+        'TBasicInformation1',
+        'TBasicInformation2',
+        'TDesignationInformation',
+        'TDocumentalInformation',
+        'TAddressInformation',
+        'TLanguageInformation',
+      ],
+    },
+    {
+      pathname: '/work',
+      title: 'Academic Information',
+      sectionNames: ['TWorkInformation', 'TAcademicInformation'],
+    },
+    {
+      pathname: '/health',
+      title: 'Health & Family',
+      sectionNames: ['THealthInformation', 'TFamilyInformation'],
+    },
+    {
+      pathname: '/other',
+      title: 'Other Information',
+      sectionNames: ['TOtherInformation', 'TUploadInformation'],
+    },
+  ];
 
   const handleChange = (event, newValue) => {
     setValue(newValue);
   };
-
-  const [featuredJobs, setFeaturedJobs] = useState();
-  useEffect(() => {
-    const fetchJobsData = async () => {
-      try {
-        const res = await axios.get('/api/job-posting');
-        setFeaturedJobs(res.data.data);
-      } catch (e) {
-        console.log(e);
-      }
-    };
-
-    fetchJobsData();
-  }, []);
 
   return (
     <div className={classes.root}>
@@ -99,37 +110,14 @@ export default function FwcTabs() {
         value={value}
         index={1}
         style={{ maxHeight: 345, overflow: 'auto' }}>
-        <Link className='link' to={{ pathname: '/personal' }}>
-          <OnboardingItem
-            title='Personal Information'
-            sectionNames={[
-              'TBasicInformation1',
-              'TBasicInformation2',
-              'TDesignationInformation',
-              'TDocumentalInformation',
-              'TAddressInformation',
-              'TLanguageInformation',
-            ]}
-          />
-        </Link>
-        <Link className='link' to={{ pathname: '/work' }}>
-          <OnboardingItem
-            title='Academic Information'
-            sectionNames={['TWorkInformation', 'TAcademicInformation']}
-          />
-        </Link>
-        <Link className='link' to={{ pathname: '/health' }}>
-          <OnboardingItem
-            title='Health & Family'
-            sectionNames={['THealthInformation', 'TFamilyInformation']}
-          />
-        </Link>
-        <Link className='link' to={{ pathname: '/other' }}>
-          <OnboardingItem
-            title='Other Information'
-            sectionNames={['TOtherInformation', 'TUploadInformation']}
-          />
-        </Link>
+        {onboardingItems.map((data) => (
+          <Link className='link' to={{ pathname: data.pathname }}>
+            <OnboardingItem
+              title={data.title}
+              sectionNames={data.sectionNames}
+            />
+          </Link>
+        ))}
       </TabPanel>
     </div>
   );
