@@ -1,8 +1,8 @@
 const asyncHandler = require('../middleware/async');
-
 const AwsS3 = require('../utils/awsS3');
-
 const ErrorResponse = require('../utils/errorResponse');
+
+const Employee = require('../models/Employee');
 
 /**
  * @desc    Upload file to aws s3
@@ -61,18 +61,29 @@ exports.getFile = asyncHandler(async (req, res, next) => {
  * @access  Private
  */
 exports.uploadFinancialDocument = asyncHandler(async (req, res, next) => {
-  const { fileType, fileExtension, userId, date } = req.body;
+  const { fileType, fileExtension, userId, date, employeeNo } = req.body;
 
-  if (!userId || !date || !fileExtension || !fileType) {
+  if (!date || !fileExtension || !fileType) {
     return next(
       new ErrorResponse(
-        'Provide all params: fileType, fileExtension, userId, date',
+        'Provide all params: fileType, fileExtension, date',
         400
       )
     );
   }
 
-  let fileKey = `${userId}/${fileType}/${date}.${fileExtension}`;
+  let fileKey = '';
+  let employee;
+
+  if (userId) {
+    fileKey = `${userId}/${fileType}/${date}.${fileExtension}`;
+  } else if (employeeNo) {
+    employee = await Employee.findOne({ empNo: employeeNo });
+    if (!employee) {
+      return next(new ErrorResponse(`No such employee :${employeeNo}`, 400));
+    }
+    fileKey = `${employee.user}/${fileType}/${date}.${fileExtension}`;
+  }
 
   const params = {
     Bucket: 'random-bucket-1234',
@@ -81,13 +92,13 @@ exports.uploadFinancialDocument = asyncHandler(async (req, res, next) => {
     Key: fileKey,
   };
 
-  let s3GetSignedUrl = util.promisify(s3.getSignedUrl);
-  let url = await s3GetSignedUrl('putObject', params);
+  let url = await new AwsS3().getSignedUrl('putObject', params);
 
   res.status(200).json({
     success: true,
     message: `Created PUT url for uploading for ${fileType}`,
     fileKey,
     url,
+    userId: employee.user,
   });
 });
