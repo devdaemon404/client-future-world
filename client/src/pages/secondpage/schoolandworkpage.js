@@ -9,6 +9,7 @@ import Header from '../../components/header/Header';
 import Card2 from '../../components/card/Card2';
 import axios from 'axios';
 import { config } from '../../util/RequestUtil';
+import FwcHeader from '../../components/header/FwcHeader';
 
 function SchoolAndWorkPage() {
   const list = ['Academic Information', 'Work Information'];
@@ -37,7 +38,9 @@ function SchoolAndWorkPage() {
   }, []);
   return (
     <Container>
-      <Header pathname='/' />
+      {/* <Header pathname='/' /> */}
+      <FwcHeader pathname='/' />
+
       <HeroContainer className='box d-flex align-items-center'>
         <div className='container'>
           <div className='row'>

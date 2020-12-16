@@ -2,12 +2,12 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 
 import { Container, HeroContainer, MainHeader } from '../formpage.styles.js';
-import Header from '../../../components/header/Header';
 import FormPageComponent from '../../../components/form/FormPageComponent';
 import OPBreadCrumb from '../../../components/form/OPBreadCrumb.js';
 
 import { OPLoader } from '../../../util/LoaderUtil.js';
 import { config } from '../../../util/RequestUtil.js';
+import FwcHeader from '../../../components/header/FwcHeader.js';
 
 const DesignationInformation = ({ history }) => {
   const [isLoading, setIsLoading] = useState(false);
@@ -124,7 +124,9 @@ const DesignationInformation = ({ history }) => {
 
   return (
     <Container>
-      <Header pathname='/personal' />
+     
+      <FwcHeader pathname='/personal' />
+
       <HeroContainer className='box d-flex align-items-center justify-content-center'>
         <MainHeader className='text-center'>Personal Information</MainHeader>
       </HeroContainer>

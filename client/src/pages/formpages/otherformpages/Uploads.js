@@ -6,20 +6,20 @@ import {
   //  MainPara, CardHeader, CardPara
 } from '../formpage.styles.js';
 // import { Link } from 'react-router-dom';
-import Header from '../../../components/header/Header';
 import FormPageComponent from '../../../components/form/FormPageComponent';
 import OPBreadCrumb from '../../../components/form/OPBreadCrumb';
 import axios from 'axios';
 import { toast } from '../../../util/ToastUtil.js';
 import { config } from '../../../util/RequestUtil';
 import { OPLoader } from '../../../util/LoaderUtil.js';
+import FwcHeader from '../../../components/header/FwcHeader.js';
 
 const Uploads = ({ history }) => {
   const [formData, setFormData] = useState({});
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
-    const fetchData = async () => { 
+    const fetchData = async () => {
       setIsLoading(true);
       const result = await axios.get('/api/employee?select=uploads', config);
 
@@ -55,7 +55,8 @@ const Uploads = ({ history }) => {
   };
   return (
     <Container>
-      <Header pathname='/other' />
+      <FwcHeader pathname='/other' />
+
       <HeroContainer className='box d-flex align-items-center justify-content-center'>
         <MainHeader className='text-center'>
           Uploads and Other Information
@@ -104,8 +105,7 @@ const Uploads = ({ history }) => {
                       </label>
                       <label
                         style={{ textDecoration: 'underline' }}
-                        className='col-sm-5 btn text-truncate text-left'
-                      >
+                        className='col-sm-5 btn text-truncate text-left'>
                         <span className='' style={{ width: 50 }}>
                           {(() => {
                             const value = formData[form.name];
@@ -153,8 +153,7 @@ const Uploads = ({ history }) => {
                       </label>
                       <label
                         style={{ textDecoration: 'underline' }}
-                        className='col-sm-5 btn text-truncate text-left'
-                      >
+                        className='col-sm-5 btn text-truncate text-left'>
                         <span className='text-truncate'>
                           {(() => {
                             const value = formData[form.label];
@@ -196,8 +195,7 @@ const Uploads = ({ history }) => {
                       setIsLoading(false);
                       toast('Your application is complete');
                       history.push('/');
-                    }}
-                  >
+                    }}>
                     <i className='far fa-check-circle'></i> Save and Continue
                   </div>
                 </div>

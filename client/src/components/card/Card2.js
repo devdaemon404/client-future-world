@@ -8,7 +8,7 @@ const Card = ({ title, subTitle, iconClass, percentage, list, pathname }) => {
     <Card2Container className='sub-card h-100 w-100'>
       <div className='row'>
         <div className='col-md-12 col-lg-12'>
-          <div className='row'>
+          <div className='row' style={{ padding: '20px' }}>
             <div className='col-md-3' style={{ padding: 0.5 }}>
               <ProgressBar iconClass={iconClass} percentage={percentage} />
             </div>
@@ -30,8 +30,7 @@ const Card = ({ title, subTitle, iconClass, percentage, list, pathname }) => {
               <Link
                 key={index}
                 to={`information/${pathname[index]}`}
-                className='sub-card-container'
-              >
+                className='sub-card-container'>
                 {' '}
                 <span className='sub-card-content'>{item}</span>
               </Link>

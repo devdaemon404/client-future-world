@@ -6,13 +6,13 @@ import {
   //  MainPara, CardHeader, CardPara
 } from '../formpage.styles.js';
 
-import Header from '../../../components/header/Header';
 import FormPageComponent from '../../../components/form/FormPageComponent';
 import OPBreadCrumb from '../../../components/form/OPBreadCrumb.js';
 
 import axios from 'axios';
 import { OPLoader } from '../../../util/LoaderUtil.js';
 import { config } from '../../../util/RequestUtil';
+import FwcHeader from '../../../components/header/FwcHeader.js';
 
 const Address = ({ history }) => {
   const [isLoading, setIsLoading] = useState(false);
@@ -102,7 +102,8 @@ const Address = ({ history }) => {
 
   return (
     <Container>
-      <Header pathname='/personal' />
+      <FwcHeader pathname='/personal' />
+
       <HeroContainer className='box d-flex align-items-center justify-content-center'>
         <MainHeader className='text-center'>Personal Information</MainHeader>
       </HeroContainer>

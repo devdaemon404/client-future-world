@@ -1,8 +1,8 @@
-import React, { useState, useContext, useEffect } from 'react';
+import React, { useState, useContext } from 'react';
 import jwt from 'jsonwebtoken';
 import axios from 'axios';
 import { Modal } from 'antd';
-import bcrypt from 'bcryptjs';
+// import bcrypt from 'bcryptjs';
 import { a, useHistory } from 'react-router-dom';
 // import './loginStyle.css';
 import { HOLDER } from './LoginPage2.styles';
@@ -73,7 +73,7 @@ export const LoginPage2 = () => {
         <nav className='.navBAAR'>
           <div className='heading'>
             <h4>
-              <img src={LOGO} height='50px' />
+              <img src={LOGO} alt='FWC Logo' height='50px' />
             </h4>
           </div>
         </nav>

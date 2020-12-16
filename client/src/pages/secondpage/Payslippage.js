@@ -8,11 +8,11 @@ import {
 } from '../formpages/formpage.styles.js';
 import axios from 'axios';
 import { DatePicker, Space, Modal } from 'antd';
-import Header from '../../components/header/Header';
 import { config } from '../../util/RequestUtil';
 import { toast } from '../../util/ToastUtil.js';
 import { OPLoader } from '../../util/LoaderUtil.js';
 import { UploadContainer } from './paySlipPage.styles';
+import FwcHeader from '../../components/header/FwcHeader.js';
 
 const PaySlipPage = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -313,7 +313,8 @@ const PaySlipPage = () => {
 
   return (
     <Container>
-      <Header pathname='/' />
+      <FwcHeader pathname='/' />
+
       <HeroContainer className='box d-flex align-items-center justify-content-center'>
         <MainHeader className='text-center'>
           Pay Slip, Time Sheet and Reimbursement
@@ -333,7 +334,7 @@ const PaySlipPage = () => {
         </div>
       </div>
       <OPLoader isLoading={isLoading} />
-      <div className='container'>
+      <div className='container' style={{ paddingLeft: '165px' }}>
         <div className='row'>
           <div className='col-lg-6 col-md-12 '>
             <div className='row'>

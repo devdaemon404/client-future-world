@@ -6,6 +6,7 @@ import { uploadDocument } from '../../util/UploadFile';
 import { OPLoader } from '../../util/LoaderUtil';
 import { toast } from '../../util/ToastUtil';
 import Axios from 'axios';
+import { Paper } from '@material-ui/core';
 
 const Job = ({ ...data }) => {
   const [modalShow, setModalShow] = React.useState(false);
@@ -88,36 +89,45 @@ const Job = ({ ...data }) => {
             width='80px'
             alt='Employer'
           />
-          <h3 className='text-center'>{title}</h3>
+          <h3 className='text-center' style={{ marginTop: '20px' }}>
+            {title}
+          </h3>
         </Modal.Header>
         <Modal.Body closeButton style={{ paddingTop: '0px' }}>
-          <div class={styles.employerItem1}>
+          <div className={styles.employerItem1}>
             <ul>
               <li>
-                <i class='fas fa-map-marker-alt'></i>&nbsp;
+                <i className='fas fa-map-marker-alt'></i>&nbsp;
                 {location}
               </li>
               <li> | </li>
               <li>Posted On: {moment(createdAt).format('MM/DD/yyyy')}</li>
             </ul>
-            <h5>Detailed Job Description</h5>
-            <pre>{longDescription}</pre>
-            <span class={styles.tag1}>
+            <h5 style={{ marginTop: '20px' }}>Detailed Job Description</h5>
+            <pre
+              style={{
+                paddingLeft: '5px',
+                fontFamily: 'roboto',
+                fontWeight: '500',
+              }}>
+              {longDescription}
+            </pre>
+            <span className={styles.tag1}>
               Salary: <b>{formatSalary(salary)}</b>
             </span>
-            <span class={styles.tag1}>
+            <span className={styles.tag1}>
               Experience Required:&nbsp;
               <b>{experience}</b>&nbsp; years
             </span>
-            <span class={styles.tag1}>
+            <span className={styles.tag1}>
               Shift: &nbsp;
               <b>{shiftType}</b>
             </span>
-            <span class={styles.tag1}>
+            <span className={styles.tag1}>
               Apply before: <b>{moment(deadline).format('DD/MM/yyyy')}</b>
             </span>
 
-            {/* <span class={styles.spanTwo}>{shiftType}</span> */}
+            {/* <span className={styles.spanTwo}>{shiftType}</span> */}
           </div>
         </Modal.Body>
         <Modal.Footer
@@ -136,23 +146,30 @@ const Job = ({ ...data }) => {
 
   return (
     <Fragment>
-      <div class={styles.employerItem} onClick={() => setModalShow(true)}>
-        <OPLoader isLoading={isLoading} />
-        <img src={imageUrl} className='img-fluid' width='70px' alt='Employer' />
+      <OPLoader isLoading={isLoading} />
+      <Paper onClick={() => setModalShow(true)} className={styles.employerItem}>
+        <img
+          src={imageUrl}
+          className='img-fluid rounded mx-auto d-block'
+          width='64px'
+          alt='Employer'
+        />
+
         <h3>{title}</h3>
 
         <ul>
           <li>
-            <i class='fas fa-map-marker-alt'></i>&nbsp;
+            <i className='fas fa-map-marker-alt'></i>&nbsp;
             {location}
           </li>
           <li> | </li>
           <li>Posted On: {moment(createdAt).format('MM/DD/yyyy')}</li>
         </ul>
-        <p>{shortDescription}</p>
-        <span class={styles.spanOne}>{type}</span>
-        <span class={styles.spanTwo}>{shiftType}</span>
-      </div>
+        {/* <br /> */}
+        <p style={{ marginTop: '5px' }}>{shortDescription}</p>
+        <span className={styles.spanOne}>{type}</span>
+        <span className={styles.spanTwo}>{shiftType}</span>
+      </Paper>
 
       <MyVerticallyCenteredModal
         show={modalShow}

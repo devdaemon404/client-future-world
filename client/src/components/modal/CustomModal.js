@@ -47,7 +47,7 @@ const CustomModal = () => {
       <OPLoader isLoading={isLoading} />
       <div
         style={{
-          width: 610,
+          // width: 610,
           display: isFormDisabled ? 'none' : undefined,
         }}>
         <Button
@@ -71,7 +71,7 @@ const CustomModal = () => {
             }
           }}
           className='submit-button w-100 font-weight-bold'
-          style={{ backgroundColor: '#296284', border: 'none' }}>
+          style={{ backgroundColor: '#0d3c61', border: 'none' }}>
           Submit Application
         </Button>
       </div>
