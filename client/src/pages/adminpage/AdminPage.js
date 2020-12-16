@@ -23,8 +23,7 @@ import { PopUp } from '../../util/DeleteConfirmUtil';
 import { Button, TabContainer, Pagination } from 'react-bootstrap';
 import BulkUpload from './BulkUpload';
 import AddListing from './AddListing';
-import DownloadReport from './DownloadReport';
-
+import UploadDownloadReport from './UploadDownloadReport';
 
 const AdminPage = () => {
   let retrievedId = '';
@@ -249,14 +248,14 @@ const AdminPage = () => {
       </div>
       <div
         className='SideBarCompItem'
-        id='DownloadReport'
+        id='UploadDownloadReport'
         style={
-          ViewPanel === 'DownloadReport'
+          ViewPanel === 'UploadDownloadReport'
             ? { backgroundColor: '#3F46CC', width: '100%' }
             : {}
         }
-        onClick={(e) => setViewPanel('DownloadReport')}>
-        Download Report
+        onClick={(e) => setViewPanel('UploadDownloadReport')}>
+        Upload/Download Report
       </div>
       {/* <div
         className='SideBarCompItem'
@@ -343,7 +342,9 @@ const AdminPage = () => {
             {ViewPanel === 'Profile' && <span>Employee Profile</span>}
             {ViewPanel === 'AddListing' && <span>Add a Job Listing</span>}
             {ViewPanel === 'BulkUpload' && <span> Bulk Upload</span>}
-            {ViewPanel === 'DownloadReport' && <span>Download Report </span>}
+            {ViewPanel === 'UploadDownloadReport' && (
+              <span>Upload/ Download Report </span>
+            )}
           </h3>
         </AdminHeader>
         <AdminMain>
@@ -376,9 +377,9 @@ const AdminPage = () => {
               <AddListing />
             </TableContainer>
           )}
-          {ViewPanel === 'DownloadReport' && (
+          {ViewPanel === 'UploadDownloadReport' && (
             <TableContainer>
-              <DownloadReport />
+              <UploadDownloadReport />
             </TableContainer>
           )}
         </AdminMain>

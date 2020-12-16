@@ -162,7 +162,7 @@ export const SideBar = styled.div`
     margin:17px auto;
     width: 200px;
     border-radius:8px;
-    height: 40px;
+    height: 50px;
     font-size:15px;
     font-weight:700;
     color: white;
